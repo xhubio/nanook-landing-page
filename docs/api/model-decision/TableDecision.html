@@ -1,0 +1,384 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Table Decision · Nanook</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;a name=&quot;TableDecision&quot;&gt;&lt;/a&gt;"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Table Decision · Nanook"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.io/"/><meta property="og:description" content="&lt;a name=&quot;TableDecision&quot;&gt;&lt;/a&gt;"/><meta property="og:image" content="https://nanook.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Nanook"/><h2 class="headerTitleWithLogo">Nanook</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/quickstart/quickstart" target="_self">Docs</a></li><li class="siteNavGroupActive"><a href="/docs/api/logger/LoggerInterface" target="_self">API</a></li><li class=""><a href="https://github.com/xhubio/nanook-table/" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Model Decision</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Logger<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerInterface">Logger Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerMemory">Logger Memory</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model/TableInterface">Table Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/TestcaseDefinitionInterface">Testcase Definition Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoMeta">Todo Meta</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoStatic">Todo Static</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoGenerator">Todo Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoReference">Todo Reference</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model Decision<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/BaseSectionDefinition">Base Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/BaseSingleRowSectionDefinition">Base Single Row Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/ExecuteSectionDefinition">Execute Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/NeverExecuteSectionDefinition">Never Execute Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/MultiplicitySectionDefinition">Multiplicity Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/SummarySectionDefinition">Summary Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FieldSectionDefinition">Field Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FieldSubSectionDefinition">Field Sub Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/MultiRowSectionDefinition">Multi Row Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/TagSectionDefinition">Tag Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FilterSectionDefinition">Filter Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/GeneratorSwitchSectionDefinition">Generator Switch Section  Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/TestcaseDefinitionDecision">Testcase Definition Decision</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/api/model-decision/TableDecision">Table Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sectionTypes">Section Types</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateDouble">Validate Double</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateHelper">Validate Helper</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateMissing">Validate Missing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model Matrix<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TestcaseDefinitionMatrix">Testcase Definition Matrix</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TableMatrix">Table Matrix</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Importer xlsx<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/importerXlsx/ImporterXlsx">Importer xlsx</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">File Processor<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/ImporterInterface">Importer Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/ParserInterface">Parser Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/FilterProcessorInterface">Interface Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/SimpleArrayFilterProcessor">Simple Array Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/SimpleArrayIgnoreFilterProcessor">Simple Array Ignore Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/FileProcessor">Parser Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/decision/ParserDecisionConstants">Parser Decision Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/decision/ParserDecision">Parser Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/matrix/ParserMatrixConstants">Parser Matrix Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/matrix/ParserMatrix">Parser Matrix</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecificationConstants">Parser Specification Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecification">Parser Specification</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecificationConverter">Parser Specification Converter</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Data Generator<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorInterface">Data Generator Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorBase">Data Generator Base</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/TDGServiceRegistry">Service Registry</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/GeneratorFaker">Generator Faker</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Processor<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceProcessor">Interface Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceWriter">Interface Writer</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Node">Node</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Reference">Reference</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/TestcaseData">Testcase Data</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Processor">Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/writeMetaData">writeMetaData</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/writeStaticData">writeStaticData</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/utilCartesian">utilCartesian</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Table Decision</h1></header><article><div><span><p><a name="TableDecision"></a></p>
+<h2><a class="anchor" aria-hidden="true" id="tabledecision--codetableinterfacecode"></a><a href="#tabledecision--codetableinterfacecode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>TableDecision ⇐ <code>TableInterface</code></h2>
+<p>The table implementation for a decision table.</p>
+<p><strong>Kind</strong>: global class<br>
+<strong>Extends</strong>: <code>TableInterface</code></p>
+<ul>
+<li><a href="#TableDecision">TableDecision</a> ⇐ <code>TableInterface</code>
+<ul>
+<li><a href="#TableDecision+testcaseOrder">.testcaseOrder</a></li>
+<li><a href="#TableDecision+testcases">.testcases</a></li>
+<li><a href="#TableDecision+sections">.sections</a></li>
+<li><a href="#TableDecision+sectionOrder">.sectionOrder</a></li>
+<li><a href="#TableDecision+singleCheck">.singleCheck</a></li>
+<li><a href="#TableDecision+sectionNames">.sectionNames</a></li>
+<li><a href="#TableDecision+tableType">.tableType</a> ⇒ <code>string</code></li>
+<li><a href="#TableDecision+getTestcaseForName">.getTestcaseForName(testcaseName)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+getTestcasesForExecution">.getTestcasesForExecution()</a></li>
+<li><a href="#TableDecision+processRanges">.processRanges(testcaseName)</a> ⇒ <code>array</code></li>
+<li><a href="#TableDecision+calculate">.calculate()</a></li>
+<li><a href="#TableDecision+validate">.validate()</a></li>
+<li><a href="#TableDecision+_validateSection">._validateSection(section, issues)</a></li>
+<li><a href="#TableDecision+_validateTestcase">._validateTestcase(section, issues)</a></li>
+<li><a href="#TableDecision+_buildSectionRows">._buildSectionRows(section)</a></li>
+<li><a href="#TableDecision+_addNewSection">._addNewSection(sectionDefinition, position)</a></li>
+<li><a href="#TableDecision+addNewTestcase">.addNewTestcase(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewFieldSection">.addNewFieldSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewMultiRowSection">.addNewMultiRowSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewTagSection">.addNewTagSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewFilterSection">.addNewFilterSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewGeneratorSwitchSection">.addNewGeneratorSwitchSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewSummarySection">.addNewSummarySection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewExecuteSection">.addNewExecuteSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewNeverExecuteSection">.addNewNeverExecuteSection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+addNewMultiplicitySection">.addNewMultiplicitySection(name, position)</a> ⇒ <code>object</code></li>
+<li><a href="#TableDecision+_checkParameterAddSection">._checkParameterAddSection(position)</a></li>
+</ul></li>
+</ul>
+<p><a name="TableDecision+testcaseOrder"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisiontestcaseorder"></a><a href="#tabledecisiontestcaseorder" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.testcaseOrder</h3>
+<p>The order of test cases. A list of test case ids</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+testcases"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisiontestcases"></a><a href="#tabledecisiontestcases" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.testcases</h3>
+<p>Stores the testcases by there id</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+sections"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionsections"></a><a href="#tabledecisionsections" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.sections</h3>
+<p>The section definitions stored by there id</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+sectionOrder"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionsectionorder"></a><a href="#tabledecisionsectionorder" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.sectionOrder</h3>
+<p>The order of the sections. A list of section ids</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+singleCheck"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionsinglecheck"></a><a href="#tabledecisionsinglecheck" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.singleCheck</h3>
+<p>This map is used to verify if sections which must only exists once are
+used more often. The map stores the sections by there sectionType.</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+sectionNames"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionsectionnames"></a><a href="#tabledecisionsectionnames" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.sectionNames</h3>
+<p>Stores all the section names per type. This is
+only to make sure that a section name is not used twice per table.
+The value is <code>${sectionType}-${sectionName}</code>
+Per type the name must be unique</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+tableType"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisiontabletype--codestringcode"></a><a href="#tabledecisiontabletype--codestringcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.tableType ⇒ <code>string</code></h3>
+<p>Stores the type of the table</p>
+<p><strong>Kind</strong>: instance property of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>string</code> - The type of this table.<br>
+<a name="TableDecision+getTestcaseForName"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisiongettestcasefornametestcasename--codeobjectcode"></a><a href="#tabledecisiongettestcasefornametestcasename--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.getTestcaseForName(testcaseName) ⇒ <code>object</code></h3>
+<p>Returns the testcase for the given name. If not found it will throw an exception</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - testcaseDefinition  returns the testcase definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>testcaseName</td><td><code>string</code></td><td>The name of the testcase</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+getTestcasesForExecution"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisiongettestcasesforexecution"></a><a href="#tabledecisiongettestcasesforexecution" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.getTestcasesForExecution()</h3>
+<p>This generator returns all the testcases which should be executed</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+processRanges"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionprocessrangestestcasename--codearraycode"></a><a href="#tabledecisionprocessrangestestcasename--codearraycode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.processRanges(testcaseName) ⇒ <code>array</code></h3>
+<p>Parses a testcase name given in a reference. If the name is a range it will return an
+Array of names. For example the name 'tc12-14' will be expended to:
+tc12, tc13, tc14</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>array</code> - tcNames  An array of test case names</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>testcaseName</td><td><code>string</code></td><td>The reference test case name</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+calculate"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisioncalculate"></a><a href="#tabledecisioncalculate" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.calculate()</h3>
+<p>Calculates the summary for each section.
+The results will be added to the section rows and to the summary section</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+validate"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionvalidate"></a><a href="#tabledecisionvalidate" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.validate()</h3>
+<p>Validates the model. Only field sections are validated.
+All the validation issues will be returned. The issue
+has the following format:</p>
+<ul>
+<li>A table must have one and only one summary section</li>
+<li>A table must have at least one field section</li>
+<li>The names of the fields must be unique per table</li>
+<li>A table must have at least one testcase</li>
+</ul>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<a name="TableDecision+_validateSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecision_validatesectionsection-issues"></a><a href="#tabledecision_validatesectionsection-issues" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision._validateSection(section, issues)</h3>
+<p>Validates a given section and stores the issues in the given array</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>section</td><td><code>object</code></td><td>The section to validate</td></tr>
+<tr><td>issues</td><td><code>array</code></td><td>The array to store the found issues</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+_validateTestcase"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecision_validatetestcasesection-issues"></a><a href="#tabledecision_validatetestcasesection-issues" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision._validateTestcase(section, issues)</h3>
+<p>Validates a given testcase for the given section</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>section</td><td><code>object</code></td><td>The section to validate</td></tr>
+<tr><td>issues</td><td><code>array</code></td><td>The array to store the found issues</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+_buildSectionRows"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecision_buildsectionrowssection"></a><a href="#tabledecision_buildsectionrowssection" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision._buildSectionRows(section)</h3>
+<p>Build an internal mapping for rowIds to the objects</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>section</td><td><code>object</code></td><td>The section to get the rowIDs from</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+_addNewSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecision_addnewsectionsectiondefinition-position"></a><a href="#tabledecision_addnewsectionsectiondefinition-position" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision._addNewSection(sectionDefinition, position)</h3>
+<p>Adds a generic section and definition to the model</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>sectionDefinition</td><td><code>object</code></td><td>The sectionDefinition to be added</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>The position where to add the section</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewTestcase"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewtestcasename-position--codeobjectcode"></a><a href="#tabledecisionaddnewtestcasename-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewTestcase(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new testcase to the table. If there are already existing sections these will be added to the testcase</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - testcase  The created testcase</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name of the new testcase</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new testcase.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewFieldSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewfieldsectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewfieldsectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewFieldSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new FieldSection to the model. For each existing testcase
+a section will be added.</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewMultiRowSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewmultirowsectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewmultirowsectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewMultiRowSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new MultiRowSection to the model. For each existing testcase
+a section will be added.</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewTagSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewtagsectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewtagsectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewTagSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new MultiRowSection to the model. For each existing testcase
+a section will be added.</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewFilterSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewfiltersectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewfiltersectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewFilterSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new MultiRowSection to the model. For each existing testcase
+a section will be added.</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewGeneratorSwitchSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewgeneratorswitchsectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewgeneratorswitchsectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewGeneratorSwitchSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new GeneratorSectionDefinition to the model. For each existing testcase
+a section will be added.</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewSummarySection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewsummarysectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewsummarysectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewSummarySection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new SummarySection to the model. Testcases needs not be updated</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewExecuteSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewexecutesectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewexecutesectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewExecuteSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new ExecuteSection to the model. Testcases needs not be updated</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewNeverExecuteSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewneverexecutesectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewneverexecutesectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewNeverExecuteSection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new ExecuteSection to the model. Testcases needs not be updated</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+addNewMultiplicitySection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecisionaddnewmultiplicitysectionname-position--codeobjectcode"></a><a href="#tabledecisionaddnewmultiplicitysectionname-position--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision.addNewMultiplicitySection(name, position) ⇒ <code>object</code></h3>
+<p>Adds a new MultiplicitySection to the model. Testcases needs not be updated</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a>  <br>
+<strong>Returns</strong>: <code>object</code> - sectionDefinition  The created section definition</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>name</td><td><code>string</code></td><td>The name for the new section. The name must not be used before</td></tr>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+<p><a name="TableDecision+_checkParameterAddSection"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="tabledecision_checkparameteraddsectionposition"></a><a href="#tabledecision_checkparameteraddsectionposition" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>tableDecision._checkParameterAddSection(position)</h3>
+<p>validates the parameter for adding a new section</p>
+<p><strong>Kind</strong>: instance method of <a href="#TableDecision"><code>TableDecision</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>position</td><td><code>integer</code></td><td>(optional) The position where to add the new section.</td></tr>
+</tbody>
+</table>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/api/model-decision/TestcaseDefinitionDecision"><span class="arrow-prev">← </span><span>Testcase Definition Decision</span></a><a class="docs-next button" href="/docs/api/model-decision/sectionTypes"><span>Section Types</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#tabledecision--codetableinterfacecode">TableDecision ⇐ <code>TableInterface</code></a><ul class="toc-headings"><li><a href="#tabledecisiontestcaseorder">tableDecision.testcaseOrder</a></li><li><a href="#tabledecisiontestcases">tableDecision.testcases</a></li><li><a href="#tabledecisionsections">tableDecision.sections</a></li><li><a href="#tabledecisionsectionorder">tableDecision.sectionOrder</a></li><li><a href="#tabledecisionsinglecheck">tableDecision.singleCheck</a></li><li><a href="#tabledecisionsectionnames">tableDecision.sectionNames</a></li><li><a href="#tabledecisiontabletype--codestringcode">tableDecision.tableType ⇒ <code>string</code></a></li><li><a href="#tabledecisiongettestcasefornametestcasename--codeobjectcode">tableDecision.getTestcaseForName(testcaseName) ⇒ <code>object</code></a></li><li><a href="#tabledecisiongettestcasesforexecution">tableDecision.getTestcasesForExecution()</a></li><li><a href="#tabledecisionprocessrangestestcasename--codearraycode">tableDecision.processRanges(testcaseName) ⇒ <code>array</code></a></li><li><a href="#tabledecisioncalculate">tableDecision.calculate()</a></li><li><a href="#tabledecisionvalidate">tableDecision.validate()</a></li><li><a href="#tabledecision_validatesectionsection-issues">tableDecision._validateSection(section, issues)</a></li><li><a href="#tabledecision_validatetestcasesection-issues">tableDecision._validateTestcase(section, issues)</a></li><li><a href="#tabledecision_buildsectionrowssection">tableDecision._buildSectionRows(section)</a></li><li><a href="#tabledecision_addnewsectionsectiondefinition-position">tableDecision._addNewSection(sectionDefinition, position)</a></li><li><a href="#tabledecisionaddnewtestcasename-position--codeobjectcode">tableDecision.addNewTestcase(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewfieldsectionname-position--codeobjectcode">tableDecision.addNewFieldSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewmultirowsectionname-position--codeobjectcode">tableDecision.addNewMultiRowSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewtagsectionname-position--codeobjectcode">tableDecision.addNewTagSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewfiltersectionname-position--codeobjectcode">tableDecision.addNewFilterSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewgeneratorswitchsectionname-position--codeobjectcode">tableDecision.addNewGeneratorSwitchSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewsummarysectionname-position--codeobjectcode">tableDecision.addNewSummarySection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewexecutesectionname-position--codeobjectcode">tableDecision.addNewExecuteSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewneverexecutesectionname-position--codeobjectcode">tableDecision.addNewNeverExecuteSection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecisionaddnewmultiplicitysectionname-position--codeobjectcode">tableDecision.addNewMultiplicitySection(name, position) ⇒ <code>object</code></a></li><li><a href="#tabledecision_checkparameteraddsectionposition">tableDecision._checkParameterAddSection(position)</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="Nanook" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/tutorials/overview.html">Tutorials</a><a href="/docs/guide/equivalence/overview.html">Guide</a></div><div><h5>More</h5><a href="/imprint">Imprint</a><a href="/privacyPolicy">Privacy Policy</a><a href="https://github.com/xhubio/nanook-table/">GitHub</a><a class="github-button" href="https://github.com/xhubio/nanook-table/" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2022 Nanook.io</section></footer></div></body></html>

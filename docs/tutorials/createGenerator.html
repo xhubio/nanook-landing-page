@@ -1,0 +1,202 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Create your own data generator · Nanook</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="First of all, we need to update the Excel sheet to use the"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Create your own data generator · Nanook"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.io/"/><meta property="og:description" content="First of all, we need to update the Excel sheet to use the"/><meta property="og:image" content="https://nanook.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Nanook"/><h2 class="headerTitleWithLogo">Nanook</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/quickstart/quickstart" target="_self">Docs</a></li><li class=""><a href="/docs/api/logger/LoggerInterface" target="_self">API</a></li><li class=""><a href="https://github.com/xhubio/nanook-table/" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Tutorials</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Quickstart<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/quickstart/quickstart">The 5 minute Quickstart</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Tutorials<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/tutorials/overview">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createEquivalenceClassTable">Create an equivalence class table</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/transform2dataGenerator">Transform into data generator</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/tutorials/createGenerator">Create data generator</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createWriter">Create writer</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createFilterProcessor">Create filter processor</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Guides<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/guide/generalOverview">Nanook Table Overview</a></li><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Equivalence class table</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/overview">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/sections">Section</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Matrix table</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/matrix/overview">Overview</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Generator commands</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/static">Static Data</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/generator">Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/reference">References</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Advanced</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/advanced/instanceIds">Instance IDs</a></li></ul></div></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Modules<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/modules/model">Model</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/logger">Logger</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/fileProcessor">File Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/dataGenerator">Data Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/writer">Writer</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Create your own data generator</h1></header><article><div><span><p>First of all, we need to update the Excel sheet to use the
+new generator.</p>
+<p><img src="/img/tutorials/t2/step4.png" alt="step4"></p>
+<p>As you can see in the image, we added two new 'FieldSubSection' fields. Also, we added three more test cases are added just to make it more interesting.</p>
+<p>We also removed the static email and replaced it with a generator call.
+We use the same generator three times with different parameters.</p>
+<p>Let’s create a generator which creates a person data record.
+The data to be generated is:</p>
+<ul>
+<li><p>firstName</p></li>
+<li><p>lastName</p></li>
+<li><p>email</p></li>
+</ul>
+<p>We would like to have an email generated out of the first name and the last name
+of the person. And the generated emails must be unique.</p>
+<p>Create a new file called /src/GeneratorPerson.js. The generator
+extends the 'DataGeneratorBase' class.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">const</span> DataGeneratorBase <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>DataGeneratorBase
+
+<span class="token keyword">class</span> <span class="token class-name">GeneratorPerson</span> <span class="token keyword">extends</span> <span class="token class-name">DataGeneratorBase</span> <span class="token punctuation">{</span>
+
+<span class="token punctuation">}</span>
+</code></pre>
+<p>Then add a method to create the data we need. The generator should create a
+person object with a unique email address.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">async</span> <span class="token function">_doGenerate</span><span class="token punctuation">(</span><span class="token parameter">instanceId<span class="token punctuation">,</span> testcase<span class="token punctuation">,</span> todoGenerator</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> firstName <span class="token operator">=</span> <span class="token constant">FIRST_NAMES</span><span class="token punctuation">[</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token constant">FIRST_NAMES</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                               
+
+  <span class="token keyword">const</span> lastName <span class="token operator">=</span> <span class="token constant">LAST_NAMES</span><span class="token punctuation">[</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token constant">LAST_NAMES</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                               
+
+  <span class="token keyword">const</span> domain <span class="token operator">=</span> <span class="token constant">FREE_MAILER</span><span class="token punctuation">[</span>Math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>Math<span class="token punctuation">.</span><span class="token function">random</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">*</span> <span class="token constant">FREE_MAILER</span><span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+                               
+
+  <span class="token keyword">const</span> email <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">makeUnique</span><span class="token punctuation">(</span>firstName<span class="token punctuation">,</span> lastName<span class="token punctuation">,</span> domain<span class="token punctuation">)</span>
+                               
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>                     
+    firstName<span class="token punctuation">,</span>
+    lastName<span class="token punctuation">,</span>
+    email
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">// ensure that the email is unique</span>
+<span class="token function">makeUnique</span><span class="token punctuation">(</span><span class="token parameter">firstName<span class="token punctuation">,</span> lastName<span class="token punctuation">,</span> domain</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> email <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>firstName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>lastName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">@</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>domain<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
+  <span class="token keyword">let</span> counter <span class="token operator">=</span> <span class="token number">1</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>uniqueSet<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>email<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                              
+    email <span class="token operator">=</span> <span class="token template-string"><span class="token template-punctuation string">`</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>firstName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">.</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>lastName<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">-</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>counter<span class="token interpolation-punctuation punctuation">}</span></span><span class="token string">@</span><span class="token interpolation"><span class="token interpolation-punctuation punctuation">${</span>domain<span class="token interpolation-punctuation punctuation">}</span></span><span class="token template-punctuation string">`</span></span>
+    counter<span class="token operator">++</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> email
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><p>The first name is chosen out of an array with first names</p></li>
+<li><p>The last name is chosen out of an array with last names</p></li>
+<li><p>Choose a random domain</p></li>
+<li><p>Depending on the size of the name and domain arrays the odds of creating
+duplicate email addresses are high. So we need a way to make the email unique,
+but the names should still be included.</p></li>
+<li><p>Return the person object.</p></li>
+<li><p>The 'DataGenerator' has an internal SET which is used to store the values which need to be unique.
+The Generator now returns a person object. However, in our table we want an 'email' or a 'firstName', not an object.</p></li>
+</ul>
+<p>Create another function to return strings for the given parameter.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">async</span> <span class="token function">generate</span><span class="token punctuation">(</span><span class="token parameter">instanceId<span class="token punctuation">,</span> testcase<span class="token punctuation">,</span> todoGenerator</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> param <span class="token operator">=</span> todoGenerator<span class="token punctuation">.</span>config      
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>instanceId <span class="token operator">&amp;&amp;</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instanceData<span class="token punctuation">.</span><span class="token function">has</span><span class="token punctuation">(</span>instanceId<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                                          
+    <span class="token keyword">const</span> valObj <span class="token operator">=</span> <span class="token keyword">this</span><span class="token punctuation">.</span>instanceData<span class="token punctuation">.</span><span class="token function">get</span><span class="token punctuation">(</span>instanceId<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> valObj<span class="token punctuation">[</span>param<span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+
+  <span class="token keyword">const</span> genData <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">_doGenerate</span><span class="token punctuation">(</span> 
+    instanceId<span class="token punctuation">,</span>
+    testcase<span class="token punctuation">,</span>
+    todoGenerator
+  <span class="token punctuation">)</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>genData <span class="token operator">!==</span> <span class="token keyword">undefined</span> <span class="token operator">&amp;&amp;</span> instanceId<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                                          
+    <span class="token keyword">this</span><span class="token punctuation">.</span>instanceData<span class="token punctuation">.</span><span class="token function">set</span><span class="token punctuation">(</span>instanceId<span class="token punctuation">,</span> genData<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">return</span> genData<span class="token punctuation">[</span>param<span class="token punctuation">]</span>                   
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><p>Get the parameter from the Excel sheet. The parameter tells the generator
+for which field the data should be created.</p></li>
+<li><p>Here we see the 'instanceId' in action. Each time the generator is called
+with the same 'instanceId', it will return the same data. In our case, we call the same generator three times with a different parameter. The generator should return fields from the same object.</p></li>
+<li><p>If there is no data for the instanceId, it will create a new one.</p></li>
+<li><p>Store the newly generated data under the current instanceId.</p></li>
+<li><p>Return the new data.</p></li>
+</ul>
+<p>Now, we still need to register the generator in our tdg.js file.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">const</span> genPerson <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GeneratorPerson</span><span class="token punctuation">(</span><span class="token punctuation">{</span> logger <span class="token punctuation">}</span><span class="token punctuation">)</span>
+  processor<span class="token punctuation">.</span>generatorRegistry<span class="token punctuation">.</span><span class="token function">registerGenerator</span><span class="token punctuation">(</span><span class="token string">'generatorPerson'</span><span class="token punctuation">,</span> genPerson<span class="token punctuation">)</span>
+</code></pre>
+<p>Let’s have a look at the generated result.
+In the 'tdg' subfolder there are four subdirectories 'TC1' to 'TC4'.
+One folder has been created for each test case.</p>
+<p><img src="/img/tutorials/t2/step4.1.png" alt="step4.1"></p>
+<p>Open one of the generated JSON files in one of the folders.
+The result should look like this.</p>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span>
+  <span class="token property">"tableName"</span><span class="token operator">:</span> <span class="token string">"Sheet1"</span><span class="token punctuation">,</span>
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"TC1"</span><span class="token punctuation">,</span>
+  <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"Sheet1"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+      <span class="token property">"a9dad54a-c12e-46d8-914e-926b32e82424"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"first name"</span><span class="token operator">:</span> <span class="token string">"Anastasia"</span><span class="token punctuation">,</span>     
+        <span class="token property">"last name"</span><span class="token operator">:</span> <span class="token string">"Lukoschek"</span><span class="token punctuation">,</span>      
+        <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"Anastasia.Lukoschek@hotmail.com"</span>
+                                       
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"instanceId"</span><span class="token operator">:</span> <span class="token string">"a9dad54a-c12e-46d8-914e-926b32e82424"</span><span class="token punctuation">,</span>
+  <span class="token property">"callTree"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"instanceId"</span><span class="token operator">:</span> <span class="token string">"364c485f-d863-490c-8600-b419f4504ad1"</span><span class="token punctuation">,</span>
+    <span class="token property">"tableName"</span><span class="token operator">:</span> <span class="token string">"Sheet1"</span><span class="token punctuation">,</span>
+    <span class="token property">"testcaseName"</span><span class="token operator">:</span> <span class="token string">"TC1"</span><span class="token punctuation">,</span>
+    <span class="token property">"children"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><p>The generated first name</p></li>
+<li><p>The generated last name</p></li>
+<li><p>The email build out of the first name and the last name</p></li>
+</ul>
+<p>Now, each time the processor is called, it will create new data for the four test cases and the data will always be different.
+Also, the email will always be unique.</p>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The example code is located at:<br>
+src/t2/step4<br>
+Just type there:<br>
+node tdg.js</p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/tutorials/transform2dataGenerator"><span class="arrow-prev">← </span><span>Transform into data generator</span></a><a class="docs-next button" href="/docs/tutorials/createWriter"><span>Create writer</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="Nanook" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/tutorials/overview.html">Tutorials</a><a href="/docs/guide/equivalence/overview.html">Guide</a></div><div><h5>More</h5><a href="/imprint">Imprint</a><a href="/privacyPolicy">Privacy Policy</a><a href="https://github.com/xhubio/nanook-table/">GitHub</a><a class="github-button" href="https://github.com/xhubio/nanook-table/" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2022 Nanook.io</section></footer></div></body></html>

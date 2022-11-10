@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://nanook.io/blog</id>
+    <title>Nanook Blog</title>
+    <updated>2019-06-01T06:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://nanook.io/blog"/>
+    <subtitle>The best place to stay up-to-date with the latest Nanook news and events.</subtitle>
+    <logo>https://nanook.io/img/logo.svg</logo>
+    <rights>Copyright © 2022 Nanook.io</rights>
+    <entry>
+        <title type="html"><![CDATA[Introducing Nanook-Table]]></title>
+        <id>https://nanook.io/blog/2019/06/01/inroducing.html</id>
+        <link href="https://nanook.io/blog/2019/06/01/inroducing.html"/>
+        <updated>2019-06-01T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>We are proud to introduce Nanook-Table. This is the first 'official' version of Nanook-Table. It has been used about one year now in a productive environment.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
+</feed>

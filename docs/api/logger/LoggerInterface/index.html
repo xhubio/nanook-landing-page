@@ -1,0 +1,203 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Logger Interface · Nanook</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;a name=&quot;LoggerInterface&quot;&gt;&lt;/a&gt;"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Logger Interface · Nanook"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.io/"/><meta property="og:description" content="&lt;a name=&quot;LoggerInterface&quot;&gt;&lt;/a&gt;"/><meta property="og:image" content="https://nanook.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Nanook"/><h2 class="headerTitleWithLogo">Nanook</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/quickstart/quickstart" target="_self">Docs</a></li><li class="siteNavGroupActive siteNavItemActive"><a href="/docs/api/logger/LoggerInterface" target="_self">API</a></li><li class=""><a href="https://github.com/xhubio/nanook-table/" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Logger</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Logger<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem navListItemActive"><a class="navItem" href="/docs/api/logger/LoggerInterface">Logger Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerMemory">Logger Memory</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model/TableInterface">Table Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/TestcaseDefinitionInterface">Testcase Definition Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoMeta">Todo Meta</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoStatic">Todo Static</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoGenerator">Todo Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoReference">Todo Reference</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model Decision<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/BaseSectionDefinition">Base Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/BaseSingleRowSectionDefinition">Base Single Row Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/ExecuteSectionDefinition">Execute Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/NeverExecuteSectionDefinition">Never Execute Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/MultiplicitySectionDefinition">Multiplicity Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/SummarySectionDefinition">Summary Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FieldSectionDefinition">Field Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FieldSubSectionDefinition">Field Sub Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/MultiRowSectionDefinition">Multi Row Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/TagSectionDefinition">Tag Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FilterSectionDefinition">Filter Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/GeneratorSwitchSectionDefinition">Generator Switch Section  Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/TestcaseDefinitionDecision">Testcase Definition Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/TableDecision">Table Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sectionTypes">Section Types</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateDouble">Validate Double</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateHelper">Validate Helper</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateMissing">Validate Missing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model Matrix<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TestcaseDefinitionMatrix">Testcase Definition Matrix</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TableMatrix">Table Matrix</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Importer xlsx<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/importerXlsx/ImporterXlsx">Importer xlsx</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">File Processor<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/ImporterInterface">Importer Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/ParserInterface">Parser Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/FilterProcessorInterface">Interface Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/SimpleArrayFilterProcessor">Simple Array Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/SimpleArrayIgnoreFilterProcessor">Simple Array Ignore Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/FileProcessor">Parser Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/decision/ParserDecisionConstants">Parser Decision Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/decision/ParserDecision">Parser Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/matrix/ParserMatrixConstants">Parser Matrix Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/matrix/ParserMatrix">Parser Matrix</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecificationConstants">Parser Specification Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecification">Parser Specification</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecificationConverter">Parser Specification Converter</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Data Generator<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorInterface">Data Generator Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorBase">Data Generator Base</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/TDGServiceRegistry">Service Registry</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/GeneratorFaker">Generator Faker</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Processor<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceProcessor">Interface Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceWriter">Interface Writer</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Node">Node</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Reference">Reference</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/TestcaseData">Testcase Data</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Processor">Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/writeMetaData">writeMetaData</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/writeStaticData">writeStaticData</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/utilCartesian">utilCartesian</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Logger Interface</h1></header><article><div><span><p><a name="LoggerInterface"></a></p>
+<h2><a class="anchor" aria-hidden="true" id="loggerinterface"></a><a href="#loggerinterface" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>LoggerInterface</h2>
+<p>Defines the interface of a logger used by all the modules.</p>
+<p><strong>Kind</strong>: global class</p>
+<ul>
+<li><a href="#LoggerInterface">LoggerInterface</a>
+<ul>
+<li><a href="#LoggerInterface+level">.level</a></li>
+<li><a href="#LoggerInterface+clear">.clear()</a></li>
+<li><a href="#LoggerInterface+_getLevelNumber">._getLevelNumber(level)</a> ⇒ <code>number</code></li>
+<li><a href="#LoggerInterface+_log">._log(level, arg)</a></li>
+<li><a href="#LoggerInterface+_writeLog">._writeLog(level, entry)</a></li>
+<li><a href="#LoggerInterface+debug">.debug(message)</a> ⇒ <code>Promise</code></li>
+<li><a href="#LoggerInterface+info">.info(message)</a> ⇒ <code>Promise</code></li>
+<li><a href="#LoggerInterface+warning">.warning(message)</a> ⇒ <code>Promise</code></li>
+<li><a href="#LoggerInterface+error">.error(message)</a> ⇒ <code>Promise</code></li>
+<li><a href="#LoggerInterface+fatal">.fatal(message)</a> ⇒ <code>Promise</code></li>
+<li><a href="#LoggerInterface+_getTime">._getTime()</a></li>
+</ul></li>
+</ul>
+<p><a name="LoggerInterface+level"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfacelevel"></a><a href="#loggerinterfacelevel" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.level</h3>
+<p>sets a new log level</p>
+<p><strong>Kind</strong>: instance property of <a href="#LoggerInterface"><code>LoggerInterface</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>level</td><td><code>number/string</code></td><td>The logLevel as number or String value</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+clear"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfaceclear"></a><a href="#loggerinterfaceclear" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.clear()</h3>
+<p>Clears all the existing log entries
+Placeholder for the implementing loggers</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<a name="LoggerInterface+_getLevelNumber"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterface_getlevelnumberlevel--codenumbercode"></a><a href="#loggerinterface_getlevelnumberlevel--codenumbercode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface._getLevelNumber(level) ⇒ <code>number</code></h3>
+<p>returns the logLevel as a number</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<strong>Returns</strong>: <code>number</code> - num  The loglevel as a number</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>level</td><td><code>string</code></td><td>The loglevel as a string</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+_log"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterface_loglevel-arg"></a><a href="#loggerinterface_loglevel-arg" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface._log(level, arg)</h3>
+<p>Do the logging</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>level</td><td><code>string</code></td><td>The log level of the current entry</td></tr>
+<tr><td>arg</td><td><code>string</code> \</td><td><code>object</code></td><td>The data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+_writeLog"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterface_writeloglevel-entry"></a><a href="#loggerinterface_writeloglevel-entry" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface._writeLog(level, entry)</h3>
+<p>Writes the log, or do what ever. At this point in time
+the logs with the wrong level arte already filtered</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a></p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>level</td><td><code>string</code></td><td>The log level of the current entry</td></tr>
+<tr><td>entry</td><td><code>string</code> \</td><td><code>object</code></td><td>The data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+debug"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfacedebugmessage--codepromisecode"></a><a href="#loggerinterfacedebugmessage--codepromisecode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.debug(message) ⇒ <code>Promise</code></h3>
+<p>Logs the given message with the level 'debug'</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<strong>Returns</strong>: <code>Promise</code> - promise  A promise when the log is written</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>message</td><td><code>string/object</code></td><td>The message or data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+info"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfaceinfomessage--codepromisecode"></a><a href="#loggerinterfaceinfomessage--codepromisecode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.info(message) ⇒ <code>Promise</code></h3>
+<p>Logs the given message with the level 'info'</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<strong>Returns</strong>: <code>Promise</code> - promise  A promise when the log is written</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>message</td><td><code>string/object</code></td><td>The message or data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+warning"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfacewarningmessage--codepromisecode"></a><a href="#loggerinterfacewarningmessage--codepromisecode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.warning(message) ⇒ <code>Promise</code></h3>
+<p>Logs the given message with the level 'warning'</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<strong>Returns</strong>: <code>Promise</code> - promise  A promise when the log is written</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>message</td><td><code>string/object</code></td><td>The message or data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+error"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfaceerrormessage--codepromisecode"></a><a href="#loggerinterfaceerrormessage--codepromisecode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.error(message) ⇒ <code>Promise</code></h3>
+<p>Logs the given message with the level 'error'</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<strong>Returns</strong>: <code>Promise</code> - promise  A promise when the log is written</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>message</td><td><code>string/object</code></td><td>The message or data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+fatal"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterfacefatalmessage--codepromisecode"></a><a href="#loggerinterfacefatalmessage--codepromisecode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface.fatal(message) ⇒ <code>Promise</code></h3>
+<p>Logs the given message with the level 'fatal'</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a>  <br>
+<strong>Returns</strong>: <code>Promise</code> - promise  A promise when the log is written</p>
+<table>
+<thead>
+<tr><th>Param</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>message</td><td><code>string/object</code></td><td>The message or data to log</td></tr>
+</tbody>
+</table>
+<p><a name="LoggerInterface+_getTime"></a></p>
+<h3><a class="anchor" aria-hidden="true" id="loggerinterface_gettime"></a><a href="#loggerinterface_gettime" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>loggerInterface._getTime()</h3>
+<p>Returns the current time in the format used by this logger</p>
+<p><strong>Kind</strong>: instance method of <a href="#LoggerInterface"><code>LoggerInterface</code></a></p>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-next button" href="/docs/api/logger/LoggerMemory"><span>Logger Memory</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#loggerinterface">LoggerInterface</a><ul class="toc-headings"><li><a href="#loggerinterfacelevel">loggerInterface.level</a></li><li><a href="#loggerinterfaceclear">loggerInterface.clear()</a></li><li><a href="#loggerinterface_getlevelnumberlevel--codenumbercode">loggerInterface._getLevelNumber(level) ⇒ <code>number</code></a></li><li><a href="#loggerinterface_loglevel-arg">loggerInterface._log(level, arg)</a></li><li><a href="#loggerinterface_writeloglevel-entry">loggerInterface._writeLog(level, entry)</a></li><li><a href="#loggerinterfacedebugmessage--codepromisecode">loggerInterface.debug(message) ⇒ <code>Promise</code></a></li><li><a href="#loggerinterfaceinfomessage--codepromisecode">loggerInterface.info(message) ⇒ <code>Promise</code></a></li><li><a href="#loggerinterfacewarningmessage--codepromisecode">loggerInterface.warning(message) ⇒ <code>Promise</code></a></li><li><a href="#loggerinterfaceerrormessage--codepromisecode">loggerInterface.error(message) ⇒ <code>Promise</code></a></li><li><a href="#loggerinterfacefatalmessage--codepromisecode">loggerInterface.fatal(message) ⇒ <code>Promise</code></a></li><li><a href="#loggerinterface_gettime">loggerInterface._getTime()</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="Nanook" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/tutorials/overview.html">Tutorials</a><a href="/docs/guide/equivalence/overview.html">Guide</a></div><div><h5>More</h5><a href="/imprint">Imprint</a><a href="/privacyPolicy">Privacy Policy</a><a href="https://github.com/xhubio/nanook-table/">GitHub</a><a class="github-button" href="https://github.com/xhubio/nanook-table/" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2022 Nanook.io</section></footer></div></body></html>

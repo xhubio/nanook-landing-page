@@ -1,0 +1,206 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Create your own writer · Nanook</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="This chapter will show you how to create your own writer and how to use it. For this tutorial the writer will generate a CSV file of the generated test data. The data is written on a per test case basis. If you need one file containing all the data for all the test cases, it is a good practice to aggregate the file shortly  before execution. This way, with the data stored, you can decide later on which test cases to include in the next run, or if you would like to retest only some of the tests. Our recommendation is to split the data on a test cases per test case basis."/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Create your own writer · Nanook"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.io/"/><meta property="og:description" content="This chapter will show you how to create your own writer and how to use it. For this tutorial the writer will generate a CSV file of the generated test data. The data is written on a per test case basis. If you need one file containing all the data for all the test cases, it is a good practice to aggregate the file shortly  before execution. This way, with the data stored, you can decide later on which test cases to include in the next run, or if you would like to retest only some of the tests. Our recommendation is to split the data on a test cases per test case basis."/><meta property="og:image" content="https://nanook.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Nanook"/><h2 class="headerTitleWithLogo">Nanook</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/quickstart/quickstart" target="_self">Docs</a></li><li class=""><a href="/docs/api/logger/LoggerInterface" target="_self">API</a></li><li class=""><a href="https://github.com/xhubio/nanook-table/" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Tutorials</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Quickstart<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/quickstart/quickstart">The 5 minute Quickstart</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Tutorials<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/tutorials/overview">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createEquivalenceClassTable">Create an equivalence class table</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/transform2dataGenerator">Transform into data generator</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createGenerator">Create data generator</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/tutorials/createWriter">Create writer</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createFilterProcessor">Create filter processor</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Guides<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/guide/generalOverview">Nanook Table Overview</a></li><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Equivalence class table</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/overview">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/sections">Section</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Matrix table</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/matrix/overview">Overview</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Generator commands</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/static">Static Data</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/generator">Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/reference">References</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Advanced</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/advanced/instanceIds">Instance IDs</a></li></ul></div></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Modules<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/modules/model">Model</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/logger">Logger</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/fileProcessor">File Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/dataGenerator">Data Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/writer">Writer</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Create your own writer</h1></header><article><div><span><p>This chapter will show you how to create your own writer and how to use it. For this tutorial the writer will generate a CSV file of the generated test data. The data is written on a per test case basis. If you need one file containing all the data for all the test cases, it is a good practice to aggregate the file shortly  before execution. This way, with the data stored, you can decide later on which test cases to include in the next run, or if you would like to retest only some of the tests. Our recommendation is to split the data on a test cases per test case basis.</p>
+<h2><a class="anchor" aria-hidden="true" id="create-the-writer"></a><a href="#create-the-writer" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create the writer</h2>
+<p>First let’s have a look at the default writer provided by the '@xhubio/nanook-table' module.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">requite</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> util <span class="token operator">=</span> <span class="token function">requite</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> InterfaceWriter <span class="token operator">=</span> <span class="token function">requite</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>InterfaceWriter
+<span class="token keyword">const</span> writeFile <span class="token operator">=</span> util<span class="token punctuation">.</span><span class="token function">promisify</span><span class="token punctuation">(</span>fs<span class="token punctuation">.</span>writeFile<span class="token punctuation">)</span>
+
+<span class="token keyword">class</span> <span class="token class-name">DefaultWriter</span> <span class="token keyword">extends</span> <span class="token class-name">InterfaceWriter</span> <span class="token punctuation">{</span>
+  <span class="token comment">/**
+   * Writes the data
+   */</span>
+  <span class="token keyword">async</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token parameter">testcaseData</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>          
+    <span class="token keyword">const</span> fileName <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">createFileName</span><span class="token punctuation">(</span>testcaseData<span class="token punctuation">)</span>
+                                       
+    <span class="token keyword">return</span> <span class="token function">writeFile</span><span class="token punctuation">(</span>fileName<span class="token punctuation">,</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">stringify</span><span class="token punctuation">(</span>testcaseData<span class="token punctuation">,</span> <span class="token keyword">null</span><span class="token punctuation">,</span> <span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                                       
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">/**
+   * Creates the file name to write the testcaseData object
+   * @param testcaseData {object} The testcaseData object
+   * @return fileName {string} The file name to write the object
+   */</span>
+  <span class="token keyword">async</span> <span class="token function">createFileName</span><span class="token punctuation">(</span><span class="token parameter">testcaseData</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> tcName <span class="token operator">=</span> testcaseData<span class="token punctuation">.</span>name
+    <span class="token keyword">const</span> targetDir <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'tdg'</span><span class="token punctuation">,</span> tcName<span class="token punctuation">)</span>
+    <span class="token keyword">await</span> <span class="token function">md</span><span class="token punctuation">(</span>targetDir<span class="token punctuation">)</span>
+
+    <span class="token keyword">return</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>targetDir<span class="token punctuation">,</span> <span class="token string">'testcaseData.json'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><p>The only function that needs to be overwritten is the 'async write(testcaseData)' function. It is called for each test case with all the created test case data. The 'testcaseData' object contains the data. The default writer will simply write out this object. If you need multiple different files, each writer will extract only the data it needs and write it to a file.</p></li>
+<li><p>Creates a file name.</p></li>
+<li><p>Writes the file.</p></li>
+</ul>
+<p>Now it’s time for your own writer. Create a file called 'csvWriter.js' and add the following content.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">const</span> fs <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'fs'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> util <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'util'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> InterfaceWriter <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>InterfaceWriter
+
+<span class="token keyword">const</span> writeFile <span class="token operator">=</span> util<span class="token punctuation">.</span><span class="token function">promisify</span><span class="token punctuation">(</span>fs<span class="token punctuation">.</span>writeFile<span class="token punctuation">)</span>
+<span class="token keyword">const</span> <span class="token constant">DELIMITER</span> <span class="token operator">=</span> <span class="token string">','</span>     
+
+<span class="token keyword">class</span> <span class="token class-name">CsvWriter</span> <span class="token keyword">extends</span> <span class="token class-name">InterfaceWriter</span> <span class="token punctuation">{</span>
+
+  <span class="token keyword">async</span> <span class="token function">write</span><span class="token punctuation">(</span><span class="token parameter">testcaseData</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> fileName <span class="token operator">=</span> <span class="token keyword">await</span> <span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">createFileName</span><span class="token punctuation">(</span>testcaseData<span class="token punctuation">)</span>
+                          
+
+    <span class="token keyword">const</span> sheetName <span class="token operator">=</span> testcaseData<span class="token punctuation">.</span>tableName
+    <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+    <span class="token keyword">for</span><span class="token punctuation">(</span><span class="token keyword">const</span> instId <span class="token keyword">of</span> Object<span class="token punctuation">.</span><span class="token function">keys</span><span class="token punctuation">(</span>testcaseData<span class="token punctuation">.</span>data<span class="token punctuation">[</span>sheetName<span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">{</span>
+                          
+      <span class="token keyword">const</span> dat <span class="token operator">=</span> testcaseData<span class="token punctuation">.</span>data<span class="token punctuation">[</span>sheetName<span class="token punctuation">]</span><span class="token punctuation">[</span>instId<span class="token punctuation">]</span>
+                          
+      <span class="token keyword">const</span> friend <span class="token operator">=</span> dat<span class="token punctuation">[</span><span class="token string">'friend email'</span><span class="token punctuation">]</span> <span class="token operator">?</span> dat<span class="token punctuation">[</span><span class="token string">'friend email'</span><span class="token punctuation">]</span> <span class="token operator">:</span> <span class="token string">''</span>
+      <span class="token keyword">const</span> row <span class="token operator">=</span> <span class="token punctuation">[</span>dat<span class="token punctuation">[</span><span class="token string">'first name'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dat<span class="token punctuation">[</span><span class="token string">'last name'</span><span class="token punctuation">]</span><span class="token punctuation">,</span> dat<span class="token punctuation">.</span>email<span class="token punctuation">,</span> friend<span class="token punctuation">]</span>
+                          
+      res<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>row<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token constant">DELIMITER</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">return</span> <span class="token function">writeFile</span><span class="token punctuation">(</span>fileName<span class="token punctuation">,</span> res<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'\n'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                          
+  <span class="token punctuation">}</span>
+
+  <span class="token comment">/**
+   * Creates the file name to write the testcaseData object
+   * @param testcaseData {object} The testcaseData object
+   * @return fileName {string} The file name to write the object
+   */</span>
+  <span class="token keyword">async</span> <span class="token function">createFileName</span><span class="token punctuation">(</span><span class="token parameter">testcaseData</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> tcName <span class="token operator">=</span> testcaseData<span class="token punctuation">.</span>name
+    <span class="token keyword">const</span> targetDir <span class="token operator">=</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'tdg'</span><span class="token punctuation">,</span> tcName<span class="token punctuation">)</span>
+    <span class="token keyword">return</span> path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span>targetDir<span class="token punctuation">,</span> <span class="token string">'person.csv'</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+module<span class="token punctuation">.</span>exports<span class="token punctuation">.</span>CsvWriter <span class="token operator">=</span> CsvWriter
+</code></pre>
+<ul>
+<li><p>Set the delimiter for the CSV file.</p></li>
+<li><p>Create the file name. In this function we do not create the directory if it doesn’t exist (because this is already done in the default writer).</p></li>
+<li><p>Iterate over all the instanceIds of the data object. In this case, we do not distinguish between the main data and the referenced data.</p></li>
+<li><p>Get the data object of the current instanceId.</p></li>
+<li><p>Build the row.</p></li>
+<li><p>Write the file.</p></li>
+</ul>
+<p>The next step is to add the writer to the processor. For this, the 'tdg.js' file needs to be modified.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> LoggerMemory <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>LoggerMemory
+<span class="token keyword">const</span> GeneratorPerson <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./GeneratorPerson'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>GeneratorPerson
+<span class="token keyword">const</span> CsvWriter <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'./CsvWriter'</span><span class="token punctuation">)</span><span class="token punctuation">.</span>CsvWriter
+                      
+
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">doIt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> logger <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoggerMemory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+  logger<span class="token punctuation">.</span>writeConsole <span class="token operator">=</span> <span class="token boolean">true</span>
+
+  <span class="token keyword">const</span> fileProcessor <span class="token operator">=</span> <span class="token keyword">await</span> p<span class="token punctuation">.</span><span class="token function">createDefaultFileProcessor</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> csvWriter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">CsvWriter</span><span class="token punctuation">(</span><span class="token punctuation">{</span>logger<span class="token punctuation">}</span><span class="token punctuation">)</span>
+                      
+  <span class="token keyword">const</span> defaultWriter <span class="token operator">=</span> p<span class="token punctuation">.</span><span class="token function">createDefaultWriter</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+                      
+
+  <span class="token keyword">const</span> processor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">p<span class="token punctuation">.</span>Processor</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+    logger<span class="token punctuation">,</span>
+    <span class="token literal-property property">generatorRegistry</span><span class="token operator">:</span> p<span class="token punctuation">.</span><span class="token function">createDefaultGeneratorRegistry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">writer</span><span class="token operator">:</span> <span class="token punctuation">[</span>defaultWriter<span class="token punctuation">,</span> csvWriter<span class="token punctuation">]</span>
+                      
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">const</span> genPerson <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GeneratorPerson</span><span class="token punctuation">(</span><span class="token punctuation">{</span>logger<span class="token punctuation">}</span><span class="token punctuation">)</span>
+  processor<span class="token punctuation">.</span>generatorRegistry<span class="token punctuation">.</span><span class="token function">registerGenerator</span><span class="token punctuation">(</span><span class="token string">'generatorPerson'</span><span class="token punctuation">,</span> genPerson<span class="token punctuation">)</span>
+
+  <span class="token keyword">await</span> fileProcessor<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'resources'</span><span class="token punctuation">,</span> <span class="token string">'demo.xlsx'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+  processor<span class="token punctuation">.</span>tables <span class="token operator">=</span> fileProcessor<span class="token punctuation">.</span>tables
+
+  <span class="token keyword">await</span> processor<span class="token punctuation">.</span><span class="token function">process</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span>
+
+
+<span class="token function">doIt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Finish'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li><p>Import the writer class.</p></li>
+<li><p>Create an instance of the csv writer.</p></li>
+<li><p>The 'createDefaultWriter()' function returns an array with one default writer, so we just get the first writer from the array.</p></li>
+<li><p>Create an array with both writers. The writers are executed in the given order, so only the first writer needs to create the output directory.</p></li>
+</ul>
+<p>Now run the execution again. Afterwards, you will find an additional file called 'person.csv' in the result directory.</p>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The example code is located at:<br>
+src/t4/step1<br>
+In there, simply run:<br>
+node tdg.js</p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/tutorials/createGenerator"><span class="arrow-prev">← </span><span>Create data generator</span></a><a class="docs-next button" href="/docs/tutorials/createFilterProcessor"><span>Create filter processor</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#create-the-writer">Create the writer</a></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="Nanook" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/tutorials/overview.html">Tutorials</a><a href="/docs/guide/equivalence/overview.html">Guide</a></div><div><h5>More</h5><a href="/imprint">Imprint</a><a href="/privacyPolicy">Privacy Policy</a><a href="https://github.com/xhubio/nanook-table/">GitHub</a><a class="github-button" href="https://github.com/xhubio/nanook-table/" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2022 Nanook.io</section></footer></div></body></html>

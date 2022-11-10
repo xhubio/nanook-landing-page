@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Transform the table into a data generator · Nanook</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="In the first tutorial, we created a normal equivalence class table. It showed us"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Transform the table into a data generator · Nanook"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.io/"/><meta property="og:description" content="In the first tutorial, we created a normal equivalence class table. It showed us"/><meta property="og:image" content="https://nanook.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body class="sideNavVisible separateOnPageNav"><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Nanook"/><h2 class="headerTitleWithLogo">Nanook</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class="siteNavGroupActive"><a href="/docs/quickstart/quickstart" target="_self">Docs</a></li><li class=""><a href="/docs/api/logger/LoggerInterface" target="_self">API</a></li><li class=""><a href="https://github.com/xhubio/nanook-table/" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>Tutorials</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Quickstart<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/quickstart/quickstart">The 5 minute Quickstart</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Tutorials<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/tutorials/overview">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createEquivalenceClassTable">Create an equivalence class table</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/tutorials/transform2dataGenerator">Transform into data generator</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createGenerator">Create data generator</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createWriter">Create writer</a></li><li class="navListItem"><a class="navItem" href="/docs/tutorials/createFilterProcessor">Create filter processor</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Guides<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/guide/generalOverview">Nanook Table Overview</a></li><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Equivalence class table</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/overview">Overview</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/sections">Section</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Matrix table</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/matrix/overview">Overview</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Generator commands</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/static">Static Data</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/generator">Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/reference">References</a></li></ul></div><div class="navGroup subNavGroup"><h4 class="navGroupSubcategoryTitle">Advanced</h4><ul><li class="navListItem"><a class="navItem" href="/docs/guide/advanced/instanceIds">Instance IDs</a></li></ul></div></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Modules<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/modules/model">Model</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/logger">Logger</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/fileProcessor">File Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/dataGenerator">Data Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/modules/writer">Writer</a></li></ul></div></div></section></div><script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory){
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')){
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function() {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function() {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function(event) {
+                var el = event.target;
+                while(el !== headings){
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else{
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function(event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Transform the table into a data generator</h1></header><article><div><span><p>In the first tutorial, we created a normal equivalence class table. It showed us
+that we had to create 39 test cases. And we still had to create the data manually.
+It didn't create the data for us.</p>
+<p>So let's transform this table into a data generation table. To do this, we'll insert a new column between 'Equivalence class' and 'Description' and type in  'generator' as the header. In this column, we will add the commands to call generators that will create the data for us.</p>
+<h2><a class="anchor" aria-hidden="true" id="format-the-table"></a><a href="#format-the-table" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Format the table</h2>
+<p>In the previous tutorial, we created an equivalence class table without any
+predefined format rules. However, if we want the table to be parsable for the table
+processor, we need to follow some formatting rules.</p>
+<p>The next sections describe the format required to make the table parseable.</p>
+<h2><a class="anchor" aria-hidden="true" id="general-overview"></a><a href="#general-overview" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>General Overview</h2>
+<h2><a class="anchor" aria-hidden="true" id="layout-equivalence-class-table"></a><a href="#layout-equivalence-class-table" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Layout Equivalence Class Table</h2>
+<p><img src="/img/model-decision/table.jpg" alt="Example table"></p>
+<p>Here is a sample equivalence class table. The column order is important. The first five columns are fixed. The test case start in the 6th column. The parser finds the end of the test case by parsing the first row and searching for the first empty cell. So if you add an empty column in your table, the parser will stop there.</p>
+<p>The table is divided into a few sections.</p>
+<p><img src="/img/model-decision/table_testcases.jpg" alt="Test case side"></p>
+<p>The right side shows the test cases. Each column on the right side represents one
+test case. The column header of a test case is the name of this test case.
+In this example the names are just numbers. Column ''F'' is the first test case with the name ''1''.</p>
+<p>The left side of the table describes the fields and the expected result.</p>
+<p>On the left, the ''field section'' is the primary data section. The primary data is the data which is directly manipulated in the test. But this is just a name. You can have as many 'FieldSection' elements as you like. A field section consists of one to multiple 'FieldSubSection' elements.</p>
+<p>The field section describes the variety of data needed by the test - and therefore the number of tests to be created.</p>
+<p><img src="/img/model-decision/table_field_sub_section.jpg" alt="Field sub section"></p>
+<p>A subsection in this case is one field and all the equivalence classes for this field. An equivalence class defines the different kinds of field values with an equivalent behaviour.</p>
+<p>For example: Let's say we have a field with a maximum length of 10 characters. Then all values entered with more than 10 chars will lead to an equivalent behaviour of the application. So it is not necessary to test with 11, 12, 13, …​ characters. The equivalence class is 'more than 10 chars'.</p>
+<p>One fieldSection may have many fieldSubSections. The FieldSection groups fields together. Having one or multiple fieldSections has no impact on the table itself. All the fieldSubSections have to be combined.</p>
+<p><img src="/img/model-decision/table_multi_row_section.jpg" alt="Multi row section"></p>
+<p>The multiple row sections can be used to describe the expected results or error messages. It is up to the user how many of these sections are in the table. It can also contain actions on the UI or other information needed.</p>
+<h2><a class="anchor" aria-hidden="true" id="create-the-first-table-for-data-generation"></a><a href="#create-the-first-table-for-data-generation" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create the first table for data generation</h2>
+<p>In this step we will create a simple table with static data generation.</p>
+<h3><a class="anchor" aria-hidden="true" id="create-table"></a><a href="#create-table" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create table</h3>
+<p>Since the current implementation reads Excel spreadsheets, let's create a new Excel file.</p>
+<ul>
+<li><p>Set the sheet identifier<br>
+The parser only considers sheets that have the right identifier set in the first cell.
+So enter '&lt;DECISION_TABLE&gt;' in the first cell.</p></li>
+<li><p>Set the column header<br>
+Enter the following column headers in the second row.</p></li>
+</ul>
+<table>
+<thead>
+<tr><th>Column</th><th>Column header</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td>Field Name</td></tr>
+<tr><td>B</td><td></td></tr>
+<tr><td>C</td><td>Equivalence class</td></tr>
+<tr><td>D</td><td>Generator Function</td></tr>
+<tr><td>E</td><td>Comment</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Create the first section (FieldSection)<br>
+A 'FieldSection' contains 1..n 'FieldSubSection' elements.
+Add a new row with the following columns:</li>
+</ul>
+<table>
+<thead>
+<tr><th>Column</th><th>Data</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td>Primary Data</td><td>A name for this 'FieldSection'</td></tr>
+<tr><td>B</td><td>FieldSection</td><td>The 'FieldSection' Identifier.</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Create a 'FieldSubSection'<br>
+For this example we take an email field.
+Add a new row with the following columns:</li>
+</ul>
+<table>
+<thead>
+<tr><th>Column</th><th>Data</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td>email</td><td>The name of the data field</td></tr>
+<tr><td>B</td><td>FieldSubSection</td><td>The 'FieldSubSection' Identifier.</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Create the equivalence class for the email field<br>
+In this example, we create only one class. Add a new row with the following columns:</li>
+</ul>
+<table>
+<thead>
+<tr><th>Column</th><th>Data</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td></td><td>Leave empty</td></tr>
+<tr><td>B</td><td></td><td>Leave empty</td></tr>
+<tr><td>C</td><td>valid</td><td>The name of this class. 'valid' indicates that we create a valid email</td></tr>
+<tr><td>D</td><td><a href="mailto:foo.bar@gum.com">foo.bar@gum.com</a></td><td>The value to be generated</td></tr>
+<tr><td>E</td><td></td><td>Leave empty</td></tr>
+<tr><td>F</td><td>X</td><td>The x tells the processor that this equivalence class is chosen.</td></tr>
+</tbody>
+</table>
+<p>Add a name for the test case of column 'F' in the first row.
+Just add 'TC1' or any other name you like.</p>
+<ul>
+<li>Mark the end row of the table.
+An identifier needs to be set to tell the processor that it has reached the end of the table.
+Add a new row with the following columns:</li>
+</ul>
+<table>
+<thead>
+<tr><th>Column</th><th>Data</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td>A</td><td>&lt;END&gt;</td><td>This identifier marks the last row of the table. All content below is ignored.</td></tr>
+</tbody>
+</table>
+<ul>
+<li>Last, not least: Add some color to the table.</li>
+</ul>
+<p><img src="/img/tutorials/t2/step2.png" alt="step2"></p>
+<h2><a class="anchor" aria-hidden="true" id="create-a-project-for-creating-the-data"></a><a href="#create-a-project-for-creating-the-data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create a project for creating the data</h2>
+<h3><a class="anchor" aria-hidden="true" id="create-an-initial-npm-module"></a><a href="#create-an-initial-npm-module" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create an initial npm module</h3>
+<p>Create a new empty directory. Change into it and run npm init.</p>
+<pre><code class="hljs css language-c"><span class="hljs-built_in">mkdir</span> demo-tdg
+cd demo-tdg
+<span class="hljs-built_in">mkdir</span> resources
+<span class="hljs-built_in">mkdir</span> tdg
+<span class="hljs-built_in">mkdir</span> src
+npm init
+npm install --save @xhubio/nanook-table
+</code></pre>
+<h2><a class="anchor" aria-hidden="true" id="create-the-script-to-call-the-processor"></a><a href="#create-the-script-to-call-the-processor" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Create the script to call the processor</h2>
+<p>Create a new file 'src/tdg.js' with the following content.</p>
+<pre><code class="hljs css language-js"><span class="token keyword">const</span> path <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'path'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> p <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> <span class="token punctuation">{</span> LoggerMemory <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">require</span><span class="token punctuation">(</span><span class="token string">'@xhubio/nanook-table'</span><span class="token punctuation">)</span>
+
+<span class="token keyword">async</span> <span class="token keyword">function</span> <span class="token function">doIt</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> logger <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">LoggerMemory</span><span class="token punctuation">(</span><span class="token punctuation">)</span>               
+  logger<span class="token punctuation">.</span>writeConsole <span class="token operator">=</span> <span class="token boolean">true</span>                      
+
+  <span class="token keyword">const</span> fileProcessor <span class="token operator">=</span> <span class="token keyword">await</span> p<span class="token punctuation">.</span><span class="token function">createDefaultFileProcessor</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
+                                                  
+
+  <span class="token keyword">const</span> processor <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">p<span class="token punctuation">.</span>Processor</span><span class="token punctuation">(</span><span class="token punctuation">{</span>             
+    logger<span class="token punctuation">,</span>
+    <span class="token literal-property property">generatorRegistry</span><span class="token operator">:</span> p<span class="token punctuation">.</span><span class="token function">createDefaultGeneratorRegistry</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+    <span class="token literal-property property">writer</span><span class="token operator">:</span> p<span class="token punctuation">.</span><span class="token function">createDefaultWriter</span><span class="token punctuation">(</span>logger<span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
+
+  <span class="token keyword">await</span> fileProcessor<span class="token punctuation">.</span><span class="token function">load</span><span class="token punctuation">(</span>path<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">'resources'</span><span class="token punctuation">,</span> <span class="token string">'demo.xlsx'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+                                                  
+
+  processor<span class="token punctuation">.</span>tables <span class="token operator">=</span> fileProcessor<span class="token punctuation">.</span>tables         
+
+  <span class="token keyword">await</span> processor<span class="token punctuation">.</span><span class="token function">process</span><span class="token punctuation">(</span><span class="token punctuation">)</span>                       
+<span class="token punctuation">}</span>
+
+
+<span class="token function">doIt</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">then</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">'Finish'</span><span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">catch</span><span class="token punctuation">(</span><span class="token parameter">err</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span>err<span class="token punctuation">)</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span>
+</code></pre>
+<ul>
+<li><p>Creates a logger. For all tutorials, we will be using the Memory Logger. This
+logger stores all the log entries. It is a good logger for unit testing.</p></li>
+<li><p>Tells the Memory Logger to also write out the logs to console.</p></li>
+<li><p>Creates a file processor. The file processor is responsible for loading an Excel sheet and transforming it into a table object as it is used by the processor.</p></li>
+<li><p>Creates the processor.<br>
+The processor needs a registry in which all the available generators are registered. In the current example, the registry is empty. But a registry is required. The writer is responsible for writing the created test data in the desired format. The default writer simply writes the test case data as a JSON file. You can add as many writers as you like.</p></li>
+<li><p>Loads the spreadsheet and creates the table object. You can call the load function multiple times depending on how many spreadsheets you would like to load. Each spreadsheet may have multiple tables. The table names must be unique across all spreadsheets. The path must point to the file you created in the previous step.</p></li>
+<li><p>Gets the loaded table objects and inserts them into the processor.</p></li>
+<li><p>Processes all tables and generates the data.</p></li>
+</ul>
+<p>Create a directory 'resources' and copy the excel file you created into it. The Excel file must be named 'demo.xlsx'.</p>
+<h3><a class="anchor" aria-hidden="true" id="run-the-script"></a><a href="#run-the-script" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Run the script</h3>
+<p>To run the script, execute:</p>
+<pre><code class="hljs">node src/tdg.js
+</code></pre>
+<p>After doing this, you should find a new file called 'tdg/TC1/testcaseData.json'. This file was written by the default writer.</p>
+<h3><a class="anchor" aria-hidden="true" id="understand-the-generated-data"></a><a href="#understand-the-generated-data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Understand the generated data</h3>
+<p>The content of the file should look like this:</p>
+<pre><code class="hljs css language-json"><span class="token punctuation">{</span>
+  <span class="token property">"tableName"</span><span class="token operator">:</span> <span class="token string">"Sheet1"</span><span class="token punctuation">,</span>      
+  <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"TC1"</span><span class="token punctuation">,</span>              
+  <span class="token property">"data"</span><span class="token operator">:</span> <span class="token punctuation">{</span>                   
+    <span class="token property">"Sheet1"</span><span class="token operator">:</span> <span class="token punctuation">{</span>               
+      <span class="token property">"ab0dc423-2338-44eb-a230-bbab1040c8ff"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+                              
+
+        <span class="token property">"email"</span><span class="token operator">:</span> <span class="token string">"foo.bar@gum.com"</span>
+                              
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token property">"instanceId"</span><span class="token operator">:</span> <span class="token string">"ab0dc423-2338-44eb-a230-bbab1040c8ff"</span><span class="token punctuation">,</span>
+                              
+  <span class="token property">"callTree"</span><span class="token operator">:</span> <span class="token punctuation">{</span>               
+    <span class="token property">"instanceId"</span><span class="token operator">:</span> <span class="token string">"3dd74281-c117-4c51-b8f5-f1262116124a"</span><span class="token punctuation">,</span>
+    <span class="token property">"tableName"</span><span class="token operator">:</span> <span class="token string">"Sheet1"</span><span class="token punctuation">,</span>
+    <span class="token property">"testcaseName"</span><span class="token operator">:</span> <span class="token string">"TC1"</span><span class="token punctuation">,</span>
+    <span class="token property">"children"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre>
+<ul>
+<li><p>The name of the table which creates this test case. (Later on we will learn the details of this.)</p></li>
+<li><p>The name of the test case. This corresponds to the content of the header column in the sheet.</p></li>
+<li><p>The data object containing all the generated data.</p></li>
+<li><p>The name of the sheet again.</p></li>
+<li><p>The instance of the created test case data. (An instanceId belongs to an instance of a given test case and is explained later in detail. For the moment just accept that the id exist and that it makes sense).</p></li>
+<li><p>The generated data.</p></li>
+<li><p>The main instanceId of this test case.</p></li>
+<li><p>The call tree of the tables. (This is for debugging your test data. More on this later.)</p></li>
+</ul>
+<p>Each time we call the script, we generate the same data since we added static data in the table. Only the instanceIds change with each script call. In the next section, we will replace the static data with a generator.</p>
+<blockquote>
+<p><strong>Note</strong></p>
+<p>The example code is located at:<br>
+src/t2/step3<br>
+In there, simply run:<br>
+node tdg.js</p>
+</blockquote>
+</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/tutorials/createEquivalenceClassTable"><span class="arrow-prev">← </span><span>Create an equivalence class table</span></a><a class="docs-next button" href="/docs/tutorials/createGenerator"><span>Create data generator</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#format-the-table">Format the table</a></li><li><a href="#general-overview">General Overview</a></li><li><a href="#layout-equivalence-class-table">Layout Equivalence Class Table</a></li><li><a href="#create-the-first-table-for-data-generation">Create the first table for data generation</a><ul class="toc-headings"><li><a href="#create-table">Create table</a></li></ul></li><li><a href="#create-a-project-for-creating-the-data">Create a project for creating the data</a><ul class="toc-headings"><li><a href="#create-an-initial-npm-module">Create an initial npm module</a></li></ul></li><li><a href="#create-the-script-to-call-the-processor">Create the script to call the processor</a><ul class="toc-headings"><li><a href="#run-the-script">Run the script</a></li><li><a href="#understand-the-generated-data">Understand the generated data</a></li></ul></li></ul></nav></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="Nanook" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/tutorials/overview.html">Tutorials</a><a href="/docs/guide/equivalence/overview.html">Guide</a></div><div><h5>More</h5><a href="/imprint">Imprint</a><a href="/privacyPolicy">Privacy Policy</a><a href="https://github.com/xhubio/nanook-table/">GitHub</a><a class="github-button" href="https://github.com/xhubio/nanook-table/" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2022 Nanook.io</section></footer></div></body></html>

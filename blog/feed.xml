@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>Nanook Blog</title>
+        <link>https://nanook.io/blog</link>
+        <description>The best place to stay up-to-date with the latest Nanook news and events.</description>
+        <lastBuildDate>Sat, 01 Jun 2019 06:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <image>
+            <title>Nanook Blog</title>
+            <url>https://nanook.io/img/logo.svg</url>
+            <link>https://nanook.io/blog</link>
+        </image>
+        <copyright>Copyright © 2022 Nanook.io</copyright>
+        <item>
+            <title><![CDATA[Introducing Nanook-Table]]></title>
+            <link>https://nanook.io/blog/2019/06/01/inroducing.html</link>
+            <guid>https://nanook.io/blog/2019/06/01/inroducing.html</guid>
+            <pubDate>Sat, 01 Jun 2019 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>We are proud to introduce Nanook-Table. This is the first 'official' version of Nanook-Table. It has been used about one year now in a productive environment.</p> ]]></description>
+        </item>
+    </channel>
+</rss>
