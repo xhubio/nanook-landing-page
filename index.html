@@ -1,7 +1,163 @@
-<!DOCTYPE html><html lang=""><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Nanook · A toolkit for test case and test data creation</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="A toolkit for test case and test data creation"/><meta property="og:title" content="Nanook · A toolkit for test case and test data creation"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.io/"/><meta property="og:description" content="A toolkit for test case and test data creation"/><meta property="og:image" content="https://nanook.io/img/docusaurus.png"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.io/img/docusaurus.png"/><link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/solarized-dark.min.css"/><script type="text/javascript" src="https://buttons.github.io/buttons.js"></script><script src="/js/scrollSpy.js"></script><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><script src="/js/codetabs.js"></script></head><body><div class="fixedHeaderContainer"><div class="headerWrapper wrapper"><header><a href="/"><img class="logo" src="/img/logo.svg" alt="Nanook"/><h2 class="headerTitleWithLogo">Nanook</h2></a><div class="navigationWrapper navigationSlider"><nav class="slidingNav"><ul class="nav-site nav-site-internal"><li class=""><a href="/docs/quickstart/quickstart" target="_self">Docs</a></li><li class=""><a href="/docs/api/logger/LoggerInterface" target="_self">API</a></li><li class=""><a href="https://github.com/xhubio/nanook-table/" target="_self">GitHub</a></li></ul></nav></div></header></div></div><div class="navPusher"><div><div class="homeContainer"><div class="projectLogo2"><img src="/img/arch.svg" alt="Nanook logo"/></div><div class="homeSplashFade"><div class="wrapper homeWrapper"><div class="inner"><h2 class="projectTitle2"></h2><h3 class="projectTitle"><small>A toolkit for test case and test data creation</small></h3><div class="minitext">Combine the Power of equivalence class tables and data generators</div><div class="section promoSection"><div class="promoRow"><div class="pluginRowBlock"><div class="pluginWrapper buttonWrapper"><a class="buttonL" href="/docs/quickstart/quickstart.html">The 5 minute Quickstart</a></div> <div class="pluginWrapper buttonWrapper"><a class="buttonL" href="/docs/guide/generalOverview.html">Get Started Guides</a></div></div></div></div></div></div></div></div><div class="mainContainer"><div class="container lightBackground paddingBottom paddingTop"><div class="wrapper"><div class="gridBlock"><div class="blockElement alignCenter fourByGridBlock imageAlignTop"><div class="blockImage"><img src="/img/file-signature.svg"/></div><div class="blockContent"><h2><div><span><p>Equivalent class tables</p>
-</span></div></h2><div><span><p>Define, Document and Optimize your test cases.</p>
-</span></div></div></div><div class="blockElement alignCenter fourByGridBlock imageAlignTop"><div class="blockImage"><img src="/img/fa-cogs.svg"/></div><div class="blockContent"><h2><div><span><p>Test data generation</p>
-</span></div></h2><div><span><p>Enrich the tables with generator calls and generate your data as needed. Export the data in any format you need. The generators and exporters are fully customisable.</p>
-</span></div></div></div><div class="blockElement alignCenter fourByGridBlock imageAlignTop"><div class="blockImage"><img src="/img/fa-flag.svg"/></div><div class="blockContent"><h2><div><span><p>Integrate Faster</p>
-</span></div></h2><div><span><p>All your testing apps, tools and platforms, are easy to integrate with Nanook</p>
-</span></div></div></div></div></div></div></div></div><footer class="nav-footer" id="footer"><section class="sitemap"><a href="/" class="nav-home"><img src="/img/logo.svg" alt="Nanook" width="66" height="58"/></a><div><h5>Docs</h5><a href="/docs/tutorials/overview.html">Tutorials</a><a href="/docs/guide/equivalence/overview.html">Guide</a></div><div><h5>More</h5><a href="/imprint">Imprint</a><a href="/privacyPolicy">Privacy Policy</a><a href="https://github.com/xhubio/nanook-table/">GitHub</a><a class="github-button" href="https://github.com/xhubio/nanook-table/" data-icon="octicon-star" data-count-href="/facebook/docusaurus/stargazers" data-show-count="true" data-count-aria-label="# stargazers on GitHub" aria-label="Star this project on GitHub">Star</a></div></section><section class="copyright">Copyright © 2022 Nanook.io</section></footer></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Nanook · A toolkit for test case and test data creation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content="Docusaurus" />
+  <meta name="description" content="A toolkit for test case and test data creation" />
+  <meta property="og:title" content="Nanook · A toolkit for test case and test data creation" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/" />
+  <meta property="og:description" content="A toolkit for test case and test data creation" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/docusaurus.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/docusaurus.png" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+</head>
+
+<body data-theme="tactical">
+
+  <!-- CRT Scanline Overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo">
+        <img src="/img/logo.svg" alt="Nanook" />
+        <span class="site-name">Nanook</span>
+      </a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-meta">
+        <samp>SYS.NANOOK // REV 2.0</samp>
+        <samp>STATUS: OPERATIONAL</samp>
+      </div>
+      <h1 class="hero-title">Nanook</h1>
+      <p class="hero-tagline">A toolkit for test case and test data creation</p>
+      <p class="hero-subtitle">Combine the Power of equivalence class tables and data generators</p>
+      <div class="hero-actions">
+        <a href="/docs/quickstart/quickstart.html" class="btn-primary">/// QUICKSTART</a>
+        <a href="/docs/guide/generalOverview.html" class="btn-secondary">&gt;&gt;&gt; GET STARTED</a>
+      </div>
+    </div>
+    <div class="hero-diagram">
+      <div class="diagram-frame">
+        <samp class="frame-label">[ SYSTEM ARCHITECTURE ]</samp>
+        <img src="/img/arch.svg" alt="Nanook architecture diagram" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <div class="features-header">
+      <samp>CAPABILITIES /// 03 MODULES</samp>
+      <hr />
+    </div>
+    <div class="features-grid">
+      <article class="feature-card">
+        <div class="feature-icon">
+          <img src="/img/file-signature.svg" alt="" />
+        </div>
+        <h2 class="feature-title">Equivalent Class Tables</h2>
+        <p>Define, Document and Optimize your test cases.</p>
+        <samp class="feature-id">UNIT / M-01</samp>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">
+          <img src="/img/fa-cogs.svg" alt="" />
+        </div>
+        <h2 class="feature-title">Test Data Generation</h2>
+        <p>Enrich the tables with generator calls and generate your data as needed. Export the data in any format you
+          need. The generators and exporters are fully customisable.</p>
+        <samp class="feature-id">UNIT / M-02</samp>
+      </article>
+      <article class="feature-card">
+        <div class="feature-icon">
+          <img src="/img/fa-flag.svg" alt="" />
+        </div>
+        <h2 class="feature-title">Integrate Faster</h2>
+        <p>All your testing apps, tools and platforms, are easy to integrate with Nanook</p>
+        <samp class="feature-id">UNIT / M-03</samp>
+      </article>
+    </div>
+  </section>
+
+  <!-- TRUST LOGOS -->
+  <section class="trust">
+    <div class="trust-inner">
+      <samp class="trust-label">[ TRUSTED BY ]</samp>
+      <div class="trust-logos">
+        <img src="/img/users/deutschebahn.svg" alt="Deutsche Bahn" />
+        <img src="/img/users/LogoWeltportfolio.png" alt="Weltportfolio" />
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview.html">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview.html">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <samp>&copy; 2026 NANOOK.XHUB.IO</samp>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      var saved = localStorage.getItem('nanook-theme');
+      if (saved) document.body.setAttribute('data-theme', saved);
+    })();
+    function toggleTheme() {
+      var current = document.body.getAttribute('data-theme');
+      var next = current === 'tactical' ? 'swiss' : 'tactical';
+      document.body.setAttribute('data-theme', next);
+      localStorage.setItem('nanook-theme', next);
+    }
+  </script>
+</body>
+
+</html>
