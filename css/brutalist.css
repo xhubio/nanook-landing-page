@@ -337,6 +337,51 @@ body[data-theme="swiss"] .theme-toggle-label-light {
   gap: 4rem;
   align-items: center;
   min-height: 70vh;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dot-Matrix background */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.07;
+  background-image: radial-gradient(circle, var(--fg-primary) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Oversized "N" watermark */
+.hero-watermark {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(30rem, 50vw, 60rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--fg-primary);
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 0;
+  user-select: none;
+}
+
+body[data-theme="swiss"] .hero::after {
+  opacity: 0.06;
+}
+
+body[data-theme="swiss"] .hero-watermark {
+  opacity: 0.04;
+}
+
+.hero > *:not(.hero-watermark) {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-meta {
@@ -957,6 +1002,10 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
   transition: opacity 0.2s ease, filter 0.2s ease;
 }
 
+.trust-logos img[alt="invoice-api.xhub.io"] {
+  height: 48px;
+}
+
 .trust-logos img:hover {
   opacity: 0.9;
 }
@@ -965,6 +1014,39 @@ body[data-theme="tactical"] .trust-logos img {
   filter: grayscale(1) brightness(0.8) invert(1);
 }
 
+body[data-theme="tactical"] .trust-logos img[alt="invoice-api.xhub.io"] {
+  filter: grayscale(1) invert(1) brightness(1.5);
+}
+
 body[data-theme="swiss"] .trust-logos img {
   filter: grayscale(1) brightness(0.4);
+}
+
+body[data-theme="swiss"] .trust-logos img[alt="invoice-api.xhub.io"] {
+  filter: grayscale(1) brightness(0.3) contrast(1.2);
+}
+
+.trust-logo-with-label {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.trust-logo-with-label samp {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--fg-primary);
+  opacity: 0.4;
+  transition: opacity 0.2s ease;
+  text-transform: none;
+}
+
+.trust-logo-with-label:hover samp {
+  opacity: 0.9;
+}
+
+.trust-logo-with-label:hover img {
+  opacity: 0.9;
 }
