@@ -488,7 +488,16 @@ body[data-theme="swiss"] .hero-watermark {
   position: relative;
   background-color: var(--bg-secondary);
   width: 100%;
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease, z-index 0s;
+  cursor: zoom-in;
+  z-index: 1;
+}
+
+.diagram-frame:hover {
+  transform: scale(1.6);
+  transform-origin: top right;
+  z-index: 10;
+  box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
 }
 
 .diagram-frame img {
@@ -498,6 +507,7 @@ body[data-theme="swiss"] .hero-watermark {
   filter: var(--diagram-filter);
   transition: filter 0.3s ease;
 }
+
 
 .frame-label {
   font-family: var(--font-mono);
@@ -509,6 +519,7 @@ body[data-theme="swiss"] .hero-watermark {
   margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 1px solid var(--border-color);
+  transition: opacity 0.3s ease;
 }
 
 /* Crosshair corners on diagram frame */
@@ -949,7 +960,54 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
     opacity: 1 !important;
     animation: none !important;
   }
+  .pulse-core, .data-dot {
+    animation: none !important;
+    display: none;
+  }
 }
+
+/* ============================================================
+   DIAGRAM ANIMATIONS — Pulse + Data Flow
+   ============================================================ */
+@keyframes corePulse {
+  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.15); }
+}
+
+@keyframes dataFlow {
+  0% { left: -5%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 105%; opacity: 0; }
+}
+
+.pulse-core {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50% !important;
+  background: radial-gradient(circle, rgba(230, 25, 25, 0.3) 0%, transparent 70%);
+  animation: corePulse 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.data-dot {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--accent-red);
+  border-radius: 50% !important;
+  animation: dataFlow 4s linear infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.data-dot:nth-child(2) { top: 35%; animation-delay: 0s; }
+.data-dot:nth-child(3) { top: 55%; animation-delay: 1.5s; }
+.data-dot:nth-child(4) { top: 75%; animation-delay: 3s; }
 
 /* ============================================================
    FEATURE CARD HOVER
