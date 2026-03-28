@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /en/
+
+Sitemap: https://nanook.xhub.io/sitemap.xml
