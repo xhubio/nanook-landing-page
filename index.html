@@ -281,80 +281,8 @@
       document.body.setAttribute('data-theme', next);
       localStorage.setItem('nanook-theme', next);
     }
-
-    /* Cookie consent */
-    function loadGA() {
-      if (document.getElementById('ga-script')) return;
-      var s = document.createElement('script');
-      s.id = 'ga-script';
-      s.async = true;
-      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-PMNJR2G9ZH';
-      document.head.appendChild(s);
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      window.gtag = gtag;
-      gtag('js', new Date());
-      gtag('config', 'G-PMNJR2G9ZH', { anonymize_ip: true });
-    }
-
-    function removeGA() {
-      var s = document.getElementById('ga-script');
-      if (s) s.remove();
-      window['ga-disable-G-PMNJR2G9ZH'] = true;
-      document.cookie = '_ga=;expires=Thu, 01 Jan 1970;path=/;domain=.' + location.hostname;
-      document.cookie = '_ga_PMNJR2G9ZH=;expires=Thu, 01 Jan 1970;path=/;domain=.' + location.hostname;
-    }
-
-    function acceptAllCookies() {
-      localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: true }));
-      document.getElementById('cookie-banner').style.display = 'none';
-      loadGA();
-    }
-
-    function declineAllCookies() {
-      localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: false }));
-      document.getElementById('cookie-banner').style.display = 'none';
-      removeGA();
-    }
-
-    function savePreferences() {
-      var analytics = document.getElementById('cookie-analytics').checked;
-      localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: analytics }));
-      document.getElementById('cookie-banner').style.display = 'none';
-      if (analytics) { loadGA(); } else { removeGA(); }
-    }
-
-    function resetCookieConsent() {
-      localStorage.removeItem('nanook-cookies');
-      var banner = document.getElementById('cookie-banner');
-      banner.style.display = 'flex';
-      document.getElementById('cookie-analytics').checked = false;
-      // Restore previous preference in toggle
-      try {
-        var prev = JSON.parse(localStorage.getItem('nanook-cookies'));
-        if (prev && prev.analytics) document.getElementById('cookie-analytics').checked = true;
-      } catch(e) {}
-    }
-
-    (function () {
-      try {
-        var raw = localStorage.getItem('nanook-cookies');
-        if (!raw) {
-          document.getElementById('cookie-banner').style.display = 'flex';
-          return;
-        }
-        var consent = JSON.parse(raw);
-        if (consent.analytics) { loadGA(); }
-        // Legacy format migration
-        if (raw === '"accepted"' || raw === 'accepted') {
-          localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: true }));
-          loadGA();
-        }
-      } catch(e) {
-        document.getElementById('cookie-banner').style.display = 'flex';
-      }
-    })();
   </script>
+<script src="/js/cookies.js"></script>
 </body>
 
 </html>

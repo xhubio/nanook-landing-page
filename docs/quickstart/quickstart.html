@@ -379,6 +379,7 @@
         <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+<a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
     <div class="footer-copyright"><samp>&copy; 2026 NANOOK.XHUB.IO</samp></div>
@@ -433,7 +434,8 @@
   <script>
     (function () { var s = localStorage.getItem('nanook-theme'); if (s) document.body.setAttribute('data-theme', s); })();
     function toggleTheme() { var c = document.body.getAttribute('data-theme'); var n = c === 'tactical' ? 'swiss' : 'tactical'; document.body.setAttribute('data-theme', n); localStorage.setItem('nanook-theme', n); }
-  </script>
+</script>
+<script src="/js/cookies.js"></script>
 </body>
 
 </html>
