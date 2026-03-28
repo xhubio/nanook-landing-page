@@ -48,15 +48,7 @@
     "codeRepository": "https://github.com/xhubio/nanook-table"
   }
   </script>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PMNJR2G9ZH"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-
-    gtag('config', 'G-PMNJR2G9ZH');
-  </script>
+  <!-- Google Analytics — loaded only after cookie consent -->
 </head>
 
 <body data-theme="tactical">
@@ -208,6 +200,7 @@
         <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
     <div class="footer-copyright">
@@ -215,7 +208,69 @@
     </div>
   </footer>
 
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <!-- Essential -->
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle">
+              <input type="checkbox" checked disabled />
+              <span class="cookie-slider cookie-slider-locked"></span>
+            </label>
+            <div class="cookie-cat-info">
+              <samp class="cookie-cat-name">ESSENTIAL</samp>
+              <span class="cookie-cat-badge">Always active</span>
+            </div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')" aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr><td><samp>Provider</samp></td><td>nanook.xhub.io (First Party)</td></tr>
+              <tr><td><samp>Cookies</samp></td><td><code>nanook-theme</code> — Stores your theme preference (CRT/INK)</td></tr>
+              <tr><td><samp>Duration</samp></td><td>Persistent (localStorage)</td></tr>
+              <tr><td><samp>Purpose</samp></td><td>Remember your display preferences across visits</td></tr>
+            </table>
+          </div>
+        </div>
+        <!-- Analytics -->
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle">
+              <input type="checkbox" id="cookie-analytics" />
+              <span class="cookie-slider"></span>
+            </label>
+            <div class="cookie-cat-info">
+              <samp class="cookie-cat-name">ANALYTICS</samp>
+            </div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')" aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr><td><samp>Provider</samp></td><td>Google LLC (Google Analytics 4)</td></tr>
+              <tr><td><samp>Cookies</samp></td><td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td></tr>
+              <tr><td><samp>Duration</samp></td><td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td></tr>
+              <tr><td><samp>Purpose</samp></td><td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are anonymized.</td></tr>
+              <tr><td><samp>Privacy</samp></td><td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
+    /* Theme toggle */
     (function () {
       var saved = localStorage.getItem('nanook-theme');
       if (saved) document.body.setAttribute('data-theme', saved);
@@ -226,6 +281,79 @@
       document.body.setAttribute('data-theme', next);
       localStorage.setItem('nanook-theme', next);
     }
+
+    /* Cookie consent */
+    function loadGA() {
+      if (document.getElementById('ga-script')) return;
+      var s = document.createElement('script');
+      s.id = 'ga-script';
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-PMNJR2G9ZH';
+      document.head.appendChild(s);
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-PMNJR2G9ZH', { anonymize_ip: true });
+    }
+
+    function removeGA() {
+      var s = document.getElementById('ga-script');
+      if (s) s.remove();
+      window['ga-disable-G-PMNJR2G9ZH'] = true;
+      document.cookie = '_ga=;expires=Thu, 01 Jan 1970;path=/;domain=.' + location.hostname;
+      document.cookie = '_ga_PMNJR2G9ZH=;expires=Thu, 01 Jan 1970;path=/;domain=.' + location.hostname;
+    }
+
+    function acceptAllCookies() {
+      localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: true }));
+      document.getElementById('cookie-banner').style.display = 'none';
+      loadGA();
+    }
+
+    function declineAllCookies() {
+      localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: false }));
+      document.getElementById('cookie-banner').style.display = 'none';
+      removeGA();
+    }
+
+    function savePreferences() {
+      var analytics = document.getElementById('cookie-analytics').checked;
+      localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: analytics }));
+      document.getElementById('cookie-banner').style.display = 'none';
+      if (analytics) { loadGA(); } else { removeGA(); }
+    }
+
+    function resetCookieConsent() {
+      localStorage.removeItem('nanook-cookies');
+      var banner = document.getElementById('cookie-banner');
+      banner.style.display = 'flex';
+      document.getElementById('cookie-analytics').checked = false;
+      // Restore previous preference in toggle
+      try {
+        var prev = JSON.parse(localStorage.getItem('nanook-cookies'));
+        if (prev && prev.analytics) document.getElementById('cookie-analytics').checked = true;
+      } catch(e) {}
+    }
+
+    (function () {
+      try {
+        var raw = localStorage.getItem('nanook-cookies');
+        if (!raw) {
+          document.getElementById('cookie-banner').style.display = 'flex';
+          return;
+        }
+        var consent = JSON.parse(raw);
+        if (consent.analytics) { loadGA(); }
+        // Legacy format migration
+        if (raw === '"accepted"' || raw === 'accepted') {
+          localStorage.setItem('nanook-cookies', JSON.stringify({ analytics: true }));
+          loadGA();
+        }
+      } catch(e) {
+        document.getElementById('cookie-banner').style.display = 'flex';
+      }
+    })();
   </script>
 </body>
 

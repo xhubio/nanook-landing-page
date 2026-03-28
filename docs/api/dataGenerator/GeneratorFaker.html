@@ -165,9 +165,57 @@ needs referenced data which is not generated yet.</p>
 <a href="/imprint">Imprint</a>
 <a href="/privacyPolicy">Privacy Policy</a>
 <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+<a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
 </div></div>
 <div class="footer-copyright"><samp>&copy; 2026 NANOOK.XHUB.IO</samp></div>
 </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')" aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr><td><samp>Provider</samp></td><td>nanook.xhub.io (First Party)</td></tr>
+              <tr><td><samp>Cookies</samp></td><td><code>nanook-theme</code> — Stores your theme preference (CRT/INK)</td></tr>
+              <tr><td><samp>Duration</samp></td><td>Persistent (localStorage)</td></tr>
+              <tr><td><samp>Purpose</samp></td><td>Remember your display preferences across visits</td></tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" /><span class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')" aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr><td><samp>Provider</samp></td><td>Google LLC (Google Analytics 4)</td></tr>
+              <tr><td><samp>Cookies</samp></td><td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td></tr>
+              <tr><td><samp>Duration</samp></td><td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td></tr>
+              <tr><td><samp>Purpose</samp></td><td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are anonymized.</td></tr>
+              <tr><td><samp>Privacy</samp></td><td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></td></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <script>
 (function(){var s=localStorage.getItem('nanook-theme');if(s)document.body.setAttribute('data-theme',s);})();
 function toggleTheme(){var c=document.body.getAttribute('data-theme');var n=c==='tactical'?'swiss':'tactical';document.body.setAttribute('data-theme',n);localStorage.setItem('nanook-theme',n);}
