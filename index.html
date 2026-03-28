@@ -17,6 +17,7 @@
   <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://nanook.xhub.io/" />
+  <link rel="alternate" type="text/plain" href="https://nanook.xhub.io/llms.txt" title="LLM content guide" />
   <link rel="shortcut icon" href="/img/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,7 +48,17 @@
       "name": "xhub.io",
       "url": "https://xhub.io"
     },
-    "codeRepository": "https://github.com/xhubio/nanook-table"
+    "codeRepository": "https://github.com/xhubio/nanook-table",
+    "programmingLanguage": "JavaScript",
+    "runtimePlatform": "Node.js",
+    "license": "https://opensource.org/licenses/MIT",
+    "datePublished": "2019-06-01",
+    "dateModified": "2026-03-28",
+    "keywords": "test data generation, equivalence class table, test case creation, synthetic data, software testing",
+    "sameAs": [
+      "https://github.com/xhubio/nanook-table",
+      "https://www.npmjs.com/package/@xhubio/nanook-table"
+    ]
   }
   </script>
   <!-- Google Analytics — loaded only after cookie consent -->
@@ -107,6 +118,14 @@
         <samp class="frame-label">[ SYSTEM ARCHITECTURE ]</samp>
         <img src="/img/arch.svg" alt="Nanook architecture diagram" />
       </div>
+    </div>
+  </section>
+
+  <!-- WHAT IS NANOOK — AI-optimized definition block -->
+  <section class="definition">
+    <div class="definition-inner">
+      <h2>What is Nanook?</h2>
+      <p>Nanook is an open-source toolkit for systematic test case and test data creation. It uses equivalence class tables — spreadsheets that define input fields, value classes, and test combinations — to automatically generate synthetic test data. Nanook reads test definitions from LibreOffice, Excel, or Google Sheets and produces test data in JSON, CSV, or any custom format through pluggable writers. Built with Node.js, it integrates into CI/CD pipelines and supports custom data generators for domain-specific testing needs. Nanook is used by enterprises including Deutsche Bahn for automated test data generation.</p>
     </div>
   </section>
 

@@ -1,0 +1,39 @@
+# Nanook
+
+> Nanook is an open-source toolkit for test case and test data creation. It combines equivalence class tables with data generators to systematically define, document, and generate test data for software testing.
+
+## Documentation
+- [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): 5-minute introduction to creating equivalence class tables and generating test data
+- [General Overview](https://nanook.xhub.io/docs/guide/generalOverview): Architecture and concepts of Nanook Table
+- [Equivalence Class Tables](https://nanook.xhub.io/docs/guide/equivalence/overview): How to define test cases using equivalence classes
+- [Matrix Tables](https://nanook.xhub.io/docs/guide/matrix/overview): Cartesian product test case generation
+- [Data Generators](https://nanook.xhub.io/docs/guide/generatrorCommand/generator): Custom data generator functions
+- [Static Data](https://nanook.xhub.io/docs/guide/generatrorCommand/static): Static test data definitions
+- [References](https://nanook.xhub.io/docs/guide/generatrorCommand/reference): Cross-table data references
+
+## Tutorials
+- [Create Equivalence Class Table](https://nanook.xhub.io/docs/tutorials/createEquivalenceClassTable): Step-by-step guide
+- [Transform to Data Generator](https://nanook.xhub.io/docs/tutorials/transform2dataGenerator): Convert tables to generators
+- [Create Data Generator](https://nanook.xhub.io/docs/tutorials/createGenerator): Build custom generators
+- [Create Writer](https://nanook.xhub.io/docs/tutorials/createWriter): Export data in custom formats
+
+## API Reference
+- [Processor](https://nanook.xhub.io/docs/api/processor/Processor): Core processing engine
+- [Data Generator Base](https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorBase): Base class for generators
+- [Table Decision](https://nanook.xhub.io/docs/api/model-decision/TableDecision): Decision table model
+- [File Processor](https://nanook.xhub.io/docs/api/file-processor/FileProcessor): Spreadsheet file handling
+
+## Key Facts
+- Open source (GitHub: https://github.com/xhubio/nanook-table)
+- Written in JavaScript/Node.js
+- Reads test definitions from LibreOffice, Excel, or Google Sheets spreadsheets
+- Generates test data in JSON, CSV, or any custom format
+- Supports equivalence class partitioning and boundary value analysis
+- Customizable generators and exporters via plugins
+- Used by Deutsche Bahn and other enterprises
+- Created by xhub.io
+
+## Contact
+- Website: https://nanook.xhub.io
+- GitHub: https://github.com/xhubio/nanook-table
+- Organization: xhub.io (https://xhub.io)

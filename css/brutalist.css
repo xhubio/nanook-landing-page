@@ -1641,6 +1641,36 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
 }
 
 /* ============================================================
+   DEFINITION SECTION (AI-optimized)
+   ============================================================ */
+.definition {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.definition-inner {
+  max-width: 800px;
+  border-left: 3px solid var(--accent-red);
+  padding-left: 1.5rem;
+}
+
+.definition h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--fg-primary);
+  margin-bottom: 1rem;
+}
+
+.definition p {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--fg-secondary);
+}
+
+/* ============================================================
    HOW IT WORKS SECTION
    ============================================================ */
 .how-it-works {
