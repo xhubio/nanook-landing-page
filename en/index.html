@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,10 +19,13 @@
   <link rel="shortcut icon" href="/img/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="/css/main.css" />
   <link rel="stylesheet" href="/css/brutalist.css" />
 </head>
+
 <body data-theme="tactical">
 
   <!-- CRT Scanline Overlay -->
@@ -63,8 +67,8 @@
       <p class="hero-tagline">A toolkit for test case and test data creation</p>
       <p class="hero-subtitle">Combine the Power of equivalence class tables and data generators</p>
       <div class="hero-actions">
-        <a href="/docs/en/quickstart/quickstart.html" class="btn-primary">/// QUICKSTART</a>
-        <a href="/docs/en/guide/generalOverview.html" class="btn-secondary">&gt;&gt;&gt; GET STARTED</a>
+        <a href="/docs/quickstart/quickstart.html" class="btn-primary">/// QUICKSTART</a>
+        <a href="/docs/guide/generalOverview.html" class="btn-secondary">&gt;&gt;&gt; GET STARTED</a>
       </div>
     </div>
     <div class="hero-diagram">
@@ -99,7 +103,8 @@
           <img src="/img/fa-cogs.svg" alt="" />
         </div>
         <h2 class="feature-title">Test Data Generation</h2>
-        <p>Enrich the tables with generator calls and generate your data as needed. Export the data in any format you need. The generators and exporters are fully customisable.</p>
+        <p>Enrich the tables with generator calls and generate your data as needed. Export the data in any format you
+          need. The generators and exporters are fully customisable.</p>
         <samp class="feature-id">UNIT / M-02</samp>
       </article>
       <article class="feature-card">
@@ -119,11 +124,11 @@
       <samp class="trust-label">[ TRUSTED BY ]</samp>
       <div class="trust-logos">
         <img src="/img/users/deutschebahn.svg" alt="Deutsche Bahn" />
-        <img src="/img/users/LogoWeltportfolio.png" alt="Weltportfolio" />
-        <span class="trust-logo-with-label">
+        <a href="https://weltportfolio.net" target="_blank" rel="noopener"><img src="/img/users/LogoWeltportfolio.png" alt="Weltportfolio" /></a>
+        <a href="https://invoice-api.xhub.io" target="_blank" rel="noopener" class="trust-logo-with-label">
           <img src="/img/users/invoice-api-xhub.png" alt="invoice-api.xhub.io" />
           <samp>invoice-api.xhub.io</samp>
-        </span>
+        </a>
       </div>
     </div>
   </section>
@@ -152,7 +157,7 @@
   </footer>
 
   <script>
-    (function() {
+    (function () {
       var saved = localStorage.getItem('nanook-theme');
       if (saved) document.body.setAttribute('data-theme', saved);
     })();
@@ -164,4 +169,5 @@
     }
   </script>
 </body>
+
 </html>
