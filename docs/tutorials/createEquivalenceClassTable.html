@@ -379,7 +379,7 @@
                     </li>
                   </ol>
                   <p>The sheet should look similar to this:</p>
-                  <p><img src="/img/tutorials/t1/step1.png" alt="step1"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step1.webp" type="image/webp"><img src="/img/tutorials/t1/step1.png" alt="step1"></picture></p>
                   <h2><a class="anchor" aria-hidden="true" id="fill-the-equivalence-class-data"></a><a
                       href="#fill-the-equivalence-class-data" aria-hidden="true" class="hash-link"><svg
                         class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16"
@@ -554,7 +554,7 @@
                     </li>
                   </ul>
                   <p>Now the table should look like this:</p>
-                  <p><img src="/img/tutorials/t1/step2.png" alt="step2"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step2.webp" type="image/webp"><img src="/img/tutorials/t1/step2.png" alt="step2"></picture></p>
                   <p>Also note the added header row.</p>
                   <h2><a class="anchor" aria-hidden="true" id="add-calculations-and-prettify-the-table"></a><a
                       href="#add-calculations-and-prettify-the-table" aria-hidden="true" class="hash-link"><svg
@@ -582,10 +582,10 @@
                     This is a lot to test. Could this be optimized? If so, how can it be optimized without losing test
                     coverage? Here is where the main benefit of the equivalence class table technique comes through.</p>
                   <p>First, we will add some formulas to the spreadsheet to do the calculations.</p>
-                  <p><img src="/img/tutorials/t1/step3_formula.png" alt="step3 formula"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step3_formula.webp" type="image/webp"><img src="/img/tutorials/t1/step3_formula.png" alt="step3 formula"></picture></p>
                   <p>The numbers count the number of classes in each field. Do this for each of the fields.
                     Also add a row at the end which shows the result of the multiplication.</p>
-                  <p><img src="/img/tutorials/t1/step3_format.png" alt="step3 format"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step3_format.webp" type="image/webp"><img src="/img/tutorials/t1/step3_format.png" alt="step3 format"></picture></p>
                   <p>As you can see in the figure above, the field rows are highlighted in color. To the right, we added
                     four new columns with the names 1, 2, 3 and 4.
                     These are the test case columns. Each column represents one test case.
@@ -652,7 +652,7 @@
                   <p>You can do the same pattern for all the cases where a value in 'userId' causes
                     an error. In each of these cases the value entered in the password fields
                     is not relevant.</p>
-                  <p><img src="/img/tutorials/t1/step4.png" alt="step4"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step4.webp" type="image/webp"><img src="/img/tutorials/t1/step4.png" alt="step4"></picture></p>
                   <p>In column 'C' in row '47' we can see that these 11 test cases cover 1716 cases. The goal of the
                     table is to obtain 100%. We need to add more test cases to cover all of them. However, as the table
                     fills up, the amount of test coverage per test case will decrease.</p>
@@ -673,12 +673,12 @@
     Error   The UserId must not exceed the length of 30 characters
     Error   The UserId must not contain white space characters
 </code></pre>
-                  <p><img src="/img/tutorials/t1/step5_resultRows.png" alt="step5 resultRows"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step5_resultRows.webp" type="image/webp"><img src="/img/tutorials/t1/step5_resultRows.png" alt="step5 resultRows"></picture></p>
                   <p>The result section is not necessary to fill the equivalence class table, but it is a possibility to
                     define the expected error messages for the application. It has also serves a documentation purpose.
                   </p>
                   <p>For each test case we can now specify the expected behaviour.</p>
-                  <p><img src="/img/tutorials/t1/step5_withResuts.png" alt="step5 withResuts"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step5_withResuts.webp" type="image/webp"><img src="/img/tutorials/t1/step5_withResuts.png" alt="step5 withResuts"></picture></p>
                   <h2><a class="anchor" aria-hidden="true" id="cleaning-up-the-table"></a><a
                       href="#cleaning-up-the-table" aria-hidden="true" class="hash-link"><svg class="hash-link-icon"
                         aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -692,7 +692,7 @@
                     cases.</p>
                   <p>It makes sense to reorder the equivalence classes, so that the fields representing
                     valid cases are at the end of the table.</p>
-                  <p><img src="/img/tutorials/t1/step6.png" alt="step6"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step6.webp" type="image/webp"><img src="/img/tutorials/t1/step6.png" alt="step6"></picture></p>
                   <p>Also more descriptions are added in order to clearify that these are valid cases.</p>
                   <p>It's now time to combine the first valid user Id with the different possibilities of 'password' and
                     'password2'.</p>
@@ -708,10 +708,10 @@
                     In 'password' choose the 'empty' class. As the 'password' is a mandatory
                     field, we can fill the 'password2' field with 'e'.</p>
                   <p>Then add a new result row with the expected error messages.</p>
-                  <p><img src="/img/tutorials/t1/step6_tc12.png" alt="step6 tc12"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step6_tc12.webp" type="image/webp"><img src="/img/tutorials/t1/step6_tc12.png" alt="step6 tc12"></picture></p>
                   <p>In the table you can now use the same logic for 'password' as we did before for 'userId' before. So
                     fill up the next test cases for all the error cases of 'password'.</p>
-                  <p><img src="/img/tutorials/t1/step6_tc12-22.png" alt="step6 tc12 22"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step6_tc12-22.webp" type="image/webp"><img src="/img/tutorials/t1/step6_tc12-22.png" alt="step6 tc12 22"></picture></p>
                   <h2><a class="anchor" aria-hidden="true" id="iterate-over-the-password2-field"></a><a
                       href="#iterate-over-the-password2-field" aria-hidden="true" class="hash-link"><svg
                         class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16"
@@ -726,7 +726,7 @@
                   <p>In this example, we do the full iteration of all the classes for password2 as well. Take the valid
                     class of 'password' and create a test case for all the error cases of 'password2'</p>
                   <p>Now the table should look like this:</p>
-                  <p><img src="/img/tutorials/t1/step7.png" alt="step7"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step7.webp" type="image/webp"><img src="/img/tutorials/t1/step7.png" alt="step7"></picture></p>
                   <p>We also added a new error message for the case in which the passwords are different.
                     When adding new test cases, always remember to update the formula for summarizing the created test
                     cases.</p>
@@ -757,7 +757,7 @@
                     this, we fill all the cells of rows 15-19
                     with the test cases 12-34 with an 'e'. Then we only iterate the valid cases. This results in 39 test
                     cases.</p>
-                  <p><img src="/img/tutorials/t1/step8_3.png" alt="step8 3"></p>
+                  <p><picture><source srcset="/img/tutorials/t1/step8_3.webp" type="image/webp"><img src="/img/tutorials/t1/step8_3.png" alt="step8 3"></picture></p>
                 </span></div>
             </article>
           </div>
