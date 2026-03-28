@@ -1017,23 +1017,26 @@ body[data-theme="swiss"] .frame-label {
    ============================================================ */
 .cookie-banner {
   position: fixed;
-  bottom: 0;
+  top: 0;
   left: 0;
   right: 0;
+  bottom: 0;
   z-index: 9000;
   display: flex;
+  align-items: flex-start;
   justify-content: center;
-  padding: 0 2rem;
-  background: var(--bg-secondary);
-  border-top: 2px solid var(--accent-red);
-  max-height: 80vh;
+  padding: 5vh 2rem;
+  background: rgba(0, 0, 0, 0.6);
   overflow-y: auto;
 }
 
 .cookie-inner {
-  max-width: 1400px;
+  max-width: 700px;
   width: 100%;
-  padding: 1.5rem 0;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-bright);
+  border-top: 3px solid var(--accent-red);
 }
 
 .cookie-main {
