@@ -1368,6 +1368,76 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
 }
 
 /* ============================================================
+   HOW IT WORKS SECTION
+   ============================================================ */
+.how-it-works {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.how-header {
+  margin-bottom: 3rem;
+}
+
+.how-header samp {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--fg-dim);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.how-header hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin-top: 0.75rem;
+}
+
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+}
+
+.how-step {
+  border-left: 2px solid var(--accent-red);
+  padding-left: 1.5rem;
+}
+
+.how-step-id {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--accent-red);
+  display: block;
+  margin-bottom: 0.75rem;
+  opacity: 0.6;
+}
+
+.how-step h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--fg-primary);
+  margin-bottom: 0.75rem;
+}
+
+.how-step p {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--fg-secondary);
+}
+
+@media (max-width: 1024px) {
+  .how-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* ============================================================
    TRUST LOGOS SECTION
    ============================================================ */
 .trust {
