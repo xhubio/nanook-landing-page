@@ -1,10 +1,33 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><title>Parser Interface · Nanook</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta name="generator" content="Docusaurus"/><meta name="description" content="&lt;a name=&quot;ParserInterface&quot;&gt;&lt;/a&gt;"/><meta name="docsearch:language" content="en"/><meta property="og:title" content="Parser Interface · Nanook"/><meta property="og:type" content="website"/><meta property="og:url" content="https://nanook.xhub.io/docs/api/file-processor/ParserInterface"/><meta property="og:description" content="&lt;a name=&quot;ParserInterface&quot;&gt;&lt;/a&gt;"/><meta property="og:image" content="https://nanook.xhub.io/img/logo.svg"/><meta name="twitter:card" content="summary"/><meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg"/><meta name="robots" content="index, follow" />
-<link rel="canonical" href="https://nanook.xhub.io/docs/api/file-processor/ParserInterface" />
-<link rel="shortcut icon" href="/img/favicon.png"/><link rel="stylesheet" href="/css/prism.css"/><link rel="stylesheet" href="/css/main.css"/><link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/css/brutalist.css" />
-<script type="application/ld+json">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Parser Interface · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content="Docusaurus" />
+  <meta name="description" content="&lt;a name=&quot;ParserInterface&quot;&gt;&lt;/a&gt;" />
+  <meta name="docsearch:language" content="en" />
+  <meta property="og:title" content="Parser Interface · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api/file-processor/ParserInterface" />
+  <meta property="og:description" content="&lt;a name=&quot;ParserInterface&quot;&gt;&lt;/a&gt;" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api/file-processor/ParserInterface" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -42,30 +65,250 @@
   ]
 }
 </script>
-</head><body data-theme="tactical">
-<div class="crt-overlay" aria-hidden="true"></div>
-<header class="site-header">
-<div class="header-inner">
-<a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
-<div class="header-right">
-<nav class="site-nav"><ul>
-<li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-<li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-<li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
-</ul></nav>
-<button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-<span class="theme-toggle-label-dark">CRT</span>
-<span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
-<span class="theme-toggle-label-light">INK</span>
-</button>
-</div></div></header><div class="navPusher"><div class="docMainWrapper wrapper"><div class="docsNavContainer" id="docsNav"><nav class="toc"><div class="toggleNav"><section class="navWrapper wrapper"><div class="navBreadcrumb wrapper"><div class="navToggle" id="navToggler"><div class="hamburger-menu"><div class="line1"></div><div class="line2"></div><div class="line3"></div></div></div><h2><i>›</i><span>File Processor</span></h2><div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div></div><div class="navGroups"><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Logger<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerInterface">Logger Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerMemory">Logger Memory</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model/TableInterface">Table Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/TestcaseDefinitionInterface">Testcase Definition Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoMeta">Todo Meta</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoStatic">Todo Static</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoGenerator">Todo Generator</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoReference">Todo Reference</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model Decision<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/BaseSectionDefinition">Base Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/BaseSingleRowSectionDefinition">Base Single Row Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/ExecuteSectionDefinition">Execute Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/NeverExecuteSectionDefinition">Never Execute Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/MultiplicitySectionDefinition">Multiplicity Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/SummarySectionDefinition">Summary Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FieldSectionDefinition">Field Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FieldSubSectionDefinition">Field Sub Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/MultiRowSectionDefinition">Multi Row Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/TagSectionDefinition">Tag Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/FilterSectionDefinition">Filter Section Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sections/GeneratorSwitchSectionDefinition">Generator Switch Section  Definition</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/TestcaseDefinitionDecision">Testcase Definition Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/TableDecision">Table Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sectionTypes">Section Types</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateDouble">Validate Double</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateHelper">Validate Helper</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-decision/functions/ValidateMissing">Validate Missing</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Model Matrix<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TestcaseDefinitionMatrix">Testcase Definition Matrix</a></li><li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TableMatrix">Table Matrix</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Importer xlsx<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/importerXlsx/ImporterXlsx">Importer xlsx</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">File Processor<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/ImporterInterface">Importer Interface</a></li><li class="navListItem navListItemActive"><a class="navItem" href="/docs/api/file-processor/ParserInterface">Parser Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/FilterProcessorInterface">Interface Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/SimpleArrayFilterProcessor">Simple Array Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/filter/SimpleArrayIgnoreFilterProcessor">Simple Array Ignore Filter</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/FileProcessor">Parser Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/decision/ParserDecisionConstants">Parser Decision Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/decision/ParserDecision">Parser Decision</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/matrix/ParserMatrixConstants">Parser Matrix Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/matrix/ParserMatrix">Parser Matrix</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecificationConstants">Parser Specification Constants</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecification">Parser Specification</a></li><li class="navListItem"><a class="navItem" href="/docs/api/file-processor/specification/ParserSpecificationConverter">Parser Specification Converter</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Data Generator<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorInterface">Data Generator Interface</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorBase">Data Generator Base</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/TDGServiceRegistry">Service Registry</a></li><li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/GeneratorFaker">Generator Faker</a></li></ul></div><div class="navGroup"><h3 class="navGroupCategoryTitle collapsible">Processor<span class="arrow"><svg width="24" height="24" viewBox="0 0 24 24"><path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path><path d="M0 0h24v24H0z" fill="none"></path></svg></span></h3><ul class="hide"><li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceProcessor">Interface Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceWriter">Interface Writer</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Node">Node</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Reference">Reference</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/TestcaseData">Testcase Data</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/Processor">Processor</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/writeMetaData">writeMetaData</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/writeStaticData">writeStaticData</a></li><li class="navListItem"><a class="navItem" href="/docs/api/processor/utilCartesian">utilCartesian</a></li></ul></div></div></section></div><script>
+</head>
+
+<body data-theme="tactical">
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>File Processor</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Logger<span class="arrow"><svg width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerInterface">Logger
+                        Interface</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/logger/LoggerMemory">Logger Memory</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Model<span class="arrow"><svg width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model/TableInterface">Table Interface</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model/TestcaseDefinitionInterface">Testcase Definition Interface</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoMeta">Todo Meta</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoStatic">Todo Static</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoGenerator">Todo
+                        Generator</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model/todo/TodoReference">Todo
+                        Reference</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Model Decision<span class="arrow"><svg width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/BaseSectionDefinition">Base Section Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/BaseSingleRowSectionDefinition">Base Single Row Section
+                        Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/ExecuteSectionDefinition">Execute Section Definition</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/NeverExecuteSectionDefinition">Never Execute Section
+                        Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/MultiplicitySectionDefinition">Multiplicity Section
+                        Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/SummarySectionDefinition">Summary Section Definition</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/FieldSectionDefinition">Field Section Definition</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/FieldSubSectionDefinition">Field Sub Section
+                        Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/MultiRowSectionDefinition">Multi Row Section
+                        Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/TagSectionDefinition">Tag Section Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/FilterSectionDefinition">Filter Section Definition</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/sections/GeneratorSwitchSectionDefinition">Generator Switch
+                        Section Definition</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/TestcaseDefinitionDecision">Testcase Definition Decision</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model-decision/TableDecision">Table
+                        Decision</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model-decision/sectionTypes">Section
+                        Types</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/functions/ValidateDouble">Validate Double</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/functions/ValidateHelper">Validate Helper</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-decision/functions/ValidateMissing">Validate Missing</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Model Matrix<span class="arrow"><svg width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/model-matrix/TestcaseDefinitionMatrix">Testcase Definition Matrix</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/model-matrix/TableMatrix">Table
+                        Matrix</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Importer xlsx<span class="arrow"><svg width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/api/importerXlsx/ImporterXlsx">Importer
+                        xlsx</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">File Processor<span class="arrow"><svg width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/ImporterInterface">Importer Interface</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem"
+                        href="/docs/api/file-processor/ParserInterface">Parser Interface</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/processor/filter/FilterProcessorInterface">Interface Filter</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/processor/filter/SimpleArrayFilterProcessor">Simple Array Filter</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/processor/filter/SimpleArrayIgnoreFilterProcessor">Simple Array Ignore
+                        Filter</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/file-processor/FileProcessor">Parser
+                        Constants</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/decision/ParserDecisionConstants">Parser Decision Constants</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/decision/ParserDecision">Parser Decision</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/matrix/ParserMatrixConstants">Parser Matrix Constants</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/matrix/ParserMatrix">Parser Matrix</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/specification/ParserSpecificationConstants">Parser Specification
+                        Constants</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/specification/ParserSpecification">Parser Specification</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/file-processor/specification/ParserSpecificationConverter">Parser Specification
+                        Converter</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Data Generator<span class="arrow"><svg width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/dataGenerator/DataGeneratorInterface">Data Generator Interface</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/DataGeneratorBase">Data
+                        Generator Base</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/TDGServiceRegistry">Service
+                        Registry</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/dataGenerator/GeneratorFaker">Generator
+                        Faker</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Processor<span class="arrow"><svg width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceProcessor">Interface
+                        Processor</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/processor/InterfaceWriter">Interface
+                        Writer</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/processor/Node">Node</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/processor/Reference">Reference</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/processor/TestcaseData">Testcase Data</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem" href="/docs/api/processor/Processor">Processor</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/processor/writeMetaData">writeMetaData</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/processor/writeStaticData">writeStaticData</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/docs/api/processor/utilCartesian">utilCartesian</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+          <script>
             var coll = document.getElementsByClassName('collapsible');
             var checkActiveCategory = true;
             for (var i = 0; i < coll.length; i++) {
               var links = coll[i].nextElementSibling.getElementsByTagName('*');
-              if (checkActiveCategory){
+              if (checkActiveCategory) {
                 for (var j = 0; j < links.length; j++) {
-                  if (links[j].classList.contains('navListItemActive')){
+                  if (links[j].classList.contains('navListItemActive')) {
                     coll[i].nextElementSibling.classList.toggle('hide');
                     coll[i].childNodes[1].classList.toggle('rotate');
                     checkActiveCategory = false;
@@ -74,7 +317,7 @@
                 }
               }
 
-              coll[i].addEventListener('click', function() {
+              coll[i].addEventListener('click', function () {
                 var arrow = this.childNodes[1];
                 arrow.classList.toggle('rotate');
                 var content = this.nextElementSibling;
@@ -82,18 +325,18 @@
               });
             }
 
-            document.addEventListener('DOMContentLoaded', function() {
+            document.addEventListener('DOMContentLoaded', function () {
               createToggler('#navToggler', '#docsNav', 'docsSliderActive');
               createToggler('#tocToggler', 'body', 'tocActive');
 
               var headings = document.querySelector('.toc-headings');
-              headings && headings.addEventListener('click', function(event) {
+              headings && headings.addEventListener('click', function (event) {
                 var el = event.target;
-                while(el !== headings){
+                while (el !== headings) {
                   if (el.tagName === 'A') {
                     document.body.classList.remove('tocActive');
                     break;
-                  } else{
+                  } else {
                     el = el.parentNode;
                   }
                 }
@@ -107,55 +350,118 @@
                   return;
                 }
 
-                toggler.onclick = function(event) {
+                toggler.onclick = function (event) {
                   event.preventDefault();
 
                   target.classList.toggle(className);
                 };
               }
             });
-        </script></nav></div><div class="container mainContainer docsContainer"><div class="wrapper"><div class="post"><header class="postHeader"><h1 id="__docusaurus" class="postHeaderTitle">Parser Interface</h1></header><article><div><span><p><a name="ParserInterface"></a></p>
-<h2><a class="anchor" aria-hidden="true" id="parserinterface"></a><a href="#parserinterface" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>ParserInterface</h2>
-<p>The interface definition for all the table parser.</p>
-<p><strong>Kind</strong>: global class<br>
-<a name="ParserInterface+parse"></a></p>
-<h3><a class="anchor" aria-hidden="true" id="parserinterfaceparsesheetname-importer--codeobjectcode"></a><a href="#parserinterfaceparsesheetname-importer--codeobjectcode" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>parserInterface.parse(sheetName, importer) ⇒ <code>object</code></h3>
-<p>Parses the sheet with the given name und uses the given importer to access
-the data.</p>
-<p><strong>Kind</strong>: instance method of <a href="#ParserInterface"><code>ParserInterface</code></a>  <br>
-<strong>Returns</strong>: <code>object</code> - tableModel  The created table model</p>
-<table>
-<thead>
-<tr><th>Param</th><th>Type</th><th>Description</th></tr>
-</thead>
-<tbody>
-<tr><td>sheetName</td><td><code>string</code></td><td>The name of the sheet</td></tr>
-<tr><td>importer</td><td><code>object</code></td><td>The importer</td></tr>
-</tbody>
-</table>
-</span></div></article></div><div class="docs-prevnext"><a class="docs-prev button" href="/docs/api/file-processor/ImporterInterface"><span class="arrow-prev">← </span><span>Importer Interface</span></a><a class="docs-next button" href="/docs/api/processor/filter/FilterProcessorInterface"><span>Interface Filter</span><span class="arrow-next"> →</span></a></div></div></div><nav class="onPageNav"><ul class="toc-headings"><li><a href="#parserinterface">ParserInterface</a><ul class="toc-headings"><li><a href="#parserinterfaceparsesheetname-importer--codeobjectcode">parserInterface.parse(sheetName, importer) ⇒ <code>object</code></a></li></ul></li></ul></nav></div></div><footer class="site-footer">
-<div class="footer-inner">
-<div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
-<div class="footer-col">
-<samp class="footer-heading">[ DOCS ]</samp>
-<a href="/docs/tutorials/overview">Tutorials</a>
-<a href="/docs/guide/equivalence/overview">Guide</a>
-</div>
-<div class="footer-col">
-<samp class="footer-heading">[ MORE ]</samp>
-<a href="/imprint">Imprint</a>
-<a href="/privacyPolicy">Privacy Policy</a>
-<a href="https://github.com/xhubio/nanook-table/">GitHub</a>
-<a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
-</div></div>
-<div class="footer-copyright"><samp>&copy; 2026 NANOOK.XHUB.IO</samp></div>
-</footer>
+          </script>
+        </nav>
+      </div>
+      <div class="container mainContainer docsContainer">
+        <div class="wrapper">
+          <div class="post">
+            <header class="postHeader">
+              <h1 id="__docusaurus" class="postHeaderTitle">Parser Interface</h1>
+            </header>
+            <article>
+              <div><span>
+                  <p><a name="ParserInterface"></a></p>
+                  <h2><a class="anchor" aria-hidden="true" id="parserinterface"></a><a href="#parserinterface"
+                      aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16"
+                        version="1.1" viewBox="0 0 16 16" width="16">
+                        <path fill-rule="evenodd"
+                          d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+                        </path>
+                      </svg></a>ParserInterface</h2>
+                  <p>The interface definition for all the table parser.</p>
+                  <p><strong>Kind</strong>: global class<br>
+                    <a name="ParserInterface+parse"></a>
+                  </p>
+                  <h3><a class="anchor" aria-hidden="true"
+                      id="parserinterfaceparsesheetname-importer--codeobjectcode"></a><a
+                      href="#parserinterfaceparsesheetname-importer--codeobjectcode" aria-hidden="true"
+                      class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1"
+                        viewBox="0 0 16 16" width="16">
+                        <path fill-rule="evenodd"
+                          d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
+                        </path>
+                      </svg></a>parserInterface.parse(sheetName, importer) ⇒ <code>object</code></h3>
+                  <p>Parses the sheet with the given name und uses the given importer to access
+                    the data.</p>
+                  <p><strong>Kind</strong>: instance method of <a
+                      href="#ParserInterface"><code>ParserInterface</code></a> <br>
+                    <strong>Returns</strong>: <code>object</code> - tableModel The created table model
+                  </p>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Param</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>sheetName</td>
+                        <td><code>string</code></td>
+                        <td>The name of the sheet</td>
+                      </tr>
+                      <tr>
+                        <td>importer</td>
+                        <td><code>object</code></td>
+                        <td>The importer</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </span></div>
+            </article>
+          </div>
+          <div class="docs-prevnext"><a class="docs-prev button" href="/docs/api/file-processor/ImporterInterface"><span
+                class="arrow-prev">← </span><span>Importer Interface</span></a><a class="docs-next button"
+              href="/docs/api/processor/filter/FilterProcessorInterface"><span>Interface Filter</span><span
+                class="arrow-next"> →</span></a></div>
+        </div>
+      </div>
+      <nav class="onPageNav">
+        <ul class="toc-headings">
+          <li><a href="#parserinterface">ParserInterface</a>
+            <ul class="toc-headings">
+              <li><a href="#parserinterfaceparsesheetname-importer--codeobjectcode">parserInterface.parse(sheetName,
+                  importer) ⇒ <code>object</code></a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO</samp></div>
+  </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
     <div class="cookie-inner">
       <div class="cookie-main">
         <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
-        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
         <div class="cookie-actions">
           <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
           <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
@@ -165,41 +471,76 @@ the data.</p>
       <div class="cookie-categories">
         <div class="cookie-category">
           <div class="cookie-cat-header">
-            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span class="cookie-slider cookie-slider-locked"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span class="cookie-cat-badge">Always active</span></div>
-            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')" aria-label="Toggle details">+</button>
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
           </div>
           <div class="cookie-cat-details">
             <table class="cookie-table">
-              <tr><td><samp>Provider</samp></td><td>nanook.xhub.io (First Party)</td></tr>
-              <tr><td><samp>Cookies</samp></td><td><code>nanook-theme</code> — Stores your theme preference (CRT/INK)</td></tr>
-              <tr><td><samp>Duration</samp></td><td>Persistent (localStorage)</td></tr>
-              <tr><td><samp>Purpose</samp></td><td>Remember your display preferences across visits</td></tr>
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (CRT/INK)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
             </table>
           </div>
         </div>
         <div class="cookie-category">
           <div class="cookie-cat-header">
-            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span class="cookie-slider"></span></label>
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
             <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
-            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')" aria-label="Toggle details">+</button>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
           </div>
           <div class="cookie-cat-details">
             <table class="cookie-table">
-              <tr><td><samp>Provider</samp></td><td>Google LLC (Google Analytics 4)</td></tr>
-              <tr><td><samp>Cookies</samp></td><td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td></tr>
-              <tr><td><samp>Duration</samp></td><td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td></tr>
-              <tr><td><samp>Purpose</samp></td><td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are anonymized.</td></tr>
-              <tr><td><samp>Privacy</samp></td><td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy Policy</a></td></tr>
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
             </table>
           </div>
         </div>
       </div>
     </div>
   </div>
-<script>
-(function(){var s=localStorage.getItem('nanook-theme');if(s)document.body.setAttribute('data-theme',s);})();
-function toggleTheme(){var c=document.body.getAttribute('data-theme');var n=c==='tactical'?'swiss':'tactical';document.body.setAttribute('data-theme',n);localStorage.setItem('nanook-theme',n);}
-</script>
+  <script>
+  </script>
+  <script src="/js/theme.js"></script>
 <script src="/js/cookies.js"></script>
-</body></html>
+</body>
+
+</html>

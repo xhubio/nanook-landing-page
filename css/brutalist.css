@@ -1708,6 +1708,40 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
     grid-template-columns: 1fr;
     gap: 2rem;
   }
+
+  /* Docs sidebar: collapse to full-width above content on tablet */
+  body[data-theme="tactical"] .docMainWrapper,
+  body[data-theme="swiss"] .docMainWrapper {
+    flex-direction: column !important;
+  }
+
+  body[data-theme="tactical"] .docsNavContainer,
+  body[data-theme="swiss"] .docsNavContainer {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border-color);
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  /* Cookie banner mobile */
+  .cookie-banner {
+    padding: 0 1rem;
+  }
+  .cookie-inner {
+    padding: 1.5rem 1rem;
+  }
+  .cookie-actions {
+    flex-wrap: wrap;
+  }
+  .cookie-btn {
+    flex: 1;
+    text-align: center;
+    min-width: 80px;
+  }
 }
 
 /* ============================================================
