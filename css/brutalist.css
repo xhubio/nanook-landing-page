@@ -679,6 +679,12 @@ body[data-theme="swiss"] .theme-toggle-label-light {
   padding: 4rem 2rem 6rem;
   display: grid;
   grid-template-columns: 3fr 2fr;
+}
+
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   gap: 4rem;
   align-items: center;
   min-height: 70vh;

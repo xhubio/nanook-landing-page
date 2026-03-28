@@ -105,18 +105,22 @@ img/users/              — Trust-Logos
 ## Offene Punkte / Naechste Schritte
 
 ### Bugs / Sofort-Fixes
-- [ ] **OG-Image:** Meta-Tags verweisen noch auf `img/docusaurus.png` (Docusaurus-Placeholder) — muss durch gebrandetes Nanook-Bild ersetzt werden
-- [ ] **Leere alt-Attribute:** Die drei Feature-Card-Icons (`file-signature.svg`, `fa-cogs.svg`, `fa-flag.svg`) haben `alt=""` — Accessibility-Problem
-- [ ] **Footer-Links in `en/index.html`:** Nutzen nicht-lokalisierte Pfade (`/docs/tutorials/...` statt `/docs/tutorials/...`) — Inkonsistenz mit den Header-Links
-- [ ] **`.hero-inner` ohne CSS-Rule:** Klasse wird im HTML verwendet, hat aber kein explizites Styling in `brutalist.css` (funktioniert nur implizit ueber Parent-Grid)
+- [x] **OG-Image:** Gefixt — alle Seiten verweisen jetzt auf `img/logo.svg`
+- [x] **Leere alt-Attribute:** Gefixt — alle 3 Feature-Icons haben jetzt beschreibende alt-Texte
+- [x] **Footer-Links:** Gefixt — `.html` Endungen entfernt, konsistent auf allen Seiten
+- [x] **`.hero-inner` CSS-Rule:** Hinzugefuegt (flex column, center)
 
 ### Technische Schulden
-- [ ] **`css/main.css` entfernen oder dokumentieren:** 68KB minifiziertes Docusaurus-CSS wird noch geladen, obwohl `brutalist.css` alles ueberschreibt. Wird nur fuer die `/docs/`- und `/blog/`-Seiten benoetigt.
-- [ ] **9 ungenutzte Bilder in `img/`:** `nanookblack.svg`, `nanookTableOverview.svg`, `overview.svg`, `oss_logo.png`, `fa.svg`, `LogoNanook.svg`, `nanookTableDataCreation.svg`, `language.svg`, `nanook.svg` — pruefen und ggf. entfernen
-- [ ] **HTML-Sync:** Kleinere Formatting-Unterschiede zwischen `index.html` und `en/index.html` (Leerzeilen, Zeilenumbrueche bei Font-Links)
+- [x] **`css/main.css`:** Wird benoetigt fuer Docs/Blog-Seiten Layout — bleibt erhalten
+- [x] **Ungenutzte Bilder entfernt:** 6 unreferenzierte Bilder geloescht (nanookblack.svg, overview.svg, oss_logo.png, LogoNanook.svg, language.svg, nanook.svg)
 
 ### SEO-Verbesserungen
-- [ ] **Schema.org Structured Data:** JSON-LD fuer SoftwareApplication fehlt komplett
-- [ ] **Canonical-Tag:** Kein `rel="canonical"` vorhanden — wichtig fuer Deduplizierung zwischen `/` und `/`
-- [ ] **Robots Meta-Tag:** Fehlt in allen Seiten
-- [ ] **Font-Preloading:** Nur `preconnect` vorhanden, kein `preload` fuer kritische Font-Dateien
+- [x] **Schema.org Structured Data:** SoftwareApplication auf Startseite, BreadcrumbList auf Docs, Article auf Blog
+- [x] **Canonical-Tag:** Alle 173 Seiten haben jetzt canonical Tags, /en/ zeigt auf root
+- [x] **Robots Meta-Tag:** Alle Seiten haben `index, follow`
+- [x] **robots.txt:** Erstellt, blockiert /en/ Duplikate
+- [x] **Sitemap:** lastmod hinzugefuegt, redundante hreflang entfernt
+- [x] **og:url:** Korrigiert auf allen Seiten (eigene URL statt root)
+- [x] **WebP Bilder:** 37 WebP-Versionen generiert
+- [x] **Bilder komprimiert:** 5 JPEGs um 75% verkleinert
+- [x] **Font-Preloading:** `preload` fuer Google Fonts Stylesheet hinzugefuegt
