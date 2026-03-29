@@ -475,13 +475,11 @@ body[data-theme="swiss"]::before {
 }
 
 body[data-theme="tactical"] .crt-overlay {
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0, 0, 0, 0.06) 2px,
-    rgba(0, 0, 0, 0.06) 4px
-  );
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.06) 2px,
+      rgba(0, 0, 0, 0.06) 4px);
   opacity: 1;
 }
 
@@ -499,12 +497,12 @@ body[data-theme="swiss"] a {
   transition: color 0.15s ease, text-shadow 0.15s ease;
 }
 
-body[data-theme="tactical"] a:hover {
+body[data-theme="tactical"] a:hover:not(.btn-primary):not(.btn-secondary) {
   color: var(--accent-red-hover);
   text-shadow: 0 0 8px var(--accent-red-glow);
 }
 
-body[data-theme="swiss"] a:hover {
+body[data-theme="swiss"] a:hover:not(.btn-primary):not(.btn-secondary) {
   color: var(--accent-red);
 }
 
@@ -730,7 +728,7 @@ body[data-theme="swiss"] .hero-watermark {
   opacity: 0.04;
 }
 
-.hero > *:not(.hero-watermark) {
+.hero>*:not(.hero-watermark) {
   position: relative;
   z-index: 1;
 }
@@ -814,7 +812,8 @@ body[data-theme="swiss"] .hero-watermark {
 
 .btn-primary:hover {
   background-color: var(--accent-red);
-  color: var(--bg-primary);
+  color: #FFFFFF;
+  border-style: dashed;
   text-shadow: none;
   box-shadow: 0 0 20px var(--accent-red-glow);
 }
@@ -1233,7 +1232,10 @@ body[data-theme="swiss"] .frame-label {
 .cookie-slider {
   position: absolute;
   cursor: pointer;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: var(--border-color);
   transition: 0.2s;
 }
@@ -1249,11 +1251,11 @@ body[data-theme="swiss"] .frame-label {
   transition: 0.2s;
 }
 
-.cookie-toggle input:checked + .cookie-slider {
+.cookie-toggle input:checked+.cookie-slider {
   background: var(--accent-red);
 }
 
-.cookie-toggle input:checked + .cookie-slider::before {
+.cookie-toggle input:checked+.cookie-slider::before {
   transform: translateX(18px);
   background: var(--bg-primary);
 }
@@ -1267,9 +1269,11 @@ body[data-theme="swiss"] .frame-label {
   .cookie-main {
     text-align: center;
   }
+
   .cookie-actions {
     justify-content: center;
   }
+
   .cookie-cat-header {
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -1508,13 +1512,27 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
    ENTRANCE ANIMATIONS
    ============================================================ */
 @keyframes fadeSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes terminalReveal {
-  from { opacity: 0; clip-path: inset(0 100% 0 0); }
-  to { opacity: 1; clip-path: inset(0 0% 0 0); }
+  from {
+    opacity: 0;
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    opacity: 1;
+    clip-path: inset(0 0% 0 0);
+  }
 }
 
 .hero-meta {
@@ -1573,12 +1591,20 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
 
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
-  .hero-meta, .hero-title, .hero-tagline, .hero-subtitle,
-  .hero-actions, .hero-diagram, .feature-card {
+
+  .hero-meta,
+  .hero-title,
+  .hero-tagline,
+  .hero-subtitle,
+  .hero-actions,
+  .hero-diagram,
+  .feature-card {
     opacity: 1 !important;
     animation: none !important;
   }
-  .pulse-core, .data-dot {
+
+  .pulse-core,
+  .data-dot {
     animation: none !important;
     display: none;
   }
@@ -1588,15 +1614,37 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
    DIAGRAM ANIMATIONS — Pulse + Data Flow
    ============================================================ */
 @keyframes corePulse {
-  0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(1.15); }
+
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  50% {
+    opacity: 0.6;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
 }
 
 @keyframes dataFlow {
-  0% { left: -5%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { left: 105%; opacity: 0; }
+  0% {
+    left: -5%;
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 105%;
+    opacity: 0;
+  }
 }
 
 .pulse-core {
@@ -1623,9 +1671,20 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
   z-index: 1;
 }
 
-.data-dot:nth-child(2) { top: 35%; animation-delay: 0s; }
-.data-dot:nth-child(3) { top: 55%; animation-delay: 1.5s; }
-.data-dot:nth-child(4) { top: 75%; animation-delay: 3s; }
+.data-dot:nth-child(2) {
+  top: 35%;
+  animation-delay: 0s;
+}
+
+.data-dot:nth-child(3) {
+  top: 55%;
+  animation-delay: 1.5s;
+}
+
+.data-dot:nth-child(4) {
+  top: 75%;
+  animation-delay: 3s;
+}
 
 /* ============================================================
    FEATURE CARD HOVER
@@ -1757,16 +1816,20 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
 }
 
 @media (max-width: 640px) {
+
   /* Cookie banner mobile */
   .cookie-banner {
     padding: 0 1rem;
   }
+
   .cookie-inner {
     padding: 1.5rem 1rem;
   }
+
   .cookie-actions {
     flex-wrap: wrap;
   }
+
   .cookie-btn {
     flex: 1;
     text-align: center;
