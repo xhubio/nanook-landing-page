@@ -8,18 +8,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content="Docusaurus" />
   <meta name="description"
-    content="We are proud to introduce Nanook-Table. This is the first &#x27;official&#x27; version of Nanook-Table. It has been used about" />
+    content="Introducing Nanook-Table — an open-source toolkit for systematic test case and test data creation using equivalence class tables and spreadsheets." />
   <meta name="docsearch:language" content="en" />
   <meta property="og:title" content="Introducing Nanook-Table · Nanook" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://nanook.xhub.io/blog/2019/06/01/inroducing" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2019/06/01/introducing" />
   <meta property="og:description"
-    content="We are proud to introduce Nanook-Table. This is the first &#x27;official&#x27; version of Nanook-Table. It has been used about" />
-  <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
+    content="Introducing Nanook-Table — an open-source toolkit for systematic test case and test data creation using equivalence class tables and spreadsheets." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
-  <meta name="robots" content="noindex, follow" />
-  <link rel="canonical" href="https://nanook.xhub.io/blog/2019/06/01/inroducing" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2019/06/01/introducing" />
   <link rel="shortcut icon" href="/img/favicon.png" />
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
   <link rel="stylesheet" href="/css/prism.css" />
@@ -37,16 +37,18 @@
   "headline": "Introducing Nanook-Table",
   "datePublished": "2019-06-01",
   "author": {
-    "@type": "Organization",
-    "name": "xhub.io"
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
   },
   "publisher": {
-    "@type": "Organization",
+    "@type": "Person",
     "name": "Nanook",
     "url": "https://nanook.xhub.io"
   },
   "description": "We are proud to introduce Nanook-Table. This is the first official version of Nanook-Table.",
-  "url": "https://nanook.xhub.io/blog/2019/06/01/inroducing"
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2019/06/01/introducing"
 }
 </script>
 </head>
@@ -167,16 +169,38 @@
           <div class="lonePost">
             <div class="post">
               <header class="postHeader">
-                <h1 class="postHeaderTitle"><a href="/blog/2019/06/01/inroducing">Introducing Nanook-Table</a></h1>
+                <h1 class="postHeaderTitle"><a href="/blog/2019/06/01/introducing">Introducing Nanook-Table</a></h1>
                 <p class="post-meta">June 1, 2019</p>
                 <div class="authorBlock">
                   <p class="post-authorName"><a href="https://github.com/xhubio" target="_blank" rel="noreferrer noopener">Torsten Link</a></p>
                 </div>
               </header>
               <div><span>
-                  <p>We are proud to introduce Nanook-Table. This is the first 'official' version of Nanook-Table. It
-                    has been used about
-                    one year now in a productive environment.</p>
+                  <p>We are proud to introduce Nanook-Table. This is the first &lsquo;official&rsquo; version of Nanook-Table. It has been used for about one year now in a productive environment, and we believe it is ready for a wider audience.</p>
+
+                  <h2>What Is Nanook-Table?</h2>
+                  <p>Nanook-Table is an open-source toolkit for systematic test case and test data creation. It reads equivalence class tables from spreadsheets &mdash; Excel, LibreOffice, or Google Sheets &mdash; and automatically generates test data for every defined test case.</p>
+
+                  <p>The core idea is simple: define your test specifications in a format that QA teams already use (spreadsheets), then let Nanook generate the actual test data. No more hand-crafting JSON fixtures or writing ad-hoc data factories.</p>
+
+                  <h2>Key Features</h2>
+                  <ul>
+                    <li><strong>Equivalence class tables</strong> &mdash; define input fields, their value classes, and which combinations to test</li>
+                    <li><strong>Pluggable data generators</strong> &mdash; use built-in generators for common types or write custom ones in JavaScript</li>
+                    <li><strong>Flexible output</strong> &mdash; export to JSON, CSV, or any custom format via pluggable writers</li>
+                    <li><strong>CI/CD ready</strong> &mdash; built with Node.js, runs anywhere Node runs</li>
+                    <li><strong>MIT licensed</strong> &mdash; free for personal and commercial use</li>
+                  </ul>
+
+                  <h2>Getting Started</h2>
+                  <p>The quickest way to try Nanook-Table is to clone the quickstart repository and run the example:</p>
+                  <pre><code>git clone https://github.com/xhubioTable/quickstart-source.git
+cd quickstart-source
+yarn install
+node src/quickstart.js</code></pre>
+                  <p>This will generate test data from a sample equivalence class table. From there, you can explore creating your own tables and generators.</p>
+
+                  <p>Check out the <a href="https://github.com/xhubio/nanook-table/">GitHub repository</a> for the full source code and documentation. We look forward to your feedback and contributions.</p>
                 </span></div>
             </div>
             <div class="blogSocialSection"></div>
