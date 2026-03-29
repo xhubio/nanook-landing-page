@@ -12,9 +12,9 @@
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://nanook.xhub.io/" />
   <meta property="og:description" content="Nanook is an open-source toolkit for systematic test case and test data creation using equivalence class tables. Works with Excel, LibreOffice, and Google Sheets." />
-  <meta property="og:image" content="https://nanook.xhub.io/img/favicon.png" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://nanook.xhub.io/img/favicon.png" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:title" content="Nanook · A toolkit for test case and test data creation" />
   <meta name="twitter:description" content="An open-source toolkit for systematic test case and test data creation using equivalence class tables and data generators" />
   <meta name="twitter:site" content="@xhubio" />
@@ -22,6 +22,7 @@
   <link rel="canonical" href="https://nanook.xhub.io/" />
   <link rel="alternate" type="text/plain" href="https://nanook.xhub.io/llms.txt" title="LLM content guide" />
   <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload"
@@ -106,6 +107,54 @@
     ]
   }
   </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What is an equivalence class table?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "An equivalence class table is a spreadsheet that defines input fields, their possible value classes, and which combinations to test. Each class represents a group of values that should produce equivalent behavior. Nanook reads these tables from Excel, LibreOffice, or Google Sheets."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which spreadsheet formats does Nanook support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nanook supports Microsoft Excel (.xlsx, .xls), LibreOffice (.ods), and Google Sheets. You can define your test cases in any of these formats and Nanook will process them identically."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What output formats can Nanook generate?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Nanook can export test data to JSON, CSV, or any custom format. The output is controlled through pluggable writers — you can use the built-in writers or create your own for domain-specific formats."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use Nanook in my CI/CD pipeline?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Nanook is built with Node.js and designed for automation. You can integrate it into any CI/CD pipeline to regenerate test data whenever your test specifications change."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Nanook free to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, Nanook is open source and released under the MIT License. It is free for both personal and commercial use."
+        }
+      }
+    ]
+  }
+  </script>
   <!-- Google Analytics — loaded only after cookie consent -->
 </head>
 
@@ -126,6 +175,7 @@
           <ul>
             <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
             <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="/blog">[ BLOG ]</a></li>
             <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
           </ul>
         </nav>
@@ -244,6 +294,36 @@
     </div>
   </section>
 
+  <!-- FAQ -->
+  <section class="faq">
+    <div class="faq-header">
+      <samp>FAQ /// COMMON QUESTIONS</samp>
+      <hr />
+    </div>
+    <div class="faq-list">
+      <details class="faq-item">
+        <summary class="faq-question">What is an equivalence class table?</summary>
+        <p class="faq-answer">An equivalence class table is a spreadsheet that defines input fields, their possible value classes, and which combinations to test. Each class represents a group of values that should produce equivalent behavior. Nanook reads these tables from Excel, LibreOffice, or Google Sheets.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Which spreadsheet formats does Nanook support?</summary>
+        <p class="faq-answer">Nanook supports Microsoft Excel (.xlsx, .xls), LibreOffice (.ods), and Google Sheets. You can define your test cases in any of these formats and Nanook will process them identically.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">What output formats can Nanook generate?</summary>
+        <p class="faq-answer">Nanook can export test data to JSON, CSV, or any custom format. The output is controlled through pluggable writers — you can use the built-in writers or create your own for domain-specific formats.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Can I use Nanook in my CI/CD pipeline?</summary>
+        <p class="faq-answer">Yes. Nanook is built with Node.js and designed for automation. You can integrate it into any CI/CD pipeline to regenerate test data whenever your test specifications change.</p>
+      </details>
+      <details class="faq-item">
+        <summary class="faq-question">Is Nanook free to use?</summary>
+        <p class="faq-answer">Yes, Nanook is open source and released under the MIT License. It is free for both personal and commercial use.</p>
+      </details>
+    </div>
+  </section>
+
   <!-- TRUST LOGOS -->
   <section class="trust">
     <div class="trust-inner">
@@ -280,7 +360,8 @@
       </div>
       <div class="footer-col">
         <samp class="footer-heading">[ MORE ]</samp>
-        <a href="/imprint">Imprint</a>
+        <a href="/about">About</a>
+                <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>

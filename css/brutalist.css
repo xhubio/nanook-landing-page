@@ -1838,6 +1838,86 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
 }
 
 /* ============================================================
+   FAQ SECTION
+   ============================================================ */
+.faq {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+}
+
+.faq-header {
+  margin-bottom: 2rem;
+}
+
+.faq-header samp {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+.faq-header hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin-top: 0.75rem;
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.faq-question {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 1.25rem 0;
+  cursor: pointer;
+  color: var(--fg-primary);
+  list-style: none;
+  transition: color 0.15s ease;
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::before {
+  content: '+';
+  display: inline-block;
+  width: 1.5rem;
+  font-family: var(--font-mono);
+  color: var(--accent-red);
+  font-weight: 700;
+}
+
+.faq-item[open] .faq-question::before {
+  content: '−';
+}
+
+.faq-question:hover {
+  color: var(--accent-red);
+}
+
+.faq-answer {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--fg-secondary);
+  padding: 0 0 1.25rem 1.5rem;
+  max-width: 800px;
+}
+
+/* ============================================================
    TRUST LOGOS SECTION
    ============================================================ */
 .trust {
