@@ -5,9 +5,9 @@
 | Field | Value |
 |---|---|
 | **Title** | Test Data Generation: Manual vs. Automated |
-| **URL Slug** | `/blog/2026/04/01/test-data-manual-vs-automated` |
+| **URL Slug** | `/blog/2026/03/20/test-data-manual-vs-automated` |
 | **Author** | Torsten Link |
-| **Estimated Publish Date** | 2026-04-01 |
+| **Estimated Publish Date** | 2026-03-20 |
 | **Word Count Target** | 1,200--1,800 words |
 | **Status** | Draft PRD |
 
@@ -184,7 +184,7 @@ All diagrams are created as Excalidraw JSON files, rendered to PNG, and embedded
 | **og:description** | A practical comparison of manual and automated test data generation, with guidance on when to switch and how Nanook can help. |
 | **og:image** | `/img/social-card.png` |
 | **Schema.org type** | `Article` |
-| **URL** | `https://nanook.xhub.io/blog/2026/04/01/test-data-manual-vs-automated` |
+| **URL** | `https://nanook.xhub.io/blog/2026/03/20/test-data-manual-vs-automated` |
 
 ## Notes
 
