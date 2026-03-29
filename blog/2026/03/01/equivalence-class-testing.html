@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Equivalence Class Testing: A Complete Guide · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Learn equivalence class testing with practical examples. Discover how to create equivalence class tables and automate test data generation with Nanook." />
+  <meta property="og:title" content="Equivalence Class Testing: A Complete Guide · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/03/01/equivalence-class-testing" />
+  <meta property="og:description"
+    content="A practical guide to equivalence class partitioning with worked examples and automation using Nanook." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/03/01/equivalence-class-testing" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Equivalence Class Testing: A Complete Guide",
+  "datePublished": "2026-03-01",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Learn equivalence class testing with practical examples and automation using Nanook.",
+  "url": "https://nanook.xhub.io/blog/2026/03/01/equivalence-class-testing"
+}
+</script>
+</head>
+
+<body data-theme="tactical">
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="/blog">[ BLOG ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/04/01/test-data-manual-vs-automated"><samp class="nav-date">2026-04</samp> Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/03/01/equivalence-class-testing">Equivalence Class
+                    Testing: A Complete Guide</a></h1>
+                <p class="post-meta">March 1, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p>Every non-trivial application has more possible input combinations than any team can test
+                    exhaustively. Equivalence class testing is a systematic technique that solves this problem by
+                    grouping inputs into classes that are expected to behave the same way &mdash; and then testing one
+                    representative value from each class instead of every possible value.</p>
+
+                  <p>In this guide, we will walk through the concept, build real equivalence class tables, compare it
+                    with boundary value analysis, and show how to automate the entire process with <a
+                      href="/">Nanook</a>.</p>
+
+                  <h2>What Is Equivalence Class Testing?</h2>
+
+                  <p>Equivalence class testing &mdash; also called equivalence partitioning or equivalence class
+                    partitioning &mdash; is a black-box test design technique. The core idea is simple: if two input
+                    values are expected to produce the same behavior, testing both is redundant. Instead, you divide the
+                    input domain into <em>equivalence classes</em> and test one representative from each.</p>
+
+                  <p>For example, if a form field accepts ages 18&ndash;120, then 25, 42, and 99 are all in the same
+                    equivalence class: &ldquo;valid age.&rdquo; Testing all three gives you no additional information.
+                    Testing one is enough.</p>
+
+                  <p>This technique is part of the <strong>ISTQB Foundation Level syllabus</strong> and is one of the
+                    most widely taught test design methods. Its power lies in dramatically reducing the number of test
+                    cases while maintaining meaningful coverage.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/equivalence-partitioning.png"
+                      alt="Equivalence class partitioning diagram showing an age input field divided into four classes: EC1 Invalid (below 0), EC2 Invalid (0-17), EC3 Valid (18-120), EC4 Invalid (above 120)"
+                      width="800" loading="lazy" /></p>
+
+                  <h2>How Equivalence Class Partitioning Works</h2>
+
+                  <h3>Step 1: Identify Input Fields and Their Domains</h3>
+
+                  <p>Consider a user registration form with three fields:</p>
+                  <ul>
+                    <li><strong>Age</strong> &mdash; numeric, must be 18&ndash;120</li>
+                    <li><strong>Email</strong> &mdash; must be a valid email format</li>
+                    <li><strong>Country</strong> &mdash; must be from a list of supported countries</li>
+                  </ul>
+
+                  <p>Each field has a domain of possible values. Our job is to partition each domain into equivalence
+                    classes.</p>
+
+                  <h3>Step 2: Define Valid and Invalid Classes</h3>
+
+                  <p>For the <strong>age</strong> field, we identify four equivalence classes:</p>
+
+                  <table>
+                    <tr>
+                      <th>Class</th>
+                      <th>Range</th>
+                      <th>Type</th>
+                      <th>Expected Behavior</th>
+                    </tr>
+                    <tr>
+                      <td>EC1</td>
+                      <td>below 0</td>
+                      <td>Invalid</td>
+                      <td>Error: invalid age</td>
+                    </tr>
+                    <tr>
+                      <td>EC2</td>
+                      <td>0 &ndash; 17</td>
+                      <td>Invalid</td>
+                      <td>Error: must be 18 or older</td>
+                    </tr>
+                    <tr>
+                      <td>EC3</td>
+                      <td>18 &ndash; 120</td>
+                      <td>Valid</td>
+                      <td>Registration succeeds</td>
+                    </tr>
+                    <tr>
+                      <td>EC4</td>
+                      <td>above 120</td>
+                      <td>Invalid</td>
+                      <td>Error: invalid age</td>
+                    </tr>
+                  </table>
+
+                  <p>We do the same for email (valid format, invalid format, empty) and country (supported, unsupported,
+                    empty). Each combination of one class per field produces a test case.</p>
+
+                  <h3>Step 3: Build the Equivalence Class Table</h3>
+
+                  <p>An equivalence class table (ECT) organizes all fields, their classes, and the test cases in a
+                    single spreadsheet. Each column is a test case; each row is a field. An &ldquo;x&rdquo; marks which
+                    class to use for that test case.</p>
+
+                  <p>This is exactly the format that <a href="/docs/guide/equivalence/overview">Nanook reads from Excel,
+                      LibreOffice, or Google Sheets</a>. The spreadsheet <em>is</em> your test specification &mdash;
+                    there is no separate step to translate it into code.</p>
+
+                  <h2>Equivalence Class Testing vs. Boundary Value Analysis</h2>
+
+                  <p>Boundary value analysis (BVA) is a complementary technique that focuses on values at the edges of
+                    equivalence classes &mdash; the boundaries where behavior changes. While equivalence partitioning
+                    selects any representative value from a class, BVA specifically tests the minimum, maximum, and
+                    values just inside and outside each boundary.</p>
+
+                  <table>
+                    <tr>
+                      <th>Aspect</th>
+                      <th>Equivalence Partitioning</th>
+                      <th>Boundary Value Analysis</th>
+                    </tr>
+                    <tr>
+                      <td>Focus</td>
+                      <td>Representative values from each class</td>
+                      <td>Values at class boundaries</td>
+                    </tr>
+                    <tr>
+                      <td>Number of tests</td>
+                      <td>One per class</td>
+                      <td>Multiple per boundary</td>
+                    </tr>
+                    <tr>
+                      <td>Best for</td>
+                      <td>Reducing total test cases</td>
+                      <td>Finding off-by-one errors</td>
+                    </tr>
+                    <tr>
+                      <td>Complexity</td>
+                      <td>Lower</td>
+                      <td>Higher</td>
+                    </tr>
+                    <tr>
+                      <td>Coverage type</td>
+                      <td>Broad functional coverage</td>
+                      <td>Edge case coverage</td>
+                    </tr>
+                  </table>
+
+                  <p>In practice, the two techniques work best together. Define your equivalence classes first, then add
+                    boundary value tests for the most critical fields. Nanook supports both within the same <a
+                      href="/docs/guide/equivalence/overview">equivalence class table</a>.</p>
+
+                  <h2>Worked Example: Testing a Login API</h2>
+
+                  <p>Let&rsquo;s walk through a complete example. A login endpoint accepts two fields:
+                    <code>userId</code> and <code>password</code>. For each field, we define three equivalence classes:
+                  </p>
+
+                  <p><strong>userId classes:</strong></p>
+                  <ul>
+                    <li>Empty (no value provided)</li>
+                    <li>Non-existent user ID</li>
+                    <li>Valid user ID</li>
+                  </ul>
+
+                  <p><strong>Password classes:</strong></p>
+                  <ul>
+                    <li>Empty</li>
+                    <li>Wrong password</li>
+                    <li>Valid password</li>
+                  </ul>
+
+                  <p>With 3 classes per field and 2 fields, we get a maximum of <strong>3 &times; 3 = 9 test
+                      cases</strong>. Without equivalence partitioning, you might write dozens of ad-hoc tests and still
+                    miss combinations. With it, you know exactly which 9 cases cover all class combinations:</p>
+
+                  <table>
+                    <tr>
+                      <th>Test Case</th>
+                      <th>userId</th>
+                      <th>Password</th>
+                      <th>Expected Result</th>
+                    </tr>
+                    <tr>
+                      <td>TC1</td>
+                      <td>Empty</td>
+                      <td>Empty</td>
+                      <td>Error: userId required</td>
+                    </tr>
+                    <tr>
+                      <td>TC2</td>
+                      <td>Empty</td>
+                      <td>Wrong</td>
+                      <td>Error: userId required</td>
+                    </tr>
+                    <tr>
+                      <td>TC3</td>
+                      <td>Empty</td>
+                      <td>Valid</td>
+                      <td>Error: userId required</td>
+                    </tr>
+                    <tr>
+                      <td>TC4</td>
+                      <td>Non-existent</td>
+                      <td>Empty</td>
+                      <td>Error: password required</td>
+                    </tr>
+                    <tr>
+                      <td>TC5</td>
+                      <td>Non-existent</td>
+                      <td>Wrong</td>
+                      <td>Error: invalid credentials</td>
+                    </tr>
+                    <tr>
+                      <td>TC6</td>
+                      <td>Non-existent</td>
+                      <td>Valid</td>
+                      <td>Error: user not found</td>
+                    </tr>
+                    <tr>
+                      <td>TC7</td>
+                      <td>Valid</td>
+                      <td>Empty</td>
+                      <td>Error: password required</td>
+                    </tr>
+                    <tr>
+                      <td>TC8</td>
+                      <td>Valid</td>
+                      <td>Wrong</td>
+                      <td>Error: invalid credentials</td>
+                    </tr>
+                    <tr>
+                      <td>TC9</td>
+                      <td>Valid</td>
+                      <td>Valid</td>
+                      <td>Login successful</td>
+                    </tr>
+                  </table>
+
+                  <p>This is the exact table from the <a href="/docs/quickstart/quickstart">Nanook Quickstart</a>. Each
+                    test case is fully defined by the combination of equivalence classes.</p>
+
+                  <h2>Automating Equivalence Class Testing with Nanook</h2>
+
+                  <p><a href="/">Nanook</a> is an open-source toolkit that reads equivalence class tables directly from
+                    spreadsheets and generates test data for every defined test case. The workflow is straightforward:
+                  </p>
+
+                  <ol>
+                    <li><strong>Define your equivalence class table</strong> in Excel, LibreOffice, or Google Sheets
+                    </li>
+                    <li><strong>Attach data generators</strong> to each class &mdash; use built-in generators for common
+                      types (emails, names, dates) or <a href="/docs/tutorials/createGenerator">write custom
+                        generators</a> in JavaScript</li>
+                    <li><strong>Run Nanook</strong> to generate test data for every test case</li>
+                    <li><strong>Export</strong> to JSON, CSV, or any custom format via <a
+                        href="/docs/tutorials/createWriter">pluggable writers</a></li>
+                  </ol>
+
+                  <p>Getting started takes minutes:</p>
+
+                  <pre><code>git clone https://github.com/xhubioTable/quickstart-source.git
+cd quickstart-source
+yarn install
+node src/quickstart.js</code></pre>
+
+                  <p>Nanook produces one output file per test case. For the login example above, you get 9 JSON files
+                    &mdash; each containing the exact test data defined by the equivalence class combination. When your
+                    specifications change, you simply update the spreadsheet and re-run Nanook. This makes it ideal for
+                    <strong>CI/CD integration</strong>: regenerate test data automatically whenever the specification
+                    evolves.</p>
+
+                  <h2>Best Practices for Equivalence Class Testing</h2>
+
+                  <ul>
+                    <li><strong>Keep classes mutually exclusive and collectively exhaustive.</strong> Every possible
+                      input value should belong to exactly one class. No gaps, no overlaps.</li>
+                    <li><strong>Combine with boundary value analysis</strong> for critical fields. Equivalence
+                      partitioning tells you <em>which</em> classes to test; BVA tells you <em>where</em> within those
+                      classes bugs are most likely hiding.</li>
+                    <li><strong>Review classes with domain experts.</strong> The quality of your equivalence classes
+                      determines the quality of your testing. A domain expert can spot missing classes that a developer
+                      might overlook.</li>
+                    <li><strong>Automate the data generation, keep the thinking human.</strong> Defining equivalence
+                      classes requires judgment and domain knowledge. Generating test data from those classes is
+                      mechanical work &mdash; let a tool like Nanook handle it.</li>
+                    <li><strong>Version-control your spreadsheets.</strong> Treat equivalence class tables as living
+                      documentation that evolves with your codebase.</li>
+                  </ul>
+
+                  <h2>Conclusion</h2>
+
+                  <p>Equivalence class testing is one of the most effective techniques for reducing test effort while
+                    maintaining meaningful coverage. By dividing inputs into classes of equivalent behavior, you can
+                    systematically cover all relevant scenarios without an explosion of test cases.</p>
+
+                  <p>The traditional bottleneck has been generating the actual test data from those specifications.
+                    Nanook eliminates that bottleneck by reading your equivalence class tables directly from
+                    spreadsheets and producing ready-to-use test data.</p>
+
+                  <p><strong>Ready to automate your equivalence class testing?</strong> Follow the <a
+                      href="/docs/quickstart/quickstart">Quickstart Guide</a> to get started in 5 minutes, or explore
+                    the <a href="/docs/tutorials/overview">full tutorials</a> to see equivalence class tables in action.
+                  </p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>
