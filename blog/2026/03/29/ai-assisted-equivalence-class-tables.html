@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>AI-Assisted Equivalence Class Tables with Claude Code · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Nanook now ships a Claude Code skill and slash command that generates complete equivalence class tables from a test object description. Learn how to use /createEquivalenceClassTable to go from zero to a formatted Excel file in seconds." />
+  <meta property="og:title" content="AI-Assisted Equivalence Class Tables with Claude Code · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables" />
+  <meta property="og:description"
+    content="Nanook ships a Claude Code skill and slash command that generates complete equivalence class tables from a test object description." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AI-Assisted Equivalence Class Tables with Claude Code",
+  "datePublished": "2026-03-29",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Nanook now ships a Claude Code skill and slash command that generates complete equivalence class tables from a test object description.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables"
+}
+</script>
+</head>
+
+<body data-theme="tactical">
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="/blog">[ BLOG ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/04/01/test-data-manual-vs-automated"><samp class="nav-date">2026-04</samp> Manual vs. Automated</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">AI-Assisted
+                    Equivalence Class Tables with Claude Code</a></h1>
+                <p class="post-meta">March 29, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p>Creating equivalence class tables by hand is tedious. You need to identify every input field, define
+                    equivalence classes for each one, plan test cases with the right marker logic, set up coverage
+                    formulas, and format everything correctly in Excel. For a form with ten fields, that can easily take
+                    an hour &mdash; and most of that time is spent on mechanical work, not on thinking about what to
+                    test.</p>
+
+                  <p>Starting today, Nanook ships a <strong>Claude Code skill</strong> and a
+                    <strong>slash command</strong> that automate the entire process. Describe your test object &mdash; a
+                    page, an API endpoint, a form &mdash; and Claude generates a complete, formatted Excel file with
+                    correct markers, formulas, and 100% coverage.</p>
+
+                  <h2>What&rsquo;s New</h2>
+
+                  <p>The <code>nanook-table</code> repository now includes two new additions for <a
+                      href="https://claude.ai/claude-code" target="_blank"
+                      rel="noreferrer noopener">Claude Code</a> users:</p>
+
+                  <ul>
+                    <li><strong>Skill: <code>create-equivalence-class-table</code></strong> &mdash; a comprehensive
+                      reference document that teaches Claude how Nanook decision tables work: section types, marker
+                      rules, the CASCADE pattern, generator syntax, multi-sheet architecture, and color formatting. It
+                      lives in <code>.claude/skills/</code> and is automatically available when you work in the
+                      nanook-table project.</li>
+                    <li><strong>Command: <code>/createEquivalenceClassTable</code></strong> &mdash; a slash command that
+                      triggers the skill with a specific test object. You provide the name of a page, API endpoint, or
+                      form, and Claude handles the rest.</li>
+                  </ul>
+
+                  <h2>How to Use It</h2>
+
+                  <h3>Step 1: Open Claude Code in the nanook-table project</h3>
+
+                  <p>Navigate to your nanook-table working directory and start Claude Code. The skill is picked up
+                    automatically from the <code>.claude/skills/</code> directory &mdash; no configuration needed.</p>
+
+                  <pre><code>cd your-project
+claude</code></pre>
+
+                  <h3>Step 2: Run the command</h3>
+
+                  <p>Use the slash command with a description of what you want to test:</p>
+
+                  <pre><code>/createEquivalenceClassTable Customer Registration Form</code></pre>
+
+                  <p>Or describe an API endpoint:</p>
+
+                  <pre><code>/createEquivalenceClassTable POST /api/v1/orders</code></pre>
+
+                  <p>Or a specific page in your application:</p>
+
+                  <pre><code>/createEquivalenceClassTable Invoice Create Page</code></pre>
+
+                  <h3>Step 3: Claude does the work</h3>
+
+                  <p>Behind the scenes, Claude follows the skill&rsquo;s workflow:</p>
+
+                  <ol>
+                    <li><strong>Analyzes the test object</strong> &mdash; identifies fields, validation rules,
+                      dependencies, and logical field groups</li>
+                    <li><strong>Defines equivalence classes</strong> per field using established patterns (valid, empty,
+                      tooLong, invalid format, etc.)</li>
+                    <li><strong>Plans test cases</strong> with the CASCADE pattern for exact 100% coverage</li>
+                    <li><strong>Generates a TypeScript script</strong> that uses <code>exceljs</code> to create a
+                      fully formatted Excel file</li>
+                    <li><strong>Runs the script</strong> to produce the <code>.xlsx</code> file</li>
+                    <li><strong>Verifies</strong> that the file can be read by Nanook&rsquo;s
+                      <code>ImporterXlsx</code></li>
+                  </ol>
+
+                  <p>The result is a production-ready Excel file in your <code>resources/</code> directory with:</p>
+
+                  <ul>
+                    <li>Color-coded headers (dark blue for table headers, blue for sections, green for summary)</li>
+                    <li>COUNTA formulas that automatically count equivalence classes per field</li>
+                    <li>Coverage formulas in the summary row that calculate total and per-test-case coverage</li>
+                    <li>Correct <code>x</code>, <code>a</code>, <code>e</code> markers following the CASCADE
+                      pattern</li>
+                    <li>Generator references like <code>gen:1:faker:person.fullName</code> for realistic test data</li>
+                    <li>Multi-sheet architecture when the test object has more than 6&ndash;8 fields</li>
+                  </ul>
+
+                  <h2>What Is the CASCADE Pattern?</h2>
+
+                  <p>CASCADE is the marker strategy that makes 100% coverage possible with a minimal number of test
+                    cases. The idea is simple: each error test case targets one specific equivalence class in one
+                    field. For fields <em>after</em> the target, the test case marks all equivalence classes
+                    (<code>a</code> on the preferred value, <code>e</code> on the rest), which increases coverage
+                    efficiently. For fields <em>before</em> the target, only the preferred value is marked with
+                    <code>x</code>.</p>
+
+                  <p>The result is a staircase-shaped pattern of markers that, when summed up, covers every possible
+                    combination exactly once:</p>
+
+                  <pre><code>                    | inv_1 | inv_2 | inv_3 | inv_4 | valid_1
+field1 valid        |       |   x   |   x   |   x   |   x
+       empty        |   x   |       |       |       |
+field2 valid        |   a   |       |   x   |   x   |   x
+       empty        |   e   |   x   |       |       |
+field3 valid        |   a   |   a   |       |   x   |   x
+       empty        |   e   |   e   |   x   |       |
+field4 valid        |   a   |   a   |   a   |       |   x
+       empty        |   e   |   e   |   e   |   x   |</code></pre>
+
+                  <p>The skill knows these rules and applies them automatically. You get mathematically correct 100%
+                    coverage without having to think about marker placement.</p>
+
+                  <h2>A Practical Example</h2>
+
+                  <p>Suppose you run:</p>
+
+                  <pre><code>/createEquivalenceClassTable User Registration Form</code></pre>
+
+                  <p>Claude analyzes the form and identifies fields like username (required text), email (required,
+                    format validation), password (required, minimum length), and terms acceptance (required boolean).
+                    It then creates equivalence classes for each:</p>
+
+                  <table>
+                    <tr>
+                      <th>Field</th>
+                      <th>Equivalence Classes</th>
+                    </tr>
+                    <tr>
+                      <td>username</td>
+                      <td>valid, empty, whitespace, tooLong</td>
+                    </tr>
+                    <tr>
+                      <td>email</td>
+                      <td>valid, invalid, empty</td>
+                    </tr>
+                    <tr>
+                      <td>password</td>
+                      <td>valid, empty, tooShort</td>
+                    </tr>
+                    <tr>
+                      <td>termsAccepted</td>
+                      <td>true, false</td>
+                    </tr>
+                  </table>
+
+                  <p>That gives us 4 &times; 3 &times; 3 &times; 2 = 72 total combinations. With CASCADE, Claude
+                    creates 8 error test cases (one per non-preferred equivalence class) plus 1 happy-path test case
+                    &mdash; 9 test cases total that cover all 72 combinations exactly.</p>
+
+                  <p>The generated script lands at <code>scripts/create-user-registration-table.ts</code> and the
+                    Excel file at <code>resources/user-registration-tests.xlsx</code>.</p>
+
+                  <h2>What Happens Next</h2>
+
+                  <p>Once you have the Excel file, the standard Nanook workflow takes over:</p>
+
+                  <ol>
+                    <li><strong>Review</strong> the table in any spreadsheet application &mdash; check that the fields,
+                      equivalence classes, and markers match your domain knowledge</li>
+                    <li><strong>Adjust</strong> as needed &mdash; add fields, rename classes, change generators</li>
+                    <li><strong>Generate fixtures</strong> by running your generation script, which uses Nanook&rsquo;s
+                      <code>ImporterXlsx</code> to read the table and produce test data files</li>
+                    <li><strong>Integrate</strong> the generated fixtures into your test suite</li>
+                  </ol>
+
+                  <p>The AI gets you to a solid starting point in seconds. Your domain expertise refines it into
+                    exactly the right test specification.</p>
+
+                  <h2>Requirements</h2>
+
+                  <ul>
+                    <li><a href="https://claude.ai/claude-code" target="_blank"
+                        rel="noreferrer noopener">Claude Code</a> installed and configured</li>
+                    <li>The <code>nanook-table</code> repository cloned locally (the skill and command are part of the
+                      repo)</li>
+                    <li><code>exceljs</code> available as a dependency (used by the generated scripts to create
+                      formatted Excel files)</li>
+                  </ul>
+
+                  <h2>Why This Matters</h2>
+
+                  <p>The hardest part of systematic test design is not understanding the theory &mdash; it is doing
+                    the mechanical work. Identifying equivalence classes, calculating coverage, placing markers
+                    correctly, formatting the spreadsheet &mdash; these are tasks that follow clear rules but take
+                    significant time.</p>
+
+                  <p>By encoding Nanook&rsquo;s decision table format into a Claude Code skill, we let AI handle the
+                    mechanics while you focus on the decisions that actually matter: <em>what</em> to test and
+                    <em>why</em>.</p>
+
+                  <p><strong>Want to try it?</strong> Clone <a href="https://github.com/xhubio/nanook-table/"
+                      target="_blank" rel="noreferrer noopener">nanook-table</a>, open Claude Code, and run
+                    <code>/createEquivalenceClassTable</code> with your test object. Or start with the <a
+                      href="/docs/quickstart/quickstart">Quickstart Guide</a> if you are new to Nanook.</p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>
