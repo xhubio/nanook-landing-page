@@ -1,3 +1,4 @@
 .playwright-mcp
 .vscode
-tmp/.DS_Store
+tmp/
+.DS_Store
