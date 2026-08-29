@@ -5,7 +5,7 @@
 | Field | Value |
 |---|---|
 | **Title** | Testing E-Invoices for 40 Country/Format Combinations |
-| **Subtitle** | From a few thousand cases to 105,000 -- and the eight data losses nobody had noticed |
+| **Subtitle** | The 105,000 cases that never ran, and the eight data losses nobody had noticed |
 | **URL Slug** | `/blog/2026/08/29/e-invoicing-decision-tables` |
 | **Author** | Torsten Link |
 | **Estimated Publish Date** | 2026-08-29 |
@@ -109,6 +109,25 @@ is the four derivations we built, measured, and threw away.
 - This is where the numbers move: the same table goes from *a few thousand* to **105,000** cases
   without a single new column
 
+#### H3: The 105,000 that never ran
+
+- 🔴 The best story in the piece, and it lands here: for weeks the workbooks *said* 105,000
+  cases. The suite ran **13,042**
+- `multiplicity` was written onto the **referenced data sheets** — 52 document types, 179
+  currencies, 200 country codes, all correct. The **executing** sheet carried `1` everywhere
+- nanook clones where it *generates*. Result: **zero clones**, and from every code list exactly
+  **one** code was ever tested
+- 💡 The rule that came out of it: *what a referenced sheet says about **values** holds; what it
+  says about the **number of cases** has to reach the generator*
+- After lifting it to the executing sheet: **13,042 → 88,609** cases (76,253 clones)
+- ⚠️ How it was found is the transferable part: raising the sample from 400 to 2,500 left the
+  test count **bit-identical**. The same signature as the `slice(0, n)` bug earlier in the
+  project. **When a number does not move although it should, suspect the instrument, not the
+  thing**
+- The counter-check, because clones that repeat themselves are idle work: 32 clone groups, none
+  with identical documents (`EN_Seller_E_14`: 200 clones, 200 distinct invoices). A guard holds
+  that, verified by switching the instance number off — it goes red and names the group
+
 ### H2: Three Run Levels, Because 105,000 Is Not a CI Job
 
 | Level | Where | Cases | Duration |
@@ -191,7 +210,7 @@ This is the section that makes the post worth reading. Each was plausible; each 
 | Sheets | **822** |
 | Equivalence classes | **35,117** (20,757 good cases, 14,360 violations) |
 | Cases in the workbooks | **27,044** |
-| Full run | **~105,000** |
+| Cases the suite builds | **88,609** (76,253 of them multiplicity clones) |
 | Rules still without a case | **7,101** |
 
 - 🔴 Be honest about that last row, and use it to make the strongest point in the post: **two thirds
@@ -204,6 +223,29 @@ This is the section that makes the post worth reading. Each was plausible; each 
 - 💡 The most valuable output of the exercise was not the coverage number. It was learning to say
   which part of the gap is testing work and which part is product work
 
+### H2: Then We Added the Missing Fields — and Four More Rules Bit
+
+Once the tables showed which business terms the input never carried, the fix was a **feature**,
+not a test: 91 of 201 terms had no input field. Line-level allowances (BG-27/BG-28) did not
+exist at all. Three plans, three releases — and the moment those fields were rendered for the
+first time, four national rules objected:
+
+| Rule | What it wanted |
+|---|---|
+| `BR-NL-28` | The Netherlands **forbids** `CountrySubentity`. A perfectly good `state` turned two cases red |
+| `IS-R-002/004` | A real Icelandic kennitala. `REG-INV-2026-IS-001` did not pass |
+| `DK-R-017` | `schemeID="0184"` alongside the Danish CVR — the number alone is not enough |
+| `PEPPOL-EN16931-R120` | Line net must carry its allowances and charges. **An amount cannot be added on its own** |
+
+💡 The lesson generalises past invoicing: **a field the generator used to discard becomes a new
+assertion the first time it is written** — and a national profile may forbid it.
+
+🔴 And the sharpest find came free. `lib-invoice-outbound-fr/ubl.ts` called the same builder
+**twice** — copy-paste, identical comment, two lines apart. `UBL-SR-04` is fatal. It had sat
+there for months without a single failure, because without a value the block writes nothing:
+**twice nothing does not show up.** Only when the fixture finally carried BT-18 did dead code
+turn into a red test.
+
 ### H2: What We Would Tell Someone Starting This
 
 1. **Pin the specification, then read it.** Every expected value traces to a file with a SHA. If it
@@ -214,6 +256,8 @@ This is the section that makes the post worth reading. Each was plausible; each 
 4. **Give every guard a counter-metric.** One number can always be gamed by removing cases
 5. **Re-measure what you discarded.** Four derivations died here; one came back and now carries 491
    mappings
+6. **Fill the fixture before you trust the coverage.** Half our findings were fields the input
+   never carried — and an empty field cannot fail a test, however many rules point at it
 
 ---
 
@@ -271,7 +315,16 @@ Secondary CTA:
   "absurd"; right -- one column with a multiplicity marker fanning out into `tc.1 ... tc.178`
 - Placed in H3 "Multiplicity, or: one code is not a code list"
 
-**Diagram 3 (TO CREATE):** "Ceiling and floor"
+**Diagram 3 (TO CREATE):** "Where multiplicity has to sit"
+- File: `/img/blog/multiplicity-executing-sheet.png` + `.excalidraw`
+- Content: left -- a referenced data sheet (`execute: F`) carrying "200", an arrow to the
+  executing sheet carrying "1", and a single case coming out (orange, caption "one country code
+  tested"); right -- the same with "200" on the executing sheet, fanning into `tc.1 … tc.200`
+  (green). Underneath, one line: *what a referenced sheet says about values holds; what it says
+  about the number of cases has to reach the generator*
+- Placed in H3 "The 105,000 that never ran"
+
+**Diagram 4 (TO CREATE):** "Ceiling and floor"
 - File: `/img/blog/ratchet-ceiling-and-floor.png` + `.excalidraw`
 - Content: a band between two lines -- upper line "unreachable classes, may only fall", lower line
   "executable violations, may only rise"; an arrow of progress that raises both, shown as
