@@ -1,0 +1,250 @@
+[
+  {
+    "tableName": "Login",
+    "name": "OK_login",
+    "data": {
+      "Login": {
+        "6a29ae0a-e7bf-4e11-a733-d0f30286b4b7": {
+          "account": "active",
+          "Expected reaction": [
+            {
+              "key": "signed in",
+              "comment": "session cookie is set"
+            }
+          ],
+          "Expected effect": [
+            {
+              "key": "failed-attempt counter rises",
+              "comment": "SOLL: only for a real account with a wrong password — not for an unknown one"
+            }
+          ],
+          "email": "Gail_Shields3@gmail.com",
+          "password": "ilWBzGSR2SzcPIM"
+        }
+      }
+    },
+    "instanceId": "6a29ae0a-e7bf-4e11-a733-d0f30286b4b7",
+    "callTree": {
+      "instanceId": "a96ec806-ec40-4845-b907-d4e44b3a5225",
+      "tableName": "Login",
+      "testcaseName": "OK_login",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_emailEmpty",
+    "data": {
+      "Login": {
+        "abf3f909-343a-4f4b-8d91-08e9256a8525": {
+          "account": "active",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "password": "epm_nv0Jhl41sPL"
+        }
+      }
+    },
+    "instanceId": "abf3f909-343a-4f4b-8d91-08e9256a8525",
+    "callTree": {
+      "instanceId": "cd814c2e-857b-48d2-baa1-fea2ddc8d164",
+      "tableName": "Login",
+      "testcaseName": "E_emailEmpty",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_emailNoAt",
+    "data": {
+      "Login": {
+        "3ff9c9f5-4e40-4bb1-ae73-4eddce7b2176": {
+          "account": "active",
+          "email": "torsten.link",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "password": "oXXGZYXgGXiUZYP"
+        }
+      }
+    },
+    "instanceId": "3ff9c9f5-4e40-4bb1-ae73-4eddce7b2176",
+    "callTree": {
+      "instanceId": "6dafe7fd-ba97-4eec-b2ef-e25ac1c4d064",
+      "tableName": "Login",
+      "testcaseName": "E_emailNoAt",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_emailTooLong",
+    "data": {
+      "Login": {
+        "a1228728-0e11-49cc-9426-405246105495": {
+          "account": "active",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "email": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "password": "0Gn5Efavj_rxPhs"
+        }
+      }
+    },
+    "instanceId": "a1228728-0e11-49cc-9426-405246105495",
+    "callTree": {
+      "instanceId": "b8649266-c3b1-417b-8a0b-af8dbaff1764",
+      "tableName": "Login",
+      "testcaseName": "E_emailTooLong",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_passwordEmpty",
+    "data": {
+      "Login": {
+        "3718f1b7-e884-4dcc-9ff0-4216afc2db87": {
+          "account": "active",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "email": "Roxanne70@hotmail.com"
+        }
+      }
+    },
+    "instanceId": "3718f1b7-e884-4dcc-9ff0-4216afc2db87",
+    "callTree": {
+      "instanceId": "d53b01b3-878e-496d-a6b0-eca16c624de9",
+      "tableName": "Login",
+      "testcaseName": "E_passwordEmpty",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_passwordTooShort",
+    "data": {
+      "Login": {
+        "dc53796d-de74-4ee3-b0af-6a369882dda9": {
+          "account": "active",
+          "password": "ab",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "Expected effect": [
+            {
+              "key": "failed-attempt counter rises",
+              "comment": "SOLL: only for a real account with a wrong password — not for an unknown one"
+            }
+          ],
+          "email": "Rex98@hotmail.com"
+        }
+      }
+    },
+    "instanceId": "dc53796d-de74-4ee3-b0af-6a369882dda9",
+    "callTree": {
+      "instanceId": "6ba866f1-b098-4d38-9130-c22233b8b799",
+      "tableName": "Login",
+      "testcaseName": "E_passwordTooShort",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_unknownUser",
+    "data": {
+      "Login": {
+        "d831165e-e538-4862-b6cb-f712bf90b940": {
+          "account": "absent",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "Expected effect": [
+            {
+              "key": "failed-attempt counter rises",
+              "comment": "SOLL: only for a real account with a wrong password — not for an unknown one"
+            }
+          ],
+          "email": "Marielle.Stiedemann46@hotmail.com",
+          "password": "9_wwiUSJCC2r4pP"
+        }
+      }
+    },
+    "instanceId": "d831165e-e538-4862-b6cb-f712bf90b940",
+    "callTree": {
+      "instanceId": "f6f995d1-c23d-49cc-b815-a7aacdc76061",
+      "tableName": "Login",
+      "testcaseName": "E_unknownUser",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  },
+  {
+    "tableName": "Login",
+    "name": "E_lockedUser",
+    "data": {
+      "Login": {
+        "7309b79a-da7a-41f1-a59e-1ad45e8e42c6": {
+          "account": "locked",
+          "Expected reaction": [
+            {
+              "key": "rejected",
+              "comment": "with a message"
+            }
+          ],
+          "email": "Sedrick.Schimmel@gmail.com",
+          "password": "DSQpbXFUVcFG_Oy"
+        }
+      }
+    },
+    "instanceId": "7309b79a-da7a-41f1-a59e-1ad45e8e42c6",
+    "callTree": {
+      "instanceId": "a26e8273-e157-4ac1-87dc-1c98b662c836",
+      "tableName": "Login",
+      "testcaseName": "E_lockedUser",
+      "neverExecute": false,
+      "tags": [],
+      "children": []
+    },
+    "postProcessDirectives": []
+  }
+]

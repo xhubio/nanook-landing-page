@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img"
+     aria-label="55 page classes, 703 element getters, 2 functions with a data contract — the specification lived in TypeScript. Now: 117 decision tables, 1,981 cases, 0 hand-written spec files.">
+  <!-- LinkedIn single image, 1:1. Square fills the mobile feed better than 1200×628,
+       and it is what QuickLook renders natively (qlmanage -t -s 1200).
+       Colours follow the Nanook brutalist dark theme. -->
+  <defs>
+    <style>
+      .mono { font-family: "SFMono-Regular","JetBrains Mono",Menlo,Consolas,monospace; }
+      .kick { font-size: 24px; fill: #E61919; font-weight: 700; letter-spacing: 4px; }
+      .n    { font-size: 132px; font-weight: 700; letter-spacing: -5px; }
+      .lbl  { font-size: 22px; fill: #8a8a8a; }
+      .head { font-size: 54px; font-weight: 700; fill: #ffffff; letter-spacing: -1px; }
+      .sub  { font-size: 29px; fill: #d4d4d4; }
+      .foot { font-size: 21px; fill: #8a8a8a; letter-spacing: 2px; }
+      .was  { font-size: 34px; fill: #8a8a8a; }
+      .now  { font-size: 34px; fill: #4CAF50; font-weight: 700; }
+      .rowl { font-size: 24px; fill: #8a8a8a; }
+    </style>
+  </defs>
+
+  <rect width="1200" height="1200" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="1200" height="6" fill="#E61919"/>
+
+  <text class="mono kick" x="80" y="104">NANOOK · FIELD REPORT</text>
+
+  <!-- Der Aufhänger: zwei graue Zahlen, eine rote. Die rote ist die Aussage. -->
+  <g class="mono">
+    <text class="n" x="80"  y="286" fill="#8a8a8a">55</text>
+    <text class="lbl" x="82" y="326">page classes</text>
+
+    <text class="n" x="350" y="286" fill="#8a8a8a">703</text>
+    <text class="lbl" x="352" y="326">element getters</text>
+
+    <text class="n" x="740" y="286" fill="#E61919">2</text>
+    <text class="lbl" x="742" y="326">functions with</text>
+    <text class="lbl" x="742" y="352">a data contract</text>
+  </g>
+
+  <line x1="80" y1="410" x2="1120" y2="410" stroke="#262626" stroke-width="2"/>
+
+  <text class="mono head" x="80" y="486">Volume was not</text>
+  <text class="mono head" x="80" y="546">the problem.</text>
+
+  <text class="mono sub" x="80" y="616">The specification lived in TypeScript —</text>
+  <text class="mono sub" x="80" y="654">and that belongs to whoever writes TypeScript,</text>
+  <text class="mono sub" x="80" y="692">not to whoever knows the domain.</text>
+
+  <!-- Das Ergebnis: eine kleine Tabelle, kein Versprechen -->
+  <g class="mono" transform="translate(80,772)">
+    <rect x="0" y="0" width="1040" height="278" fill="#121212"/>
+    <rect x="0" y="0" width="6" height="278" fill="#4CAF50"/>
+
+    <text class="rowl" x="44"  y="56">BEFORE</text>
+    <text class="rowl" x="300" y="56">NOW</text>
+    <line x1="44" y1="76" x2="996" y2="76" stroke="#262626" stroke-width="2"/>
+
+    <text class="was" x="44"  y="132">16</text>
+    <text class="now" x="300" y="132">0</text>
+    <text class="rowl" x="560" y="132">hand-written spec files</text>
+
+    <text class="was" x="44"  y="190">—</text>
+    <text class="now" x="300" y="190">117</text>
+    <text class="rowl" x="560" y="190">decision tables</text>
+
+    <text class="was" x="44"  y="248">—</text>
+    <text class="now" x="300" y="248">1,981</text>
+    <text class="rowl" x="560" y="248">test cases</text>
+  </g>
+
+  <text class="mono foot" x="80" y="1132">nanook.xhub.io</text>
+</svg>

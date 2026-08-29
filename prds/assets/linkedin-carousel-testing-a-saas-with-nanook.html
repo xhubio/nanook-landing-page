@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>LinkedIn Carousel — How We Test a SaaS Application with Nanook</title>
+<style>
+  /* ─── Export ──────────────────────────────────────────────────────────────
+     LinkedIn carousels are PDFs. Print this file (Cmd+P) → "Save as PDF".
+     Set margins to NONE and enable "Background graphics", otherwise the slides
+     come out white with cropped edges.
+     Square 1080×1080 is the format that survives both feed and mobile.        */
+  @page { size: 1080px 1080px; margin: 0; }
+
+  :root {
+    --bg:      #0A0A0A;
+    --ink:     #ffffff;
+    --muted:   #8a8a8a;
+    --line:    #262626;
+    --red:     #E61919;
+    --green:   #4CAF50;
+    --amber:   #f59e0b;
+    --mono: "SFMono-Regular", "JetBrains Mono", Menlo, Consolas, monospace;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #1a1a1a; font-family: var(--mono); }
+
+  .slide {
+    width: 1080px; height: 1080px;
+    background: var(--bg); color: var(--ink);
+    padding: 88px 96px;
+    display: flex; flex-direction: column;
+    position: relative;
+    page-break-after: always;
+    margin: 0 auto 24px;
+    overflow: hidden;
+  }
+  .slide:last-child { page-break-after: auto; }
+
+  /* Kopfzeile: Marke links, Foliennummer rechts */
+  .top { display: flex; justify-content: space-between; align-items: baseline;
+         font-size: 22px; letter-spacing: .14em; color: var(--muted); }
+  .top .brand { color: var(--red); font-weight: 700; }
+
+  .body { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  h1 { font-size: 72px; line-height: 1.04; letter-spacing: -.02em; font-weight: 700; }
+  h2 { font-size: 58px; line-height: 1.12; letter-spacing: -.01em; font-weight: 700; }
+  .lede { font-size: 34px; line-height: 1.45; color: #d4d4d4; margin-top: 36px; max-width: 20ch; }
+  .note { font-size: 26px; line-height: 1.5; color: var(--muted); margin-top: 32px; }
+
+  .rule { height: 4px; background: var(--red); width: 120px; margin: 40px 0; }
+
+  /* Zahlenblock */
+  .figures { display: flex; gap: 96px; margin-top: 28px; align-items: flex-start; }
+  .fig .n { font-size: 104px; line-height: 1; font-weight: 700; letter-spacing: -.04em; }
+  .fig .l { font-size: 23px; color: var(--muted); margin-top: 20px; line-height: 1.4; width: 240px; }
+  .fig.dim .n { color: var(--muted); }
+  .fig.hot .n { color: var(--red); }
+  .fig.ok  .n { color: var(--green); }
+
+  /* Vorher/Nachher */
+  table { width: 100%; border-collapse: collapse; font-size: 30px; margin-top: 16px; }
+  th, td { text-align: left; padding: 26px 0; border-bottom: 2px solid var(--line); }
+  th { color: var(--muted); font-size: 24px; letter-spacing: .1em; font-weight: 400; }
+  td.was { color: var(--muted); width: 22%; }
+  td.now { color: var(--green); width: 22%; font-weight: 700; }
+  tr:last-child td, tr:last-child th { border-bottom: none; }
+
+  /* Code */
+  pre { background: #121212; border-left: 5px solid var(--amber);
+        padding: 34px 38px; font-size: 25px; line-height: 1.6; margin-top: 36px;
+        white-space: pre-wrap; }
+  .c-dim { color: var(--muted); }
+  .c-ok  { color: var(--green); }
+
+  /* Diagramm: Pfad gegen Achse */
+  .grid2 { display: flex; gap: 64px; margin-top: 40px; align-items: flex-start; }
+  .col { flex: 1; }
+  .col h3 { font-size: 26px; letter-spacing: .1em; color: var(--muted);
+            font-weight: 400; margin-bottom: 28px; }
+  .path { border-left: 4px solid var(--amber); padding: 18px 0 18px 24px;
+          margin-bottom: 18px; font-size: 25px; color: #bdbdbd; }
+  .matrix { display: grid; grid-template-columns: 150px 1fr 1fr; gap: 10px; font-size: 24px; }
+  .matrix div { padding: 22px 14px; text-align: center; border: 2px solid var(--line); }
+  .matrix .hd { color: var(--muted); border: none; text-align: left; }
+  .matrix .cell { color: #bdbdbd; }
+  .matrix .star { border-color: var(--green); color: var(--green); font-weight: 700; }
+
+  .cta { font-size: 36px; line-height: 1.5; }
+  .cta strong { color: var(--green); }
+  .url { font-size: 30px; color: var(--red); margin-top: 40px; word-break: break-all; }
+
+  .foot { font-size: 22px; color: var(--muted); letter-spacing: .08em; }
+
+  @media print { body { background: none; } .slide { margin: 0; } }
+</style>
+</head>
+<body>
+
+<!-- ─── 1 · Der Aufhänger ──────────────────────────────────────────────── -->
+<section class="slide">
+  <div class="top"><span class="brand">NANOOK</span><span>01 / 06</span></div>
+  <div class="body">
+    <h1>Our test suite had<br />703 element getters.</h1>
+    <div class="rule"></div>
+    <div class="figures">
+      <div class="fig dim"><div class="n">55</div><div class="l">page classes</div></div>
+      <div class="fig dim"><div class="n">703</div><div class="l">element getters</div></div>
+      <div class="fig hot"><div class="n">2</div><div class="l">functions with a data contract</div></div>
+    </div>
+    <p class="note">How you operate a dropdown —<br />written down up to 55 times.</p>
+  </div>
+  <div class="foot">A field report</div>
+</section>
+
+<!-- ─── 2 · Das eigentliche Problem ────────────────────────────────────── -->
+<section class="slide">
+  <div class="top"><span class="brand">NANOOK</span><span>02 / 06</span></div>
+  <div class="body">
+    <h2>But volume was<br />not the problem.</h2>
+    <div class="rule"></div>
+    <p class="lede">The specification lived in TypeScript.</p>
+    <pre><span class="c-dim">// somewhere inside a .spec.ts</span>
+const CASES = [ … ]</pre>
+    <p class="note">And that belongs to whoever writes TypeScript —<br />not to whoever knows the domain.</p>
+  </div>
+  <div class="foot">02 — the real cost</div>
+</section>
+
+<!-- ─── 3 · Die Umstellung ─────────────────────────────────────────────── -->
+<section class="slide">
+  <div class="top"><span class="brand">NANOOK</span><span>03 / 06</span></div>
+  <div class="body">
+    <h2>So we moved it out.</h2>
+    <div class="rule"></div>
+    <p class="lede">The decision table is the source.<br />One runner reads the suites as data.</p>
+    <p class="note">No generated spec files left over to maintain.<br />
+      One entry point per app — not one per screen.</p>
+  </div>
+  <div class="foot">03 — the switch</div>
+</section>
+
+<!-- ─── 4 · Vorbedingung als Achse ─────────────────────────────────────── -->
+<section class="slide">
+  <div class="top"><span class="brand">NANOOK</span><span>04 / 06</span></div>
+  <div class="body">
+    <h2>A precondition is<br />an axis, not a path.</h2>
+    <div class="grid2">
+      <div class="col">
+        <h3>AS SCENARIOS</h3>
+        <div class="path">create booking → book over it</div>
+        <div class="path">create absence → assign anyway</div>
+        <div class="path">expire cert → assign anyway</div>
+      </div>
+      <div class="col">
+        <h3>AS AN AXIS</h3>
+        <div class="matrix">
+          <div class="hd"></div><div class="hd">normal</div><div class="hd">proposal</div>
+          <div class="hd">free</div><div class="cell">✓</div><div class="cell">✓</div>
+          <div class="hd">booked</div><div class="cell">conflict</div><div class="star">no conflict ★</div>
+        </div>
+      </div>
+    </div>
+    <p class="note">★ Nobody writes that case as a script.<br />
+      It only occurs to you when you see the grid.</p>
+  </div>
+  <div class="foot">04 — the payoff</div>
+</section>
+
+<!-- ─── 5 · Der Befund ─────────────────────────────────────────────────── -->
+<section class="slide">
+  <div class="top"><span class="brand">NANOOK</span><span>05 / 06</span></div>
+  <div class="body">
+    <h2>This test was green<br />for two days.</h2>
+    <pre><span class="c-dim">// the field had been renamed to `num`</span>
+const seen = rows.map(r =&gt; r.number)
+<span class="c-dim">// → [undefined, undefined, …]</span>
+
+expect(seen).toEqual([...seen].sort())
+<span class="c-ok">✓ passes</span></pre>
+    <p class="note">A dead reader doesn't make an assertion <em>fail</em>.<br />
+      It makes it <strong style="color:#fff">empty</strong> — and empty looks exactly like correct.</p>
+    <p class="note" style="color:var(--red)">Behind it: sorting ascending returned descending.</p>
+  </div>
+  <div class="foot">05 — what it caught</div>
+</section>
+
+<!-- ─── 6 · Zahlen + Verweis ───────────────────────────────────────────── -->
+<section class="slide">
+  <div class="top"><span class="brand">NANOOK</span><span>06 / 06</span></div>
+  <div class="body">
+    <h2>Where we stand.</h2>
+    <table>
+      <tr><th>&nbsp;</th><th>BEFORE</th><th>NOW</th></tr>
+      <tr><td>hand-written spec files</td><td class="was">16</td><td class="now">0</td></tr>
+      <tr><td>decision tables</td><td class="was">—</td><td class="now">117</td></tr>
+      <tr><td>test cases</td><td class="was">—</td><td class="now">1,981</td></tr>
+    </table>
+    <p class="cta" style="margin-top:48px">The full report — including the two assertions
+      <strong>we got wrong ourselves</strong> and what tables don't solve:</p>
+    <div class="url">nanook.xhub.io/blog</div>
+  </div>
+  <div class="foot">Nanook — test case &amp; test data design</div>
+</section>
+
+</body>
+</html>
