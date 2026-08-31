@@ -26,6 +26,10 @@ broadsheet register.
 - **Content — blog posts** (`/blog/YYYY/MM/DD/<slug>`): **Long Document**.
   Single readable column (measure `--measure`), the article leads; related-posts
   index sits *after* the article, open, untoggled. No reveals.
+- Blog column (index + posts) is **centered** in the shell — user decision
+  2026-08-31, replacing the earlier left-biased asymmetry. Posts run **one
+  shared column width** (44rem frame = reading measure); the index keeps the
+  wider 58rem broadsheet frame.
 - **Docs** (`/docs/**`): existing Docusaurus shell, themed via overrides.
   Locked as-is.
 
@@ -72,8 +76,11 @@ themes on every change.
 - 2+1 rule: this site now runs 2 + 1 (Inter display · Plex Sans reading ·
   JetBrains Mono apparatus). Loaded via `@import` at the top of
   `css/brutalist.css`, weights capped at 400/600/ital-400.
-- Prose measure: `--measure` (68ch) on running text only; tables, code and
-  figures may take the full column (deliberate asymmetry).
+- Prose measure: `--measure` (68ch) on running text. On blog **posts** the
+  frame itself equals the measure (44rem) — one shared column width for head,
+  prose, tables and code (user decision 2026-08-31, „ausgewogen"); wide
+  tables/code scroll inside their own container. On docs, tables/code may
+  still take the full column (deliberate asymmetry).
 - Headings roman, never italic. Labels: mono, uppercase, letter-spacing 0.08em+,
   **floor 12px (`--text-xs`) on every viewport** — resolved 2026-08-31 (was
   desktop-only open); toggle/footer/cookie labels now sit on the floor.

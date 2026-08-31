@@ -8,7 +8,8 @@
  *          (user decision — mono stays for apparatus: labels, data, code);
  *          polish pass 2026-08-31: desktop micro-label floor 12px, spacing
  *          snapped to grid (4 documented geometry/em exceptions), cache-bust
- *          via tools/cache-bust.sh;
+ *          via tools/cache-bust.sh; blog column centered + posts on one
+ *          shared 44rem column (balance, user decisions 2026-08-31);
  *          open by user decision: 43 footer shape · 1 Inter display face ·
  *          footer bracket voice ([ MORE ] vs plain masthead)
  */
@@ -2940,15 +2941,28 @@ body[data-theme="swiss"] .hash-link:focus-visible {
    SHARED — both blog page types read as one journal
    ------------------------------------------------------------ */
 
-/* The archive and the article column sit left-biased in the 1400px shell —
-   the wide right margin is the editorial asymmetry, echoing the masthead's
-   left-set wordmark. */
-.docMainWrapper:has(.posts) .mainContainer > .wrapper,
-.docMainWrapper:has(.lonePost) .mainContainer > .wrapper {
+/* The archive and the article column sit centered in the 1400px shell —
+   user decision 2026-08-31 (replaces the earlier left-biased asymmetry).
+   main.css gives .mainContainer a one-sided 24px margin-left (sidebar
+   separation); without zeroing it the column sits 12px off-axis. */
+.docMainWrapper:has(.posts) .mainContainer,
+.docMainWrapper:has(.lonePost) .mainContainer {
+  margin-inline: 0;
+}
+.docMainWrapper:has(.posts) .mainContainer > .wrapper {
   /* !important needed: the legacy docMainWrapper overrides pin wrapper widths
      with !important; this scoped rule must out-rank them */
   max-width: 58rem !important;
-  margin-inline: 0 !important;
+  margin-inline: auto !important;
+}
+
+/* Articles run ONE column width: the frame equals the reading measure, so
+   head, rules, prose, tables, code and the further-reading strip share the
+   same edges. Two stacked widths (928px frame / ~694px prose) left the text
+   mass off-axis inside a centered frame — the imbalance the user flagged. */
+.docMainWrapper:has(.lonePost) .mainContainer > .wrapper {
+  max-width: 44rem !important;
+  margin-inline: auto !important;
 }
 
 /* ------------------------------------------------------------
@@ -3109,12 +3123,14 @@ body[data-theme="swiss"] .docMainWrapper:has(.posts) .posts .post:first-child .p
   position: static !important;
   width: 100% !important;
   min-width: 0 !important;
-  max-width: 58rem;
+  max-width: 44rem;
   height: auto !important;
   border-right: 0 !important;
   border-bottom: 0;
   background: transparent;
   margin-top: var(--space-md);
+  /* follows the centered article column (user decision 2026-08-31) */
+  margin-inline: auto;
   overflow: visible;
 }
 
