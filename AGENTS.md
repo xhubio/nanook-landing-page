@@ -116,7 +116,10 @@ body[data-theme="swiss"] .blog-diagram { filter: invert(1) hue-rotate(180deg); }
 ⇒ Author diagrams **for the dark theme** (dark background, white text). The light variant
 is derived, never drawn twice.
 
-- Keep the `.excalidraw` source next to the PNG in `img/blog/` — both existing diagrams do.
+- Keep the `.excalidraw` source next to the PNG in `img/blog/` — both original diagrams do.
+- ⚪ **Hand-maintained SVG is an accepted alternative** (since the 2026-08-21 post): the SVG
+  *is* its own editable source, so no `.excalidraw` twin is required. Same palette, same
+  dark-first rule, same CSS invert — it applies to `img` inside `.blog-diagram` either way.
 - Palette: `#0A0A0A` background · `#E61919` invalid · `#4CAF50` valid · `#f59e0b` caution
   · `#ffffff` text · `roughness: 0` · `fontFamily: 3` (monospace).
 

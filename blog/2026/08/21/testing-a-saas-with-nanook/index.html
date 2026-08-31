@@ -44,7 +44,7 @@
     "name": "Nanook",
     "url": "https://nanook.xhub.io"
   },
-  "description": "A field report: how we replaced 16 hand-written spec files with 117 decision tables and 1,981 data-driven cases, what it caught, and the two assertions we got wrong ourselves.",
+  "description": "A field report: 16 hand-written spec files replaced by 117 decision tables and 1,981 data-driven cases — what it caught, and the two assertions we got wrong.",
   "image": "https://nanook.xhub.io/img/social-card.png",
   "url": "https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook"
 }
@@ -161,7 +161,8 @@
                     had, somewhere near the top, a <code>const CASES = [...]</code> &mdash; an array of inputs and
                     expected outcomes. That array <em>is</em> the specification: it says which inputs are valid,
                     which are rejected, and what the system must do in each case. And it belonged to whoever writes
-                    TypeScript, not to whoever knows the domain. The person who could tell you that a proposal over an
+                    TypeScript, not to whoever knows the domain &mdash; all the test case design there ever was,
+                    locked in a file only one side could edit. The person who could tell you that a proposal over an
                     existing booking must <em>not</em> raise a conflict could not read the file that should have said
                     so. When the two disagreed, the file won by default, because nobody who knew better ever opened
                     it.</p>
@@ -577,7 +578,7 @@
                     the same stations, and the check column is <strong>empty</strong> &mdash; a customer that was
                     refused has nothing to read back. The flow sheet adds only what the decision table cannot say:
                     the order, and what must still be true at the end of it. Everything else stays in the data
-                    tables, which is why our 24 flow sheets stay two rows short instead of becoming a second test
+                    tables, which is why our 24 flow sheets stay at two rows instead of becoming a second test
                     suite.</p>
 
                   <h2>Where It Stands Now</h2>
@@ -667,8 +668,8 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                       audit.</strong> A column forces a decision into every cell &mdash; you cannot leave a field
                     vaguely &ldquo;handled&rdquo; the way a scenario script can simply not mention it. Writing the
                     country classes for the customer sheet meant asking the application which countries it actually
-                    serves &mdash; and the answer was <strong>five different lists in five places</strong>:
-                    sixteen in one form, fourteen in another, thirteen in the backend. You could create a Romanian
+                    serves &mdash; and the answer was <strong>five different lists in five places</strong>, among
+                    them sixteen in one form, fourteen in another, thirteen in the backend. You could create a Romanian
                     customer but not a Romanian supplier, and a Canadian customer silently fell back to US dollars.
                     None of that came from running a test. It came from having to write a row.</p>
 
@@ -800,7 +801,8 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
 
                   <p>Yes, and earlier. The win was not fewer tests; there are more now than before. The win was that
                     <strong>the specification moved out of TypeScript</strong> and into a form the people who know
-                    the domain can read, correct and extend. The maintenance curve flattened as a direct result:
+                    the domain can read, correct and extend &mdash; that, not the tooling, is what
+                    data-driven testing bought us. The maintenance curve flattened as a direct result:
                     a new screen is a table and a suite file, and the runner has not changed for it.
                   </p>
 
