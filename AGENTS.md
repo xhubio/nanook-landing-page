@@ -140,6 +140,11 @@ and it has no generator watching it.
    reformat or regenerate it.
 4. **Deployment is a push to `main`.** No CI, no tests, no preview. What you commit is
    live — so check the rendered file locally before pushing.
+   🔴 **Nach jeder Änderung an `css/brutalist.css` oder `js/theme.js`:
+   `tools/cache-bust.sh` ausführen** (schreibt einen Inhalts-Hash als `?v=` in alle
+   HTML-Dateien; idempotent). Ohne den Bump überdeckt der Browser-Cache
+   (GitHub Pages, max-age 600) den Deploy bis zu 10 Minuten — und beim lokalen
+   Prüfen mit `python3 -m http.server` passiert dasselbe mit alten Stylesheets.
 5. **The `.html` and `/index.html` twins must stay identical.** Editing one and not the
    other produces two different pages at two URLs that look like one.
 

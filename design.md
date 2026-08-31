@@ -74,7 +74,11 @@ themes on every change.
   `css/brutalist.css`, weights capped at 400/600/ital-400.
 - Prose measure: `--measure` (68ch) on running text only; tables, code and
   figures may take the full column (deliberate asymmetry).
-- Headings roman, never italic. Labels: mono, uppercase, letter-spacing 0.08em+.
+- Headings roman, never italic. Labels: mono, uppercase, letter-spacing 0.08em+,
+  **floor 12px (`--text-xs`) on every viewport** — resolved 2026-08-31 (was
+  desktop-only open); toggle/footer/cookie labels now sit on the floor.
+- Open user decision: footer bracket voice (`[ MORE ]`) vs the plain masthead
+  nav — unify only on the user's word.
 - Type scale tokens `--text-*` (1.25 ratio) in `css/brutalist.css` § SCALES.
 
 ## Spacing · motion · layers
