@@ -19,6 +19,7 @@
 - [Create Writer](https://nanook.xhub.io/docs/tutorials/createWriter): Export data in custom formats
 
 ## API Reference
+- [API Hub](https://nanook.xhub.io/docs/api): Entry page listing all eight module groups of the API reference
 - [Processor](https://nanook.xhub.io/docs/api/processor/Processor): Core processing engine
 - [Data Generator Base](https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorBase): Base class for generators
 - [Table Decision](https://nanook.xhub.io/docs/api/model-decision/TableDecision): Decision table model

@@ -4,20 +4,15 @@
 <head>
   <meta charSet="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Imprint · Nanook</title>
+  <title>API Reference · Nanook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="generator" content="Docusaurus" />
-  <meta name="description" content="A toolkit for test case and test data creation" />
-  <meta property="og:title" content="Imprint · Nanook" />
+  <meta name="description" content="Nanook API reference: interfaces and classes of the model, decision and matrix tables, data generator, processor, file importer, and logger modules." />
+  <meta property="og:title" content="API Reference · Nanook" />
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://nanook.xhub.io/imprint" />
-  <meta property="og:description" content="A toolkit for test case and test data creation" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api" />
   <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://nanook.xhub.io/imprint" />
-  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api" />
+    <link rel="shortcut icon" href="/img/favicon.png" />
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
   <link rel="stylesheet" href="/css/prism.css" />
   <link rel="stylesheet" href="/css/main.css" />
@@ -51,36 +46,55 @@
       </div>
     </div>
   </header>
-  <div class="navPusher">
-    <div class="docMainWrapper wrapper">
-      <div class="container mainContainer documentContainer postContainer">
-        <div class="wrapper">
-          <div class="post">
-            <header class="postHeader">
-              <h1>Imprint</h1>
-            </header>
-            <h2>Responsible for content (§ 55 Abs. 2 RStV):</h2>
-            <p>BeeBack UG (haftungsbeschränkt)<br />Scheffelstraße 20A<br />60318 Frankfurt am Main<br />Germany</p>
-            <p>Managing Director: Patrick Jerominek</p>
-            <p>Registration: Amtsgericht Frankfurt am Main, HRB 125402</p>
-            <p>Open Source Contact: Torsten Link</p>
-            <p>Email: <a href="mailto:opensource@xhub.io" target="_blank" rel="noopener">opensource@xhub.io</a></p>
-            <h2>Disclaimer</h2>
-            <p>These internet pages are non-binding service pages and are set up for the purpose of providing general
-              information only. We make an effort to provide you with precise and updated information. We do not accept
-              any responsibility for the editorial contents, in particular the Internet pages of third parties who are
-              designated with references (links).</p>
-            <p>Furthermore, we do not issue any guarantee with regard to the completeness, correctness and updated
-              status of the information provided by us. Any liability for damage, also direct and/or indirect
-              consequential damage, that results from the use of the information published herein, is not accepted in
-              any case of liability.</p>
-            <p>This disclaimer of liability applies also for information and intellectual contents of third parties
-              which result through reference to other Internet pages of third parties.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+
+  <main class="docs-hub" id="main-content">
+    <header class="docs-hub-head">
+      <samp>API Reference</samp>
+      <p>The interfaces and classes of every Nanook module, grouped the way the
+        packages are.</p>
+    </header>
+    <nav aria-label="API module groups">
+      <a class="docs-hub-row" href="/docs/api/model/TableInterface">
+        <h2>model</h2>
+        <p>The base contracts — TableInterface, TestcaseDefinitionInterface — and
+          the four Todo classes.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/model-decision/TableDecision">
+        <h2>model-decision</h2>
+        <p>Decision tables: TableDecision, TestcaseDefinitionDecision, the
+          section types, and the validate functions.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/model-matrix/TableMatrix">
+        <h2>model-matrix</h2>
+        <p>Matrix tables: TableMatrix and TestcaseDefinitionMatrix.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/dataGenerator/DataGeneratorInterface">
+        <h2>dataGenerator</h2>
+        <p>Data generation: DataGeneratorInterface, DataGeneratorBase,
+          GeneratorFaker, and the TDGServiceRegistry.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/processor/InterfaceProcessor">
+        <h2>processor</h2>
+        <p>Test case processing: InterfaceProcessor, InterfaceWriter, Processor,
+          the data classes (Node, Reference, TestcaseData), and the write and
+          filter helpers.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/file-processor/FileProcessor">
+        <h2>file-processor</h2>
+        <p>File handling: FileProcessor, ImporterInterface, ParserInterface, and
+          the decision, matrix, and specification parsers.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/importerXlsx/ImporterXlsx">
+        <h2>importerXlsx</h2>
+        <p>The Excel importer: ImporterXlsx.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/logger/LoggerInterface">
+        <h2>logger</h2>
+        <p>Logging: LoggerInterface and LoggerMemory.</p>
+      </a>
+    </nav>
+  </main>
+
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>

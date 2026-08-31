@@ -34,7 +34,9 @@ broadsheet register.
   Locked as-is. New: **`/docs/` hub** (2026-08-31 — the URL was a bare 404):
   hand-built `docs/index.html` in the Index-First register (label + sentence +
   five hairline rows), centered 44rem column, styles under `.docs-hub` in
-  `css/brutalist.css`.
+  `css/brutalist.css`. Same day, same register: **`/docs/api/` hub** (8 module
+  groups, reuses `.docs-hub` classes) plus a noindex redirect stub at `/api/`;
+  the site nav's API link targets the hub sitewide.
 
 ## Theme
 

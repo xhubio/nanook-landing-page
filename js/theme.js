@@ -86,7 +86,7 @@ function toggleTheme() {
     var path = location.pathname;
     var section = null;
     if (path.indexOf('/blog') === 0) section = '/blog';
-    else if (path.indexOf('/docs/api/') === 0) section = '/docs/api/';
+    else if (path.indexOf('/docs/api') === 0) section = '/docs/api';
     else if (path.indexOf('/docs') === 0) section = '/docs';
     if (section) {
       var links = document.querySelectorAll('.site-nav a');
@@ -94,10 +94,10 @@ function toggleTheme() {
       for (var i = 0; i < links.length; i++) {
         var href = links[i].getAttribute('href') || '';
         if (href.indexOf('http') === 0) continue;
-        if (section === '/docs/api/' && href.indexOf('/docs/api/') === 0) best = links[i];
+        if (section === '/docs/api' && href.indexOf('/docs/api') === 0) best = links[i];
         else if (section === '/blog' && href.indexOf('/blog') === 0) best = links[i];
         else if (section === '/docs' && href.indexOf('/docs') === 0 &&
-                 href.indexOf('/docs/api/') !== 0 && !best) best = links[i];
+                 href.indexOf('/docs/api') !== 0 && !best) best = links[i];
       }
       if (best) best.setAttribute('aria-current', 'page');
     }
