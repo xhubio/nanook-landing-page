@@ -67,8 +67,8 @@ themes on every change.
 - **Reading (article prose)**: IBM Plex Sans 400/600 + italic 400 at 17px
   (`--font-reading`/`--text-reading`, lede `--text-lede` 19px), line-height
   1.7 — user decision 2026-08-31 ("redesign, so dass es lesbar ist"). Scope:
-  `.lonePost` p/li/blockquote only. Docs remain mono (open option: extend the
-  reading face to docs prose — ask before doing it).
+  `.lonePost` (blog articles) and `.docsContainer` (docs prose — extension
+  requested by the user the same day) p/li/blockquote.
 - 2+1 rule: this site now runs 2 + 1 (Inter display · Plex Sans reading ·
   JetBrains Mono apparatus). Loaded via `@import` at the top of
   `css/brutalist.css`, weights capped at 400/600/ital-400.

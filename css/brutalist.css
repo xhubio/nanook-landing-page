@@ -3229,15 +3229,22 @@ body[data-theme="swiss"] .lonePost .post > div > span > p:first-of-type {
    fatiguing over 3,600 words. The prose on Long Document pages moves
    to the reading face at 17px; everything that is apparatus rather
    than prose (masthead, meta, dates, labels, tables, code, the index,
-   the further-reading strip) stays mono. Scope is .lonePost only:
-   the blog index and the docs keep their current voice.
+   the further-reading strip, the sidebar) stays mono. Scope: .lonePost
+   (blog articles) and .docsContainer (docs prose, extended on user
+   request 2026-08-31); the blog index keeps its mono voice.
    ============================================================ */
 body[data-theme="tactical"] .lonePost .post p,
 body[data-theme="swiss"] .lonePost .post p,
 body[data-theme="tactical"] .lonePost .post li,
 body[data-theme="swiss"] .lonePost .post li,
 body[data-theme="tactical"] .lonePost .post blockquote,
-body[data-theme="swiss"] .lonePost .post blockquote {
+body[data-theme="swiss"] .lonePost .post blockquote,
+body[data-theme="tactical"] .docsContainer .post p,
+body[data-theme="swiss"] .docsContainer .post p,
+body[data-theme="tactical"] .docsContainer .post li,
+body[data-theme="swiss"] .docsContainer .post li,
+body[data-theme="tactical"] .docsContainer .post blockquote,
+body[data-theme="swiss"] .docsContainer .post blockquote {
   font-family: var(--font-reading);
   font-size: var(--text-reading);
   line-height: 1.7;
@@ -3247,7 +3254,11 @@ body[data-theme="swiss"] .lonePost .post blockquote {
 body[data-theme="tactical"] .lonePost .post p strong,
 body[data-theme="swiss"] .lonePost .post p strong,
 body[data-theme="tactical"] .lonePost .post li strong,
-body[data-theme="swiss"] .lonePost .post li strong {
+body[data-theme="swiss"] .lonePost .post li strong,
+body[data-theme="tactical"] .docsContainer .post p strong,
+body[data-theme="swiss"] .docsContainer .post p strong,
+body[data-theme="tactical"] .docsContainer .post li strong,
+body[data-theme="swiss"] .docsContainer .post li strong {
   font-weight: 600;
   color: var(--fg-primary);
 }
