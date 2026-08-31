@@ -1,10 +1,10 @@
-/* Hallmark · repair pass (audit /blog) · macrostructure: Long Document (existing)
- * genre: editorial · tone: brutalist · anchor hue: 28 (warm red)
- * nav: N6 masthead · footer: unchanged (Ft3-ish, kept by request)
- * pre-emit critique: P4 H4 E4 S5 R4 V3
- * fixed: 25 measure · 26 states · 10 transition-all · 42 nav · 22 chroma
- *        · 24 scale · 48 tokens · leaked Docusaurus light values · tabular-nums
- * open by request: 43 footer shape · 1 Inter display face
+/* Hallmark · genre: editorial · design-system: design.md · designed-as-app
+ * macrostructure: Index-First (blog index) + Long Document (posts) ·
+ * landing + docs: existing, locked · nav: N6 masthead · footer: fixed-by-user
+ * theme: house (OKLCH anchor hue 28) · enrichment: none on content pages
+ * pre-emit critique: P4 H4 E4 S4 R4 V4
+ * history: repair pass 2026-08-31 closed gates 10 22 24 25 26 34 42 48;
+ *          open by user decision: 43 footer shape · 1 Inter display face
  */
 
 /* ============================================================
@@ -44,6 +44,15 @@
 
   /* prose measure — 45-75ch is the readable band (gate 25) */
   --measure: 68ch;
+
+  /* type scale — 1.25 (major third) on a 1rem base */
+  --text-xs:   0.75rem;    /* 12px  — labels, feed link */
+  --text-sm:   0.875rem;   /* 14px  — index excerpts, meta */
+  --text-base: 1rem;       /* 16px  — ledes */
+  --text-md:   1.25rem;    /* 20px  — archive row titles */
+  --text-lg:   1.5625rem;  /* 25px  */
+  --text-xl:   1.953rem;   /* 31px  — archive lead title */
+  --text-2xl:  2.441rem;   /* 39px  — article display title */
 
   /* z-index — six named levels; 9000/9998/9999 were arbitrary.
      The nav sits above in-page sticky boxes so it always out-paints them. */
@@ -2909,4 +2918,350 @@ body[data-theme="swiss"] .hash-link:focus-visible {
   body[data-theme="swiss"] .hash-link {
     opacity: 0.45;
   }
+}
+
+/* ============================================================
+   BLOG REDESIGN — hallmark redesign /blog (design.md)
+   Index  -> 13 · Index-First   (scope: .docMainWrapper:has(.posts))
+   Posts  -> 02 · Long Document (scope: .docMainWrapper:has(.lonePost))
+   CSS-only: the 17 baked blog HTML files and their twins are untouched;
+   docs pages carry neither .posts nor .lonePost and never match.
+   Browsers without :has() keep the previous layout (graceful fallback).
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   SHARED — both blog page types read as one journal
+   ------------------------------------------------------------ */
+
+/* The archive and the article column sit left-biased in the 1400px shell —
+   the wide right margin is the editorial asymmetry, echoing the masthead's
+   left-set wordmark. */
+.docMainWrapper:has(.posts) .mainContainer > .wrapper,
+.docMainWrapper:has(.lonePost) .mainContainer > .wrapper {
+  /* !important needed: the legacy docMainWrapper overrides pin wrapper widths
+     with !important; this scoped rule must out-rank them */
+  max-width: 58rem !important;
+  margin-inline: 0 !important;
+}
+
+/* ------------------------------------------------------------
+   INDEX — broadsheet archive
+   ------------------------------------------------------------ */
+
+/* The old index listed the same six posts twice: once in the sidebar, once as
+   stacked full teasers. The index IS the index now — the sidebar goes. */
+.docMainWrapper:has(.posts) .docsNavContainer {
+  display: none;
+}
+
+/* Index head: one label, one factual sentence, the feed — stacked, no display
+   type (Index-First), one tag on the whole page (eyebrow cap). */
+.blog-index-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding-block: var(--space-md) var(--space-sm);
+  border-bottom: 3px double var(--border-bright);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme="tactical"] .blog-index-label,
+body[data-theme="swiss"] .blog-index-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-bottom: var(--space-3xs);
+}
+
+body[data-theme="tactical"] .blog-index-desc,
+body[data-theme="swiss"] .blog-index-desc {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  max-width: var(--measure);
+}
+
+body[data-theme="tactical"] .blog-index-feed,
+body[data-theme="swiss"] .blog-index-feed {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--link-accent);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;      /* standalone target — full touch square */
+}
+
+/* Archive rows: hairline-separated, radius-free, tighter than the old
+   full-teaser stack */
+.docMainWrapper:has(.posts) .posts .post {
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-block: var(--space-md);
+}
+
+/* Row head: title left, date right, one baseline — a list row with a date
+   micro-label, not a section head (gate-54-clean by construction) */
+.docMainWrapper:has(.posts) .postHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3xs) var(--space-md);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme="tactical"] .docMainWrapper:has(.posts) .postHeaderTitle,
+body[data-theme="swiss"] .docMainWrapper:has(.posts) .postHeaderTitle {
+  margin: 0;
+  font-size: var(--text-md);
+  line-height: 1.2;
+  letter-spacing: 0;
+  border-bottom: 0;
+  padding-bottom: 0;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* Titles are ink; red stays with interaction (hover) */
+body[data-theme="tactical"] .docMainWrapper:has(.posts) .postHeaderTitle a,
+body[data-theme="swiss"] .docMainWrapper:has(.posts) .postHeaderTitle a {
+  color: var(--fg-primary);
+  border-bottom-color: transparent;
+}
+
+body[data-theme="tactical"] .docMainWrapper:has(.posts) .postHeaderTitle a:hover,
+body[data-theme="swiss"] .docMainWrapper:has(.posts) .postHeaderTitle a:hover {
+  color: var(--link-accent);
+  border-bottom-color: var(--accent-red-glow);
+}
+
+body[data-theme="tactical"] .docMainWrapper:has(.posts) .post-meta,
+body[data-theme="swiss"] .docMainWrapper:has(.posts) .post-meta {
+  margin: 0 0 0 auto;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+/* One author, six rows — repeating the byline is noise; it lives on the post */
+.docMainWrapper:has(.posts) .authorBlock {
+  display: none;
+}
+
+/* Excerpts: two lines, the full text is one click away */
+.docMainWrapper:has(.posts) .post-content p {
+  margin-block: 0;
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.docMainWrapper:has(.posts) .post-content code {
+  font-size: 0.9em;   /* 12.6px on the 14px excerpt — stays >= the 12px floor */
+}
+
+/* Lead story: the newest entry carries broadsheet weight */
+body[data-theme="tactical"] .docMainWrapper:has(.posts) .posts .post:first-child .postHeaderTitle,
+body[data-theme="swiss"] .docMainWrapper:has(.posts) .posts .post:first-child .postHeaderTitle {
+  font-size: var(--text-xl);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.docMainWrapper:has(.posts) .posts .post:first-child {
+  padding-block: var(--space-lg) var(--space-lg);
+}
+
+.docMainWrapper:has(.posts) .posts .post:first-child .post-content p {
+  -webkit-line-clamp: 3;
+}
+
+/* ------------------------------------------------------------
+   POSTS — the article leads; related posts follow it
+   ------------------------------------------------------------ */
+
+.docMainWrapper:has(.lonePost) {
+  flex-direction: column;
+}
+
+/* The rail becomes an open further-reading index after the article —
+   no toggle, no collapse, six short rows at the end of the read. */
+.docMainWrapper:has(.lonePost) .docsNavContainer {
+  order: 2;
+  position: static !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 58rem;
+  height: auto !important;
+  border-right: 0 !important;
+  border-bottom: 0;
+  background: transparent;
+  margin-top: var(--space-md);
+  overflow: visible;
+}
+
+body[data-theme="tactical"] .docMainWrapper:has(.lonePost) .navBreadcrumb,
+body[data-theme="swiss"] .docMainWrapper:has(.lonePost) .navBreadcrumb {
+  display: none !important;
+}
+
+body[data-theme="tactical"] .docMainWrapper:has(.lonePost) .toc section .navGroups,
+body[data-theme="swiss"] .docMainWrapper:has(.lonePost) .toc section .navGroups {
+  display: block !important;
+  padding: var(--space-sm) 0 0 !important;
+  border-top: 3px double var(--border-bright);
+}
+
+/* Don't recommend the page the reader is on */
+.docMainWrapper:has(.lonePost) .navListItem.navListItemActive {
+  display: none;
+}
+
+/* Strip dates: the sidebar's 9.6px micro-dates are too small for a reading
+   surface — floor them at --text-xs here (site chrome elsewhere unchanged) */
+body[data-theme="tactical"] .docMainWrapper:has(.lonePost) .nav-date,
+body[data-theme="swiss"] .docMainWrapper:has(.lonePost) .nav-date {
+  font-size: var(--text-xs);
+}
+
+body[data-theme="tactical"] .docMainWrapper:has(.lonePost) .toc .toggleNav .navGroup .navGroupCategoryTitle,
+body[data-theme="swiss"] .docMainWrapper:has(.lonePost) .toc .toggleNav .navGroup .navGroupCategoryTitle {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-bottom: var(--space-2xs);
+}
+
+/* Article head: display title in ink, mono meta, double rule under the block —
+   the accent leaves the title and returns to the links */
+body[data-theme="tactical"] .lonePost .postHeader,
+body[data-theme="swiss"] .lonePost .postHeader {
+  border-bottom: 3px double var(--border-bright);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+body[data-theme="tactical"] .lonePost .postHeaderTitle,
+body[data-theme="swiss"] .lonePost .postHeaderTitle {
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: var(--space-sm);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+body[data-theme="tactical"] .lonePost .postHeaderTitle a,
+body[data-theme="swiss"] .lonePost .postHeaderTitle a {
+  color: var(--fg-primary);
+  border-bottom-color: transparent;
+}
+
+body[data-theme="tactical"] .lonePost .postHeaderTitle a:hover,
+body[data-theme="swiss"] .lonePost .postHeaderTitle a:hover {
+  color: var(--link-accent);
+}
+
+body[data-theme="tactical"] .lonePost .post-meta,
+body[data-theme="swiss"] .lonePost .post-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin: 0 0 var(--space-3xs);
+}
+
+body[data-theme="tactical"] .lonePost .authorBlock p,
+body[data-theme="swiss"] .lonePost .authorBlock p {
+  margin: 0;
+  font-size: var(--text-xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Lede: the opening paragraph steps up one rung and carries full ink */
+body[data-theme="tactical"] .lonePost .post > div > span > p:first-of-type,
+body[data-theme="swiss"] .lonePost .post > div > span > p:first-of-type {
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--fg-primary);
+}
+
+@media (max-width: 640px) {
+
+  .blog-index-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+  }
+
+  .blog-index-feed {
+    min-height: 0;
+  }
+
+  /* Date drops under the title, left-set */
+  .docMainWrapper:has(.posts) .postHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  body[data-theme="tactical"] .docMainWrapper:has(.posts) .post-meta,
+  body[data-theme="swiss"] .docMainWrapper:has(.posts) .post-meta {
+    margin-left: 0;
+  }
+
+  body[data-theme="tactical"] .docMainWrapper:has(.posts) .posts .post:first-child .postHeaderTitle,
+  body[data-theme="swiss"] .docMainWrapper:has(.posts) .posts .post:first-child .postHeaderTitle {
+    font-size: var(--text-lg);
+  }
+
+  body[data-theme="tactical"] .lonePost .postHeaderTitle,
+  body[data-theme="swiss"] .lonePost .postHeaderTitle {
+    font-size: var(--text-xl);
+  }
+}
+
+/* Prev/next and "Recent Posts" buttons still carried Docusaurus' #4277bb
+   border + blue hover fill — the last un-themed interactive elements on
+   content pages. Applies to docs and blog alike. */
+body[data-theme="tactical"] .docs-prevnext .button,
+body[data-theme="swiss"] .docs-prevnext .button,
+body[data-theme="tactical"] .blog-recent .button,
+body[data-theme="swiss"] .blog-recent .button {
+  border: 1px solid var(--border-bright);
+  border-radius: 0;
+  color: var(--link-accent);
+}
+
+body[data-theme="tactical"] .docs-prevnext .button:hover,
+body[data-theme="swiss"] .docs-prevnext .button:hover,
+body[data-theme="tactical"] .blog-recent .button:hover,
+body[data-theme="swiss"] .blog-recent .button:hover {
+  background: var(--bg-secondary);
+  border-color: var(--link-accent);
+  color: var(--link-accent);
+}
+
+/* The strip already lists the archive; the lone "Recent Posts" button above it
+   would say the same thing twice. Keep it where the strip is absent (fallback
+   browsers without :has()) — hide it only when the redesign is active. */
+.docMainWrapper:has(.lonePost) .blog-recent {
+  display: none;
 }
