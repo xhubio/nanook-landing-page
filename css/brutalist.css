@@ -4,8 +4,14 @@
  * theme: house (OKLCH anchor hue 28) · enrichment: none on content pages
  * pre-emit critique: P4 H4 E4 S4 R4 V4
  * history: repair pass 2026-08-31 closed gates 10 22 24 25 26 34 42 48;
+ *          readability pass 2026-08-31: article prose IBM Plex Sans 17px
+ *          (user decision — mono stays for apparatus: labels, data, code);
  *          open by user decision: 43 footer shape · 1 Inter display face
  */
+
+/* Reading face for article prose only (blog Long Document pages).
+   @import must precede all rules; display=swap keeps text visible. */
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&display=swap");
 
 /* ============================================================
    NANOOK — INDUSTRIAL BRUTALIST UI DESIGN SYSTEM
@@ -42,8 +48,16 @@
      Mobile is the compact bar (wordmark + toggles); desktop is the masthead. */
   --header-h: 50px;
 
-  /* prose measure — 45-75ch is the readable band (gate 25) */
+  /* prose measure — 45-75ch is the readable band (gate 25).
+     ch resolves against the element's own face, so the cap self-adjusts
+     between mono (docs) and the reading face (blog articles). */
   --measure: 68ch;
+
+  /* reading face — article prose only; mono stays for apparatus
+     (labels, dates, tables, code, index). User decision 2026-08-31. */
+  --font-reading: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --text-reading: 1.0625rem;  /* 17px — article body */
+  --text-lede:    1.1875rem;  /* 19px — article lede  */
 
   /* type scale — 1.25 (major third) on a 1rem base */
   --text-xs:   0.75rem;    /* 12px  — labels, feed link */
@@ -81,14 +95,15 @@ body[data-theme="tactical"] {
   --accent-red-hover: oklch(64.3% 0.243 27.6);
   --accent-red-glow:  oklch(58.8% 0.231 28.3 / 0.4);
   --accent-ink:       oklch(99.0% 0.004 28);   /* text on an accent fill */
+  --accent-fill-deep: oklch(53.7% 0.211 28.3); /* 5.19:1 with --accent-ink */
   --link-accent:      oklch(64.3% 0.243 27.6); /* 5.30:1 on --bg-primary */
   --border-color:   oklch(28.5% 0.012 28);
   --border-bright:  oklch(32.1% 0.014 28);
   --focus-ring:     oklch(64.3% 0.243 27.6);
-  --scanline:       oklch(0% 0 0 / 0.06);
-  --overlay-scrim:  oklch(0% 0 0 / 0.6);
-  --shadow-drawer:  oklch(0% 0 0 / 0.35);
-  --shadow-lift:    oklch(0% 0 0 / 0.7);
+  --scanline:       oklch(10% 0.008 28 / 0.06);
+  --overlay-scrim:  oklch(10% 0.010 28 / 0.6);
+  --shadow-drawer:  oklch(12% 0.012 28 / 0.35);
+  --shadow-lift:    oklch(10% 0.012 28 / 0.7);
   /* the diagram is authored for the dark theme; its plate stays dark in both */
   --diagram-surface: oklch(21.8% 0.010 28);
   --diagram-border:  oklch(16.5% 0.008 28);
@@ -119,14 +134,15 @@ body[data-theme="swiss"] {
   --accent-red-hover: oklch(53.7% 0.211 28.3);
   --accent-red-glow:  oklch(58.8% 0.231 28.3 / 0.15);
   --accent-ink:       oklch(99.0% 0.004 28);
+  --accent-fill-deep: oklch(53.7% 0.211 28.3); /* 5.19:1 with --accent-ink */
   --link-accent:      oklch(53.7% 0.211 28.3); /* 5.19:1 on --bg-primary */
   --border-color:   oklch(82.4% 0.012 28);
   --border-bright:  oklch(72.0% 0.014 28);
   --focus-ring:     oklch(53.7% 0.211 28.3);
-  --scanline:       oklch(0% 0 0 / 0.06);
-  --overlay-scrim:  oklch(0% 0 0 / 0.6);
-  --shadow-drawer:  oklch(0% 0 0 / 0.18);
-  --shadow-lift:    oklch(0% 0 0 / 0.25);
+  --scanline:       oklch(10% 0.008 28 / 0.06);
+  --overlay-scrim:  oklch(10% 0.010 28 / 0.6);
+  --shadow-drawer:  oklch(14% 0.014 28 / 0.18);
+  --shadow-lift:    oklch(14% 0.014 28 / 0.25);
   --diagram-surface: oklch(21.8% 0.010 28);
   --diagram-border:  oklch(16.5% 0.008 28);
   --diagram-muted:   oklch(45.0% 0.008 28);
@@ -193,6 +209,7 @@ body[data-theme="swiss"] .navPusher {
   background: var(--bg-primary);
   color: var(--fg-primary);
   min-height: 60vh;
+  min-height: 60dvh;
 }
 
 body[data-theme="tactical"] .docMainWrapper,
@@ -849,6 +866,7 @@ body[data-theme="swiss"] .theme-toggle-label-light {
   gap: var(--space-2xl);
   align-items: center;
   min-height: 70vh;
+  min-height: 70dvh;
   position: relative;
   overflow: hidden;
 }
@@ -1217,6 +1235,7 @@ body[data-theme="swiss"] .frame-label {
   align-items: flex-start;
   justify-content: center;
   padding: 5vh var(--space-lg);
+  padding: 5dvh var(--space-lg);
   background: var(--overlay-scrim);
   overflow-y: auto;
 }
@@ -3199,9 +3218,49 @@ body[data-theme="swiss"] .lonePost .authorBlock p {
 /* Lede: the opening paragraph steps up one rung and carries full ink */
 body[data-theme="tactical"] .lonePost .post > div > span > p:first-of-type,
 body[data-theme="swiss"] .lonePost .post > div > span > p:first-of-type {
-  font-size: var(--text-base);
+  font-size: var(--text-lede);
   line-height: 1.65;
   color: var(--fg-primary);
+}
+
+/* ============================================================
+   READABILITY PASS (2026-08-31, user decision)
+   Article prose was JetBrains Mono at 14.4px — fine as a signature,
+   fatiguing over 3,600 words. The prose on Long Document pages moves
+   to the reading face at 17px; everything that is apparatus rather
+   than prose (masthead, meta, dates, labels, tables, code, the index,
+   the further-reading strip) stays mono. Scope is .lonePost only:
+   the blog index and the docs keep their current voice.
+   ============================================================ */
+body[data-theme="tactical"] .lonePost .post p,
+body[data-theme="swiss"] .lonePost .post p,
+body[data-theme="tactical"] .lonePost .post li,
+body[data-theme="swiss"] .lonePost .post li,
+body[data-theme="tactical"] .lonePost .post blockquote,
+body[data-theme="swiss"] .lonePost .post blockquote {
+  font-family: var(--font-reading);
+  font-size: var(--text-reading);
+  line-height: 1.7;
+}
+
+/* Plex Sans 700 is not loaded; 600 carries emphasis without flaring */
+body[data-theme="tactical"] .lonePost .post p strong,
+body[data-theme="swiss"] .lonePost .post p strong,
+body[data-theme="tactical"] .lonePost .post li strong,
+body[data-theme="swiss"] .lonePost .post li strong {
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+/* meta/author lines are p's too, but they are apparatus — pin them back.
+   p.post-meta matches the prose rule's (0,3,2) specificity; the bare
+   .post-meta form loses on the extra type selector. */
+body[data-theme="tactical"] .lonePost .authorBlock p,
+body[data-theme="swiss"] .lonePost .authorBlock p,
+body[data-theme="tactical"] .lonePost p.post-meta,
+body[data-theme="swiss"] .lonePost p.post-meta {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
 }
 
 @media (max-width: 640px) {
@@ -3264,4 +3323,139 @@ body[data-theme="swiss"] .blog-recent .button:hover {
    browsers without :has()) — hide it only when the redesign is active. */
 .docMainWrapper:has(.lonePost) .blog-recent {
   display: none;
+}
+
+/* ============================================================
+   REDESIGN-AUDIT PASS — text-wrap · smooth scroll · skip link ·
+   current-page nav · 404. All inside the design.md system.
+   ============================================================ */
+
+/* Anchor jumps glide instead of teleporting; reduced-motion opts out */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Balanced headings, no orphaned last words in prose — progressive
+   enhancement, ignored by engines without text-wrap support */
+h1,
+h2,
+h3,
+.postHeaderTitle,
+.hero-title,
+.hero-tagline {
+  text-wrap: balance;
+}
+
+.post p,
+.post li,
+.post-content p,
+.definition-inner p,
+.faq-answer {
+  text-wrap: pretty;
+}
+
+/* Skip link — injected by js/theme.js as the first element in <body>;
+   invisible until keyboard focus, then a themed block above the masthead */
+.skip-link {
+  position: fixed;
+  top: var(--space-2xs);
+  left: var(--space-2xs);
+  z-index: calc(var(--z-film) + 1);
+  transform: translateY(calc(-100% - var(--space-lg)));
+  padding: var(--space-xs) var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  background: var(--accent-fill-deep);
+  border: 0;
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid var(--accent-ink);
+  outline-offset: -6px;
+}
+
+/* the base body[data-theme] a rule out-ranks a bare class — pin the ink */
+body[data-theme="tactical"] .skip-link,
+body[data-theme="swiss"] .skip-link {
+  color: var(--accent-ink);
+}
+
+/* Current section in the masthead — set as aria-current by js/theme.js */
+body[data-theme="tactical"] .site-nav a[aria-current="page"],
+body[data-theme="swiss"] .site-nav a[aria-current="page"] {
+  color: var(--fg-primary);
+  border-bottom-color: var(--accent-red);
+}
+
+/* ------------------------------------------------------------
+   404 — /404.html (GitHub Pages serves it automatically)
+   ------------------------------------------------------------ */
+.notfound {
+  max-width: 58rem;
+  margin-inline: auto;
+  padding: var(--space-3xl) var(--space-lg);
+}
+
+body[data-theme="tactical"] .notfound-status,
+body[data-theme="swiss"] .notfound-status {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+  margin-bottom: var(--space-sm);
+}
+
+body[data-theme="tactical"] .notfound-code,
+body[data-theme="swiss"] .notfound-code {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(4rem, 14vw, 7rem);   /* single 3-char figure — may exceed display cap */
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary);
+  margin: 0 0 var(--space-md);
+}
+
+body[data-theme="tactical"] .notfound-text,
+body[data-theme="swiss"] .notfound-text {
+  font-size: var(--text-base);
+  color: var(--fg-secondary);
+  max-width: var(--measure);
+  margin: 0 0 var(--space-lg);
+}
+
+.notfound-links {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-sm) 0 0;
+  border-top: 3px double var(--border-bright);
+}
+
+.notfound-links li {
+  margin: 0;
+}
+
+body[data-theme="tactical"] .notfound-links a,
+body[data-theme="swiss"] .notfound-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--link-accent);
 }

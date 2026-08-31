@@ -61,9 +61,17 @@ themes on every change.
 - **Display**: Inter 800/900 — locked by explicit user decision (2026-08-31).
   A swap to a non-default display face remains an *open user decision*; do not
   swap silently.
-- **Body**: JetBrains Mono 400/700 — the mono body is the site's signature, a
-  deliberate single-voice choice, not a missing pairing.
-- No third family. 2+1 rule: this site runs 2.
+- **Body (apparatus)**: JetBrains Mono 400/700 — labels, dates, meta, tables,
+  code, the blog index, the further-reading strip, and all docs/landing copy.
+  The mono voice is the site's signature; it is no longer the *prose* face.
+- **Reading (article prose)**: IBM Plex Sans 400/600 + italic 400 at 17px
+  (`--font-reading`/`--text-reading`, lede `--text-lede` 19px), line-height
+  1.7 — user decision 2026-08-31 ("redesign, so dass es lesbar ist"). Scope:
+  `.lonePost` p/li/blockquote only. Docs remain mono (open option: extend the
+  reading face to docs prose — ask before doing it).
+- 2+1 rule: this site now runs 2 + 1 (Inter display · Plex Sans reading ·
+  JetBrains Mono apparatus). Loaded via `@import` at the top of
+  `css/brutalist.css`, weights capped at 400/600/ital-400.
 - Prose measure: `--measure` (68ch) on running text only; tables, code and
   figures may take the full column (deliberate asymmetry).
 - Headings roman, never italic. Labels: mono, uppercase, letter-spacing 0.08em+.
@@ -89,6 +97,13 @@ themes on every change.
   (2026-08-31). The editorial default would be Ft1/Ft4; changing it is an open
   user decision, not a per-build pick.
 - Cookie banner, theme toggle (CRT/INK), CRT grain film: as built.
+- **Skip link** (`.skip-link`, injected by `js/theme.js`): first focusable
+  element on every page, accent-red block, visible only on keyboard focus.
+- **Current-page marker**: `js/theme.js` sets `aria-current="page"` on the
+  masthead link for the active section (blog / docs / api); styled ink +
+  red underline.
+- **404** (`/404.html`): telemetry status line, display figure, three exits
+  (start page / quickstart / blog). `noindex`, no canonical, not in the sitemap.
 
 ## Per-page allowances
 
