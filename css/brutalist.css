@@ -2577,6 +2577,9 @@ body[data-theme="swiss"] .navToggle .hamburger-menu > div {
   body[data-theme="swiss"] .toc .toggleNav ul li a {
     display: flex;
     align-items: center;
+    /* flex drops the whitespace text node between <samp class="nav-date">
+       and the post title, so the date would butt against it */
+    gap: 0.4rem;
     min-height: 44px;
     font-size: 0.85rem;
   }

@@ -7,12 +7,12 @@
   <title>How We Test a SaaS Application with Nanook · Nanook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description"
-    content="A field report: how we replaced 16 hand-written spec files with 117 decision tables and 1,981 data-driven cases, what it caught, and the two assertions we got wrong ourselves." />
+    content="A field report: 16 hand-written spec files replaced by 117 decision tables and 1,981 data-driven cases &mdash; what it caught, and the two assertions we got wrong." />
   <meta property="og:title" content="How We Test a SaaS Application with Nanook" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook" />
   <meta property="og:description"
-    content="From one spec file per screen to one runner reading tables as data -- with the numbers, the defects it surfaced, and what decision tables do not solve." />
+    content="From one spec file per screen to one runner reading tables as data &mdash; with the numbers, the defects it surfaced, and what decision tables do not solve." />
   <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
@@ -359,7 +359,7 @@
                       <tr style="background:var(--bg-elevated)">
                         <td></td>
                         <td colspan="6">2 &times; 2 &times; 2 = 8 combinations &mdash; 1 + 1 + 1 + 1 + 4 = <strong>8 of
-                            8 &mdash; 100&thinsp;% coverage</strong></td>
+                            8 &mdash; 100% coverage</strong></td>
                       </tr>
                       <tr style="background:var(--bg-secondary)">
                         <td colspan="7"><strong>Expected reaction</strong></td>
@@ -507,7 +507,7 @@
                         <td>note</td>
                         <td>255 chars</td>
                         <td><code>gen::len:255</code></td>
-                        <td>a ten-line custom generator &mdash; see the login post</td>
+                        <td>a ten-line custom generator &mdash; see the <a href="/docs/tutorials/createGenerator">custom generator tutorial</a></td>
                         <td style="text-align:center">x</td>
                       </tr>
                     </table>
@@ -611,8 +611,8 @@
                   </table>
 
                   <p>That is across two products, an invoicing API and a field-service SaaS. Alongside the decision
-                    tables sit 24 flow sheets for the cases where order genuinely is the statement &mdash; more on
-                    those below.</p>
+                    tables sit 24 flow sheets for the cases where order genuinely is the statement &mdash; the
+                    section above shows one.</p>
 
                   <p>The number that convinced us was not in the table. One module &mdash; a dispatch board with 43
                     procedures and 84 call sites in the UI &mdash; had <strong>no tests at all</strong>. It now has 92
@@ -711,7 +711,7 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
 
                   <p>The fix was to read the opening quantity independently, from the receipt that created it.
                     <strong>Only then was a mutation probe possible at all</strong>: with two independent sources,
-                    breaking the service makes them disagree. With one, there is nothing to disagree.
+                    breaking the service makes them disagree. With one, there is nothing to disagree with.
                   </p>
 
                   <h3>An optional field switched off the compiler</h3>
