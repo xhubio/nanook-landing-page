@@ -3,6 +3,7 @@
 > Nanook is an open-source toolkit for test case and test data creation. It combines equivalence class tables with data generators to systematically define, document, and generate test data for software testing.
 
 ## Documentation
+- [Documentation Hub](https://nanook.xhub.io/docs): Entry page linking quickstart, guide, tutorials, modules, and API reference
 - [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): 5-minute introduction to creating equivalence class tables and generating test data
 - [General Overview](https://nanook.xhub.io/docs/guide/generalOverview): Architecture and concepts of Nanook Table
 - [Equivalence Class Tables](https://nanook.xhub.io/docs/guide/equivalence/overview): How to define test cases using equivalence classes

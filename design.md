@@ -31,7 +31,10 @@ broadsheet register.
   shared column width** (44rem frame = reading measure); the index keeps the
   wider 58rem broadsheet frame.
 - **Docs** (`/docs/**`): existing Docusaurus shell, themed via overrides.
-  Locked as-is.
+  Locked as-is. New: **`/docs/` hub** (2026-08-31 — the URL was a bare 404):
+  hand-built `docs/index.html` in the Index-First register (label + sentence +
+  five hairline rows), centered 44rem column, styles under `.docs-hub` in
+  `css/brutalist.css`.
 
 ## Theme
 
