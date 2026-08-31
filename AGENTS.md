@@ -83,6 +83,15 @@ Do not treat these as regressions you introduced:
 Nobody notices, because nothing fails. If you publish a post, fixing the feed for that
 post is cheap; a full feed rebuild is a separate decision.
 
+### 5 · 🔴 Lektorat is mandatory — always, before pushing
+
+After writing **or editing** a post, run the **`lektor` agent** (`.claude/agents/lektor.md`)
+— proactively, without being asked. It cross-reads language and tone, checks facts and
+links against the PRD, and verifies all six registration places (including byte-identical
+twins). It is read-only: it reports findings; the main agent applies the fixes, then
+re-runs the Lektor if anything 🔴 was found. There is no CI here — the Lektor pass is the
+only gate between a draft and the live site.
+
 ## Content conventions
 
 - **Language is English.** All posts and docs. (`CLAUDE.md` and `REDESIGN.md` are German

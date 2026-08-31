@@ -2,12 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nanook.xhub.io/blog</id>
     <title>Nanook Blog</title>
-    <updated>2019-06-01T06:00:00.000Z</updated>
+    <updated>2026-08-21T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nanook.xhub.io/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Nanook news and events.</subtitle>
     <logo>https://nanook.xhub.io/img/logo.svg</logo>
     <rights>Copyright  2022 nanook.xhub.io</rights>
+    <entry>
+        <title type="html"><![CDATA[How We Test a SaaS Application with Nanook]]></title>
+        <id>https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook</id>
+        <link href="https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook"/>
+        <updated>2026-08-21T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>A field report from our own products: 16 hand-written spec files replaced by 117 decision tables and 1,981 data-driven cases, run by a single runner that reads the tables as data &mdash; with the numbers, the defects it surfaced, and what decision tables do not solve.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Introducing Nanook-Table]]></title>
         <id>https://nanook.xhub.io/blog/2019/06/01/inroducing.html</id>
