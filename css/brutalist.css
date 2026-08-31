@@ -1,24 +1,77 @@
+/* Hallmark · repair pass (audit /blog) · macrostructure: Long Document (existing)
+ * genre: editorial · tone: brutalist · anchor hue: 28 (warm red)
+ * nav: N6 masthead · footer: unchanged (Ft3-ish, kept by request)
+ * pre-emit critique: P4 H4 E4 S5 R4 V3
+ * fixed: 25 measure · 26 states · 10 transition-all · 42 nav · 22 chroma
+ *        · 24 scale · 48 tokens · leaked Docusaurus light values · tabular-nums
+ * open by request: 43 footer shape · 1 Inter display face
+ */
+
 /* ============================================================
    NANOOK — INDUSTRIAL BRUTALIST UI DESIGN SYSTEM
    Dual Mode: Tactical Telemetry (Dark) + Swiss Industrial Print (Light)
    ============================================================ */
 
 /* ============================================================
+   SCALES — theme-independent, so they live on :root
+   ============================================================ */
+:root {
+  /* 4-pt spacing scale */
+  --space-3xs: 0.25rem;   /*  4px */
+  --space-2xs: 0.5rem;    /*  8px */
+  --space-xs:  0.75rem;   /* 12px */
+  --space-sm:  1rem;      /* 16px */
+  --space-md:  1.5rem;    /* 24px */
+  --space-lg:  2rem;      /* 32px */
+  --space-xl:  3rem;      /* 48px */
+  --space-2xl: 4rem;      /* 64px */
+  --space-3xl: 6rem;      /* 96px */
+
+  /* motion — three named easings, never the browser default `ease` */
+  --dur-short: 120ms;
+  --dur-mid:   200ms;
+  --dur-long:  320ms;
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* masthead height — drives sticky offset and scroll-margin.
+     Mobile is the compact bar (wordmark + toggles); desktop is the masthead. */
+  --header-h: 50px;
+
+  /* prose measure — 45-75ch is the readable band (gate 25) */
+  --measure: 68ch;
+}
+
+/* ============================================================
    CUSTOM PROPERTIES — TACTICAL TELEMETRY (DARK)
    ============================================================ */
 body[data-theme="tactical"] {
-  --bg-primary: #0A0A0A;
-  --bg-secondary: #121212;
-  --bg-elevated: #1A1A1A;
-  --fg-primary: #EAEAEA;
-  --fg-secondary: #9A9A9A;
-  --fg-dim: #8A8A8A;
-  --accent-red: #E61919;
-  --accent-red-hover: #FF2A2A;
-  --accent-red-glow: rgba(230, 25, 25, 0.4);
-  --link-accent: #FF2A2A;   /* 5.30:1 on --bg-primary */
-  --border-color: #2A2A2A;
-  --border-bright: #333333;
+  /* Neutrals carry the accent hue at low chroma — lightness is unchanged from
+     the previous hex values, so every measured contrast ratio is preserved. */
+  --bg-primary:     oklch(14.5% 0.008 28);
+  --bg-secondary:   oklch(18.2% 0.009 28);
+  --bg-elevated:    oklch(21.8% 0.010 28);
+  --fg-primary:     oklch(93.7% 0.006 28);
+  --fg-secondary:   oklch(68.6% 0.008 28);
+  --fg-dim:         oklch(63.3% 0.008 28);
+  --accent-red:       oklch(58.8% 0.231 28.3);
+  --accent-red-hover: oklch(64.3% 0.243 27.6);
+  --accent-red-glow:  oklch(58.8% 0.231 28.3 / 0.4);
+  --accent-ink:       oklch(99.0% 0.004 28);   /* text on an accent fill */
+  --link-accent:      oklch(64.3% 0.243 27.6); /* 5.30:1 on --bg-primary */
+  --border-color:   oklch(28.5% 0.012 28);
+  --border-bright:  oklch(32.1% 0.014 28);
+  --focus-ring:     oklch(64.3% 0.243 27.6);
+  --scanline:       oklch(0% 0 0 / 0.06);
+  --overlay-scrim:  oklch(0% 0 0 / 0.6);
+  --shadow-drawer:  oklch(0% 0 0 / 0.35);
+  --shadow-lift:    oklch(0% 0 0 / 0.7);
+  /* the diagram is authored for the dark theme; its plate stays dark in both */
+  --diagram-surface: oklch(21.8% 0.010 28);
+  --diagram-border:  oklch(16.5% 0.008 28);
+  --diagram-muted:   oklch(45.0% 0.008 28);
+  --logo-plate:      oklch(16.5% 0.008 28);
   --font-display: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
   --diagram-filter: brightness(0.9) contrast(1.1);
@@ -32,18 +85,30 @@ body[data-theme="tactical"] {
    CUSTOM PROPERTIES — SWISS INDUSTRIAL PRINT (LIGHT)
    ============================================================ */
 body[data-theme="swiss"] {
-  --bg-primary: #F4F4F0;
-  --bg-secondary: #EAE8E3;
-  --bg-elevated: #FFFFFF;
-  --fg-primary: #050505;
-  --fg-secondary: #444444;
-  --fg-dim: #636363;
-  --accent-red: #E61919;
-  --accent-red-hover: #CC1414;
-  --accent-red-glow: rgba(230, 25, 25, 0.15);
-  --link-accent: #CC1414;   /* 5.19:1 on --bg-primary */
-  --border-color: #C8C5BE;
-  --border-bright: #A8A49C;
+  /* Same treatment: hue realigned from the stray yellow-ish tint to the
+     accent's 28, lightness held, so contrast is unchanged. */
+  --bg-primary:     oklch(96.6% 0.006 28);
+  --bg-secondary:   oklch(93.1% 0.008 28);
+  --bg-elevated:    oklch(99.0% 0.004 28);   /* was #FFFFFF — gate 7 */
+  --fg-primary:     oklch(11.5% 0.006 28);
+  --fg-secondary:   oklch(38.7% 0.008 28);
+  --fg-dim:         oklch(50.0% 0.010 28);
+  --accent-red:       oklch(58.8% 0.231 28.3);
+  --accent-red-hover: oklch(53.7% 0.211 28.3);
+  --accent-red-glow:  oklch(58.8% 0.231 28.3 / 0.15);
+  --accent-ink:       oklch(99.0% 0.004 28);
+  --link-accent:      oklch(53.7% 0.211 28.3); /* 5.19:1 on --bg-primary */
+  --border-color:   oklch(82.4% 0.012 28);
+  --border-bright:  oklch(72.0% 0.014 28);
+  --focus-ring:     oklch(53.7% 0.211 28.3);
+  --scanline:       oklch(0% 0 0 / 0.06);
+  --overlay-scrim:  oklch(0% 0 0 / 0.6);
+  --shadow-drawer:  oklch(0% 0 0 / 0.18);
+  --shadow-lift:    oklch(0% 0 0 / 0.25);
+  --diagram-surface: oklch(21.8% 0.010 28);
+  --diagram-border:  oklch(16.5% 0.008 28);
+  --diagram-muted:   oklch(45.0% 0.008 28);
+  --logo-plate:      oklch(16.5% 0.008 28);
   --font-display: 'Inter', 'Helvetica Neue', Arial, sans-serif;
   --font-mono: 'JetBrains Mono', 'Courier New', monospace;
   --diagram-filter: none;
@@ -67,8 +132,11 @@ body[data-theme="swiss"] {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* `clip`, not `hidden` — clip does not create a scroll container, so the
+     sticky masthead keeps working (gate 34) */
+  overflow-x: clip;
+  transition: background-color var(--dur-long) var(--ease-out),
+    color var(--dur-long) var(--ease-out);
 }
 
 body[data-theme="tactical"] *,
@@ -279,7 +347,9 @@ body[data-theme="swiss"] .navItem {
   font-family: var(--font-mono);
   font-size: 0.85rem;
   border-left: 2px solid transparent;
-  transition: all 0.15s;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
 }
 
 body[data-theme="tactical"] .navItem:hover,
@@ -543,8 +613,8 @@ body[data-theme="tactical"] .crt-overlay {
   background: repeating-linear-gradient(0deg,
       transparent,
       transparent 2px,
-      rgba(0, 0, 0, 0.06) 2px,
-      rgba(0, 0, 0, 0.06) 4px);
+      var(--scanline) 2px,
+      var(--scanline) 4px);
   opacity: 1;
 }
 
@@ -608,10 +678,10 @@ body[data-theme="swiss"] a:hover:not(.btn-primary):not(.btn-secondary) {
 }
 
 body[data-theme="swiss"] .site-logo img {
-  background-color: #111111;
+  background-color: var(--logo-plate);
   border-radius: 50% !important;
   padding: 4px;
-  box-shadow: 0 0 0 2px #111111;
+  box-shadow: 0 0 0 2px var(--logo-plate);
 }
 
 .site-name {
@@ -652,7 +722,9 @@ body[data-theme="swiss"] .site-logo img {
   padding: 0.5rem 0.75rem;
   color: var(--fg-secondary);
   border: 1px solid transparent;
-  transition: all 0.15s ease;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
 }
 
 .site-nav a:hover {
@@ -675,7 +747,9 @@ body[data-theme="swiss"] .site-logo img {
   border: 1px solid var(--border-color);
   padding: 0.4rem 0.6rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -887,7 +961,9 @@ body[data-theme="swiss"] .hero-watermark {
   background: transparent;
   color: var(--fg-primary);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
   text-decoration: none;
   display: inline-block;
 }
@@ -899,7 +975,7 @@ body[data-theme="swiss"] .hero-watermark {
 
 .btn-primary:hover {
   background-color: var(--accent-red);
-  color: #FFFFFF;
+  color: var(--accent-ink);
   border-style: dashed;
   text-shadow: none;
   box-shadow: 0 0 20px var(--accent-red-glow);
@@ -940,7 +1016,7 @@ body[data-theme="swiss"] .hero-watermark {
     transform: scale(1.6);
     transform-origin: top right;
     z-index: 10;
-    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 0 80px var(--shadow-lift);
   }
 }
 
@@ -1088,18 +1164,18 @@ body[data-theme="swiss"] .site-header {
 }
 
 body[data-theme="swiss"] .diagram-frame {
-  background-color: #1A1A1A;
-  border-color: #111111;
+  background-color: var(--diagram-surface);
+  border-color: var(--diagram-border);
 }
 
 body[data-theme="swiss"] .diagram-frame::before,
 body[data-theme="swiss"] .diagram-frame::after {
-  color: #555555;
+  color: var(--diagram-muted);
 }
 
 body[data-theme="swiss"] .frame-label {
-  color: #888888;
-  border-bottom-color: #333333;
+  color: var(--diagram-muted);
+  border-bottom-color: var(--border-bright);
 }
 
 /* ============================================================
@@ -1119,7 +1195,7 @@ body[data-theme="swiss"] .frame-label {
   align-items: flex-start;
   justify-content: center;
   padding: 5vh 2rem;
-  background: rgba(0, 0, 0, 0.6);
+  background: var(--overlay-scrim);
   overflow-y: auto;
 }
 
@@ -1174,7 +1250,9 @@ body[data-theme="swiss"] .frame-label {
   background: transparent;
   color: var(--fg-secondary);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
 }
 
 .cookie-accept {
@@ -1255,7 +1333,9 @@ body[data-theme="swiss"] .frame-label {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.15s;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
   line-height: 1;
 }
 
@@ -1405,10 +1485,10 @@ body[data-theme="swiss"] .frame-label {
 }
 
 body[data-theme="swiss"] .footer-logo img {
-  background-color: #111111;
+  background-color: var(--logo-plate);
   border-radius: 50% !important;
   padding: 6px;
-  box-shadow: 0 0 0 2px #111111;
+  box-shadow: 0 0 0 2px var(--logo-plate);
 }
 
 .footer-logo img:hover {
@@ -1576,7 +1656,7 @@ body[data-theme="swiss"] .footer-logo img {
 body[data-theme="tactical"] ::selection,
 body[data-theme="swiss"] ::selection {
   background-color: var(--accent-red);
-  color: #FFFFFF;
+  color: var(--accent-ink);
 }
 
 /* ============================================================
@@ -1748,7 +1828,7 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
   width: 100px;
   height: 100px;
   border-radius: 50% !important;
-  background: radial-gradient(circle, rgba(230, 25, 25, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, oklch(58.8% 0.231 28.3 / 0.3) 0%, transparent 70%);
   animation: corePulse 3s ease-in-out infinite;
   pointer-events: none;
   z-index: 1;
@@ -2283,7 +2363,7 @@ h1[id],
 h2[id],
 h3[id],
 h4[id] {
-  scroll-margin-top: 68px;
+  scroll-margin-top: calc(var(--header-h) + var(--space-sm));
 }
 
 /* --- Mobile nav toggle (button is injected by js/theme.js) -------------- */
@@ -2352,7 +2432,7 @@ h4[id] {
     right: 0;
     background-color: var(--bg-primary);
     border-bottom: 1px solid var(--border-color);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 12px 24px var(--shadow-drawer);
   }
 
   .site-nav ul {
@@ -2616,4 +2696,176 @@ body[data-theme="swiss"] table tr:nth-child(2n) {
 body[data-theme="tactical"] .post th,
 body[data-theme="swiss"] .post th {
   color: var(--link-accent);
+}
+
+/* ============================================================
+   HALLMARK REPAIR PASS — audit /blog
+   Gates closed here: 25 (measure) · 26 (states) · 40-41 held ·
+   leaked Docusaurus light values · tabular numerals.
+   ============================================================ */
+
+/* --- Gate 26 · the eight states -----------------------------------------
+   The stylesheet previously carried no :focus-visible at all, so keyboard
+   users fell back to the UA ring — thin and barely visible on a 14.5%-light
+   ground. The ring never transitions: it must be there on the first frame. */
+body[data-theme="tactical"] :focus-visible,
+body[data-theme="swiss"] :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  transition: none;
+}
+
+/* Element already carrying its own border keeps the ring clear of it */
+body[data-theme="tactical"] .btn-primary:focus-visible,
+body[data-theme="swiss"] .btn-primary:focus-visible,
+body[data-theme="tactical"] .btn-secondary:focus-visible,
+body[data-theme="swiss"] .btn-secondary:focus-visible,
+body[data-theme="tactical"] .theme-toggle:focus-visible,
+body[data-theme="swiss"] .theme-toggle:focus-visible,
+body[data-theme="tactical"] .nav-toggle:focus-visible,
+body[data-theme="swiss"] .nav-toggle:focus-visible {
+  outline-offset: 3px;
+}
+
+body[data-theme="tactical"] .btn-primary:active,
+body[data-theme="swiss"] .btn-primary:active,
+body[data-theme="tactical"] .btn-secondary:active,
+body[data-theme="swiss"] .btn-secondary:active,
+body[data-theme="tactical"] .cookie-btn:active,
+body[data-theme="swiss"] .cookie-btn:active,
+body[data-theme="tactical"] .theme-toggle:active,
+body[data-theme="swiss"] .theme-toggle:active,
+body[data-theme="tactical"] .nav-toggle:active,
+body[data-theme="swiss"] .nav-toggle:active {
+  transform: translateY(1px);
+}
+
+body[data-theme="tactical"] button:disabled,
+body[data-theme="swiss"] button:disabled,
+body[data-theme="tactical"] [aria-disabled="true"],
+body[data-theme="swiss"] [aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Gate 25 · prose measure --------------------------------------------
+   Body copy ran 99ch at 1280px and 115ch at 1920px. Only the running text is
+   capped — tables, code blocks and figures keep the full column, which is the
+   asymmetry the editorial genre wants anyway. */
+body[data-theme="tactical"] .post p,
+body[data-theme="swiss"] .post p,
+body[data-theme="tactical"] .post li,
+body[data-theme="swiss"] .post li,
+body[data-theme="tactical"] .post blockquote,
+body[data-theme="swiss"] .post blockquote,
+body[data-theme="tactical"] .post-content p,
+body[data-theme="swiss"] .post-content p {
+  max-width: var(--measure);
+}
+
+/* --- Leaked Docusaurus light values on the dark ground -------------------
+   main.css paints the blog teaser rule #e0e0e0 and generic hairlines #dfe2e5;
+   brutalist.css themed .blogContainer but never .post, so on a 14.5%-light
+   page every teaser was separated by a near-white line. */
+body[data-theme="tactical"] .blogContainer .posts .post,
+body[data-theme="swiss"] .blogContainer .posts .post {
+  border-bottom-color: var(--border-color);
+}
+
+body[data-theme="tactical"] .post hr,
+body[data-theme="swiss"] .post hr,
+body[data-theme="tactical"] .blogContainer hr,
+body[data-theme="swiss"] .blogContainer hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+/* --- Tabular numerals ----------------------------------------------------
+   The comparison tables carry columns of figures (16 / 117 / 1,981 / 55 /
+   703); proportional digits leave them unaligned. */
+body[data-theme="tactical"] .post table,
+body[data-theme="swiss"] .post table,
+body[data-theme="tactical"] .post-meta,
+body[data-theme="swiss"] .post-meta,
+body[data-theme="tactical"] .nav-date,
+body[data-theme="swiss"] .nav-date {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================
+   NAV — N6 MASTHEAD  (gate 42)
+   The previous shape was wordmark-left + four inline links + control-right +
+   hairline border: the most-recognised AI nav fingerprint, and genre-blind —
+   it read the same on a docs site as on any B2B SaaS landing page.
+
+   No HTML changes: the markup is identical in all 178 pre-rendered pages, so
+   the masthead is built by promoting .header-right's children into the grid
+   with `display: contents`. Wordmark and theme toggle share the top row; the
+   links drop to a full-width row beneath a rule.
+
+   Mobile keeps the compact bar + drawer built in the responsiveness pass —
+   a masthead needs horizontal room it doesn't have at 375px.
+   ============================================================ */
+@media (min-width: 641px) {
+  :root {
+    --header-h: 94px;
+  }
+
+  .header-inner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "logo toggle"
+      "nav  nav";
+    align-items: center;
+    height: auto;
+    row-gap: var(--space-2xs);
+    padding-block: var(--space-xs) 0;
+  }
+
+  /* promote nav + toggles out of .header-right into the masthead grid */
+  .header-right {
+    display: contents;
+  }
+
+  .site-logo {
+    grid-area: logo;
+    /* grid stretches items by default — the wordmark is a link, not a
+       1112px-wide click target */
+    justify-self: start;
+  }
+
+  .theme-toggle {
+    grid-area: toggle;
+    justify-self: end;
+  }
+
+  .site-name {
+    font-size: 1.4rem;
+    letter-spacing: 0.2em;
+  }
+
+  .site-nav {
+    grid-area: nav;
+    justify-self: stretch;
+    border-top: 2px solid var(--fg-primary);
+    padding-block: var(--space-2xs);
+  }
+
+  .site-nav ul {
+    gap: var(--space-lg);
+  }
+
+  .site-nav a {
+    font-size: 0.8rem;
+    letter-spacing: 0.12em;
+    padding: var(--space-3xs) 0;
+    border: 0;
+    border-bottom: 2px solid transparent;
+  }
+
+  .site-nav a:hover {
+    border-bottom-color: var(--accent-red);
+  }
 }

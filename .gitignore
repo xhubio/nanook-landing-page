@@ -5,3 +5,4 @@ tmp/
 .agents
 .claude/skills/
 skills-lock.json
+.hallmark/
