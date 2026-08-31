@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="JetBrains Mono, monospace" font-size="14" fill="#ffffff">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <text x="400" y="34" text-anchor="middle" font-size="16" font-weight="700">One class, 178 codes</text>
+  <!-- left: one column -->
+  <text x="120" y="80" text-anchor="middle" fill="#E61919">one column</text>
+  <rect x="95" y="100" width="50" height="180" fill="none" stroke="#E61919" stroke-width="2"/>
+  <text x="120" y="130" text-anchor="middle" font-size="12">EUR</text>
+  <text x="120" y="200" text-anchor="middle" font-size="12">x</text>
+  <text x="120" y="320" text-anchor="middle" fill="#E61919" font-weight="700">a lie</text>
+  <text x="120" y="342" text-anchor="middle" font-size="11">1 of 178 tested</text>
+  <!-- middle: 178 columns -->
+  <text x="400" y="80" text-anchor="middle" fill="#f59e0b">178 columns</text>
+  <g stroke="#f59e0b" stroke-width="1" fill="none">
+    <rect x="270" y="100" width="14" height="180"/><rect x="288" y="100" width="14" height="180"/><rect x="306" y="100" width="14" height="180"/><rect x="324" y="100" width="14" height="180"/><rect x="342" y="100" width="14" height="180"/><rect x="360" y="100" width="14" height="180"/><rect x="378" y="100" width="14" height="180"/><rect x="396" y="100" width="14" height="180"/><rect x="414" y="100" width="14" height="180"/><rect x="432" y="100" width="14" height="180"/><rect x="450" y="100" width="14" height="180"/><rect x="468" y="100" width="14" height="180"/><rect x="486" y="100" width="14" height="180"/><rect x="504" y="100" width="14" height="180"/><rect x="522" y="100" width="14" height="180"/>
+  </g>
+  <text x="400" y="200" text-anchor="middle" font-size="12">… … …</text>
+  <text x="400" y="320" text-anchor="middle" fill="#f59e0b" font-weight="700">absurd</text>
+  <text x="400" y="342" text-anchor="middle" font-size="11">nobody maintains 178 columns</text>
+  <!-- right: multiplicity -->
+  <text x="680" y="80" text-anchor="middle" fill="#4CAF50">one column · multiplicity 178</text>
+  <rect x="655" y="100" width="50" height="110" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <text x="680" y="125" text-anchor="middle" font-size="12">gen:</text>
+  <text x="680" y="143" text-anchor="middle" font-size="11">iso4217</text>
+  <text x="680" y="190" text-anchor="middle" font-size="12" fill="#4CAF50">178</text>
+  <g stroke="#4CAF50" stroke-width="1.5" fill="none">
+    <path d="M680 210 L600 270"/><path d="M680 210 L640 270"/><path d="M680 210 L680 270"/><path d="M680 210 L720 270"/><path d="M680 210 L760 270"/>
+  </g>
+  <text x="600" y="290" text-anchor="middle" font-size="11">tc.1</text>
+  <text x="640" y="290" text-anchor="middle" font-size="11">tc.2</text>
+  <text x="680" y="290" text-anchor="middle" font-size="11">tc.3</text>
+  <text x="720" y="290" text-anchor="middle" font-size="11">…</text>
+  <text x="760" y="290" text-anchor="middle" font-size="11">tc.178</text>
+  <text x="680" y="320" text-anchor="middle" fill="#4CAF50" font-weight="700">every code, one class</text>
+  <text x="680" y="342" text-anchor="middle" font-size="11">178 of 178 tested</text>
+  <line x1="220" y1="70" x2="220" y2="360" stroke="#333333" stroke-dasharray="4 4"/>
+  <line x1="580" y1="70" x2="580" y2="360" stroke="#333333" stroke-dasharray="4 4"/>
+  <text x="400" y="400" text-anchor="middle" font-size="12">a few thousand cases &#8594; 105,000, without a single new column</text>
+</svg>

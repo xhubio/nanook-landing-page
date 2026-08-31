@@ -81,8 +81,11 @@ running suite -- and top-of-funnel for readers who have never linked "equivalenc
 
 - Show a real table skeleton: `Secondary data` (what must already exist) above `Primary data`
   (what the test enters), then `Expected reaction` and `Expected effect`
-- Explain the markers plainly: `x` must happen, `e` must **not** happen
-- 🔵 **`e` is the counter-probe, not decoration.** Four cases demand "conflict findable", one
+- Explain the markers as Nanook defines them (🔴 corrected 2026-08-30, Torsten): `x` chooses exactly this
+  class; `a` is the preferred class among several and is generated; `e` marks the other valid classes so
+  they count for coverage (CASCADE). `e` does **not** mean "must not happen" — a negative expectation is
+  its own row with an `x` (`no conflict on the board`)
+- 🔵 **The fifth case is the counter-probe, not decoration.** Four cases demand "conflict findable", one
   demands "no conflict". A probe that always reports conflict fails the fifth; one that never
   reports fails the four. **The contradiction between two cases is what turns a value into an
   assertion**
@@ -168,6 +171,14 @@ running suite -- and top-of-funnel for readers who have never linked "equivalenc
 
 ---
 
+## Nachtrag 2026-08-31 (Torsten)
+
+Zwei Abschnitte nach "The Shape of a Table" ergaenzt: (1) **"Where the Values Come From"** — die
+Generator-Spalte an EINER Testfall-Spalte (static / `gen:` mit Instanz-Id / `ref:` als Bruecke
+zwischen Tabellen, Custom-Generator via Login-Post); (2) **"A Flow Table Ties the Tables Together"**
+— reale Flow-Tabelle `KundeRundweg` (`<fn:>`, Datenspalte, `<pc:kunde>`, `<mode:check>` als
+Rueckleseprobe; TC2 = abgewiesener Fall hat nichts zurueckzulesen).
+
 ## Internal Links to Include
 
 | Link Text | URL |
@@ -241,8 +252,8 @@ hue-rotate(180deg); }`). Keep the `.excalidraw` source next to the PNG.
   approach does *not* solve. Cutting any of the three turns it into marketing.
 - **The strongest single argument is not the case count.** It is that the specification moved out
   of TypeScript. Lead the "What We Changed" section with that, not with the tooling.
-- **Keep the products unnamed.** "An invoicing API and a field-service SaaS" is enough; naming them
-  invites a different conversation and dates the post.
+- **Keep the products unnamed** — ⚪ gelockert 2026-08-31 (Torsten): **dasHandwerk wird beim ersten
+  Auftreten genannt und verlinkt** (https://dashandwerk.xhub.io); die invoicing API bleibt unbenannt.
 - **Introduce Nanook where it answers the problem**, not in the lede. The first section holds up
   as a general argument about test suites.
 - **Publish checklist:** this post must be registered in six places, not one. See `AGENTS.md`,

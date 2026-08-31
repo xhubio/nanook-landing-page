@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="JetBrains Mono, monospace" font-size="14" fill="#ffffff">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <text x="400" y="34" text-anchor="middle" font-size="16" font-weight="700">Ceiling and floor</text>
+  <!-- axes -->
+  <line x1="80" y1="340" x2="740" y2="340" stroke="#333333"/>
+  <text x="740" y="360" text-anchor="end" font-size="11" fill="#888888">time / commits</text>
+  <!-- ceiling: unreachable classes, may only fall -->
+  <path d="M80 110 H260 V128 H420 V150 H600 V150 H740" stroke="#E61919" stroke-width="2.5" fill="none"/>
+  <text x="90" y="98" fill="#E61919" font-weight="700">ceiling: unreachable classes &#8212; may only fall</text>
+  <!-- floor: executable violations, may only rise -->
+  <path d="M80 300 H220 V270 H400 V240 H560 V212 H740" stroke="#4CAF50" stroke-width="2.5" fill="none"/>
+  <text x="90" y="326" fill="#4CAF50" font-weight="700">floor: executable violation cases &#8212; may only rise</text>
+  <!-- band -->
+  <rect x="80" y="150" width="660" height="62" fill="#4CAF50" fill-opacity="0.08"/>
+  <text x="92" y="186" font-size="12" fill="#4CAF50">the band between them is where the suite lives</text>
+  <!-- progress arrow -->
+  <path d="M470 232 L520 165" stroke="#ffffff" stroke-width="2" fill="none" marker-end="url(#aw)"/>
+  <text x="560" y="190" font-size="11">progress raises both</text>
+  <text x="560" y="206" font-size="11" fill="#4CAF50">acceptable</text>
+  <!-- the trap -->
+  <path d="M500 150 L500 134" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#ao)"/>
+  <text x="445" y="128" font-size="11" fill="#f59e0b">two new grips: +1 unreachable in all 36 families</text>
+  <text x="445" y="114" font-size="11" fill="#f59e0b">one number alone reads this as a regression</text>
+  <text x="400" y="400" text-anchor="middle" font-size="12">a single upper bound can be lowered by leaving cases out; a floor cannot</text>
+  <defs>
+    <marker id="aw" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#ffffff"/></marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#f59e0b"/></marker>
+  </defs>
+</svg>

@@ -1,0 +1,19 @@
+Our E2E suite had 55 page classes and 703 element getters — and exactly TWO functions with a data contract.
+
+Which meant: how you operate a dropdown was written down up to 55 times. But that was not the real problem. The real problem was that the specification lived in TypeScript — and a const CASES = [...] inside a spec file belongs to whoever writes TypeScript, not to whoever knows the domain.
+
+So we turned it around. The decision table stays the source; ONE runner reads the suites as data.
+
+Where we are now, across two products:
+
+• 16 hand-written spec files → 0
+• 117 decision tables, 1,981 cases
+• one module that had no tests at all → 92 cases in six tables, in a single session
+
+It also caught things. The most instructive one had been green for two days: a sort assertion whose field reader had been renamed, comparing [undefined, …] against [undefined, …]. A dead reader doesn't make an assertion fail — it makes it EMPTY, and empty looks exactly like correct.
+
+Full field report, including the two assertions we got wrong ourselves and what tables don't solve:
+
+👉 https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook
+
+#softwaretesting #testautomation #qa #testdesign #playwright

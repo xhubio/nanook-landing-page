@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" font-family="JetBrains Mono, monospace" font-size="14" fill="#ffffff">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <text x="400" y="34" text-anchor="middle" font-size="16" font-weight="700">Where multiplicity has to sit</text>
+  <!-- left: wrong -->
+  <rect x="40" y="80" width="160" height="90" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="120" y="104" text-anchor="middle" font-size="12">CountryCodes</text>
+  <text x="120" y="122" text-anchor="middle" font-size="11">execute: F</text>
+  <text x="120" y="150" text-anchor="middle" fill="#f59e0b" font-weight="700">Multiplicity 200</text>
+  <path d="M200 125 H240" stroke="#ffffff" stroke-width="1.5" fill="none" marker-end="url(#aw)"/>
+  <rect x="250" y="80" width="130" height="90" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <text x="315" y="104" text-anchor="middle" font-size="12">EN_Seller</text>
+  <text x="315" y="122" text-anchor="middle" font-size="11">execute: T</text>
+  <text x="315" y="150" text-anchor="middle" fill="#f59e0b" font-weight="700">Multiplicity 1</text>
+  <path d="M315 170 V230" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#ao)"/>
+  <rect x="270" y="240" width="90" height="34" fill="none" stroke="#f59e0b" stroke-width="2"/>
+  <text x="315" y="262" text-anchor="middle" font-size="12">tc.1  DE</text>
+  <text x="210" y="310" text-anchor="middle" fill="#f59e0b" font-weight="700">one country code tested</text>
+  <text x="210" y="330" text-anchor="middle" font-size="11">the workbook said 105,000 · the suite ran 13,042</text>
+  <!-- right: correct -->
+  <rect x="430" y="80" width="160" height="90" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="510" y="104" text-anchor="middle" font-size="12">CountryCodes</text>
+  <text x="510" y="122" text-anchor="middle" font-size="11">execute: F</text>
+  <text x="510" y="150" text-anchor="middle" font-size="11">values: 200 codes</text>
+  <path d="M590 125 H630" stroke="#ffffff" stroke-width="1.5" fill="none" marker-end="url(#aw)"/>
+  <rect x="640" y="80" width="130" height="90" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <text x="705" y="104" text-anchor="middle" font-size="12">EN_Seller</text>
+  <text x="705" y="122" text-anchor="middle" font-size="11">execute: T</text>
+  <text x="705" y="150" text-anchor="middle" fill="#4CAF50" font-weight="700">Multiplicity 200</text>
+  <g stroke="#4CAF50" stroke-width="1.5" fill="none">
+    <path d="M705 170 L625 240"/><path d="M705 170 L665 240"/><path d="M705 170 L705 240"/><path d="M705 170 L745 240"/><path d="M705 170 L785 240"/>
+  </g>
+  <text x="625" y="262" text-anchor="middle" font-size="11">tc.1</text>
+  <text x="665" y="262" text-anchor="middle" font-size="11">tc.2</text>
+  <text x="705" y="262" text-anchor="middle" font-size="11">tc.3</text>
+  <text x="745" y="262" text-anchor="middle" font-size="11">…</text>
+  <text x="785" y="262" text-anchor="middle" font-size="11">tc.200</text>
+  <text x="610" y="310" text-anchor="middle" fill="#4CAF50" font-weight="700">200 clones, 200 distinct invoices</text>
+  <text x="610" y="330" text-anchor="middle" font-size="11">13,042 &#8594; 88,609 cases</text>
+  <line x1="405" y1="70" x2="405" y2="350" stroke="#333333" stroke-dasharray="4 4"/>
+  <text x="400" y="385" text-anchor="middle" font-size="12">what a referenced sheet says about values holds;</text>
+  <text x="400" y="404" text-anchor="middle" font-size="12">what it says about the number of cases has to reach the generator</text>
+  <defs>
+    <marker id="aw" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#ffffff"/></marker>
+    <marker id="ao" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#f59e0b"/></marker>
+  </defs>
+</svg>

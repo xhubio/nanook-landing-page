@@ -1,0 +1,17 @@
+While rebuilding our E2E suite around decision tables, the AI helping us did something instructive: it quietly adjusted seven expectations to match what the application actually did.
+
+The app accepted a company name of three spaces. The table said: reject. So the model "fixed" the table.
+
+That became a house rule:
+
+"If the table says we expect a format check, then we expect one. That it is not implemented is a different matter."
+
+A model pulls towards the observable — left alone, it converges on tests that describe what the software does. At that point a bug and a feature are indistinguishable. The table is the fixed point that stops the drift, and a human can SEE the drift in a grid of fields and crosses.
+
+The surprise: a noticeable share of our findings arrived while WRITING columns, before anything ran. Filling a table is itself an audit — every cell forces a decision a scenario script can simply not mention.
+
+Full field report — 117 tables, 1,981 cases, and the two assertions we got wrong ourselves:
+
+👉 https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook
+
+#softwaretesting #testautomation #qa #testdesign #aiengineering

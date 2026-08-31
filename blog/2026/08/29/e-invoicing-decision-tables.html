@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Testing E-Invoices for 40 Country/Format Combinations · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Forty country and format combinations, 35,117 equivalence classes, and eight fields our API accepted but never wrote. A field report on testing against a specification rather than against your own code." />
+  <meta property="og:title" content="Testing E-Invoices for 40 Country/Format Combinations · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables" />
+  <meta property="og:description"
+    content="The 105,000 cases that never ran, the eight data losses nobody had noticed, and four derivations we built, measured and deleted. Testing e-invoices against EN 16931 and 40 national dialects." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Testing E-Invoices for 40 Country/Format Combinations",
+  "datePublished": "2026-08-29",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Forty country and format combinations, 35,117 equivalence classes, and eight fields our API accepted but never wrote. A field report on testing against a specification rather than against your own code.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables"
+}
+</script>
+</head>
+
+<body data-theme="tactical">
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="/blog">[ BLOG ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp> One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/08/29/e-invoicing-decision-tables">Testing E-Invoices for 40 Country/Format Combinations</a></h1>
+                <p class="post-meta">August 29, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p>EN 16931 is the European standard for electronic invoices. It defines the business terms an
+                    invoice carries &mdash; BT-1 is the invoice number, BT-5 the currency, BT-31 the seller&rsquo;s
+                    VAT identifier &mdash; and it defines them once, for everyone. Then every country narrows it. A
+                    national narrowing is called a CIUS, and there is one almost everywhere the standard applies:
+                    XRechnung in Germany, FatturaPA in Italy, CIUS-RO in Romania, Peppol BIS across the Peppol network,
+                    PINT in Japan, Oman and the United Arab Emirates. Each one says which optional terms become
+                    mandatory, which values are allowed, and which combinations are forbidden.</p>
+
+                  <p>For us that meant <strong>40 country/format combinations</strong>, each with its own rule book,
+                    each rule book with hundreds of rules. The rules are not prose. They are Schematron &mdash;
+                    executable XPath assertions with an identifier, a severity and a test expression, versioned and
+                    published as files. <code>BR-DE-17</code> is a rule. <code>PEPPOL-EN16931-R120</code> is a rule.
+                    You can pin the file, hash it, and run it against an invoice, and it will tell you which rule
+                    objects.</p>
+
+                  <p>That sounds like the easy kind of testing problem: the oracle is written down. It is not.
+                    Generating a hundred thousand cases across forty dialects is a morning&rsquo;s work.
+                    <strong>Knowing that those cases test the standard, and not our implementation of it, is the
+                      hard part</strong> &mdash; and we got it wrong before we got it right.</p>
+
+                  <h2>The Oracle Problem, in One Measurement</h2>
+
+                  <p>Before any of the tables existed, we had 726 green assertions on the German invoice type code.
+                    Every one of them checked that <code>InvoiceTypeCode</code> came out as <code>380</code>. They
+                    passed on every input, every run, for months.</p>
+
+                  <p>380 is a commercial invoice. It is also our <strong>default</strong>. What those 726 assertions
+                    proved was that our default arrives in the output &mdash; whatever you send in. Then a customer
+                    asked for partial invoices. XRechnung codes a partial invoice as <strong>326</strong>, and
+                    <code>BR-DE-17</code> names the code in its text. 726 green tests, and not one of them had ever
+                    seen the case, because the case had come out of our own catalogue, and our catalogue did not know
+                    it.</p>
+
+                  <p>It got worse when we looked at where the allowed codes lived. The allow-list in our code had been
+                    <em>transcribed by hand</em> from the Schematron. It contained <strong>386</strong> &mdash; a code
+                    <code>BR-DE-17</code> does not know. No test had ever compared the transcript with the source,
+                    because both were ours.</p>
+
+                  <blockquote>
+                    <p><strong>The expected value comes from the pinned specification artefact &mdash; Schematron,
+                        XSD, code list &mdash; never from a constant in <code>src/</code>.</strong> A test built from
+                      our own code confirms our code. A test built from the specification finds the bug in it.</p>
+                  </blockquote>
+
+                  <p><img class="blog-diagram" src="/img/blog/test-oracle-spec-vs-code.svg"
+                      alt="Two tests side by side: the left one draws its expectation from src/constants.ts and loops back into the same codebase, captioned 'confirms the code'; the right one draws from a pinned Schematron file, captioned 'finds the bug in the code'. Between them: 726 green assertions on 380, and the 326 partial invoice none of them had seen"
+                      width="800" loading="lazy" /></p>
+
+                  <h2>What a Table Looks Like When the Rules Are the Input</h2>
+
+                  <h3>One sheet per rule area, one column per case</h3>
+
+                  <p>We build the tables with <a href="https://github.com/xhubio/nanook-table/" target="_blank"
+                      rel="noreferrer noopener">Nanook</a>, whose <a href="/docs/guide/equivalence/overview">decision
+                      tables</a> read left to right: rows are the things that can vary, columns are the cases, and a
+                    marker in a cell says which class the case takes. For a rule book the rows are the business terms
+                    the rules touch, grouped by rule area, above a base variant that says which invoice we start from.
+                    The expected reaction sits at the bottom: which rule fires, or that none does.</p>
+
+                  <p>A class in these sheets is not &ldquo;valid&rdquo; or &ldquo;invalid&rdquo;. It is a
+                    <strong>grip</strong> &mdash; a concrete way of taking hold of a field so that exactly one rule
+                    objects: <code>omit</code>, <code>too-long:100</code>, <code>not-in-list</code>,
+                    <code>wrong-value</code>, <code>value-limit:-1</code>, <code>group-removed:BG-8</code>. And the grip
+                    is not written by hand. It is derived from the rule&rsquo;s own test expression:</p>
+
+                  <pre><code>string-length(cbc:Name) &lt;= 100   &rarr;   too-long:100
+count(cac:PaymentMeans) &lt;= 1      &rarr;   too-many:1</code></pre>
+
+                  <p>The class comes from the file with the hash, so when the rule changes the grip changes with it.</p>
+
+                  <pre style="overflow-x:auto"><code>                          | BT-1_omit | BT-5_notInList | BT-31_tooLong | OK_base
+base variant  minimal     |     x     |       x        |       x       |    x
+BT-1 invoice number
+              present     |           |       x        |       x       |    x
+              omit        |     x     |                |               |
+BT-5 currency
+              in list     |     a     |                |       x       |    x
+              not-in-list |     e     |       x        |               |
+BT-31 seller VAT id
+              valid       |     a     |       a        |               |    x
+              too-long:30 |     e     |       e        |       x       |
+Expected reaction
+              BR-02       |     x     |                |               |
+              BR-CL-04    |           |       x        |               |
+              BR-DE-16    |           |                |       x       |
+              no rule     |           |                |               |    x</code></pre>
+
+                  <p>The <code>a</code> and <code>e</code> markers are the <a
+                      href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">CASCADE pattern</a>: the products
+                    of the classes sum to the whole, and the coverage formula in the sheet comes out at 100 %. That
+                    formula is the reason the next section exists.</p>
+
+                  <h3>The CASCADE triangle, and why 0.03 % was the most useful number of the project</h3>
+
+                  <p>Here is the wrong turn, told plainly, because it is the lesson. A script generated the sheets
+                    &mdash; 819 of them. From that moment on we worked <strong>on the script</strong>. Every run
+                    rewrote the whole workbook, and the table became a printout. Nobody opened it any more.</p>
+
+                  <p>When we finally did open one in Excel, its summary row said <strong>0.03 % coverage</strong>. The
+                    CASCADE triangle was missing entirely: the script had written <code>x</code> markers and never
+                    emitted the <code>a</code>/<code>e</code> cascade. Every case tested one grip and left the rest
+                    of the row undefined. The generator log had said nothing, because from the generator&rsquo;s point
+                    of view every sheet was exactly as specified.</p>
+
+                  <p>A table a human reads and edits is a conversation about test cases. A script that emits tables is
+                    a monologue, and a bug in the script always looks correct in the script&rsquo;s own output. So we
+                    wrote the rule down: <strong>the table is the source, not the generator&rsquo;s output.</strong>
+                    The test for whether you actually live by it is short: change a cell, re-run the generator &mdash;
+                    is your change still there? If the answer is no, the table is a printout, whatever the file name
+                    says.</p>
+
+                  <h3>Multiplicity, or: one code is not a code list</h3>
+
+                  <p>ISO 4217 has 178 currency codes. A rule that checks BT-5 against the list is 178 rules in a
+                    trench coat. Writing 178 columns for it is absurd. Writing one column with <code>EUR</code> in it
+                    is a lie: it tests one code and reports the list as covered.</p>
+
+                  <p>Nanook&rsquo;s <a href="/docs/guide/multiplicity/overview">multiplicity section</a> is the way
+                    out. A number in the multiplicity row clones the case definition <em>n</em> times
+                    (<code>tc.1</code> &hellip; <code>tc.n</code>), and a generator directive walks the referenced code
+                    list, one entry per clone. One class, every code, and the sheet stays readable.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/multiplicity-one-class-many-codes.svg"
+                      alt="Three ways to test a currency code list: one column captioned 'a lie', 178 columns captioned 'absurd', and one column with a multiplicity marker fanning out into tc.1 to tc.178"
+                      width="800" loading="lazy" /></p>
+
+                  <p>This is where the numbers move. The same tables went from <em>a few thousand</em> cases to
+                    <strong>105,000</strong> without a single new column. That was the figure we quoted for weeks. It
+                    was also wrong, and the way it was wrong is the best story in this piece.</p>
+
+                  <h3>The 105,000 that never ran</h3>
+
+                  <p>The workbooks said 105,000 cases. The suite ran <strong>13,042</strong>. Nobody had compared the
+                    two, because they lived in different places &mdash; one in Excel, one in a test reporter.</p>
+
+                  <p>The multiplicity had been written onto the <strong>referenced data sheets</strong>: 52 document
+                    types, 179 currencies, 200 country codes, each with the correct count in its multiplicity row. The
+                    <strong>executing</strong> sheet &mdash; the one whose columns actually become cases &mdash;
+                    carried <code>1</code> everywhere. Nanook clones where it <em>generates</em>. A referenced sheet
+                    is consulted for values, not executed, so its multiplicity row is read by nobody. Result:
+                    <strong>zero clones</strong>, and from every code list exactly <strong>one</strong> code was ever
+                    tested.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/multiplicity-executing-sheet.svg"
+                      alt="Left: a referenced data sheet marked execute F carries multiplicity 200, the executing sheet carries 1, and one case comes out, captioned 'one country code tested'. Right: the 200 sits on the executing sheet and fans into tc.1 to tc.200. Caption: what a referenced sheet says about values holds; what it says about the number of cases has to reach the generator"
+                      width="800" loading="lazy" /></p>
+
+                  <p>The rule that came out of it: what a referenced sheet says about <strong>values</strong> holds;
+                    what it says about the <strong>number of cases</strong> has to reach the generator. We lifted the
+                    multiplicity onto the executing sheets and the count went from <strong>13,042 to 88,609</strong>
+                    &mdash; 76,253 of them clones.</p>
+
+                  <p>How it was found is the transferable part. We had raised the CI sample from 400 to 2,500 cases
+                    and the executed test count came back <strong>bit-identical</strong>. Not close &mdash; identical.
+                    That was the same signature as a <code>slice(0, n)</code> bug we had hit earlier in the project,
+                    and it is a signature worth memorising: <strong>when a number does not move although it should,
+                      suspect the instrument, not the thing.</strong></p>
+
+                  <p>Clones that repeat themselves would be idle work, so the counter-check went in the same day: 32
+                    clone groups, none of them with two identical documents. <code>EN_Seller_E_14</code> has 200
+                    clones and produces 200 distinct invoices. A guard holds that, and we verified the guard the only
+                    way a guard can be verified &mdash; by switching the instance number off. It went red and named
+                    the group.</p>
+
+                  <h2>Three Run Levels, Because 105,000 Is Not a CI Job</h2>
+
+                  <table>
+                    <tr>
+                      <th>Level</th>
+                      <th>Where</th>
+                      <th>Cases</th>
+                      <th>Duration</th>
+                    </tr>
+                    <tr>
+                      <td><code>smoke</code></td>
+                      <td>CI, on every push</td>
+                      <td><strong>191</strong></td>
+                      <td>21 s</td>
+                    </tr>
+                    <tr>
+                      <td><code>extended</code></td>
+                      <td>local, pre-push hook (default)</td>
+                      <td><strong>3,688</strong></td>
+                      <td>~4 min</td>
+                    </tr>
+                    <tr>
+                      <td><code>full</code></td>
+                      <td>before a production release</td>
+                      <td><strong>~105,000</strong></td>
+                      <td>~3 h</td>
+                    </tr>
+                  </table>
+
+                  <p>The decision behind the split was made in one sentence, and we kept it verbatim:</p>
+
+                  <blockquote>
+                    <p>&ldquo;CI should have a sample, not the 6,500. Fifty is enough. Locally, everything must
+                      run.&rdquo;</p>
+                  </blockquote>
+
+                  <p>The mistake we made here is worth more than the table. The sample took the <strong>first</strong>
+                    80 cases per kind. Then we added two new grips, which produced 72 new cases &mdash; and the number
+                    of executed tests stayed <strong>bit-identical</strong>. The first 80 were the same first 80 they
+                    had always been. The sample was blind to every addition, and the measurement <em>confirmed the
+                      error</em> instead of showing it: a stable count looked like a stable suite.</p>
+
+                  <p>The fix is a few lines. Take every <em>k</em>-th case, deterministically &mdash; a red sample has
+                    to be reproducible, so never random:</p>
+
+                  <pre><code>const k = Math.max(1, Math.floor(cases.length / SAMPLE_SIZE))
+const sample = cases.filter((_, i) =&gt; i % k === 0)
+// deterministic: same input, same sample &mdash; and a new case shifts the stride</code></pre>
+
+                  <p>Immediate yield after the change: two failures the first-80 sample would never have reached.</p>
+
+                  <h2>What It Caught</h2>
+
+                  <p>The tables were built to prove conformance. What they actually found was that <strong>fields we
+                      accept never reach the document</strong>. Eight of them, each confirmed the same way: a request
+                    carrying the field, a <code>200</code> in response, and an invoice without it.</p>
+
+                  <table>
+                    <tr>
+                      <th>Lost field</th>
+                      <th>Where</th>
+                    </tr>
+                    <tr>
+                      <td><strong>BG-10</strong> Payee</td>
+                      <td>29 Peppol generators, plus SI-UBL, BG-UBL and RO-eFactura</td>
+                    </tr>
+                    <tr>
+                      <td><strong>BG-11</strong> Seller tax representative</td>
+                      <td>the same, plus the CII path &mdash; in the entire tree, <strong>one</strong> generator
+                        knew it</td>
+                    </tr>
+                    <tr>
+                      <td><strong>BT-28</strong> Trading name</td>
+                      <td>RO wrote the <em>legal</em> name twice</td>
+                    </tr>
+                    <tr>
+                      <td><strong>BT-36</strong> Address line 2 &middot; <strong>BT-12</strong> Contract reference</td>
+                      <td>RO, missing entirely</td>
+                    </tr>
+                    <tr>
+                      <td><strong>BT-14</strong> Sales order reference</td>
+                      <td>35 files build <code>cac:OrderReference</code>; <strong>none</strong> wrote
+                        <code>cbc:SalesOrderID</code></td>
+                    </tr>
+                  </table>
+
+                  <p>These are our own generators, and that is why the story lands: the transfer succeeds, the validator
+                    is happy, and the invoice is wrong. <strong>BG-11 is mandatory in several EU states</strong> for a
+                    non-resident seller; without it the document is factually incorrect and nobody notices.
+                    <strong>BG-10</strong> says <em>where to pay</em>. Drop it and the customer pays the seller instead
+                    of the factor, and the receivable stays open.</p>
+
+                  <p>Two further findings we filed rather than fixed, because each is a product decision:
+                    <code>normalizeUnitCode</code> maps <strong>any</strong> unknown unit to <code>C62</code>
+                    (&ldquo;piece&rdquo;), and an unfitting tax category is silently replaced by a default. Garbage in,
+                    valid invoice out.</p>
+
+                  <h2>Four Derivations We Built, Measured, and Deleted</h2>
+
+                  <p>This is the section that makes the post worth reading. Each of these was plausible, each was
+                    wrong, and in each case it was the <strong>run</strong> that said so &mdash; not a review, not an
+                    argument.</p>
+
+                  <ol>
+                    <li><strong>The context bridge.</strong> Many rules name no business term in their text, but
+                      every rule names an XPath in its context. So: map context &rarr; term &rarr; input field, and
+                      derive the grip from there. Measured: 14 of 56 contexts mapped, several of them wrongly.
+                      Deleted. Then, a day later, we fixed the rule source we had been reading &mdash; and re-measured
+                      out of habit: <strong>491 of 764</strong>. The reason for the rejection had never been the
+                      bridge; it had been a broken input. A discarded derivation deserves re-measuring the moment its
+                      input changes, and this one now carries most of our mappings.</li>
+                    <li><strong>The group grip on categories.</strong> Remove a whole group to break a rule. Correct
+                      for BG-8, the buyer address: no group, rule fires. Wrong for 231 rules where the group is merely
+                      the <em>scene</em> the rule plays in &mdash; removing it satisfies the rule&rsquo;s condition
+                      trivially, the rule never evaluates, and the case goes green having tested nothing.</li>
+                    <li><strong>Reason codes by index.</strong> BT-98 is the allowance reason code, BT-105 the charge
+                      reason code. Their paths assumed <em>order</em> &mdash; <code>.0</code> is the allowance,
+                      <code>.1</code> the charge &mdash; rather than identity. When a document carried a charge and no
+                      allowance, the grip landed on the wrong entry. A grip that hits the wrong field one time in two
+                      is not coverage; it is noise with a rule id attached.</li>
+                    <li><strong>The note subject code.</strong> <code>BR-CL-08</code> wants a code from UNCL 4451,
+                      carried as <code>#AAI#</code> at the start of the note text. Faking that prefix looked airtight.
+                      It failed in <strong>102 of 117</strong> cases: our <code>notes</code> field is free text, the
+                      generator passes it through verbatim, and the convention simply does not exist in our model.
+                      The grip was testing a format we never write.</li>
+                  </ol>
+
+                  <p>The pattern across all four: <strong>the mapping was right and the effect was not.</strong> On
+                    paper each derivation reached the rule it was aimed at. Only the run tells whether the rule
+                    actually evaluated. The cheapest instrument for that turned out to be raising the sample size once
+                    &mdash; 80 to 400 &mdash; and reading what fell out.</p>
+
+                  <h2>The Ratchet That Read Progress as Regression</h2>
+
+                  <p>We guard the numbers. &ldquo;Unreachable classes&rdquo; &mdash; grips the base data cannot
+                    produce &mdash; is a count that may only fall, and a test holds it as an upper bound per rule
+                    family. Then it rose by exactly 1 in <strong>all 36</strong> families at once.</p>
+
+                  <p>Nothing had regressed. Two new grips reached more rules, and each touched one more field our base
+                    data does not carry. A single upper bound cannot tell progress from regression &mdash; and worse,
+                    it can be satisfied by <strong>leaving cases out</strong>. Delete the new grips and the guard is
+                    green again, having protected nothing.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/ratchet-ceiling-and-floor.svg"
+                      alt="A band between two lines: the upper line 'unreachable classes, may only fall' in red, the lower line 'executable violation cases, may only rise' in green, and an arrow of progress that raises both, marked acceptable"
+                      width="800" loading="lazy" /></p>
+
+                  <p>The fix is two numbers instead of one:</p>
+
+                  <pre><code>expect(unreachable).toBeLessThanOrEqual(CEILING)   // may only fall
+expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</code></pre>
+
+                  <p>Progress that raises both is acceptable; a change that lowers the ceiling by dropping cases now
+                    trips the floor. Two numbers that pull in opposite directions cannot be gamed by removing work.</p>
+
+                  <h2>What the Numbers Say Now</h2>
+
+                  <table>
+                    <tr>
+                      <td>Country/format combinations</td>
+                      <td><strong>40</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Sheets</td>
+                      <td><strong>822</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Equivalence classes</td>
+                      <td><strong>35,117</strong> (20,757 good cases, 14,360 violations)</td>
+                    </tr>
+                    <tr>
+                      <td>Cases in the workbooks</td>
+                      <td><strong>27,044</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Cases the suite builds</td>
+                      <td><strong>88,609</strong> (76,253 of them multiplicity clones)</td>
+                    </tr>
+                    <tr>
+                      <td>Rules still without a case</td>
+                      <td><strong>7,101</strong></td>
+                    </tr>
+                  </table>
+
+                  <p>The last row deserves honesty, and it makes the strongest point in the post: <strong>two thirds of
+                      it is not work.</strong> 2,447 of those rules are German rules sitting in a Dutch rule family
+                    &mdash; a case for them would assert XRechnung behaviour on a Dutch invoice. 706 are Spanish tax
+                    categories in a German family. 379 are structurally unbreakable, because our generator rounds
+                    every amount to two decimals and the rules test for a third. A case for any of these would be
+                    <strong>wrong</strong>, not missing.</p>
+
+                  <p>And most of the remainder is not a test problem either. <strong>91 of the 201 business terms
+                      have no input field at all.</strong> Line-level allowances and charges (BG-27, BG-28) do not
+                    exist in our model &mdash; there is a single <code>discount: {type, value, reason}</code> per
+                    line. No grip can reach a rule about a field the API cannot receive. Those rules need a
+                    <strong>feature</strong>, not a grip.</p>
+
+                  <p>That distinction was the most valuable output of the exercise. Not the coverage number &mdash;
+                    learning to say, rule by rule, which part of the gap is testing work and which part is product
+                    work.</p>
+
+                  <h2>Then We Added the Missing Fields &mdash; and Four More Rules Bit</h2>
+
+                  <p>Once the tables showed which terms the input never carried, the fix was a feature. Three plans,
+                    three releases, and the input model gained the fields the rules had been pointing at. The moment
+                    those fields were rendered into a document for the first time, four national rules objected
+                    &mdash; to values that had been perfectly fine for as long as they were being thrown away.</p>
+
+                  <table>
+                    <tr>
+                      <th>Rule</th>
+                      <th>What it wanted</th>
+                    </tr>
+                    <tr>
+                      <td><code>BR-NL-28</code></td>
+                      <td>The Netherlands <strong>forbids</strong> <code>CountrySubentity</code>. A perfectly good
+                        <code>state</code> turned two cases red the first time it was written</td>
+                    </tr>
+                    <tr>
+                      <td><code>IS-R-002</code> / <code>IS-R-004</code></td>
+                      <td>A real Icelandic kennitala. <code>REG-INV-2026-IS-001</code> did not pass</td>
+                    </tr>
+                    <tr>
+                      <td><code>DK-R-017</code></td>
+                      <td><code>schemeID="0184"</code> alongside the Danish CVR number &mdash; the number alone is not
+                        enough</td>
+                    </tr>
+                    <tr>
+                      <td><code>PEPPOL-EN16931-R120</code></td>
+                      <td>Line net must carry its allowances and charges. <strong>An amount cannot be added on its
+                          own</strong></td>
+                    </tr>
+                  </table>
+
+                  <p>The lesson generalises past invoicing: <strong>a field the generator used to discard becomes a
+                      new assertion the first time it is written</strong> &mdash; and a national profile may forbid
+                    it. Filling a gap is not neutral. It changes what the document says, and every dialect gets a vote
+                    on what it now says.</p>
+
+                  <p>The sharpest find came free. <code>lib-invoice-outbound-fr/ubl.ts</code> called the same builder
+                    <strong>twice</strong> &mdash; copy-paste, identical comment, two lines apart. <code>UBL-SR-04</code>
+                    says the element may appear once, and it is fatal. The duplicate had sat there for months without
+                    a single failure, because without a value the block writes nothing, and <strong>twice nothing does
+                      not show up</strong>. Only when the fixture finally carried BT-18 did dead code turn into a red
+                    test.</p>
+
+                  <h2>What We Would Tell Someone Starting This</h2>
+
+                  <ol>
+                    <li><strong>Pin the specification, then read it.</strong> Every expected value traces to a file
+                      with a SHA. If it traces to a constant in <code>src/</code>, you are testing a transcript
+                      &mdash; and ours contained a code the standard does not have.</li>
+                    <li><strong>Open the workbook.</strong> Read coverage in the file, not in the generator log. Our
+                      0.03 % was in the file; the log said nothing.</li>
+                    <li><strong>Let the sample scatter.</strong> <code>slice(0, n)</code> goes blind the moment you
+                      add anything, and a blind sample reports stability.</li>
+                    <li><strong>Give every guard a counter-metric.</strong> One number can always be gamed by
+                      removing cases. A ceiling needs a floor.</li>
+                    <li><strong>Re-measure what you discarded.</strong> Four derivations died here; one came back when
+                      its input was fixed, and now carries 491 mappings.</li>
+                    <li><strong>Fill the fixture before you trust the coverage.</strong> Half our findings were fields
+                      the input never carried &mdash; and an empty field cannot fail a test, however many rules point
+                      at it.</li>
+                  </ol>
+
+                  <p>The smaller version of this story &mdash; one SaaS, one runner, 1,981 cases &mdash; is in <a
+                      href="/blog/2026/08/21/testing-a-saas-with-nanook">How We Test a SaaS Application with
+                      Nanook</a>. <a href="/docs/guide/matrix/overview">Matrix tables</a>, <a
+                      href="/docs/tutorials/createGenerator">custom generators</a> and the <a
+                      href="/docs/tutorials/createEquivalenceClassTable">table tutorial</a> are in the guide.</p>
+
+                  <p><strong>If your domain has a specification, your test oracle is already written &mdash; in someone
+                      else&rsquo;s repository.</strong> Start with the <a href="/docs/quickstart/quickstart">Quickstart</a>,
+                    then read the <a href="/docs/guide/multiplicity/overview">multiplicity guide</a>: it is the
+                    difference between testing one currency code and testing all 178.</p>
+
+                  <p>Building against EN 16931, Peppol or a national CIUS? We would like to compare notes &mdash; the
+                    hard part is never the XML.</p>
+
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

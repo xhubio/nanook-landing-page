@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>How We Test a SaaS Application with Nanook · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="A field report: how we replaced 16 hand-written spec files with 117 decision tables and 1,981 data-driven cases, what it caught, and the two assertions we got wrong ourselves." />
+  <meta property="og:title" content="How We Test a SaaS Application with Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook" />
+  <meta property="og:description"
+    content="From one spec file per screen to one runner reading tables as data -- with the numbers, the defects it surfaced, and what decision tables do not solve." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "How We Test a SaaS Application with Nanook",
+  "datePublished": "2026-08-21",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "A field report: how we replaced 16 hand-written spec files with 117 decision tables and 1,981 data-driven cases, what it caught, and the two assertions we got wrong ourselves.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook"
+}
+</script>
+</head>
+
+<body data-theme="tactical">
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="/blog">[ BLOG ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp> One Login, Eight Cases</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/08/21/testing-a-saas-with-nanook">How We Test a SaaS Application with Nanook</a></h1>
+                <p class="post-meta">August 21, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+                  <p>We build SaaS products &mdash; an invoicing API and <a href="https://dashandwerk.xhub.io" target="_blank" rel="noreferrer noopener">dasHandwerk</a>, a field-service application for the trades. The
+                    end-to-end suite grew the way these suites do: one spec file per screen, then one per feature,
+                    then one per bug. Nobody planned it. Nobody had to. Every file was reasonable on the day it was
+                    written.</p>
+
+                  <p>This is a field report on what we did when that suite stopped paying for itself: what it looked
+                    like before, what we changed, what it cost, what it caught &mdash; and the two assertions we got
+                    wrong ourselves along the way.</p>
+
+                  <h2>The Suite That Stopped Paying for Itself</h2>
+
+                  <p>Before we touched anything, we measured. The page-object layer of one product had
+                    <strong>55 page classes</strong> and <strong>703 element getters</strong> &mdash; and exactly
+                    <strong>2</strong> functions with a data contract, meaning a function that takes a typed record
+                    and fills a form from it. Everything else took no arguments and returned a locator.</p>
+
+                  <p>The consequence, in one sentence: <em>how you operate a Radix select was written down up to 55
+                    times.</em> Each page class knew how to open a dropdown, wait for the listbox, and click the
+                    option. When the dropdown component changed, the suite did not break in one place. It broke in as
+                    many places as had copied the pattern, and it broke on different days, because each copy had
+                    drifted a little.</p>
+
+                  <p>That is the volume problem, and it is the one everybody sees. It was not the real problem.</p>
+
+                  <p>The real problem was that <strong>the specification lived in TypeScript.</strong> Every spec file
+                    had, somewhere near the top, a <code>const CASES = [...]</code> &mdash; an array of inputs and
+                    expected outcomes. That array <em>is</em> the specification: it says which inputs are valid,
+                    which are rejected, and what the system must do in each case. And it belonged to whoever writes
+                    TypeScript, not to whoever knows the domain. The person who could tell you that a proposal over an
+                    existing booking must <em>not</em> raise a conflict could not read the file that should have said
+                    so. When the two disagreed, the file won by default, because nobody who knew better ever opened
+                    it.</p>
+
+                  <h2>What We Changed</h2>
+
+                  <p>We had been using <a href="https://github.com/xhubio/nanook-table/" target="_blank"
+                      rel="noreferrer noopener">Nanook</a> equivalence class tables for some time, but in the way
+                    the tool originally suggested: write a table, generate a spec file from it, commit the spec file.
+                    That turned out to be the expensive half.</p>
+
+                  <h3>The table is the source, not a generator input</h3>
+
+                  <p>After generation, a file lay around per surface and wanted maintaining. It was still a spec
+                    file, still TypeScript, still the place where the specification actually lived &mdash; the table
+                    had merely been its first draft. Within weeks the generated files had been hand-edited, and the
+                    tables were stale.</p>
+
+                  <p>We inverted it. <strong>The table stays the source, and one runner reads suite descriptions as
+                    data.</strong> A suite is a JSON file that names a table, a page, and how the table&rsquo;s
+                    fields map to that page. The runner loads the suite, generates the cases from the table at run
+                    time, and drives each one. Nothing is generated into the repository.</p>
+
+                  <p>The result is <code>&lt;app&gt;/tests/suiten.spec.ts</code> &mdash; <em>one</em> file, not one
+                    per surface. It is short, it is generic, and it has not been edited for a new screen since.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/one-runner-vs-spec-per-surface.svg"
+                      alt="Left: each decision table feeds its own generated spec file, and each generated file carries a maintenance loop. Right: all tables feed one runner that reads suite descriptions as data; the tables are labelled the source."
+                      width="800" loading="lazy" /></p>
+
+                  <h3>Three commitments that carry the approach</h3>
+
+                  <p>The runner is not the interesting part. Three decisions about what goes <em>into</em> it are.</p>
+
+                  <ol>
+                    <li><strong>The suite JSON knows no Playwright vocabulary.</strong> It describes cases, not
+                      clicks. There is no <code>click</code>, no <code>fill</code>, no selector in it. It maps table fields to a
+                      page and leaves the operating of the form to the page module. Someone who knows the domain and
+                      not the tooling can read it, and can read the table it points at.</li>
+                    <li><strong>The expectation belongs at the boundary where it holds</strong> &mdash;
+                      <code>ui</code> or <code>api</code>. When we converted the company form, it had 41 cases.
+                      <strong>26 of them were pure statements about a validation schema</strong>: too long, empty,
+                      wrong format. Against the procedure, those 26 run in seconds. Through the browser, the same
+                      case costs 20&ndash;60&nbsp;s, and what it measures is the same schema plus a form that
+                      forwards to it. <em>A test that pushes a schema statement through a browser does not measure
+                      more, it measures slower.</em> So a suite declares its boundary, and the same table runs at
+                      whichever one holds the statement.</li>
+                    <li><strong>A report that names the table column.</strong> When a case fails, the report says
+                      the test case name, the <strong>column</strong>, the page and the field. Without that, a red
+                      run leads straight back into the handwork the runner just abolished: open the table, find the
+                      column, guess which field the message is about. With it, the failure is a cell reference.</li>
+                  </ol>
+
+                  <h2>The Shape of a Table</h2>
+
+                  <p>A Nanook decision table has one column per test case and one row per equivalence class. Ours
+                    settled into a fixed skeleton: a section <code>Secondary data</code> for what must already exist
+                    before the test starts, above a section <code>Primary data</code> for what the test itself
+                    enters, then <code>Expected reaction</code> (what the user sees) and <code>Expected effect</code>
+                    (what the system does). Here is the skeleton for an appointment form on a dispatch board,
+                    reduced to the rows that matter:</p>
+
+                                    <div style="overflow-x:auto"><table style="min-width:640px">
+                    <tr><th style="min-width:4rem"></th><th style="min-width:12rem"></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overBooking</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overlapBooking</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overProposal</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overlapProposal</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_proposalOver</div></th></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Secondary data &mdash; what must already exist</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>slot</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>2</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>taken by a booking</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">a</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>taken by a proposal</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Primary data &mdash; the appointment form</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>kind</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>booking</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>proposal</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>time</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>2</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>same slot</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">a</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>overlapping start</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Summary &mdash; combinations covered</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>product of the counts above</td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>4</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td colspan="6">2 &times; 2 &times; 2 = 8 combinations &mdash; 1 + 1 + 1 + 1 + 4 = <strong>8 of 8 &mdash; 100&thinsp;% coverage</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Expected reaction</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>saved</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>rejected with a message</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Expected effect</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>conflict findable on the board</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>no conflict on the board</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
+                  </table></div>
+
+                  <p>The markers are Nanook&rsquo;s: <code>x</code> chooses exactly this class for the case.
+                    Where several classes of one field are marked, <code>a</code> is the preferred one and is what
+                    actually gets generated, while <code>e</code> marks the other valid classes so that they count
+                    for coverage without being generated &mdash; that is the <a
+                      href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">CASCADE pattern</a>, and it is
+                    why a handful of columns can cover every class. What a marker never does is state a negative.
+                    &ldquo;Must not happen&rdquo; is written as its own row with an <code>x</code>: <code>no conflict
+                    on the board</code>. A table states expectations positively, one row per statement. Read the
+                    <code>OK_proposalOver</code> column for the effect of the open markers: slot state and time both
+                    carry <code>a</code>/<code>e</code>, because a proposal must not raise a conflict over
+                    <em>anything</em>, however it lies &mdash; that one column claims four of the eight combinations,
+                    and the Summary row shows the arithmetic.</p>
+
+                  <p><strong>The fifth case is the counter-probe, not decoration.</strong> Read the last two rows.
+                    Four cases demand &ldquo;conflict findable&rdquo;, one demands &ldquo;no conflict&rdquo;. A
+                    probe that always reports a conflict fails the fifth case. A probe that never reports one fails
+                    the four. Only a probe that actually looks at the board passes all five. We learned to distrust
+                    any effect that had only one row in the table &mdash; it can be satisfied by a probe that returns
+                    <code>true</code>. <em>The contradiction between two cases is what turns a value into an
+                    assertion.</em></p>
+
+                  <h3>Preconditions are an axis, not a path</h3>
+
+                  <p>&ldquo;First create an appointment, then book over it&rdquo; reads like a scenario. Written as a
+                    script, it is one: setup, act, assert, in a straight line. We had dozens of those.</p>
+
+                  <p>In a table, a pre-existing state is not a step. It is an <strong>axis</strong> &mdash; a row in
+                    <code>Secondary data</code> &mdash; and as an axis it crosses with every other class in the
+                    table. The moment &ldquo;slot taken by a booking&rdquo; is a row rather than a setup call, it
+                    combines with &ldquo;kind: proposal&rdquo; whether or not anyone thought of it.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/precondition-path-vs-axis.svg"
+                      alt="Left: three separate scenario arrows, each setup, act, assert. Right: a two-by-two grid with the precondition as one dimension and the input class as the other; the fourth cell, a proposal over an existing booking, is highlighted as the case nobody writes."
+                      width="800" loading="lazy" /></p>
+
+                  <p>That is the payoff case in the skeleton above: <code>OK_proposalOver</code>, a <em>proposal</em>
+                    over an existing booking, which must be saved and must <strong>not</strong> report a conflict
+                    &mdash; while a real booking over the same slot must. Nobody on the team had written that as a
+                    script. Not because it was hard, but because it only occurs to you when you see the grid: two
+                    kinds of appointment, two states of the slot, four cells, and one of them empty.</p>
+
+                  <h2>Where the Values Come From</h2>
+
+                  <p>The skeleton above hid one column of the workbook: the generator column. It is the reason a
+                    table needs no fixture files &mdash; the data is produced <em>from</em> the table, at run time.
+                    Reduced to a single test case so the column has room to breathe:</p>
+
+                  <div style="overflow-x:auto"><table style="min-width:640px">
+                    <tr><th style="min-width:6rem"></th><th style="min-width:5rem"></th><th style="min-width:14rem">generator</th><th style="min-width:13rem"></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_booking</div></th></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="5"><strong>Secondary data &mdash; the world the case lands in</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td>customer</td><td>exists, active</td><td><code>ref:1:Customer:DE_OK_1:id</code></td><td>the whole record comes from the customer table&rsquo;s own OK case</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="5"><strong>Primary data &mdash; the appointment form</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td>contact name</td><td>valid</td><td><code>gen:1:faker:person.fullName</code></td><td>instance <code>1</code> &mdash; a generated person</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td>contact phone</td><td>valid</td><td><code>gen:1:faker:phone.number</code></td><td>instance <code>1</code> again &mdash; the <em>same</em> person&rsquo;s phone</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td>start</td><td>valid</td><td><code>08:00</code></td><td>no prefix &mdash; a static value, copied as-is</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td>note</td><td>255 chars</td><td><code>gen::len:255</code></td><td>a ten-line custom generator &mdash; see the login post</td><td style="text-align:center">x</td></tr>
+                  </table></div>
+
+                  <p>Three kinds of entry, and a prefix tells them apart. No prefix is a <strong>static
+                    value</strong>, copied as-is. <code>gen:</code> calls a registered <strong>generator</strong>
+                    &mdash; Faker ships with Nanook, and a custom one is ten lines plus a one-line registration. The
+                    number after <code>gen:</code> is the <strong>instance id</strong>: the name and the phone above
+                    both say <code>1</code>, so they come from the <em>same</em> generated person &mdash; different
+                    ids, or none, would produce two unrelated people.</p>
+
+                  <p>The quiet star is <code>ref:</code>. The appointment&rsquo;s customer is not described a second
+                    time &mdash; it <strong>references the customer table&rsquo;s own OK case</strong>, and the
+                    processor generates that case and takes its id. That is what &ldquo;secondary data&rdquo; looks
+                    like in practice: the precondition of one table is the output of another, with no setup script in
+                    between. Change what a valid customer is, and every table that builds on one follows.</p>
+
+                  <h2>A Flow Table Ties the Tables Together</h2>
+
+                  <p>Decision tables answer &ldquo;which combinations&rdquo;. They deliberately do not answer
+                    &ldquo;in which order&rdquo; &mdash; and for the cases where the order <em>is</em> the statement,
+                    we keep flow sheets. This is a real one from our suite, with the
+                    identifiers translated to English:</p>
+
+                  <div style="overflow-x:auto"><table style="min-width:720px">
+                    <tr><th>tc_id</th><th style="min-width:11rem">name</th><th><code>&lt;fn:function&gt;</code></th><th>CustomerCreate</th><th><code>&lt;pc:customer&gt;</code></th><th>CustomerCreate<code>&lt;mode:check&gt;</code></th></tr>
+                    <tr style="background:var(--bg-elevated)"><td>TC1</td><td>create a customer and read it back</td><td>companySignedIn</td><td><strong>DE_OK_1</strong></td><td>save</td><td><strong>DE_OK_1</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td>TC2</td><td>a rejected customer leaves nothing behind</td><td>companySignedIn</td><td><strong>DE_E_1-1</strong></td><td>save</td><td></td></tr>
+                  </table></div>
+
+                  <p>One row is one journey; the columns are its stations, read left to right.
+                    <code>&lt;fn:&hellip;&gt;</code> calls a registered function &mdash; here the base state, a
+                    company with a signed-in user. A column headed by a <strong>table name</strong> plays a case from
+                    that decision table: <code>DE_OK_1</code> is filled into the form exactly as the data table
+                    defines it. <code>&lt;pc:customer&gt;</code> clicks an action on the page class. And
+                    <code>&lt;mode:check&gt;</code> is the payoff: <strong>the same case, read back instead of
+                    entered</strong> &mdash; open the record and assert that every field holds what
+                    <code>DE_OK_1</code> says it should. The expectation is not written a second time; the data
+                    table is both the input and the oracle.</p>
+
+                  <p>Read <code>TC2</code> for the counter-move: the rejected case <code>DE_E_1-1</code> runs through
+                    the same stations, and the check column is <strong>empty</strong> &mdash; a customer that was
+                    refused has nothing to read back. The flow sheet adds only what the decision table cannot say:
+                    the order, and what must still be true at the end of it. Everything else stays in the data
+                    tables, which is why our 24 flow sheets stay two rows short instead of becoming a second test
+                    suite.</p>
+
+                  <h2>Where It Stands Now</h2>
+
+                  <table>
+                    <tr>
+                      <th></th>
+                      <th>Before</th>
+                      <th>Now</th>
+                    </tr>
+                    <tr>
+                      <td>Hand-written domain spec files</td>
+                      <td>16</td>
+                      <td><strong>0</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Decision tables</td>
+                      <td>&mdash;</td>
+                      <td><strong>117</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Test cases</td>
+                      <td>&mdash;</td>
+                      <td><strong>1,981</strong></td>
+                    </tr>
+                    <tr>
+                      <td>Runner files per app</td>
+                      <td>one per surface</td>
+                      <td><strong>8 total</strong>, all generic</td>
+                    </tr>
+                  </table>
+
+                  <p>That is across two products, an invoicing API and a field-service SaaS. Alongside the decision
+                    tables sit 24 flow sheets for the cases where order genuinely is the statement &mdash; more on
+                    those below.</p>
+
+                  <p>The number that convinced us was not in the table. One module &mdash; a dispatch board with 43
+                    procedures and 84 call sites in the UI &mdash; had <strong>no tests at all</strong>. It now has 92
+                    cases in six tables, built in a single session. The runner, the page contract and the report already
+                    existed; the session only had to say what the board must do.</p>
+
+                  <h2>What It Caught</h2>
+
+                  <p>To be clear about the order of things: the point of the switch was maintenance. The defects were
+                    a side effect. That is exactly why they are worth reporting &mdash; nobody set out to find them,
+                    and the tables found them anyway.</p>
+
+                  <h3>The one that had been green for two days</h3>
+
+                  <p>A sort assertion on a list view. A field had been renamed in the row reader; the assertion had
+                    not been told. It compared the sorted column with the expected order and passed:</p>
+
+                  <pre><code>const got = rows.map((r) =&gt; r.dueDate)   // reader renamed: every entry is undefined
+expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined, …]</code></pre>
+
+                  <p><strong>A dead reader does not make an assertion fail. It makes it empty &mdash; and empty
+                    looks exactly like correct.</strong> Behind the green: sorting ascending returned descending, and
+                    had done so for two days.</p>
+
+                  <p>The table-driven runner surfaced it within minutes of the switch, for a reason that generalises.
+                    The same row reader serves twenty other cases that <em>do</em> have values in that column. The
+                    moment one of them asked for a real date and got <code>undefined</code>, the report named the
+                    column, and the rename was visible in the diff.</p>
+
+                  <h3>The class of defect tables find on their own</h3>
+
+                  <p>The rest were less dramatic and more instructive, because they are all of one shape.</p>
+
+                  <ul>
+                    <li>A missing <code>.trim()</code> before <code>.min()</code> &mdash; three spaces pass a
+                      minimum-length check &mdash; in five separate locations. Not because anyone hunted for it, but
+                      because every table asks the same question of every text field: what happens with whitespace
+                      only?</li>
+                    <li>A whole module answering rule violations with <code>500</code> instead of <code>4xx</code>.
+                      One wrapper, 41 procedures, every one of them turning a validation error into a server error.
+                      Each table has a column that expects a rejection; every one of those columns went red on the
+                      status code at once.</li>
+                  </ul>
+
+                  <p>The pattern: <strong>a table asks the boring questions everywhere, and boring questions are
+                    the ones humans skip.</strong> Nobody writes the whitespace-only test for the fifth text field on
+                    a form. The table does not know it is the fifth.</p>
+
+                  <h3>The findings that arrived before the first run</h3>
+
+                  <p>One more class of catch, and we can only half measure it: <strong>filling a table is itself an
+                    audit.</strong> A column forces a decision into every cell &mdash; you cannot leave a field
+                    vaguely &ldquo;handled&rdquo; the way a scenario script can simply not mention it. Writing the
+                    country classes for the customer sheet meant asking the application which countries it actually
+                    serves &mdash; and the answer was <strong>five different lists in five places</strong>:
+                    sixteen in one form, fourteen in another, thirteen in the backend. You could create a Romanian
+                    customer but not a Romanian supplier, and a Canadian customer silently fell back to US dollars.
+                    None of that came from running a test. It came from having to write a row.</p>
+
+                  <p>The same forcing works on the AI that helps build the tables, and this one we can date: working
+                    through a validation sheet, the model adjusted seven expectations to match what the application
+                    actually did &mdash; the app accepted a company name of three spaces, the table said reject, so
+                    the model &ldquo;fixed&rdquo; the table. The correction became a house rule:</p>
+
+                  <blockquote><p>If the table says we expect a format check, then we expect one. That it is not
+                    implemented is a different matter.</p></blockquote>
+
+                  <p>A model has a strong pull towards the observable: it sees a failing expectation and a passing
+                    application and resolves the contradiction in the direction of what it can measure. Left alone,
+                    it converges on <em>the tests describe what the software does</em> &mdash; at which point a bug
+                    and a feature are indistinguishable. The table is the fixed point that stops that drift, and
+                    because it is a grid of fields and crosses rather than three hundred lines of generated code,
+                    <strong>a human can see the drift happening</strong>. Whether the authoring effect alone justifies
+                    the switch we cannot prove &mdash; but a noticeable share of our findings arrived while writing
+                    columns, before anything ran.</p>
+
+                  <h2>Two Mistakes We Made</h2>
+
+                  <p>This section is deliberate. A field report without it is a brochure.</p>
+
+                  <h3>An equation whose two sides come from the same number</h3>
+
+                  <p>The stock module has a balance: what is on hand equals the opening quantity plus movements. Our
+                    first assertion for it derived the opening quantity from the same record it was checking:</p>
+
+                  <pre><code>const base = stockAt - sum(movements)   // then: expect(base).toBeGreaterThanOrEqual(0)</code></pre>
+
+                  <p>It was green. It was also unable to find the defect its own case was named after. If the
+                    service had double-counted a movement, <code>stockAt</code> would carry the error and
+                    <code>base</code> would absorb it. The assertion checked that a number minus part of itself is a
+                    non-negative integer &mdash; which it always is when the data is integers.</p>
+
+                  <p>The fix was to read the opening quantity independently, from the receipt that created it.
+                    <strong>Only then was a mutation probe possible at all</strong>: with two independent sources,
+                    breaking the service makes them disagree. With one, there is nothing to disagree.</p>
+
+                  <h3>An optional field switched off the compiler</h3>
+
+                  <p>The page modules share a contract for what a list view reports back to the runner. One line of
+                    it read:</p>
+
+                  <pre><code>ariaSort?: string | null   // optional — and three of four page modules never set it</code></pre>
+
+                  <p>The probe for sort order read that field. Three of the four modules never wrote it. So the probe
+                    compared <code>undefined === 'ascending'</code>, which is always false, and the check passed
+                    <strong>empty</strong> &mdash; the same failure shape as the dead reader, produced by a question
+                    mark.</p>
+
+                  <p>We made the field mandatory. The type checker named a third module immediately, one we had not
+                    suspected. And the same run went from 15 to 20 red &mdash; the five new ones being exactly the
+                    cases that had measured nothing before. That is the number to watch after a fix like this: if
+                    the red count does not rise, the field was not being read.</p>
+
+                  <h2>Verify the Verifier</h2>
+
+                  <p>After the second mistake we made it a rule: every new assertion gets a mutation probe. Break the
+                    thing it guards on purpose, and check <strong>which</strong> cases fall &mdash; not merely
+                    <em>that</em> some do. A probe that turns everything red is as uninformative as one that turns
+                    nothing red.</p>
+
+                  <table>
+                    <tr>
+                      <th>Probe</th>
+                      <th>Predicted red</th>
+                      <th>Measured red</th>
+                    </tr>
+                    <tr>
+                      <td>Conflict detection always returns false</td>
+                      <td>3</td>
+                      <td>3</td>
+                    </tr>
+                    <tr>
+                      <td>Sort comparator inverted</td>
+                      <td>3</td>
+                      <td>3</td>
+                    </tr>
+                    <tr>
+                      <td>Opening quantity read from the wrong receipt</td>
+                      <td>1</td>
+                      <td>1</td>
+                    </tr>
+                    <tr>
+                      <td><code>ariaSort</code> reported as <code>null</code> everywhere</td>
+                      <td>4</td>
+                      <td>4</td>
+                    </tr>
+                  </table>
+
+                  <p>Each exact. Where prediction and measurement disagree, the assertion is wrong, not the
+                    application &mdash; that is the point of predicting first.</p>
+
+                  <p>One practical rule: <strong>always over a file copy, never <code>git checkout</code>.</strong>
+                    A checkout after the probe discards every uncommitted change in that file, and the probe usually
+                    runs in the middle of other work. Copy the file aside, mutate, measure, copy it back.</p>
+
+                  <h2>What Tables Do Not Solve</h2>
+
+                  <p>Three things, and we hit all three.</p>
+
+                  <p><strong>Order-as-the-statement stays a flow.</strong> &ldquo;Finalize the invoice, then confirm
+                    it can no longer be edited&rdquo; is a chain; the sequence <em>is</em> the assertion. A decision
+                    table has no notion of &ldquo;then&rdquo;. We keep 24 flow sheets for exactly this, and we stopped
+                    trying to bend tables around it.</p>
+
+                  <p><strong>A table freezes what it describes.</strong> Pouring a half-built module into 92 cases
+                    pins down a state that is still meant to change. Every subsequent change then produces red that
+                    is not a defect, and the team learns to ignore red. Tables belong on surfaces whose behaviour is
+                    decided.</p>
+
+                  <p><strong>The runner still needs a domain probe.</strong> The table says what must happen;
+                    something has to know how to look. &ldquo;Conflict findable on the board&rdquo; needs code that
+                    opens the board and looks. That code must <em>observe and report</em> &mdash; never assert. A probe
+                    with its own <code>expect</code> pulls the expectation out of the table and into the place where
+                    nobody reads it, and we are back to the specification living in TypeScript. We wrote that rule
+                    down and still broke it twice.</p>
+
+                  <h2>Would We Do It Again</h2>
+
+                  <p>Yes, and earlier. The win was not fewer tests; there are more now than before. The win was that
+                    <strong>the specification moved out of TypeScript</strong> and into a form the people who know
+                    the domain can read, correct and extend. The maintenance curve flattened as a direct result:
+                    a new screen is a table and a suite file, and the runner has not changed for it.</p>
+
+                  <p>If you want to start, the <a href="/docs/quickstart/quickstart">Quickstart</a> covers
+                    installation, the <a href="/docs/guide/equivalence/overview">equivalence class guide</a> explains
+                    the markers, and the guides on <a href="/docs/guide/matrix/overview">matrix tables</a>, <a
+                      href="/docs/guide/generatrorCommand/reference">cross-table references</a> and <a
+                      href="/docs/tutorials/createGenerator">custom generators</a> cover what we leaned on most. If
+                    you would rather have a model draft the first table, <a
+                      href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">AI-Assisted Equivalence Class
+                      Tables</a> shows how; and <a href="/blog/2026/03/20/test-data-manual-vs-automated">Manual vs.
+                      Automated</a> is the argument for generated data in the first place.</p>
+
+                  <p><strong>Your suite is probably already a table &mdash; it is just written in TypeScript.</strong>
+                    Start with the <a href="/docs/quickstart/quickstart">Quickstart</a> and turn one screen into an
+                    equivalence class table; the <a href="/docs/tutorials/createEquivalenceClassTable">tutorial</a>
+                    walks through the markers.</p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

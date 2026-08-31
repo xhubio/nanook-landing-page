@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="JetBrains Mono, monospace" font-size="13">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <!-- left: the table column -->
+  <text x="40" y="36" fill="#ffffff" font-size="12" opacity="0.7">decision table · one column</text>
+  <rect x="212" y="48" width="138" height="272" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <text x="281" y="68" fill="#4CAF50" text-anchor="middle" font-weight="700" font-size="12">E_passwordTooShort</text>
+  <line x1="40" y1="80" x2="340" y2="80" stroke="#ffffff" stroke-opacity="0.3"/>
+  <text x="40" y="104" fill="#f59e0b">account</text>
+  <text x="60" y="124" fill="#ffffff">exists, active</text><text x="281" y="124" fill="#4CAF50" text-anchor="middle" font-weight="700">x</text>
+  <text x="60" y="142" fill="#ffffff" opacity="0.5">does not exist</text><text x="281" y="142" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="60" y="160" fill="#ffffff" opacity="0.5">locked</text><text x="281" y="160" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="40" y="188" fill="#f59e0b">email</text>
+  <text x="60" y="208" fill="#ffffff">valid</text><text x="281" y="208" fill="#4CAF50" text-anchor="middle" font-weight="700">x</text>
+  <text x="60" y="226" fill="#ffffff" opacity="0.5">empty</text><text x="281" y="226" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="60" y="244" fill="#ffffff" opacity="0.5">no @</text><text x="281" y="244" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="60" y="262" fill="#ffffff" opacity="0.5">too long</text><text x="281" y="262" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="40" y="290" fill="#f59e0b">password</text>
+  <text x="60" y="310" fill="#ffffff" opacity="0.5">valid</text><text x="281" y="310" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="60" y="328" fill="#ffffff" opacity="0.5">empty</text><text x="281" y="328" fill="#ffffff" opacity="0.3" text-anchor="middle">.</text>
+  <text x="60" y="346" fill="#ffffff">too short</text><text x="281" y="346" fill="#E61919" text-anchor="middle" font-weight="700">x</text>
+  <rect x="222" y="332" width="118" height="20" fill="none" stroke="#E61919" stroke-width="1.5"/>
+  <text x="40" y="392" fill="#ffffff" opacity="0.7" font-size="12">exactly one thing wrong — everything else right</text>
+  <!-- arrow -->
+  <line x1="360" y1="200" x2="440" y2="200" stroke="#ffffff" stroke-width="2"/>
+  <polygon points="440,192 456,200 440,208" fill="#ffffff"/>
+  <text x="408" y="186" fill="#ffffff" text-anchor="middle" font-size="11" opacity="0.7">nanook</text>
+  <!-- right: the generated case -->
+  <text x="470" y="36" fill="#ffffff" font-size="12" opacity="0.7">generated test case · one object</text>
+  <rect x="470" y="48" width="290" height="272" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <text x="486" y="76" fill="#ffffff">{</text>
+  <text x="502" y="98" fill="#ffffff">"name": <tspan fill="#4CAF50">"E_passwordTooShort"</tspan>,</text>
+  <text x="502" y="120" fill="#ffffff">"data": {</text>
+  <text x="518" y="142" fill="#ffffff">"account": <tspan fill="#4CAF50">"active"</tspan>,</text>
+  <text x="518" y="164" fill="#ffffff">"email": <tspan fill="#4CAF50">"Kurtis_McGlynn27@yahoo.com"</tspan>,</text>
+  <text x="518" y="186" fill="#ffffff">"password": <tspan fill="#E61919" font-weight="700">"ab"</tspan>,</text>
+  <text x="518" y="208" fill="#ffffff">"Expected reaction": [</text>
+  <text x="534" y="230" fill="#ffffff">{ "key": <tspan fill="#f59e0b">"rejected"</tspan> }</text>
+  <text x="518" y="252" fill="#ffffff">],</text>
+  <text x="518" y="274" fill="#ffffff">"Expected effect": [ ... ]</text>
+  <text x="502" y="296" fill="#ffffff">}</text>
+  <text x="486" y="314" fill="#ffffff">}</text>
+  <text x="470" y="392" fill="#ffffff" opacity="0.7" font-size="12">column in, test case out — one to one</text>
+</svg>

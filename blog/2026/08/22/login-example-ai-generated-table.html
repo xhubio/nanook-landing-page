@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>One Login Form, Eight Test Cases: A Worked Example · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="A complete worked example: one prompt, one decision table, eight generated test cases with real data. Everything shown is output from an actual run." />
+  <meta property="og:title" content="One Login Form, Eight Test Cases" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table" />
+  <meta property="og:description"
+    content="From a one-line prompt to a decision table and generated test data -- including the limitation we hit and the ten lines that fixed it." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/brutalist.css" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "One Login Form, Eight Test Cases: A Worked Example",
+  "datePublished": "2026-08-22",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "A complete worked example: one prompt, one decision table, eight generated test cases with real data. Everything shown is output from an actual run.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table"
+}
+</script>
+</head>
+
+<body data-theme="tactical">
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
+            <li><a href="/blog">[ BLOG ]</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">INK</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp> One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/08/22/login-example-ai-generated-table">One Login Form, Eight Test Cases: A Worked Example</a></h1>
+                <p class="post-meta">August 22, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p>The <a href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">post announcing the
+                    <code>/createEquivalenceClassTable</code> skill</a> explains how it works: the six workflow steps,
+                    the CASCADE markers, what lands in the Excel file. What it does not contain is one complete, small
+                    example with real output. This is that example. Everything below &mdash; the table, every generated
+                    value, the error we hit &mdash; came out of an actual run, not out of an illustration. If you want
+                    the mechanics of the skill itself, read that post first; here we only use it.</p>
+
+                  <p>The subject is a login form, on purpose. Everybody understands one, nothing needs explaining, and
+                    most teams already have tests for theirs &mdash; which makes it the best object for a comparison at
+                    the end.</p>
+
+                  <h2>Ask for a Table</h2>
+
+                  <p>One line is the starting gun:</p>
+
+                  <pre><code>/createEquivalenceClassTable Login Form</code></pre>
+
+                  <p>That is all the prompting there is. The table shown next was built to the skill&rsquo;s rules and
+                    run through Nanook; the prompt is the entry point, and the rest of this post is about what comes
+                    out of it.</p>
+
+                  <h2>What Comes Back</h2>
+
+                  <p>A decision table with eight columns &mdash; one per test case. Here it is with the bookkeeping rows
+                    (<code>Execute</code>, <code>Multiplicity</code>) and one column removed: the generator column,
+                    which says where run-time values come from. This section is about the mechanics of the table
+                    itself; the generators return in the next one, and the directive syntax deserves a post of its
+                    own. Eight cases side by side are meant to be read across, not down: one column is one test
+                    case.</p>
+
+                  <div style="overflow-x:auto"><table style="min-width:820px">
+                    <tr><th style="min-width:7rem"></th><th style="min-width:9rem"></th><th style="min-width:13rem">rule</th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_login</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_emailEmpty</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_emailNoAt</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_emailTooLong</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_passwordEmpty</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_passwordTooShort</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_unknownUser</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_lockedUser</div></th></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Secondary data — what must already exist</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>account</td><td></td><td><small>3 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>exists, active</td><td>the normal world</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>does not exist</td><td>nobody registered that</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>locked</td><td>too many failed attempts</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Primary data — the login form</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>email</td><td></td><td><small>4 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>4</small></td><td style="text-align:center"><small>4</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>valid</td><td></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">a</td><td style="text-align:center">a</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>empty</td><td>min(1)</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>no @</td><td>format</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>too long</td><td>max(254) RFC 5321</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>password</td><td></td><td><small>3 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>3</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>valid</td><td></td><td style="text-align:center">x</td><td style="text-align:center">a</td><td style="text-align:center">a</td><td style="text-align:center">a</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">a</td><td style="text-align:center">a</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>empty</td><td>min(1)</td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>too short</td><td>min(8)</td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Summary &mdash; combinations covered</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>product of the counts above</td><td>3 &times; 4 &times; 3 = 36 in total</td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>12</strong></td><td style="text-align:center"><strong>12</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td colspan="10">1 + 3 + 3 + 3 + 1 + 1 + 12 + 12 = <strong>36 of 36 &mdash; 100&thinsp;% coverage</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Expected reaction</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>signed in</td><td>session cookie is set</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>rejected</td><td>with a message</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Expected effect</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>failed-attempt counter rises</td><td>real account, wrong password</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>failed-attempt counter unchanged</td><td>success or unknown user</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                  </table></div>
+
+                  <p>Four things to look at, in this order.</p>
+
+                  <ol>
+                    <li><strong>Two sections, not one.</strong> <em>Secondary data</em> describes the world the test
+                      lands in; <em>Primary data</em> is what the form receives. Whether the account is locked is not
+                      something you type into a login form &mdash; it has to be true before the test starts. Keeping
+                      the two apart is what lets the table say &ldquo;valid credentials, locked account&rdquo; as one
+                      case instead of a paragraph of setup code.</li>
+                    <li><strong>Equivalence classes, not values.</strong> <code>email</code> has four: valid, empty, no
+                      <code>@</code>, too long. Each stands for infinitely many concrete inputs. <code>password</code>
+                      has three, <code>account</code> has three. The table never lists a specific email address as a
+                      row; it lists the reasons an address can be accepted or rejected.</li>
+                    <li><strong>The arithmetic.</strong> The small number next to each field counts the classes a case
+                      claims there; the <em>Summary</em> row multiplies them per column. <code>E_unknownUser</code>
+                      claims 1 &times; 4 &times; 3 = <strong>12</strong> combinations &mdash; the account is the one
+                      thing wrong, so every email class and every password class is admissible. The eight products sum
+                      to <strong>36</strong>, which is exactly the 3 &times; 4 &times; 3 the three fields span:
+                      100&thinsp;% of the combination space, claimed by eight columns.</li>
+                    <li><strong>The markers.</strong> <code>x</code> selects exactly this class for the case.
+                      <code>a</code> marks the preferred class where several are admissible &mdash; that is the one
+                      Nanook generates. <code>e</code> marks the other admissible classes: they count towards coverage
+                      but are not generated unless no <code>a</code> or <code>x</code> is present. Together
+                      <code>a</code> and <code>e</code> are the <a
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">CASCADE pattern</a> from the
+                      earlier post, and the reason eight columns cover every class exactly once.</li>
+                  </ol>
+
+                  <p>The last two rows are the ones people miss. Note what is <em>not</em> there: no marker means
+                    &ldquo;must not happen&rdquo;. A table states its expectations positively, one row per statement,
+                    each selected with an <code>x</code>. So the counter gets two rows &mdash; <em>rises</em> and
+                    <em>unchanged</em> &mdash; and the cases take sides: a real account with a wrong password demands
+                    the first, a successful login and an unknown user demand the second. Five columns say nothing about
+                    the counter; three take a position, and the two positions contradict each other. That contradiction
+                    is the assertion: a probe that always reports a rising counter fails two cases, one that never
+                    reports it fails the third.</p>
+
+                  <h3>Read one column and the method explains itself</h3>
+
+                  <p>Take <code>E_passwordTooShort</code> and read it top to bottom: account <strong>active</strong>,
+                    email <strong>valid</strong>, password <strong>too short</strong>. Exactly one thing is wrong;
+                    everything else is right.</p>
+
+                  <p>That is the whole discipline of error-case design, and in a table you can see it at a glance
+                    instead of reasoning about it. The counter-example is one everybody has written at some point: a
+                    test that submits an empty email <em>and</em> a two-character password. It passes when the form
+                    rejects either one &mdash; and therefore proves nothing about which. If the password check is
+                    later removed by accident, that test stays green. The column above cannot: its email is valid, so
+                    the only thing that can produce the rejection is the password rule.</p>
+
+                  <h2>The Data It Generates</h2>
+
+                  <p><img class="blog-diagram" src="/img/blog/login-column-to-testcase.svg"
+                      alt="One column of the decision table, E_passwordTooShort with its three x marks on account active, email valid and password too short, mapped by an arrow to the generated JSON test case with account active, a generated email, and the password ab"
+                      width="800" loading="lazy" /></p>
+
+                  <p>Running the table through Nanook produces one object per column. Reduced to the fields that
+                    matter, this is a single run, values unedited:</p>
+
+                  <div style="overflow-x:auto"><pre><code>case                 account   email                              password           expected     effect
+OK_login             active    Jennifer_Tremblay@hotmail.com      VuZGJBushpsbY_b    signed in    counter unchanged
+E_emailEmpty         active    —                                  iu2MngWY7bxFuXF    rejected
+E_emailNoAt          active    torsten.link                       0qeDxgDRG0kwRAT    rejected
+E_emailTooLong       active    aaaa…aaaa (255)                    3laNNg1Jt_jjWCk    rejected
+E_passwordEmpty      active    Kelli_Ankunding54@gmail.com        —                  rejected
+E_passwordTooShort   active    Kurtis_McGlynn27@yahoo.com         ab                 rejected     counter rises
+E_unknownUser        absent    Cody.Kuhic-Kuphal@yahoo.com        gRL7wb1Xz1m2maI    rejected     counter unchanged
+E_lockedUser         locked    Johan_DuBuque@hotmail.com          8FnRb944emJsD4c    rejected</code></pre></div>
+
+                  <p>(The 255-character address is abbreviated for display; the generated value is 255 letters
+                    <code>a</code>.)</p>
+
+                  <p>A few things are only visible in the output, not in the table:</p>
+
+                  <ul>
+                    <li><code>E_emailEmpty</code> has <strong>no email key at all</strong>. The dash is not an empty
+                      string &mdash; the field is absent from the object. An empty class means the field is not sent,
+                      which is a different test from sending <code>""</code>, and a form that handles one may well
+                      mishandle the other.</li>
+                    <li><code>E_emailTooLong</code> is exactly <strong>255</strong> characters: one over the 254-octet
+                      limit of RFC 5321. A boundary case is only a boundary case if the number is exact; &ldquo;some
+                      long string&rdquo; tests nothing.</li>
+                    <li>The passwords differ in every row. They are <strong>generated per run, not a fixture</strong>.
+                      A test that hard-codes <code>Test1234!</code> passes forever after someone adds a password
+                      blocklist that happens not to contain it; a generated value gets a fresh chance to collide with
+                      every rule on every run.</li>
+                    <li><code>account</code> varies only in the two rows where it is the point. Everywhere else it is
+                      <code>active</code>, the normal world &mdash; which is what makes the other six cases statements
+                      about the form and not about the account.</li>
+                  </ul>
+
+                  <h2>When Faker Is Not Enough</h2>
+
+                  <p>The first version of the table did not use <code>gen::len:255</code>. It used what looked
+                    obvious: <code>gen:1:faker:string.alpha:255</code>. That does not work, and it is worth saying
+                    exactly why.</p>
+
+                  <p>A Faker path in a generator directive takes <strong>no arguments</strong>. The directive is split
+                    on <code>.</code> and called as a path &mdash; <code>string.alpha</code> resolves to a function,
+                    <code>alpha:255</code> resolves to nothing, and the call throws.</p>
+
+                  <p>What happened when we ran it: Nanook logged the error and the case <strong>was not emitted</strong>.
+                    Seven test cases came out instead of eight. The run did not stop; the error sat in the log, and the
+                    other seven cases were perfectly fine. If nothing in your pipeline checks the count of generated
+                    cases against the count of table columns, a case can disappear this quietly. Check the number.</p>
+
+                  <p>The fix is a generator of our own, ten lines:</p>
+
+                  <pre><code>// `gen::len:255` -> a string of exactly 255 'a'. Faker paths take no
+// arguments, so an exact length needs a generator of its own.
+class GeneratorLen extends DataGeneratorBase {
+  async doGenerate(request: DataGeneratorGenerateRequest) {
+    const cfg = request.generatorDirective?.config
+    const count = Number.parseInt(String(cfg ?? '').replace(/^len:/, ''), 10)
+    return Number.isFinite(count) ? 'a'.repeat(count) : undefined
+  }
+}</code></pre>
+
+                  <p>And one line to make it available under the name the table uses:</p>
+
+                  <pre><code>registry.registerGenerator('len', new GeneratorLen({ logger, name: 'len' }))</code></pre>
+
+                  <p>After that, eight cases. The <a href="/docs/tutorials/createGenerator">custom generator
+                    tutorial</a> covers the interface; the <a href="/docs/guide/directives">directives guide</a> has
+                    the full <code>gen:</code> syntax, including the instance number.</p>
+
+                  <h2>What the Table Is Worth After Day One</h2>
+
+                  <p>Eight cases for a login form is not a large number, and it is not the claim. Most teams already
+                    have a handful of login tests. The value is in two properties the eight cases have that the
+                    hand-written ones usually lack.</p>
+
+                  <p><strong>The specification is readable by someone who does not write TypeScript.</strong> The
+                    table above says what the login form must do, in the vocabulary of the form. Add a class to
+                    <code>email</code> &mdash; say &ldquo;unicode domain&rdquo; &mdash; and the case count follows on
+                    its own; the person adding it does not need to know how the test runner is built. Compare that with
+                    a <code>const CASES = [...]</code> inside a spec file, which belongs to whoever writes the spec
+                    file.</p>
+
+                  <p><strong>The same table drives execution.</strong> The eight objects above are not documentation;
+                    they are the input to whatever runs the test. How that scales past one form &mdash; to a whole
+                    application, with the table as the only source &mdash; is the subject of the
+                    <a href="/blog/2026/08/21/testing-a-saas-with-nanook">field report on testing a SaaS with
+                    Nanook</a>; this post stops at the eight.</p>
+
+                  <h2>Try It on Your Own Form</h2>
+
+                  <p>Two steps. Install Nanook following the <a href="/docs/quickstart/quickstart">Quickstart</a>, then
+                    run the slash command against your own login page. The
+                    <a href="/docs/tutorials/createEquivalenceClassTable">tutorial</a> walks through the markers if the
+                    table needs editing, and the <a href="/docs/guide/equivalence/overview">equivalence class
+                    guide</a> explains why the classes are chosen the way they are. The source is on
+                    <a href="https://github.com/xhubio/nanook-table/" target="_blank"
+                      rel="noreferrer noopener">GitHub</a>.</p>
+
+                  <p>Then compare. How many login cases did you have before, and how many did the table produce? The
+                    two numbers are usually close &mdash; but the overlap is rarely complete, and the column that is
+                    missing from your suite tends to be one of the boring ones: the absent field, the 255th character,
+                    the counter that must <em>not</em> move.</p>
+
+                  <p><strong>Point it at your own login page.</strong> Install <a href="/docs/quickstart/quickstart">Nanook</a>,
+                    run <code>/createEquivalenceClassTable Login Form</code>, and compare the result with the login
+                    tests you have today. The interesting number is not how many cases it produced &mdash; it is how
+                    many of them you already had.</p>
+
+                </span></div>
+
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ DOCS ]</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">[ MORE ]</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

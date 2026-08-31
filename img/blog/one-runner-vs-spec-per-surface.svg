@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="'JetBrains Mono', monospace" font-size="13">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <defs>
+    <marker id="arrW" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#ffffff"/>
+    </marker>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#f59e0b"/>
+    </marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#4CAF50"/>
+    </marker>
+  </defs>
+
+  <!-- titles -->
+  <text x="190" y="32" fill="#f59e0b" text-anchor="middle" font-weight="700">BEFORE: table → generated spec per surface</text>
+  <text x="600" y="32" fill="#4CAF50" text-anchor="middle" font-weight="700">NOW: tables → one runner</text>
+  <line x1="400" y1="50" x2="400" y2="390" stroke="#333333" stroke-width="1" stroke-dasharray="4 4"/>
+
+  <!-- LEFT: three tables each feeding its own spec -->
+  <g id="left">
+    <!-- row 1 -->
+    <rect x="30" y="70" width="90" height="46" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="75" y="89" fill="#ffffff" text-anchor="middle">table</text>
+    <text x="75" y="106" fill="#ffffff" text-anchor="middle" font-size="11">quotes</text>
+    <line x1="120" y1="93" x2="180" y2="93" stroke="#ffffff" stroke-width="1.5" marker-end="url(#arrW)"/>
+    <rect x="182" y="70" width="140" height="46" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="252" y="89" fill="#f59e0b" text-anchor="middle">quotes.spec.ts</text>
+    <text x="252" y="106" fill="#f59e0b" text-anchor="middle" font-size="11">generated</text>
+    <path d="M322,80 C360,80 360,106 322,106" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrO)"/>
+    <text x="352" y="97" fill="#f59e0b" font-size="10">maintain</text>
+
+    <!-- row 2 -->
+    <rect x="30" y="150" width="90" height="46" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="75" y="169" fill="#ffffff" text-anchor="middle">table</text>
+    <text x="75" y="186" fill="#ffffff" text-anchor="middle" font-size="11">invoices</text>
+    <line x1="120" y1="173" x2="180" y2="173" stroke="#ffffff" stroke-width="1.5" marker-end="url(#arrW)"/>
+    <rect x="182" y="150" width="140" height="46" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="252" y="169" fill="#f59e0b" text-anchor="middle">invoices.spec.ts</text>
+    <text x="252" y="186" fill="#f59e0b" text-anchor="middle" font-size="11">generated</text>
+    <path d="M322,160 C360,160 360,186 322,186" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrO)"/>
+    <text x="352" y="177" fill="#f59e0b" font-size="10">maintain</text>
+
+    <!-- row 3 -->
+    <rect x="30" y="230" width="90" height="46" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="75" y="249" fill="#ffffff" text-anchor="middle">table</text>
+    <text x="75" y="266" fill="#ffffff" text-anchor="middle" font-size="11">bookings</text>
+    <line x1="120" y1="253" x2="180" y2="253" stroke="#ffffff" stroke-width="1.5" marker-end="url(#arrW)"/>
+    <rect x="182" y="230" width="140" height="46" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="252" y="249" fill="#f59e0b" text-anchor="middle">bookings.spec.ts</text>
+    <text x="252" y="266" fill="#f59e0b" text-anchor="middle" font-size="11">generated</text>
+    <path d="M322,240 C360,240 360,266 322,266" fill="none" stroke="#f59e0b" stroke-width="1.5" marker-end="url(#arrO)"/>
+    <text x="352" y="257" fill="#f59e0b" font-size="10">maintain</text>
+
+    <text x="75" y="312" fill="#ffffff" text-anchor="middle">…</text>
+    <text x="252" y="312" fill="#f59e0b" text-anchor="middle">…</text>
+
+    <text x="190" y="355" fill="#ffffff" text-anchor="middle" font-size="12">one file per surface,</text>
+    <text x="190" y="373" fill="#f59e0b" text-anchor="middle" font-size="12">each one wants maintaining</text>
+  </g>
+
+  <!-- RIGHT: three tables feeding one runner -->
+  <g id="right">
+    <rect x="440" y="70" width="110" height="46" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="495" y="89" fill="#ffffff" text-anchor="middle">table</text>
+    <text x="495" y="106" fill="#ffffff" text-anchor="middle" font-size="11">quotes</text>
+
+    <rect x="440" y="150" width="110" height="46" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="495" y="169" fill="#ffffff" text-anchor="middle">table</text>
+    <text x="495" y="186" fill="#ffffff" text-anchor="middle" font-size="11">invoices</text>
+
+    <rect x="440" y="230" width="110" height="46" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+    <text x="495" y="249" fill="#ffffff" text-anchor="middle">table</text>
+    <text x="495" y="266" fill="#ffffff" text-anchor="middle" font-size="11">bookings</text>
+
+    <text x="495" y="312" fill="#ffffff" text-anchor="middle">…</text>
+
+    <!-- label "the source" -->
+    <text x="495" y="340" fill="#ffffff" text-anchor="middle" font-size="12" font-style="italic">the source</text>
+
+    <!-- arrows to runner -->
+    <line x1="550" y1="93" x2="616" y2="160" stroke="#4CAF50" stroke-width="1.5" marker-end="url(#arrG)"/>
+    <line x1="550" y1="173" x2="616" y2="173" stroke="#4CAF50" stroke-width="1.5" marker-end="url(#arrG)"/>
+    <line x1="550" y1="253" x2="616" y2="186" stroke="#4CAF50" stroke-width="1.5" marker-end="url(#arrG)"/>
+
+    <!-- runner -->
+    <rect x="620" y="128" width="170" height="90" fill="none" stroke="#4CAF50" stroke-width="2"/>
+    <text x="705" y="160" fill="#4CAF50" text-anchor="middle" font-weight="700">ONE RUNNER</text>
+    <text x="705" y="180" fill="#4CAF50" text-anchor="middle" font-size="11">suiten.spec.ts</text>
+    <text x="705" y="200" fill="#ffffff" text-anchor="middle" font-size="11">reads suites as data</text>
+
+    <text x="640" y="355" fill="#ffffff" text-anchor="middle" font-size="12">nothing generated,</text>
+    <text x="640" y="373" fill="#4CAF50" text-anchor="middle" font-size="12">nothing to maintain per surface</text>
+  </g>
+</svg>
