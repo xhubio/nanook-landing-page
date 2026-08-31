@@ -12,7 +12,8 @@
   <meta property="og:title" content="Create your own data generator · Nanook" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://nanook.xhub.io/docs/tutorials/createGenerator" />
-  <meta property="og:description" content="Tutorial: create custom data generators for domain-specific test data in Nanook." />
+  <meta property="og:description"
+    content="Tutorial: create custom data generators for domain-specific test data in Nanook." />
   <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
@@ -70,10 +71,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -265,7 +266,12 @@
               <div><span>
                   <p>First of all, we need to update the Excel sheet to use the
                     new generator.</p>
-                  <p><picture><source srcset="/img/tutorials/t2/step4.webp" type="image/webp"><img src="/img/tutorials/t2/step4.png" alt="step4"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t2/step4.webp" type="image/webp"><img
+                        src="/img/tutorials/t2/step4.png" alt="step4">
+                    </picture>
+                  </p>
                   <p>As you can see in the image, we added two new 'FieldSubSection' fields. Also, we added three more
                     test cases are added just to make it more interesting.</p>
                   <p>We also removed the static email and replaced it with a generator call.
@@ -402,7 +408,12 @@
                   <p>Let’s have a look at the generated result.
                     In the 'tdg' subfolder there are four subdirectories 'TC1' to 'TC4'.
                     One folder has been created for each test case.</p>
-                  <p><picture><source srcset="/img/tutorials/t2/step4.1.webp" type="image/webp"><img src="/img/tutorials/t2/step4.1.png" alt="step4.1"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t2/step4.1.webp" type="image/webp"><img
+                        src="/img/tutorials/t2/step4.1.png" alt="step4.1">
+                    </picture>
+                  </p>
                   <p>Open one of the generated JSON files in one of the folders.
                     The result should look like this.</p>
                   <pre><code class="hljs css language-json"><span class="token punctuation">{</span>
@@ -463,20 +474,21 @@
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
       <div class="footer-col">
         <samp class="footer-heading">[ MORE ]</samp>
         <a href="/about">About</a>
-                <a href="/imprint">Imprint</a>
+        <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
-    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a href="https://xhub.io">BeeBack UG</a>.</samp></div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
@@ -563,7 +575,7 @@
   <script>
   </script>
   <script src="/js/theme.js"></script>
-<script src="/js/cookies.js"></script>
+  <script src="/js/cookies.js"></script>
 </body>
 
 </html>

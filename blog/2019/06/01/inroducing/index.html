@@ -61,10 +61,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -96,11 +96,18 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
                   </ul>
                 </div>
               </div>
@@ -173,22 +180,32 @@
                 <h1 class="postHeaderTitle"><a href="/blog/2019/06/01/introducing">Introducing Nanook-Table</a></h1>
                 <p class="post-meta">June 1, 2019</p>
                 <div class="authorBlock">
-                  <p class="post-authorName"><a href="https://github.com/xhubio" target="_blank" rel="noreferrer noopener">Torsten Link</a></p>
+                  <p class="post-authorName"><a href="https://github.com/xhubio" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
                 </div>
               </header>
               <div><span>
-                  <p>We are proud to introduce Nanook-Table. This is the first &lsquo;official&rsquo; version of Nanook-Table. It has been used for about one year now in a productive environment, and we believe it is ready for a wider audience.</p>
+                  <p>We are proud to introduce Nanook-Table. This is the first &lsquo;official&rsquo; version of
+                    Nanook-Table. It has been used for about one year now in a productive environment, and we believe it
+                    is ready for a wider audience.</p>
 
                   <h2>What Is Nanook-Table?</h2>
-                  <p>Nanook-Table is an open-source toolkit for systematic test case and test data creation. It reads equivalence class tables from spreadsheets &mdash; Excel, LibreOffice, or Google Sheets &mdash; and automatically generates test data for every defined test case.</p>
+                  <p>Nanook-Table is an open-source toolkit for systematic test case and test data creation. It reads
+                    equivalence class tables from spreadsheets &mdash; Excel, LibreOffice, or Google Sheets &mdash; and
+                    automatically generates test data for every defined test case.</p>
 
-                  <p>The core idea is simple: define your test specifications in a format that QA teams already use (spreadsheets), then let Nanook generate the actual test data. No more hand-crafting JSON fixtures or writing ad-hoc data factories.</p>
+                  <p>The core idea is simple: define your test specifications in a format that QA teams already use
+                    (spreadsheets), then let Nanook generate the actual test data. No more hand-crafting JSON fixtures
+                    or writing ad-hoc data factories.</p>
 
                   <h2>Key Features</h2>
                   <ul>
-                    <li><strong>Equivalence class tables</strong> &mdash; define input fields, their value classes, and which combinations to test</li>
-                    <li><strong>Pluggable data generators</strong> &mdash; use built-in generators for common types or write custom ones in JavaScript</li>
-                    <li><strong>Flexible output</strong> &mdash; export to JSON, CSV, or any custom format via pluggable writers</li>
+                    <li><strong>Equivalence class tables</strong> &mdash; define input fields, their value classes, and
+                      which combinations to test</li>
+                    <li><strong>Pluggable data generators</strong> &mdash; use built-in generators for common types or
+                      write custom ones in JavaScript</li>
+                    <li><strong>Flexible output</strong> &mdash; export to JSON, CSV, or any custom format via pluggable
+                      writers</li>
                     <li><strong>CI/CD ready</strong> &mdash; built with Node.js, runs anywhere Node runs</li>
                     <li><strong>MIT licensed</strong> &mdash; free for personal and commercial use</li>
                   </ul>
@@ -199,9 +216,11 @@
 cd quickstart-source
 yarn install
 node src/quickstart.js</code></pre>
-                  <p>This will generate test data from a sample equivalence class table. From there, you can explore creating your own tables and generators.</p>
+                  <p>This will generate test data from a sample equivalence class table. From there, you can explore
+                    creating your own tables and generators.</p>
 
-                  <p>Check out the <a href="https://github.com/xhubio/nanook-table/">GitHub repository</a> for the full source code and documentation. We look forward to your feedback and contributions.</p>
+                  <p>Check out the <a href="https://github.com/xhubio/nanook-table/">GitHub repository</a> for the full
+                    source code and documentation. We look forward to your feedback and contributions.</p>
                 </span></div>
             </div>
             <div class="blogSocialSection"></div>
@@ -216,20 +235,21 @@ node src/quickstart.js</code></pre>
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
       <div class="footer-col">
         <samp class="footer-heading">[ MORE ]</samp>
         <a href="/about">About</a>
-                <a href="/imprint">Imprint</a>
+        <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
-    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a href="https://xhub.io">BeeBack UG</a>.</samp></div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
@@ -316,7 +336,7 @@ node src/quickstart.js</code></pre>
   <script>
   </script>
   <script src="/js/theme.js"></script>
-<script src="/js/cookies.js"></script>
+  <script src="/js/cookies.js"></script>
 </body>
 
 </html>

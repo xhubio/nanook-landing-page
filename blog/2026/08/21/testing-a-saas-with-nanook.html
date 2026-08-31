@@ -59,10 +59,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -94,14 +94,26 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp> One Login, Eight Cases</a></li>
-                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing a SaaS</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp
+                          class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem"
+                        href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing
+                        a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
                   </ul>
                 </div>
               </div>
@@ -114,7 +126,8 @@
           <div class="lonePost">
             <div class="post">
               <header class="postHeader">
-                <h1 class="postHeaderTitle"><a href="/blog/2026/08/21/testing-a-saas-with-nanook">How We Test a SaaS Application with Nanook</a></h1>
+                <h1 class="postHeaderTitle"><a href="/blog/2026/08/21/testing-a-saas-with-nanook">How We Test a SaaS
+                    Application with Nanook</a></h1>
                 <p class="post-meta">August 21, 2026</p>
                 <div class="authorBlock">
                   <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
@@ -122,7 +135,9 @@
                 </div>
               </header>
               <div><span>
-                  <p>We build SaaS products &mdash; an invoicing API and <a href="https://dashandwerk.xhub.io" target="_blank" rel="noreferrer noopener">dasHandwerk</a>, a field-service application for the trades. The
+                  <p>We build SaaS products &mdash; an invoicing API and <a href="https://dashandwerk.xhub.io"
+                      target="_blank" rel="noreferrer noopener">dasHandwerk</a>, a field-service application for the
+                    trades. The
                     end-to-end suite grew the way these suites do: one spec file per screen, then one per feature,
                     then one per bug. Nobody planned it. Nobody had to. Every file was reasonable on the day it was
                     written.</p>
@@ -136,10 +151,11 @@
                   <p>Before we touched anything, we measured. The page-object layer of one product had
                     <strong>55 page classes</strong> and <strong>703 element getters</strong> &mdash; and exactly
                     <strong>2</strong> functions with a data contract, meaning a function that takes a typed record
-                    and fills a form from it. Everything else took no arguments and returned a locator.</p>
+                    and fills a form from it. Everything else took no arguments and returned a locator.
+                  </p>
 
                   <p>The consequence, in one sentence: <em>how you operate a Radix select was written down up to 55
-                    times.</em> Each page class knew how to open a dropdown, wait for the listbox, and click the
+                      times.</em> Each page class knew how to open a dropdown, wait for the listbox, and click the
                     option. When the dropdown component changed, the suite did not break in one place. It broke in as
                     many places as had copied the pattern, and it broke on different days, because each copy had
                     drifted a little.</p>
@@ -170,7 +186,7 @@
                     tables were stale.</p>
 
                   <p>We inverted it. <strong>The table stays the source, and one runner reads suite descriptions as
-                    data.</strong> A suite is a JSON file that names a table, a page, and how the table&rsquo;s
+                      data.</strong> A suite is a JSON file that names a table, a page, and how the table&rsquo;s
                     fields map to that page. The runner loads the suite, generates the cases from the table at run
                     time, and drives each one. Nothing is generated into the repository.</p>
 
@@ -187,7 +203,8 @@
 
                   <ol>
                     <li><strong>The suite JSON knows no Playwright vocabulary.</strong> It describes cases, not
-                      clicks. There is no <code>click</code>, no <code>fill</code>, no selector in it. It maps table fields to a
+                      clicks. There is no <code>click</code>, no <code>fill</code>, no selector in it. It maps table
+                      fields to a
                       page and leaves the operating of the form to the page module. Someone who knows the domain and
                       not the tooling can read it, and can read the table it points at.</li>
                     <li><strong>The expectation belongs at the boundary where it holds</strong> &mdash;
@@ -196,8 +213,9 @@
                       wrong format. Against the procedure, those 26 run in seconds. Through the browser, the same
                       case costs 20&ndash;60&nbsp;s, and what it measures is the same schema plus a form that
                       forwards to it. <em>A test that pushes a schema statement through a browser does not measure
-                      more, it measures slower.</em> So a suite declares its boundary, and the same table runs at
-                      whichever one holds the statement.</li>
+                        more, it measures slower.</em> So a suite declares its boundary, and the same table runs at
+                      whichever one holds the statement.
+                    </li>
                     <li><strong>A report that names the table column.</strong> When a case fails, the report says
                       the test case name, the <strong>column</strong>, the page and the field. Without that, a red
                       run leads straight back into the handwork the runner just abolished: open the table, find the
@@ -213,29 +231,185 @@
                     (what the system does). Here is the skeleton for an appointment form on a dispatch board,
                     reduced to the rows that matter:</p>
 
-                                    <div style="overflow-x:auto"><table style="min-width:640px">
-                    <tr><th style="min-width:4rem"></th><th style="min-width:12rem"></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overBooking</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overlapBooking</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overProposal</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_overlapProposal</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_proposalOver</div></th></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Secondary data &mdash; what must already exist</strong></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td>slot</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>2</small></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>taken by a booking</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">a</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>taken by a proposal</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Primary data &mdash; the appointment form</strong></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td>kind</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>booking</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>proposal</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td>time</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>2</small></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>same slot</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">a</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>overlapping start</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Summary &mdash; combinations covered</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>product of the counts above</td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>4</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td colspan="6">2 &times; 2 &times; 2 = 8 combinations &mdash; 1 + 1 + 1 + 1 + 4 = <strong>8 of 8 &mdash; 100&thinsp;% coverage</strong></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Expected reaction</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>saved</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>rejected with a message</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="7"><strong>Expected effect</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>conflict findable on the board</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>no conflict on the board</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
-                  </table></div>
+                  <div style="overflow-x:auto">
+                    <table style="min-width:640px">
+                      <tr>
+                        <th style="min-width:4rem"></th>
+                        <th style="min-width:12rem"></th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_overBooking</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_overlapBooking</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_overProposal</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_overlapProposal</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            OK_proposalOver</div>
+                        </th>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="7"><strong>Secondary data &mdash; what must already exist</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td>slot</td>
+                        <td><small>2 classes</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>2</small></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>taken by a booking</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">a</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>taken by a proposal</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="7"><strong>Primary data &mdash; the appointment form</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td>kind</td>
+                        <td><small>2 classes</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>booking</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>proposal</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td>time</td>
+                        <td><small>2 classes</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>2</small></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>same slot</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">a</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>overlapping start</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="7"><strong>Summary &mdash; combinations covered</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>product of the counts above</td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>4</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td colspan="6">2 &times; 2 &times; 2 = 8 combinations &mdash; 1 + 1 + 1 + 1 + 4 = <strong>8 of
+                            8 &mdash; 100&thinsp;% coverage</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="7"><strong>Expected reaction</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>saved</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>rejected with a message</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="7"><strong>Expected effect</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>conflict findable on the board</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>no conflict on the board</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                    </table>
+                  </div>
 
                   <p>The markers are Nanook&rsquo;s: <code>x</code> chooses exactly this class for the case.
                     Where several classes of one field are marked, <code>a</code> is the preferred one and is what
@@ -248,7 +422,8 @@
                     <code>OK_proposalOver</code> column for the effect of the open markers: slot state and time both
                     carry <code>a</code>/<code>e</code>, because a proposal must not raise a conflict over
                     <em>anything</em>, however it lies &mdash; that one column claims four of the eight combinations,
-                    and the Summary row shows the arithmetic.</p>
+                    and the Summary row shows the arithmetic.
+                  </p>
 
                   <p><strong>The fifth case is the counter-probe, not decoration.</strong> Read the last two rows.
                     Four cases demand &ldquo;conflict findable&rdquo;, one demands &ldquo;no conflict&rdquo;. A
@@ -256,7 +431,8 @@
                     the four. Only a probe that actually looks at the board passes all five. We learned to distrust
                     any effect that had only one row in the table &mdash; it can be satisfied by a probe that returns
                     <code>true</code>. <em>The contradiction between two cases is what turns a value into an
-                    assertion.</em></p>
+                      assertion.</em>
+                  </p>
 
                   <h3>Preconditions are an axis, not a path</h3>
 
@@ -266,7 +442,8 @@
                   <p>In a table, a pre-existing state is not a step. It is an <strong>axis</strong> &mdash; a row in
                     <code>Secondary data</code> &mdash; and as an axis it crosses with every other class in the
                     table. The moment &ldquo;slot taken by a booking&rdquo; is a row rather than a setup call, it
-                    combines with &ldquo;kind: proposal&rdquo; whether or not anyone thought of it.</p>
+                    combines with &ldquo;kind: proposal&rdquo; whether or not anyone thought of it.
+                  </p>
 
                   <p><img class="blog-diagram" src="/img/blog/precondition-path-vs-axis.svg"
                       alt="Left: three separate scenario arrows, each setup, act, assert. Right: a two-by-two grid with the precondition as one dimension and the input class as the other; the fourth cell, a proposal over an existing booking, is highlighted as the case nobody writes."
@@ -284,19 +461,65 @@
                     table needs no fixture files &mdash; the data is produced <em>from</em> the table, at run time.
                     Reduced to a single test case so the column has room to breathe:</p>
 
-                  <div style="overflow-x:auto"><table style="min-width:640px">
-                    <tr><th style="min-width:6rem"></th><th style="min-width:5rem"></th><th style="min-width:14rem">generator</th><th style="min-width:13rem"></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_booking</div></th></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="5"><strong>Secondary data &mdash; the world the case lands in</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td>customer</td><td>exists, active</td><td><code>ref:1:Customer:DE_OK_1:id</code></td><td>the whole record comes from the customer table&rsquo;s own OK case</td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="5"><strong>Primary data &mdash; the appointment form</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td>contact name</td><td>valid</td><td><code>gen:1:faker:person.fullName</code></td><td>instance <code>1</code> &mdash; a generated person</td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td>contact phone</td><td>valid</td><td><code>gen:1:faker:phone.number</code></td><td>instance <code>1</code> again &mdash; the <em>same</em> person&rsquo;s phone</td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td>start</td><td>valid</td><td><code>08:00</code></td><td>no prefix &mdash; a static value, copied as-is</td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td>note</td><td>255 chars</td><td><code>gen::len:255</code></td><td>a ten-line custom generator &mdash; see the login post</td><td style="text-align:center">x</td></tr>
-                  </table></div>
+                  <div style="overflow-x:auto">
+                    <table style="min-width:640px">
+                      <tr>
+                        <th style="min-width:6rem"></th>
+                        <th style="min-width:5rem"></th>
+                        <th style="min-width:14rem">generator</th>
+                        <th style="min-width:13rem"></th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            OK_booking</div>
+                        </th>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="5"><strong>Secondary data &mdash; the world the case lands in</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>customer</td>
+                        <td>exists, active</td>
+                        <td><code>ref:1:Customer:DE_OK_1:id</code></td>
+                        <td>the whole record comes from the customer table&rsquo;s own OK case</td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="5"><strong>Primary data &mdash; the appointment form</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>contact name</td>
+                        <td>valid</td>
+                        <td><code>gen:1:faker:person.fullName</code></td>
+                        <td>instance <code>1</code> &mdash; a generated person</td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>contact phone</td>
+                        <td>valid</td>
+                        <td><code>gen:1:faker:phone.number</code></td>
+                        <td>instance <code>1</code> again &mdash; the <em>same</em> person&rsquo;s phone</td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>start</td>
+                        <td>valid</td>
+                        <td><code>08:00</code></td>
+                        <td>no prefix &mdash; a static value, copied as-is</td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>note</td>
+                        <td>255 chars</td>
+                        <td><code>gen::len:255</code></td>
+                        <td>a ten-line custom generator &mdash; see the login post</td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                    </table>
+                  </div>
 
                   <p>Three kinds of entry, and a prefix tells them apart. No prefix is a <strong>static
-                    value</strong>, copied as-is. <code>gen:</code> calls a registered <strong>generator</strong>
+                      value</strong>, copied as-is. <code>gen:</code> calls a registered <strong>generator</strong>
                     &mdash; Faker ships with Nanook, and a custom one is ten lines plus a one-line registration. The
                     number after <code>gen:</code> is the <strong>instance id</strong>: the name and the phone above
                     both say <code>1</code>, so they come from the <em>same</em> generated person &mdash; different
@@ -315,11 +538,34 @@
                     we keep flow sheets. This is a real one from our suite, with the
                     identifiers translated to English:</p>
 
-                  <div style="overflow-x:auto"><table style="min-width:720px">
-                    <tr><th>tc_id</th><th style="min-width:11rem">name</th><th><code>&lt;fn:function&gt;</code></th><th>CustomerCreate</th><th><code>&lt;pc:customer&gt;</code></th><th>CustomerCreate<code>&lt;mode:check&gt;</code></th></tr>
-                    <tr style="background:var(--bg-elevated)"><td>TC1</td><td>create a customer and read it back</td><td>companySignedIn</td><td><strong>DE_OK_1</strong></td><td>save</td><td><strong>DE_OK_1</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td>TC2</td><td>a rejected customer leaves nothing behind</td><td>companySignedIn</td><td><strong>DE_E_1-1</strong></td><td>save</td><td></td></tr>
-                  </table></div>
+                  <div style="overflow-x:auto">
+                    <table style="min-width:720px">
+                      <tr>
+                        <th>tc_id</th>
+                        <th style="min-width:11rem">name</th>
+                        <th><code>&lt;fn:function&gt;</code></th>
+                        <th>CustomerCreate</th>
+                        <th><code>&lt;pc:customer&gt;</code></th>
+                        <th>CustomerCreate<code>&lt;mode:check&gt;</code></th>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>TC1</td>
+                        <td>create a customer and read it back</td>
+                        <td>companySignedIn</td>
+                        <td><strong>DE_OK_1</strong></td>
+                        <td>save</td>
+                        <td><strong>DE_OK_1</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td>TC2</td>
+                        <td>a rejected customer leaves nothing behind</td>
+                        <td>companySignedIn</td>
+                        <td><strong>DE_E_1-1</strong></td>
+                        <td>save</td>
+                        <td></td>
+                      </tr>
+                    </table>
+                  </div>
 
                   <p>One row is one journey; the columns are its stations, read left to right.
                     <code>&lt;fn:&hellip;&gt;</code> calls a registered function &mdash; here the base state, a
@@ -327,9 +573,10 @@
                     that decision table: <code>DE_OK_1</code> is filled into the form exactly as the data table
                     defines it. <code>&lt;pc:customer&gt;</code> clicks an action on the page class. And
                     <code>&lt;mode:check&gt;</code> is the payoff: <strong>the same case, read back instead of
-                    entered</strong> &mdash; open the record and assert that every field holds what
+                      entered</strong> &mdash; open the record and assert that every field holds what
                     <code>DE_OK_1</code> says it should. The expectation is not written a second time; the data
-                    table is both the input and the oracle.</p>
+                    table is both the input and the oracle.
+                  </p>
 
                   <p>Read <code>TC2</code> for the counter-move: the rejected case <code>DE_E_1-1</code> runs through
                     the same stations, and the check column is <strong>empty</strong> &mdash; a customer that was
@@ -392,7 +639,7 @@
 expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined, …]</code></pre>
 
                   <p><strong>A dead reader does not make an assertion fail. It makes it empty &mdash; and empty
-                    looks exactly like correct.</strong> Behind the green: sorting ascending returned descending, and
+                      looks exactly like correct.</strong> Behind the green: sorting ascending returned descending, and
                     had done so for two days.</p>
 
                   <p>The table-driven runner surfaced it within minutes of the switch, for a reason that generalises.
@@ -416,13 +663,13 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                   </ul>
 
                   <p>The pattern: <strong>a table asks the boring questions everywhere, and boring questions are
-                    the ones humans skip.</strong> Nobody writes the whitespace-only test for the fifth text field on
+                      the ones humans skip.</strong> Nobody writes the whitespace-only test for the fifth text field on
                     a form. The table does not know it is the fifth.</p>
 
                   <h3>The findings that arrived before the first run</h3>
 
                   <p>One more class of catch, and we can only half measure it: <strong>filling a table is itself an
-                    audit.</strong> A column forces a decision into every cell &mdash; you cannot leave a field
+                      audit.</strong> A column forces a decision into every cell &mdash; you cannot leave a field
                     vaguely &ldquo;handled&rdquo; the way a scenario script can simply not mention it. Writing the
                     country classes for the customer sheet meant asking the application which countries it actually
                     serves &mdash; and the answer was <strong>five different lists in five places</strong>:
@@ -435,8 +682,10 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                     actually did &mdash; the app accepted a company name of three spaces, the table said reject, so
                     the model &ldquo;fixed&rdquo; the table. The correction became a house rule:</p>
 
-                  <blockquote><p>If the table says we expect a format check, then we expect one. That it is not
-                    implemented is a different matter.</p></blockquote>
+                  <blockquote>
+                    <p>If the table says we expect a format check, then we expect one. That it is not
+                      implemented is a different matter.</p>
+                  </blockquote>
 
                   <p>A model has a strong pull towards the observable: it sees a failing expectation and a passing
                     application and resolves the contradiction in the direction of what it can measure. Left alone,
@@ -445,7 +694,8 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                     because it is a grid of fields and crosses rather than three hundred lines of generated code,
                     <strong>a human can see the drift happening</strong>. Whether the authoring effect alone justifies
                     the switch we cannot prove &mdash; but a noticeable share of our findings arrived while writing
-                    columns, before anything ran.</p>
+                    columns, before anything ran.
+                  </p>
 
                   <h2>Two Mistakes We Made</h2>
 
@@ -461,11 +711,13 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                   <p>It was green. It was also unable to find the defect its own case was named after. If the
                     service had double-counted a movement, <code>stockAt</code> would carry the error and
                     <code>base</code> would absorb it. The assertion checked that a number minus part of itself is a
-                    non-negative integer &mdash; which it always is when the data is integers.</p>
+                    non-negative integer &mdash; which it always is when the data is integers.
+                  </p>
 
                   <p>The fix was to read the opening quantity independently, from the receipt that created it.
                     <strong>Only then was a mutation probe possible at all</strong>: with two independent sources,
-                    breaking the service makes them disagree. With one, there is nothing to disagree.</p>
+                    breaking the service makes them disagree. With one, there is nothing to disagree.
+                  </p>
 
                   <h3>An optional field switched off the compiler</h3>
 
@@ -477,7 +729,8 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                   <p>The probe for sort order read that field. Three of the four modules never wrote it. So the probe
                     compared <code>undefined === 'ascending'</code>, which is always false, and the check passed
                     <strong>empty</strong> &mdash; the same failure shape as the dead reader, produced by a question
-                    mark.</p>
+                    mark.
+                  </p>
 
                   <p>We made the field mandatory. The type checker named a third module immediately, one we had not
                     suspected. And the same run went from 15 to 20 red &mdash; the five new ones being exactly the
@@ -489,7 +742,8 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                   <p>After the second mistake we made it a rule: every new assertion gets a mutation probe. Break the
                     thing it guards on purpose, and check <strong>which</strong> cases fall &mdash; not merely
                     <em>that</em> some do. A probe that turns everything red is as uninformative as one that turns
-                    nothing red.</p>
+                    nothing red.
+                  </p>
 
                   <table>
                     <tr>
@@ -552,7 +806,8 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
                   <p>Yes, and earlier. The win was not fewer tests; there are more now than before. The win was that
                     <strong>the specification moved out of TypeScript</strong> and into a form the people who know
                     the domain can read, correct and extend. The maintenance curve flattened as a direct result:
-                    a new screen is a table and a suite file, and the runner has not changed for it.</p>
+                    a new screen is a table and a suite file, and the runner has not changed for it.
+                  </p>
 
                   <p>If you want to start, the <a href="/docs/quickstart/quickstart">Quickstart</a> covers
                     installation, the <a href="/docs/guide/equivalence/overview">equivalence class guide</a> explains
@@ -583,7 +838,7 @@ expect(got).toEqual([...got].sort())      // [undefined, …] equals [undefined,
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>

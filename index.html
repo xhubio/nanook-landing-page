@@ -7,16 +7,19 @@
   <title>Nanook · A toolkit for test case and test data creation</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content="Docusaurus" />
-  <meta name="description" content="Nanook is an open-source toolkit for systematic test case and test data creation using equivalence class tables. Works with Excel, LibreOffice, and Google Sheets." />
+  <meta name="description"
+    content="Nanook is an open-source toolkit for systematic test case and test data creation using equivalence class tables. Works with Excel, LibreOffice, and Google Sheets." />
   <meta property="og:title" content="Nanook · A toolkit for test case and test data creation" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://nanook.xhub.io/" />
-  <meta property="og:description" content="Nanook is an open-source toolkit for systematic test case and test data creation using equivalence class tables. Works with Excel, LibreOffice, and Google Sheets." />
+  <meta property="og:description"
+    content="Nanook is an open-source toolkit for systematic test case and test data creation using equivalence class tables. Works with Excel, LibreOffice, and Google Sheets." />
   <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:title" content="Nanook · A toolkit for test case and test data creation" />
-  <meta name="twitter:description" content="An open-source toolkit for systematic test case and test data creation using equivalence class tables and data generators" />
+  <meta name="twitter:description"
+    content="An open-source toolkit for systematic test case and test data creation using equivalence class tables and data generators" />
   <meta name="twitter:site" content="@xhubio" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://nanook.xhub.io/" />
@@ -173,10 +176,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -304,47 +307,57 @@
     <div class="use-cases-grid">
       <article class="use-case-card">
         <h3 class="use-case-title">API Testing</h3>
-        <p>Systematically test REST and GraphQL endpoints. Generate varied payloads covering valid inputs, error paths, and edge cases &mdash; all from one equivalence class table.</p>
+        <p>Systematically test REST and GraphQL endpoints. Generate varied payloads covering valid inputs, error paths,
+          and edge cases &mdash; all from one equivalence class table.</p>
         <samp class="use-case-id">UC-01 / API</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">Form Validation</h3>
-        <p>Registration, login, checkout. Every form has fields with validation rules. Nanook produces test data for every valid/invalid combination without manual fixture work.</p>
+        <p>Registration, login, checkout. Every form has fields with validation rules. Nanook produces test data for
+          every valid/invalid combination without manual fixture work.</p>
         <samp class="use-case-id">UC-02 / FORM</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">CI/CD Integration</h3>
-        <p>Regenerate test data on every spec change. Nanook runs as a Node.js script in any pipeline &mdash; GitHub Actions, GitLab CI, Jenkins, or a cron job.</p>
+        <p>Regenerate test data on every spec change. Nanook runs as a Node.js script in any pipeline &mdash; GitHub
+          Actions, GitLab CI, Jenkins, or a cron job.</p>
         <samp class="use-case-id">UC-03 / CICD</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">GDPR-Compliant Test Data</h3>
-        <p>Stop copying production data to test environments. Synthetic data matches your schema without privacy risks, audit headaches, or compliance exposure.</p>
+        <p>Stop copying production data to test environments. Synthetic data matches your schema without privacy risks,
+          audit headaches, or compliance exposure.</p>
         <samp class="use-case-id">UC-04 / GDPR</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">Load Testing</h3>
-        <p>Need 10,000 test users or 1 million transactions? Nanook scales your equivalence class table to any volume while preserving realistic data distribution.</p>
+        <p>Need 10,000 test users or 1 million transactions? Nanook scales your equivalence class table to any volume
+          while preserving realistic data distribution.</p>
         <samp class="use-case-id">UC-05 / LOAD</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">Integration Testing</h3>
-        <p>Test data flowing through multiple microservices. Nanook keeps data consistent across service boundaries with reference fields and instance IDs.</p>
+        <p>Test data flowing through multiple microservices. Nanook keeps data consistent across service boundaries with
+          reference fields and instance IDs.</p>
         <samp class="use-case-id">UC-06 / INT</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">Environment Seeding</h3>
-        <p>Bootstrap dev and staging environments with realistic, repeatable data. Every developer sees the same test data, defined in one spreadsheet.</p>
+        <p>Bootstrap dev and staging environments with realistic, repeatable data. Every developer sees the same test
+          data, defined in one spreadsheet.</p>
         <samp class="use-case-id">UC-07 / SEED</samp>
       </article>
       <article class="use-case-card">
         <h3 class="use-case-title">Migration Testing</h3>
-        <p>Test database migrations with synthetic data that matches your production schema. Regenerate after every schema change &mdash; no risk of leaking real data.</p>
+        <p>Test database migrations with synthetic data that matches your production schema. Regenerate after every
+          schema change &mdash; no risk of leaking real data.</p>
         <samp class="use-case-id">UC-08 / MIG</samp>
       </article>
       <article class="use-case-card use-case-card--cta">
         <h3 class="use-case-title">Your Use Case?</h3>
-        <p>Not sure if Nanook fits your scenario? Open an issue on <a href="https://github.com/xhubio/nanook-table/">GitHub</a> or reach out at <a href="mailto:opensource@xhub.io">opensource@xhub.io</a>.</p>
+        <p>Not sure if Nanook fits your scenario? Open an issue on <a
+            href="https://github.com/xhubio/nanook-table/">GitHub</a> or reach out at <a
+            href="mailto:opensource@xhub.io">opensource@xhub.io</a>.</p>
         <samp class="use-case-id">UC-09 / OPEN</samp>
       </article>
     </div>
@@ -359,23 +372,30 @@
     <div class="faq-list">
       <details class="faq-item">
         <summary class="faq-question">What is an equivalence class table?</summary>
-        <p class="faq-answer">An equivalence class table is a spreadsheet that defines input fields, their possible value classes, and which combinations to test. Each class represents a group of values that should produce equivalent behavior. Nanook reads these tables from Excel, LibreOffice, or Google Sheets.</p>
+        <p class="faq-answer">An equivalence class table is a spreadsheet that defines input fields, their possible
+          value classes, and which combinations to test. Each class represents a group of values that should produce
+          equivalent behavior. Nanook reads these tables from Excel, LibreOffice, or Google Sheets.</p>
       </details>
       <details class="faq-item">
         <summary class="faq-question">Which spreadsheet formats does Nanook support?</summary>
-        <p class="faq-answer">Nanook supports Microsoft Excel (.xlsx, .xls), LibreOffice (.ods), and Google Sheets. You can define your test cases in any of these formats and Nanook will process them identically.</p>
+        <p class="faq-answer">Nanook supports Microsoft Excel (.xlsx, .xls), LibreOffice (.ods), and Google Sheets. You
+          can define your test cases in any of these formats and Nanook will process them identically.</p>
       </details>
       <details class="faq-item">
         <summary class="faq-question">What output formats can Nanook generate?</summary>
-        <p class="faq-answer">Nanook can export test data to JSON, CSV, or any custom format. The output is controlled through pluggable writers — you can use the built-in writers or create your own for domain-specific formats.</p>
+        <p class="faq-answer">Nanook can export test data to JSON, CSV, or any custom format. The output is controlled
+          through pluggable writers — you can use the built-in writers or create your own for domain-specific formats.
+        </p>
       </details>
       <details class="faq-item">
         <summary class="faq-question">Can I use Nanook in my CI/CD pipeline?</summary>
-        <p class="faq-answer">Yes. Nanook is built with Node.js and designed for automation. You can integrate it into any CI/CD pipeline to regenerate test data whenever your test specifications change.</p>
+        <p class="faq-answer">Yes. Nanook is built with Node.js and designed for automation. You can integrate it into
+          any CI/CD pipeline to regenerate test data whenever your test specifications change.</p>
       </details>
       <details class="faq-item">
         <summary class="faq-question">Is Nanook free to use?</summary>
-        <p class="faq-answer">Yes, Nanook is open source and released under the MIT License. It is free for both personal and commercial use.</p>
+        <p class="faq-answer">Yes, Nanook is open source and released under the MIT License. It is free for both
+          personal and commercial use.</p>
       </details>
     </div>
   </section>
@@ -410,21 +430,22 @@
         <a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a>
       </div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
       <div class="footer-col">
         <samp class="footer-heading">[ MORE ]</samp>
         <a href="/about">About</a>
-                <a href="/imprint">Imprint</a>
+        <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
     <div class="footer-copyright">
-      <samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a href="https://xhub.io">BeeBack UG</a>.</samp>
+      <samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a href="https://xhub.io">BeeBack
+          UG</a>.</samp>
     </div>
   </footer>
 

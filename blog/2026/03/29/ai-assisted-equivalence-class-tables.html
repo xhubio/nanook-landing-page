@@ -59,10 +59,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -94,11 +94,18 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
-                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
                   </ul>
                 </div>
               </div>
@@ -121,7 +128,8 @@
               </header>
               <div><span>
 
-                  <p>Creating equivalence class tables by hand is tedious. You need to identify every input field, define
+                  <p>Creating equivalence class tables by hand is tedious. You need to identify every input field,
+                    define
                     equivalence classes for each one, plan test cases with the right marker logic, set up coverage
                     formulas, and format everything correctly in Excel. For a form with ten fields, that can easily take
                     an hour &mdash; and most of that time is spent on mechanical work, not on thinking about what to
@@ -130,13 +138,14 @@
                   <p>Starting today, Nanook ships a <strong>Claude Code skill</strong> and a
                     <strong>slash command</strong> that automate the entire process. Describe your test object &mdash; a
                     page, an API endpoint, a form &mdash; and Claude generates a complete, formatted Excel file with
-                    correct markers, formulas, and 100% coverage.</p>
+                    correct markers, formulas, and 100% coverage.
+                  </p>
 
                   <h2>What&rsquo;s New</h2>
 
                   <p>The <code>nanook-table</code> repository now includes two new additions for <a
-                      href="https://claude.ai/claude-code" target="_blank"
-                      rel="noreferrer noopener">Claude Code</a> users:</p>
+                      href="https://claude.ai/claude-code" target="_blank" rel="noreferrer noopener">Claude Code</a>
+                    users:</p>
 
                   <ul>
                     <li><strong>Skill: <code>create-equivalence-class-table</code></strong> &mdash; a comprehensive
@@ -187,7 +196,8 @@ claude</code></pre>
                       fully formatted Excel file</li>
                     <li><strong>Runs the script</strong> to produce the <code>.xlsx</code> file</li>
                     <li><strong>Verifies</strong> that the file can be read by Nanook&rsquo;s
-                      <code>ImporterXlsx</code></li>
+                      <code>ImporterXlsx</code>
+                    </li>
                   </ol>
 
                   <p>The result is a production-ready Excel file in your <code>resources/</code> directory with:</p>
@@ -209,7 +219,8 @@ claude</code></pre>
                     field. For fields <em>after</em> the target, the test case marks all equivalence classes
                     (<code>a</code> on the preferred value, <code>e</code> on the rest), which increases coverage
                     efficiently. For fields <em>before</em> the target, only the preferred value is marked with
-                    <code>x</code>.</p>
+                    <code>x</code>.
+                  </p>
 
                   <p>The result is a staircase-shaped pattern of markers that, when summed up, covers every possible
                     combination exactly once:</p>
@@ -276,7 +287,8 @@ field4 valid        |   a   |   a   |   a   |       |   x
                       equivalence classes, and markers match your domain knowledge</li>
                     <li><strong>Adjust</strong> as needed &mdash; add fields, rename classes, change generators</li>
                     <li><strong>Generate fixtures</strong> by running your generation script, which uses Nanook&rsquo;s
-                      <code>ImporterXlsx</code> to read the table and produce test data files</li>
+                      <code>ImporterXlsx</code> to read the table and produce test data files
+                    </li>
                     <li><strong>Integrate</strong> the generated fixtures into your test suite</li>
                   </ol>
 
@@ -286,8 +298,8 @@ field4 valid        |   a   |   a   |   a   |       |   x
                   <h2>Requirements</h2>
 
                   <ul>
-                    <li><a href="https://claude.ai/claude-code" target="_blank"
-                        rel="noreferrer noopener">Claude Code</a> installed and configured</li>
+                    <li><a href="https://claude.ai/claude-code" target="_blank" rel="noreferrer noopener">Claude
+                        Code</a> installed and configured</li>
                     <li>The <code>nanook-table</code> repository cloned locally (the skill and command are part of the
                       repo)</li>
                     <li><code>exceljs</code> available as a dependency (used by the generated scripts to create
@@ -303,12 +315,14 @@ field4 valid        |   a   |   a   |   a   |       |   x
 
                   <p>By encoding Nanook&rsquo;s decision table format into a Claude Code skill, we let AI handle the
                     mechanics while you focus on the decisions that actually matter: <em>what</em> to test and
-                    <em>why</em>.</p>
+                    <em>why</em>.
+                  </p>
 
                   <p><strong>Want to try it?</strong> Clone <a href="https://github.com/xhubio/nanook-table/"
                       target="_blank" rel="noreferrer noopener">nanook-table</a>, open Claude Code, and run
                     <code>/createEquivalenceClassTable</code> with your test object. Or start with the <a
-                      href="/docs/quickstart/quickstart">Quickstart Guide</a> if you are new to Nanook.</p>
+                      href="/docs/quickstart/quickstart">Quickstart Guide</a> if you are new to Nanook.
+                  </p>
 
                 </span></div>
             </div>
@@ -324,7 +338,7 @@ field4 valid        |   a   |   a   |   a   |       |   x
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>

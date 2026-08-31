@@ -1906,11 +1906,13 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
     border-bottom: 1px solid var(--border-color);
     /* main.css pins this fixed below 1023px; without the reset it overlays
        the article. Back into the flow, height driven by the toggle state. */
-    position: static !important;
+    /* relative + z-index (not static) so the sidebar still wins hit-testing
+       against any content box that overlaps it, while staying in the flow */
+    position: relative !important;
     max-height: none;
     height: auto !important;
     overflow-y: visible;
-    z-index: auto !important;
+    z-index: 2 !important;
   }
 }
 
@@ -2259,6 +2261,19 @@ body[data-theme="swiss"] .docMainWrapper > * {
 body[data-theme="tactical"] .post a.anchor,
 body[data-theme="swiss"] .post a.anchor {
   border-bottom: 0;
+}
+
+/* --- Legacy anchor-offset hack ------------------------------------------
+   main.css gives .postHeader/.postHeaderTitle a ::before spacer of
+   height:200px; margin-top:-200px to keep the old fixed header from covering
+   the title on a hash jump. The spacer is pointer-events:none, but it stretches
+   the h1's own box 200px upward — and the h1 still takes hit-tests there. With
+   the sidebar back in the flow (no longer a z-index:100 overlay) that box
+   covers the sidebar toggle and swallows the tap.
+   scroll-margin-top below does the same job properly, so drop the spacer. */
+.docsContainer .wrapper .post .postHeader:before,
+.docsContainer .wrapper .post .postHeaderTitle:before {
+  display: none;
 }
 
 /* --- Sticky header must not swallow anchor targets --------------------- */

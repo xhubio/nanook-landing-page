@@ -16,7 +16,7 @@ Die Nanook Landing Page war eine Standard-Docusaurus-v1-Seite mit generischem St
 - `css/brutalist.css` — Komplett neues Design System (~970 Zeilen), bestehend aus:
   - Dual-Theme Custom Properties (Tactical Dark / Swiss Light)
   - CRT-Scanline-Overlay-Effekt
-  - Neues Header-Layout mit Bracket-Navigation (`[ DOCS ]`, `[ API ]`, `[ GITHUB ]`)
+  - Neues Header-Layout mit Bracket-Navigation (`DOCS`, `API`, `GITHUB`)
   - Hero-Section mit Terminal-Ästhetik (`SYS.NANOOK // REV 2.0`, `STATUS: OPERATIONAL`)
   - Feature-Cards im Karteikarten-Stil mit Unit-IDs (`UNIT / M-01` etc.)
   - Trust-Logos-Section

@@ -59,10 +59,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -94,14 +94,26 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
-                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp> One Login, Eight Cases</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing a SaaS</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
                   </ul>
                 </div>
               </div>
@@ -114,7 +126,8 @@
           <div class="lonePost">
             <div class="post">
               <header class="postHeader">
-                <h1 class="postHeaderTitle"><a href="/blog/2026/08/29/e-invoicing-decision-tables">Testing E-Invoices for 40 Country/Format Combinations</a></h1>
+                <h1 class="postHeaderTitle"><a href="/blog/2026/08/29/e-invoicing-decision-tables">Testing E-Invoices
+                    for 40 Country/Format Combinations</a></h1>
                 <p class="post-meta">August 29, 2026</p>
                 <div class="authorBlock">
                   <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
@@ -141,7 +154,8 @@
                   <p>That sounds like the easy kind of testing problem: the oracle is written down. It is not.
                     Generating a hundred thousand cases across forty dialects is a morning&rsquo;s work.
                     <strong>Knowing that those cases test the standard, and not our implementation of it, is the
-                      hard part</strong> &mdash; and we got it wrong before we got it right.</p>
+                      hard part</strong> &mdash; and we got it wrong before we got it right.
+                  </p>
 
                   <h2>The Oracle Problem, in One Measurement</h2>
 
@@ -154,12 +168,14 @@
                     asked for partial invoices. XRechnung codes a partial invoice as <strong>326</strong>, and
                     <code>BR-DE-17</code> names the code in its text. 726 green tests, and not one of them had ever
                     seen the case, because the case had come out of our own catalogue, and our catalogue did not know
-                    it.</p>
+                    it.
+                  </p>
 
                   <p>It got worse when we looked at where the allowed codes lived. The allow-list in our code had been
                     <em>transcribed by hand</em> from the Schematron. It contained <strong>386</strong> &mdash; a code
                     <code>BR-DE-17</code> does not know. No test had ever compared the transcript with the source,
-                    because both were ours.</p>
+                    because both were ours.
+                  </p>
 
                   <blockquote>
                     <p><strong>The expected value comes from the pinned specification artefact &mdash; Schematron,
@@ -186,7 +202,8 @@
                     <strong>grip</strong> &mdash; a concrete way of taking hold of a field so that exactly one rule
                     objects: <code>omit</code>, <code>too-long:100</code>, <code>not-in-list</code>,
                     <code>wrong-value</code>, <code>value-limit:-1</code>, <code>group-removed:BG-8</code>. And the grip
-                    is not written by hand. It is derived from the rule&rsquo;s own test expression:</p>
+                    is not written by hand. It is derived from the rule&rsquo;s own test expression:
+                  </p>
 
                   <pre><code>string-length(cbc:Name) &lt;= 100   &rarr;   too-long:100
 count(cac:PaymentMeans) &lt;= 1      &rarr;   too-many:1</code></pre>
@@ -251,7 +268,8 @@ Expected reaction
 
                   <p>This is where the numbers move. The same tables went from <em>a few thousand</em> cases to
                     <strong>105,000</strong> without a single new column. That was the figure we quoted for weeks. It
-                    was also wrong, and the way it was wrong is the best story in this piece.</p>
+                    was also wrong, and the way it was wrong is the best story in this piece.
+                  </p>
 
                   <h3>The 105,000 that never ran</h3>
 
@@ -264,7 +282,8 @@ Expected reaction
                     carried <code>1</code> everywhere. Nanook clones where it <em>generates</em>. A referenced sheet
                     is consulted for values, not executed, so its multiplicity row is read by nobody. Result:
                     <strong>zero clones</strong>, and from every code list exactly <strong>one</strong> code was ever
-                    tested.</p>
+                    tested.
+                  </p>
 
                   <p><img class="blog-diagram" src="/img/blog/multiplicity-executing-sheet.svg"
                       alt="Left: a referenced data sheet marked execute F carries multiplicity 200, the executing sheet carries 1, and one case comes out, captioned 'one country code tested'. Right: the 200 sits on the executing sheet and fans into tc.1 to tc.200. Caption: what a referenced sheet says about values holds; what it says about the number of cases has to reach the generator"
@@ -369,7 +388,8 @@ const sample = cases.filter((_, i) =&gt; i % k === 0)
                     <tr>
                       <td><strong>BT-14</strong> Sales order reference</td>
                       <td>35 files build <code>cac:OrderReference</code>; <strong>none</strong> wrote
-                        <code>cbc:SalesOrderID</code></td>
+                        <code>cbc:SalesOrderID</code>
+                      </td>
                     </tr>
                   </table>
 
@@ -377,12 +397,14 @@ const sample = cases.filter((_, i) =&gt; i % k === 0)
                     is happy, and the invoice is wrong. <strong>BG-11 is mandatory in several EU states</strong> for a
                     non-resident seller; without it the document is factually incorrect and nobody notices.
                     <strong>BG-10</strong> says <em>where to pay</em>. Drop it and the customer pays the seller instead
-                    of the factor, and the receivable stays open.</p>
+                    of the factor, and the receivable stays open.
+                  </p>
 
                   <p>Two further findings we filed rather than fixed, because each is a product decision:
                     <code>normalizeUnitCode</code> maps <strong>any</strong> unknown unit to <code>C62</code>
                     (&ldquo;piece&rdquo;), and an unfitting tax category is silently replaced by a default. Garbage in,
-                    valid invoice out.</p>
+                    valid invoice out.
+                  </p>
 
                   <h2>Four Derivations We Built, Measured, and Deleted</h2>
 
@@ -406,7 +428,8 @@ const sample = cases.filter((_, i) =&gt; i % k === 0)
                       reason code. Their paths assumed <em>order</em> &mdash; <code>.0</code> is the allowance,
                       <code>.1</code> the charge &mdash; rather than identity. When a document carried a charge and no
                       allowance, the grip landed on the wrong entry. A grip that hits the wrong field one time in two
-                      is not coverage; it is noise with a rule id attached.</li>
+                      is not coverage; it is noise with a rule id attached.
+                    </li>
                     <li><strong>The note subject code.</strong> <code>BR-CL-08</code> wants a code from UNCL 4451,
                       carried as <code>#AAI#</code> at the start of the note text. Faking that prefix looked airtight.
                       It failed in <strong>102 of 117</strong> cases: our <code>notes</code> field is free text, the
@@ -476,13 +499,15 @@ expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</c
                     &mdash; a case for them would assert XRechnung behaviour on a Dutch invoice. 706 are Spanish tax
                     categories in a German family. 379 are structurally unbreakable, because our generator rounds
                     every amount to two decimals and the rules test for a third. A case for any of these would be
-                    <strong>wrong</strong>, not missing.</p>
+                    <strong>wrong</strong>, not missing.
+                  </p>
 
                   <p>And most of the remainder is not a test problem either. <strong>91 of the 201 business terms
                       have no input field at all.</strong> Line-level allowances and charges (BG-27, BG-28) do not
                     exist in our model &mdash; there is a single <code>discount: {type, value, reason}</code> per
                     line. No grip can reach a rule about a field the API cannot receive. Those rules need a
-                    <strong>feature</strong>, not a grip.</p>
+                    <strong>feature</strong>, not a grip.
+                  </p>
 
                   <p>That distinction was the most valuable output of the exercise. Not the coverage number &mdash;
                     learning to say, rule by rule, which part of the gap is testing work and which part is product
@@ -503,7 +528,8 @@ expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</c
                     <tr>
                       <td><code>BR-NL-28</code></td>
                       <td>The Netherlands <strong>forbids</strong> <code>CountrySubentity</code>. A perfectly good
-                        <code>state</code> turned two cases red the first time it was written</td>
+                        <code>state</code> turned two cases red the first time it was written
+                      </td>
                     </tr>
                     <tr>
                       <td><code>IS-R-002</code> / <code>IS-R-004</code></td>
@@ -527,11 +553,13 @@ expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</c
                     on what it now says.</p>
 
                   <p>The sharpest find came free. <code>lib-invoice-outbound-fr/ubl.ts</code> called the same builder
-                    <strong>twice</strong> &mdash; copy-paste, identical comment, two lines apart. <code>UBL-SR-04</code>
+                    <strong>twice</strong> &mdash; copy-paste, identical comment, two lines apart.
+                    <code>UBL-SR-04</code>
                     says the element may appear once, and it is fatal. The duplicate had sat there for months without
                     a single failure, because without a value the block writes nothing, and <strong>twice nothing does
                       not show up</strong>. Only when the fixture finally carried BT-18 did dead code turn into a red
-                    test.</p>
+                    test.
+                  </p>
 
                   <h2>What We Would Tell Someone Starting This</h2>
 
@@ -559,7 +587,8 @@ expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</c
                       href="/docs/tutorials/createEquivalenceClassTable">table tutorial</a> are in the guide.</p>
 
                   <p><strong>If your domain has a specification, your test oracle is already written &mdash; in someone
-                      else&rsquo;s repository.</strong> Start with the <a href="/docs/quickstart/quickstart">Quickstart</a>,
+                      else&rsquo;s repository.</strong> Start with the <a
+                      href="/docs/quickstart/quickstart">Quickstart</a>,
                     then read the <a href="/docs/guide/multiplicity/overview">multiplicity guide</a>: it is the
                     difference between testing one currency code and testing all 178.</p>
 
@@ -581,7 +610,7 @@ expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</c
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>

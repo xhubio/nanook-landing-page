@@ -71,10 +71,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -381,7 +381,12 @@
                     </li>
                   </ol>
                   <p>The sheet should look similar to this:</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step1.webp" type="image/webp"><img src="/img/tutorials/t1/step1.png" alt="step1"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step1.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step1.png" alt="step1">
+                    </picture>
+                  </p>
                   <h2><a class="anchor" aria-hidden="true" id="fill-the-equivalence-class-data"></a><a
                       href="#fill-the-equivalence-class-data" aria-hidden="true" class="hash-link"><svg
                         class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16"
@@ -556,7 +561,12 @@
                     </li>
                   </ul>
                   <p>Now the table should look like this:</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step2.webp" type="image/webp"><img src="/img/tutorials/t1/step2.png" alt="step2"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step2.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step2.png" alt="step2">
+                    </picture>
+                  </p>
                   <p>Also note the added header row.</p>
                   <h2><a class="anchor" aria-hidden="true" id="add-calculations-and-prettify-the-table"></a><a
                       href="#add-calculations-and-prettify-the-table" aria-hidden="true" class="hash-link"><svg
@@ -584,10 +594,20 @@
                     This is a lot to test. Could this be optimized? If so, how can it be optimized without losing test
                     coverage? Here is where the main benefit of the equivalence class table technique comes through.</p>
                   <p>First, we will add some formulas to the spreadsheet to do the calculations.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step3_formula.webp" type="image/webp"><img src="/img/tutorials/t1/step3_formula.png" alt="step3 formula"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step3_formula.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step3_formula.png" alt="step3 formula">
+                    </picture>
+                  </p>
                   <p>The numbers count the number of classes in each field. Do this for each of the fields.
                     Also add a row at the end which shows the result of the multiplication.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step3_format.webp" type="image/webp"><img src="/img/tutorials/t1/step3_format.png" alt="step3 format"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step3_format.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step3_format.png" alt="step3 format">
+                    </picture>
+                  </p>
                   <p>As you can see in the figure above, the field rows are highlighted in color. To the right, we added
                     four new columns with the names 1, 2, 3 and 4.
                     These are the test case columns. Each column represents one test case.
@@ -654,7 +674,12 @@
                   <p>You can do the same pattern for all the cases where a value in 'userId' causes
                     an error. In each of these cases the value entered in the password fields
                     is not relevant.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step4.webp" type="image/webp"><img src="/img/tutorials/t1/step4.png" alt="step4"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step4.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step4.png" alt="step4">
+                    </picture>
+                  </p>
                   <p>In column 'C' in row '47' we can see that these 11 test cases cover 1716 cases. The goal of the
                     table is to obtain 100%. We need to add more test cases to cover all of them. However, as the table
                     fills up, the amount of test coverage per test case will decrease.</p>
@@ -675,12 +700,22 @@
     Error   The UserId must not exceed the length of 30 characters
     Error   The UserId must not contain white space characters
 </code></pre>
-                  <p><picture><source srcset="/img/tutorials/t1/step5_resultRows.webp" type="image/webp"><img src="/img/tutorials/t1/step5_resultRows.png" alt="step5 resultRows"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step5_resultRows.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step5_resultRows.png" alt="step5 resultRows">
+                    </picture>
+                  </p>
                   <p>The result section is not necessary to fill the equivalence class table, but it is a possibility to
                     define the expected error messages for the application. It has also serves a documentation purpose.
                   </p>
                   <p>For each test case we can now specify the expected behaviour.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step5_withResuts.webp" type="image/webp"><img src="/img/tutorials/t1/step5_withResuts.png" alt="step5 withResuts"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step5_withResuts.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step5_withResuts.png" alt="step5 withResuts">
+                    </picture>
+                  </p>
                   <h2><a class="anchor" aria-hidden="true" id="cleaning-up-the-table"></a><a
                       href="#cleaning-up-the-table" aria-hidden="true" class="hash-link"><svg class="hash-link-icon"
                         aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16">
@@ -694,7 +729,12 @@
                     cases.</p>
                   <p>It makes sense to reorder the equivalence classes, so that the fields representing
                     valid cases are at the end of the table.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step6.webp" type="image/webp"><img src="/img/tutorials/t1/step6.png" alt="step6"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step6.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step6.png" alt="step6">
+                    </picture>
+                  </p>
                   <p>Also more descriptions are added in order to clearify that these are valid cases.</p>
                   <p>It's now time to combine the first valid user Id with the different possibilities of 'password' and
                     'password2'.</p>
@@ -710,10 +750,20 @@
                     In 'password' choose the 'empty' class. As the 'password' is a mandatory
                     field, we can fill the 'password2' field with 'e'.</p>
                   <p>Then add a new result row with the expected error messages.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step6_tc12.webp" type="image/webp"><img src="/img/tutorials/t1/step6_tc12.png" alt="step6 tc12"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step6_tc12.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step6_tc12.png" alt="step6 tc12">
+                    </picture>
+                  </p>
                   <p>In the table you can now use the same logic for 'password' as we did before for 'userId' before. So
                     fill up the next test cases for all the error cases of 'password'.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step6_tc12-22.webp" type="image/webp"><img src="/img/tutorials/t1/step6_tc12-22.png" alt="step6 tc12 22"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step6_tc12-22.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step6_tc12-22.png" alt="step6 tc12 22">
+                    </picture>
+                  </p>
                   <h2><a class="anchor" aria-hidden="true" id="iterate-over-the-password2-field"></a><a
                       href="#iterate-over-the-password2-field" aria-hidden="true" class="hash-link"><svg
                         class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16"
@@ -728,7 +778,12 @@
                   <p>In this example, we do the full iteration of all the classes for password2 as well. Take the valid
                     class of 'password' and create a test case for all the error cases of 'password2'</p>
                   <p>Now the table should look like this:</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step7.webp" type="image/webp"><img src="/img/tutorials/t1/step7.png" alt="step7"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step7.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step7.png" alt="step7">
+                    </picture>
+                  </p>
                   <p>We also added a new error message for the case in which the passwords are different.
                     When adding new test cases, always remember to update the formula for summarizing the created test
                     cases.</p>
@@ -752,14 +807,24 @@
                       change the equivalence class for the 'userId' so that all the cases are covered.
                       This results in 131 test cases.</li>
                   </ol>
-                  <p><picture><source srcset="/img/tutorials/t1/step8_2.webp" type="image/webp"><img src="/img/tutorials/t1/step8_2.png" alt="step8 2" loading="lazy"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step8_2.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step8_2.png" alt="step8 2" loading="lazy">
+                    </picture>
+                  </p>
                   <p>The picture gives an idea of what this looks like.</p>
                   <p>To optimize the testing procedure we should consider not to iterate over all of the valid cases to
                     check the errors of 'password' and 'password2'. Instead, we can simply take any valid userId. For
                     this, we fill all the cells of rows 15-19
                     with the test cases 12-34 with an 'e'. Then we only iterate the valid cases. This results in 39 test
                     cases.</p>
-                  <p><picture><source srcset="/img/tutorials/t1/step8_3.webp" type="image/webp"><img src="/img/tutorials/t1/step8_3.png" alt="step8 3"></picture></p>
+                  <p>
+                    <picture>
+                      <source srcset="/img/tutorials/t1/step8_3.webp" type="image/webp"><img
+                        src="/img/tutorials/t1/step8_3.png" alt="step8 3">
+                    </picture>
+                  </p>
                 </span></div>
             </article>
           </div>
@@ -801,20 +866,21 @@
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
       <div class="footer-col">
         <samp class="footer-heading">[ MORE ]</samp>
         <a href="/about">About</a>
-                <a href="/imprint">Imprint</a>
+        <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
-    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a href="https://xhub.io">BeeBack UG</a>.</samp></div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
@@ -901,7 +967,7 @@
   <script>
   </script>
   <script src="/js/theme.js"></script>
-<script src="/js/cookies.js"></script>
+  <script src="/js/cookies.js"></script>
 </body>
 
 </html>

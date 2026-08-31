@@ -59,10 +59,10 @@
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">[ DOCS ]</a></li>
-            <li><a href="/docs/api/logger/LoggerInterface">[ API ]</a></li>
-            <li><a href="/blog">[ BLOG ]</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">[ GITHUB ]</a></li>
+            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/api/logger/LoggerInterface">API</a></li>
+            <li><a href="/blog">BLOG</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
@@ -94,14 +94,25 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
-                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp> One Login, Eight Cases</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp class="nav-date">2026-08</samp> Testing a SaaS</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp> Manual vs. Automated</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp class="nav-date">2026-02</samp> Nanook Is Back</a></li>
-                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp
+                          class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-03</samp>
+                        AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
                   </ul>
                 </div>
               </div>
@@ -114,7 +125,8 @@
           <div class="lonePost">
             <div class="post">
               <header class="postHeader">
-                <h1 class="postHeaderTitle"><a href="/blog/2026/08/22/login-example-ai-generated-table">One Login Form, Eight Test Cases: A Worked Example</a></h1>
+                <h1 class="postHeaderTitle"><a href="/blog/2026/08/22/login-example-ai-generated-table">One Login Form,
+                    Eight Test Cases: A Worked Example</a></h1>
                 <p class="post-meta">August 22, 2026</p>
                 <div class="authorBlock">
                   <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
@@ -124,7 +136,7 @@
               <div><span>
 
                   <p>The <a href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">post announcing the
-                    <code>/createEquivalenceClassTable</code> skill</a> explains how it works: the six workflow steps,
+                      <code>/createEquivalenceClassTable</code> skill</a> explains how it works: the six workflow steps,
                     the CASCADE markers, what lands in the Excel file. What it does not contain is one complete, small
                     example with real output. This is that example. Everything below &mdash; the table, every generated
                     value, the error we hit &mdash; came out of an actual run, not out of an illustration. If you want
@@ -153,33 +165,309 @@
                     own. Eight cases side by side are meant to be read across, not down: one column is one test
                     case.</p>
 
-                  <div style="overflow-x:auto"><table style="min-width:820px">
-                    <tr><th style="min-width:7rem"></th><th style="min-width:9rem"></th><th style="min-width:13rem">rule</th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_login</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_emailEmpty</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_emailNoAt</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_emailTooLong</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_passwordEmpty</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_passwordTooShort</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_unknownUser</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">E_lockedUser</div></th></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Secondary data — what must already exist</strong></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td>account</td><td></td><td><small>3 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>exists, active</td><td>the normal world</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>does not exist</td><td>nobody registered that</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>locked</td><td>too many failed attempts</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Primary data — the login form</strong></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td>email</td><td></td><td><small>4 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>4</small></td><td style="text-align:center"><small>4</small></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>valid</td><td></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">a</td><td style="text-align:center">a</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>empty</td><td>min(1)</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>no @</td><td>format</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>too long</td><td>max(254) RFC 5321</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td>password</td><td></td><td><small>3 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>3</small></td><td style="text-align:center"><small>3</small></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>valid</td><td></td><td style="text-align:center">x</td><td style="text-align:center">a</td><td style="text-align:center">a</td><td style="text-align:center">a</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">a</td><td style="text-align:center">a</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>empty</td><td>min(1)</td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>too short</td><td>min(8)</td><td style="text-align:center"></td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">e</td><td style="text-align:center">e</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Summary &mdash; combinations covered</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>product of the counts above</td><td>3 &times; 4 &times; 3 = 36 in total</td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"><strong>3</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>12</strong></td><td style="text-align:center"><strong>12</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td colspan="10">1 + 3 + 3 + 3 + 1 + 1 + 12 + 12 = <strong>36 of 36 &mdash; 100&thinsp;% coverage</strong></td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Expected reaction</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>signed in</td><td>session cookie is set</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>rejected</td><td>with a message</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td></tr>
-                    <tr style="background:var(--bg-secondary)"><td colspan="11"><strong>Expected effect</strong></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>failed-attempt counter rises</td><td>real account, wrong password</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
-                    <tr style="background:var(--bg-elevated)"><td></td><td>failed-attempt counter unchanged</td><td>success or unknown user</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
-                  </table></div>
+                  <div style="overflow-x:auto">
+                    <table style="min-width:820px">
+                      <tr>
+                        <th style="min-width:7rem"></th>
+                        <th style="min-width:9rem"></th>
+                        <th style="min-width:13rem">rule</th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            OK_login</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_emailEmpty</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_emailNoAt</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_emailTooLong</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_passwordEmpty</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_passwordTooShort</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_unknownUser</div>
+                        </th>
+                        <th style="vertical-align:bottom;width:2.2rem">
+                          <div
+                            style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">
+                            E_lockedUser</div>
+                        </th>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="11"><strong>Secondary data — what must already exist</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td>account</td>
+                        <td></td>
+                        <td><small>3 classes</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>exists, active</td>
+                        <td>the normal world</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>does not exist</td>
+                        <td>nobody registered that</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>locked</td>
+                        <td>too many failed attempts</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="11"><strong>Primary data — the login form</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td>email</td>
+                        <td></td>
+                        <td><small>4 classes</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>4</small></td>
+                        <td style="text-align:center"><small>4</small></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>valid</td>
+                        <td></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">a</td>
+                        <td style="text-align:center">a</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>empty</td>
+                        <td>min(1)</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>no @</td>
+                        <td>format</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>too long</td>
+                        <td>max(254) RFC 5321</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td>password</td>
+                        <td></td>
+                        <td><small>3 classes</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>3</small></td>
+                        <td style="text-align:center"><small>3</small></td>
+                        <td style="text-align:center"><small>3</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>1</small></td>
+                        <td style="text-align:center"><small>3</small></td>
+                        <td style="text-align:center"><small>3</small></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>valid</td>
+                        <td></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">a</td>
+                        <td style="text-align:center">a</td>
+                        <td style="text-align:center">a</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">a</td>
+                        <td style="text-align:center">a</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>empty</td>
+                        <td>min(1)</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>too short</td>
+                        <td>min(8)</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">e</td>
+                        <td style="text-align:center">e</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="11"><strong>Summary &mdash; combinations covered</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>product of the counts above</td>
+                        <td>3 &times; 4 &times; 3 = 36 in total</td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>3</strong></td>
+                        <td style="text-align:center"><strong>3</strong></td>
+                        <td style="text-align:center"><strong>3</strong></td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>1</strong></td>
+                        <td style="text-align:center"><strong>12</strong></td>
+                        <td style="text-align:center"><strong>12</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td colspan="10">1 + 3 + 3 + 3 + 1 + 1 + 12 + 12 = <strong>36 of 36 &mdash; 100&thinsp;%
+                            coverage</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="11"><strong>Expected reaction</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>signed in</td>
+                        <td>session cookie is set</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>rejected</td>
+                        <td>with a message</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center">x</td>
+                      </tr>
+                      <tr style="background:var(--bg-secondary)">
+                        <td colspan="11"><strong>Expected effect</strong></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>failed-attempt counter rises</td>
+                        <td>real account, wrong password</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                      <tr style="background:var(--bg-elevated)">
+                        <td></td>
+                        <td>failed-attempt counter unchanged</td>
+                        <td>success or unknown user</td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center"></td>
+                        <td style="text-align:center">x</td>
+                        <td style="text-align:center"></td>
+                      </tr>
+                    </table>
+                  </div>
 
                   <p>Four things to look at, in this order.</p>
 
@@ -192,7 +480,8 @@
                     <li><strong>Equivalence classes, not values.</strong> <code>email</code> has four: valid, empty, no
                       <code>@</code>, too long. Each stands for infinitely many concrete inputs. <code>password</code>
                       has three, <code>account</code> has three. The table never lists a specific email address as a
-                      row; it lists the reasons an address can be accepted or rejected.</li>
+                      row; it lists the reasons an address can be accepted or rejected.
+                    </li>
                     <li><strong>The arithmetic.</strong> The small number next to each field counts the classes a case
                       claims there; the <em>Summary</em> row multiplies them per column. <code>E_unknownUser</code>
                       claims 1 &times; 4 &times; 3 = <strong>12</strong> combinations &mdash; the account is the one
@@ -205,7 +494,8 @@
                       but are not generated unless no <code>a</code> or <code>x</code> is present. Together
                       <code>a</code> and <code>e</code> are the <a
                         href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">CASCADE pattern</a> from the
-                      earlier post, and the reason eight columns cover every class exactly once.</li>
+                      earlier post, and the reason eight columns cover every class exactly once.
+                    </li>
                   </ol>
 
                   <p>The last two rows are the ones people miss. Note what is <em>not</em> there: no marker means
@@ -215,7 +505,8 @@
                     the first, a successful login and an unknown user demand the second. Five columns say nothing about
                     the counter; three take a position, and the two positions contradict each other. That contradiction
                     is the assertion: a probe that always reports a rising counter fails two cases, one that never
-                    reports it fails the third.</p>
+                    reports it fails the third.
+                  </p>
 
                   <h3>Read one column and the method explains itself</h3>
 
@@ -239,7 +530,8 @@
                   <p>Running the table through Nanook produces one object per column. Reduced to the fields that
                     matter, this is a single run, values unedited:</p>
 
-                  <div style="overflow-x:auto"><pre><code>case                 account   email                              password           expected     effect
+                  <div style="overflow-x:auto">
+                    <pre><code>case                 account   email                              password           expected     effect
 OK_login             active    Jennifer_Tremblay@hotmail.com      VuZGJBushpsbY_b    signed in    counter unchanged
 E_emailEmpty         active    —                                  iu2MngWY7bxFuXF    rejected
 E_emailNoAt          active    torsten.link                       0qeDxgDRG0kwRAT    rejected
@@ -247,10 +539,12 @@ E_emailTooLong       active    aaaa…aaaa (255)                    3laNNg1Jt_jj
 E_passwordEmpty      active    Kelli_Ankunding54@gmail.com        —                  rejected
 E_passwordTooShort   active    Kurtis_McGlynn27@yahoo.com         ab                 rejected     counter rises
 E_unknownUser        absent    Cody.Kuhic-Kuphal@yahoo.com        gRL7wb1Xz1m2maI    rejected     counter unchanged
-E_lockedUser         locked    Johan_DuBuque@hotmail.com          8FnRb944emJsD4c    rejected</code></pre></div>
+E_lockedUser         locked    Johan_DuBuque@hotmail.com          8FnRb944emJsD4c    rejected</code></pre>
+                  </div>
 
                   <p>(The 255-character address is abbreviated for display; the generated value is 255 letters
-                    <code>a</code>.)</p>
+                    <code>a</code>.)
+                  </p>
 
                   <p>A few things are only visible in the output, not in the table:</p>
 
@@ -268,7 +562,8 @@ E_lockedUser         locked    Johan_DuBuque@hotmail.com          8FnRb944emJsD4
                       every rule on every run.</li>
                     <li><code>account</code> varies only in the two rows where it is the point. Everywhere else it is
                       <code>active</code>, the normal world &mdash; which is what makes the other six cases statements
-                      about the form and not about the account.</li>
+                      about the form and not about the account.
+                    </li>
                   </ul>
 
                   <h2>When Faker Is Not Enough</h2>
@@ -279,9 +574,11 @@ E_lockedUser         locked    Johan_DuBuque@hotmail.com          8FnRb944emJsD4
 
                   <p>A Faker path in a generator directive takes <strong>no arguments</strong>. The directive is split
                     on <code>.</code> and called as a path &mdash; <code>string.alpha</code> resolves to a function,
-                    <code>alpha:255</code> resolves to nothing, and the call throws.</p>
+                    <code>alpha:255</code> resolves to nothing, and the call throws.
+                  </p>
 
-                  <p>What happened when we ran it: Nanook logged the error and the case <strong>was not emitted</strong>.
+                  <p>What happened when we ran it: Nanook logged the error and the case <strong>was not
+                      emitted</strong>.
                     Seven test cases came out instead of eight. The run did not stop; the error sat in the log, and the
                     other seven cases were perfectly fine. If nothing in your pipeline checks the count of generated
                     cases against the count of table columns, a case can disappear this quietly. Check the number.</p>
@@ -303,7 +600,7 @@ class GeneratorLen extends DataGeneratorBase {
                   <pre><code>registry.registerGenerator('len', new GeneratorLen({ logger, name: 'len' }))</code></pre>
 
                   <p>After that, eight cases. The <a href="/docs/tutorials/createGenerator">custom generator
-                    tutorial</a> covers the interface; the <a href="/docs/guide/directives">directives guide</a> has
+                      tutorial</a> covers the interface; the <a href="/docs/guide/directives">directives guide</a> has
                     the full <code>gen:</code> syntax, including the instance number.</p>
 
                   <h2>What the Table Is Worth After Day One</h2>
@@ -317,13 +614,15 @@ class GeneratorLen extends DataGeneratorBase {
                     <code>email</code> &mdash; say &ldquo;unicode domain&rdquo; &mdash; and the case count follows on
                     its own; the person adding it does not need to know how the test runner is built. Compare that with
                     a <code>const CASES = [...]</code> inside a spec file, which belongs to whoever writes the spec
-                    file.</p>
+                    file.
+                  </p>
 
                   <p><strong>The same table drives execution.</strong> The eight objects above are not documentation;
                     they are the input to whatever runs the test. How that scales past one form &mdash; to a whole
                     application, with the table as the only source &mdash; is the subject of the
                     <a href="/blog/2026/08/21/testing-a-saas-with-nanook">field report on testing a SaaS with
-                    Nanook</a>; this post stops at the eight.</p>
+                      Nanook</a>; this post stops at the eight.
+                  </p>
 
                   <h2>Try It on Your Own Form</h2>
 
@@ -331,16 +630,18 @@ class GeneratorLen extends DataGeneratorBase {
                     run the slash command against your own login page. The
                     <a href="/docs/tutorials/createEquivalenceClassTable">tutorial</a> walks through the markers if the
                     table needs editing, and the <a href="/docs/guide/equivalence/overview">equivalence class
-                    guide</a> explains why the classes are chosen the way they are. The source is on
+                      guide</a> explains why the classes are chosen the way they are. The source is on
                     <a href="https://github.com/xhubio/nanook-table/" target="_blank"
-                      rel="noreferrer noopener">GitHub</a>.</p>
+                      rel="noreferrer noopener">GitHub</a>.
+                  </p>
 
                   <p>Then compare. How many login cases did you have before, and how many did the table produce? The
                     two numbers are usually close &mdash; but the overlap is rarely complete, and the column that is
                     missing from your suite tends to be one of the boring ones: the absent field, the 255th character,
                     the counter that must <em>not</em> move.</p>
 
-                  <p><strong>Point it at your own login page.</strong> Install <a href="/docs/quickstart/quickstart">Nanook</a>,
+                  <p><strong>Point it at your own login page.</strong> Install <a
+                      href="/docs/quickstart/quickstart">Nanook</a>,
                     run <code>/createEquivalenceClassTable Login Form</code>, and compare the result with the login
                     tests you have today. The interesting number is not how many cases it produced &mdash; it is how
                     many of them you already had.</p>
@@ -360,7 +661,7 @@ class GeneratorLen extends DataGeneratorBase {
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">[ DOCS ]</samp>
+        <samp class="footer-heading">DOCS</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
