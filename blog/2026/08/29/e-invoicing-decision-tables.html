@@ -210,22 +210,28 @@ count(cac:PaymentMeans) &lt;= 1      &rarr;   too-many:1</code></pre>
 
                   <p>The class comes from the file with the hash, so when the rule changes the grip changes with it.</p>
 
-                  <pre style="overflow-x:auto"><code>                          | BT-1_omit | BT-5_notInList | BT-31_tooLong | OK_base
-base variant  minimal     |     x     |       x        |       x       |    x
-BT-1 invoice number
-              present     |           |       x        |       x       |    x
-              omit        |     x     |                |               |
-BT-5 currency
-              in list     |     a     |                |       x       |    x
-              not-in-list |     e     |       x        |               |
-BT-31 seller VAT id
-              valid       |     a     |       a        |               |    x
-              too-long:30 |     e     |       e        |       x       |
-Expected reaction
-              BR-02       |     x     |                |               |
-              BR-CL-04    |           |       x        |               |
-              BR-DE-16    |           |                |       x       |
-              no rule     |           |                |               |    x</code></pre>
+                  <div style="overflow-x:auto"><table style="min-width:640px">
+                    <tr><th style="min-width:8rem"></th><th style="min-width:8rem"></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">BT-1_omit</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">BT-5_notInList</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">BT-31_tooLong</div></th><th style="vertical-align:bottom;width:2.2rem"><div style="writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;margin:0 auto">OK_base</div></th></tr>
+                    <tr style="background:var(--bg-secondary)"><td>base variant</td><td><small>1 class</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>minimal</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>BT-1 invoice number</td><td><small>2 classes</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>present</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>omit</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>BT-5 currency</td><td><small>2 classes</small></td><td style="text-align:center"><small>2</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>in list</td><td style="text-align:center">a</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>not-in-list</td><td style="text-align:center">e</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td>BT-31 seller VAT id</td><td><small>2 classes</small></td><td style="text-align:center"><small>2</small></td><td style="text-align:center"><small>2</small></td><td style="text-align:center"><small>1</small></td><td style="text-align:center"><small>1</small></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>valid</td><td style="text-align:center">a</td><td style="text-align:center">a</td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>too-long:30</td><td style="text-align:center">e</td><td style="text-align:center">e</td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="6"><strong>Summary &mdash; combinations covered</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>product of the counts above</td><td style="text-align:center"><strong>4</strong></td><td style="text-align:center"><strong>2</strong></td><td style="text-align:center"><strong>1</strong></td><td style="text-align:center"><strong>1</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td colspan="5">1 &times; 2 &times; 2 &times; 2 = 8 combinations &mdash; 4 + 2 + 1 + 1 = <strong>8 of 8 &mdash; 100&thinsp;% coverage</strong></td></tr>
+                    <tr style="background:var(--bg-secondary)"><td colspan="6"><strong>Expected reaction</strong></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>BR-02</td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>BR-CL-04</td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>BR-DE-16</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td><td style="text-align:center"></td></tr>
+                    <tr style="background:var(--bg-elevated)"><td></td><td>no rule</td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center"></td><td style="text-align:center">x</td></tr>
+                  </table></div>
 
                   <p>The <code>a</code> and <code>e</code> markers are the <a
                       href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">CASCADE pattern</a>: the products
@@ -330,12 +336,14 @@ Expected reaction
                     <tr>
                       <td><code>full</code></td>
                       <td>before a production release</td>
-                      <td><strong>~105,000</strong></td>
+                      <td><strong>88,609</strong></td>
                       <td>~3 h</td>
                     </tr>
                   </table>
 
-                  <p>The decision behind the split was made in one sentence, and we kept it verbatim:</p>
+                  <p>The <code>full</code> level is simply everything the suite builds &mdash; the 88,609 from
+                    the multiplicity fix above (the section title keeps the number the workbooks used to claim).
+                    The decision behind the split was made in one sentence, and we kept it verbatim:</p>
 
                   <blockquote>
                     <p>&ldquo;CI should have a sample, not the 6,500. Fifty is enough. Locally, everything must
@@ -361,7 +369,8 @@ const sample = cases.filter((_, i) =&gt; i % k === 0)
 
                   <p>The tables were built to prove conformance. What they actually found was that <strong>fields we
                       accept never reach the document</strong>. Eight of them, each confirmed the same way: a request
-                    carrying the field, a <code>200</code> in response, and an invoice without it.</p>
+                    carrying the field, a <code>200</code> in response, and an invoice without it. The six with the
+                    widest blast radius:</p>
 
                   <table>
                     <tr>
@@ -495,7 +504,7 @@ expect(executableViolations).toBeGreaterThanOrEqual(FLOOR)   // may only rise</c
                   </table>
 
                   <p>The last row deserves honesty, and it makes the strongest point in the post: <strong>two thirds of
-                      it is not work.</strong> 2,447 of those rules are German rules sitting in a Dutch rule family
+                      it is not work.</strong> The three largest blocks alone cover half the gap: 2,447 of those rules are German rules sitting in a Dutch rule family
                     &mdash; a case for them would assert XRechnung behaviour on a Dutch invoice. 706 are Spanish tax
                     categories in a German family. 379 are structurally unbreakable, because our generator rounds
                     every amount to two decimals and the rules test for a third. A case for any of these would be

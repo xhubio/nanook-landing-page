@@ -261,6 +261,17 @@ turn into a red test.
 
 ---
 
+## Lektorat 2026-08-31 — drei Zahlen-Spannungen im PRD, im Artikel aufgeloest
+
+1. "Eight lost fields" vs. 6 Zeilen in der Tabelle → Artikel kennzeichnet die Tabelle als Auswahl
+   ("the six with the widest blast radius"); die Acht bleibt (PRD: gemessen).
+2. Run-Level `full` stand als "~105,000" — Stand vor der Multiplicity-Korrektur; Artikel sagt jetzt
+   **88,609** (= "Cases the suite builds") mit Halbsatz. 🔴 Wer die ~3 h nachmisst: auf dem
+   88,609er-Lauf messen.
+3. "two thirds is not work": die drei genannten Posten (2.447+706+379 = 3.532) sind ~die Haelfte
+   von 7.101 → Artikel: "The three largest blocks alone cover half the gap". Die Zwei-Drittel-
+   Behauptung selbst ist unbelegt-im-Repo; Quelle liegt in der unkommittierten Tabellen-Lane.
+
 ## Internal Links to Include
 
 | Link Text | URL |
