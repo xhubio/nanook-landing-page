@@ -2591,3 +2591,29 @@ body[data-theme="swiss"] .navToggle .hamburger-menu > div {
     min-height: 44px;
   }
 }
+
+/* --- Tables: Docusaurus' light zebra-striping ----------------------------
+   main.css ships GitHub's light-theme table skin — `tr:nth-child(2n)` gets
+   #f6f8fa and every rule is #dfe2e5. brutalist.css themed `th` and `td` but
+   never `tr`, so on the dark theme every second row renders as a near-white
+   band carrying --fg-secondary text at 2.64:1. 167 published pages have
+   tables, plus the cookie-consent table on every page — so this is scoped to
+   the theme, not to .post. */
+body[data-theme="tactical"] table tr,
+body[data-theme="swiss"] table tr {
+  background-color: transparent;
+  border-top: 1px solid var(--border-color);
+}
+
+body[data-theme="tactical"] table tr:nth-child(2n),
+body[data-theme="swiss"] table tr:nth-child(2n) {
+  background-color: var(--bg-secondary);
+}
+
+/* --accent-red on --bg-secondary is 4.03:1 — short of AA for 12px header
+   text. --link-accent is the same brand red tuned per theme (5.3:1 / 5.2:1).
+   Inline <code> inside a header inherits this. */
+body[data-theme="tactical"] .post th,
+body[data-theme="swiss"] .post th {
+  color: var(--link-accent);
+}
