@@ -11,11 +11,12 @@ body[data-theme="tactical"] {
   --bg-secondary: #121212;
   --bg-elevated: #1A1A1A;
   --fg-primary: #EAEAEA;
-  --fg-secondary: #666666;
-  --fg-dim: #444444;
+  --fg-secondary: #9A9A9A;
+  --fg-dim: #8A8A8A;
   --accent-red: #E61919;
   --accent-red-hover: #FF2A2A;
   --accent-red-glow: rgba(230, 25, 25, 0.4);
+  --link-accent: #FF2A2A;   /* 5.30:1 on --bg-primary */
   --border-color: #2A2A2A;
   --border-bright: #333333;
   --font-display: 'Inter', 'Helvetica Neue', Arial, sans-serif;
@@ -36,10 +37,11 @@ body[data-theme="swiss"] {
   --bg-elevated: #FFFFFF;
   --fg-primary: #050505;
   --fg-secondary: #444444;
-  --fg-dim: #777777;
+  --fg-dim: #636363;
   --accent-red: #E61919;
   --accent-red-hover: #CC1414;
   --accent-red-glow: rgba(230, 25, 25, 0.15);
+  --link-accent: #CC1414;   /* 5.19:1 on --bg-primary */
   --border-color: #C8C5BE;
   --border-bright: #A8A49C;
   --font-display: 'Inter', 'Helvetica Neue', Arial, sans-serif;
@@ -143,20 +145,63 @@ body[data-theme="swiss"] .docsNavContainer {
   flex-shrink: 0 !important;
 }
 
-body[data-theme="tactical"] .toc .navBreadcrumb,
-body[data-theme="swiss"] .toc .navBreadcrumb {
-  display: none !important;
+/* Desktop only: the sidebar is always open, so the breadcrumb toggle is hidden.
+   Below 1025px these must NOT apply — Docusaurus' own #navToggler (already wired
+   in every docs/blog page) needs the breadcrumb bar to be reachable. */
+@media (min-width: 1025px) {
+  body[data-theme="tactical"] .toc .navBreadcrumb,
+  body[data-theme="swiss"] .toc .navBreadcrumb {
+    display: none !important;
+  }
+
+  body[data-theme="tactical"] .navGroups,
+  body[data-theme="swiss"] .navGroups {
+    display: block !important;
+    padding: 0 1rem !important;
+  }
+
+  body[data-theme="tactical"] .navGroup ul.hide,
+  body[data-theme="swiss"] .navGroup ul.hide {
+    display: block !important;
+  }
 }
 
-body[data-theme="tactical"] .navGroups,
-body[data-theme="swiss"] .navGroups {
-  display: block !important;
-  padding: 0 1rem !important;
-}
+/* Mobile: brutalist skin for the breadcrumb toggle bar */
+@media (max-width: 1024px) {
 
-body[data-theme="tactical"] .navGroup ul.hide,
-body[data-theme="swiss"] .navGroup ul.hide {
-  display: block !important;
+  body[data-theme="tactical"] .toc .navBreadcrumb,
+  body[data-theme="swiss"] .toc .navBreadcrumb {
+    display: flex !important;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 48px;
+    padding: 0 1rem;
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    font-family: var(--font-mono);
+    overflow: visible;
+  }
+
+  body[data-theme="tactical"] .toc .navBreadcrumb h2,
+  body[data-theme="swiss"] .toc .navBreadcrumb h2 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-primary);
+  }
+
+  body[data-theme="tactical"] .toc .navToggle,
+  body[data-theme="swiss"] .toc .navToggle {
+    width: 44px;
+    height: 44px;
+    margin-right: 0;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 /* Main content area takes remaining width */
@@ -329,7 +374,7 @@ body[data-theme="swiss"] .post li {
 
 body[data-theme="tactical"] .post a,
 body[data-theme="swiss"] .post a {
-  color: var(--accent-red);
+  color: var(--link-accent);
   text-decoration: none;
   border-bottom: 1px solid var(--accent-red-glow);
 }
@@ -410,7 +455,7 @@ body[data-theme="swiss"] .docs-prevnext {
 
 body[data-theme="tactical"] .docs-prevnext a,
 body[data-theme="swiss"] .docs-prevnext a {
-  color: var(--accent-red);
+  color: var(--link-accent);
   font-family: var(--font-mono);
   font-size: 0.85rem;
 }
@@ -697,6 +742,8 @@ body[data-theme="swiss"] .theme-toggle-label-light {
   padding: 4rem 2rem 6rem;
   display: grid;
   grid-template-columns: 3fr 2fr;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-inner {
@@ -879,15 +926,22 @@ body[data-theme="swiss"] .hero-watermark {
   background-color: var(--bg-secondary);
   width: 100%;
   transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease, z-index 0s;
-  cursor: zoom-in;
   z-index: 1;
 }
 
-.diagram-frame:hover {
-  transform: scale(1.6);
-  transform-origin: top right;
-  z-index: 10;
-  box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+@media (hover: hover) and (pointer: fine) {
+  .diagram-frame {
+    cursor: zoom-in;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .diagram-frame:hover {
+    transform: scale(1.6);
+    transform-origin: top right;
+    z-index: 10;
+    box-shadow: 0 0 80px rgba(0, 0, 0, 0.7);
+  }
 }
 
 .diagram-frame img {
@@ -1850,8 +1904,13 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
     min-width: 100% !important;
     border-right: none !important;
     border-bottom: 1px solid var(--border-color);
-    max-height: 50vh;
-    overflow-y: auto;
+    /* main.css pins this fixed below 1023px; without the reset it overlays
+       the article. Back into the flow, height driven by the toggle state. */
+    position: static !important;
+    max-height: none;
+    height: auto !important;
+    overflow-y: visible;
+    z-index: auto !important;
   }
 }
 
@@ -1871,9 +1930,12 @@ body[data-theme="swiss"]::-webkit-scrollbar-thumb:hover {
   }
 
   .cookie-btn {
-    flex: 1;
+    flex: 1 1 100%;
     text-align: center;
-    min-width: 80px;
+    min-width: 0;
+    min-height: 44px;
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
 }
 
@@ -2158,4 +2220,356 @@ body[data-theme="swiss"] .trust-logos img[alt="invoice-api.xhub.io"] {
 
 .trust-logo-with-label:hover img {
   opacity: 0.9;
+}
+/* ============================================================
+   MOBILE PASS
+   Everything below fixes smartphone rendering. Kept in one block
+   at the end of the file so it is easy to review and to revert.
+   Verified with Playwright at 320 / 375 / 414 / 768px in both themes.
+   ============================================================ */
+
+/* --- Horizontal overflow containment -----------------------------------
+   body already carries overflow-x:hidden, but the single-element form leaks
+   on iOS Safari. `clip` (not `hidden`) avoids creating a scroll container,
+   which would break the sticky .site-header. */
+html {
+  overflow-x: clip;
+}
+
+/* --- Code blocks must scroll, not clip ---------------------------------
+   main.css sets `pre code{display:inline}` and no overflow, so long lines
+   (e.g. the git clone URL in the quickstart) were cut off and unreachable. */
+pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* Let the flex children actually shrink so the pre can take over scrolling */
+body[data-theme="tactical"] .documentContainer,
+body[data-theme="swiss"] .documentContainer,
+body[data-theme="tactical"] .docMainWrapper > *,
+body[data-theme="swiss"] .docMainWrapper > * {
+  min-width: 0;
+}
+
+/* --- Docusaurus heading anchors are empty <a class="anchor"> scroll targets.
+   `.post a` gives every link a red underline, so each one rendered as a stray
+   1px rule struck through the body text. Pre-existing; most visible on mobile. */
+body[data-theme="tactical"] .post a.anchor,
+body[data-theme="swiss"] .post a.anchor {
+  border-bottom: 0;
+}
+
+/* --- Sticky header must not swallow anchor targets --------------------- */
+:target,
+section[id],
+h1[id],
+h2[id],
+h3[id],
+h4[id] {
+  scroll-margin-top: 68px;
+}
+
+/* --- Mobile nav toggle (button is injected by js/theme.js) -------------- */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  flex: 0 0 44px;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+  position: relative;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--fg-primary);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.site-header.nav-open .nav-toggle span {
+  position: absolute;
+  top: 50%;
+  margin-top: -1px;
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+@media (max-width: 640px) {
+
+  /* --- Header: four bracket links (~300px) + logo (~115px) + toggle never
+     fit 375px. They wrapped mid-item and collided with the wordmark.
+     Collapse them into a drawer instead. --------------------------------- */
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-header.nav-open .site-nav {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    gap: 0;
+    padding: 0.5rem 0;
+  }
+
+  .site-nav li {
+    width: 100%;
+  }
+
+  .site-nav a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0.75rem 1.25rem;
+    font-size: 0.8rem;
+    color: var(--fg-primary);
+    border: 0;
+  }
+
+  /* Theme toggle was 41x27 — below the 44px touch minimum */
+  .theme-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+  }
+
+  /* --- Type floor: body copy was 12.8px, labels down to 9.6px ----------- */
+  .hero-subtitle,
+  .definition-inner p,
+  .feature-card p,
+  .how-step p,
+  .use-case-card p,
+  .faq-answer,
+  .cookie-text {
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .frame-label,
+  .cookie-cat-badge,
+  .use-case-id,
+  .cookie-btn,
+  .feature-id,
+  .footer-heading,
+  .trust-label,
+  .hero-meta samp,
+  .features-header samp,
+  .how-header samp,
+  .use-cases-header samp,
+  .faq-header samp,
+  .footer-copyright samp,
+  .trust-inner samp,
+  .footer-col samp {
+    font-size: 0.75rem;
+  }
+
+  /* accent red on --bg-primary is 4.26:1 — fine as large text (>=18.66px bold,
+     3:1 threshold), short of it as normal text. The CTA title sat at 17.6px. */
+  .use-case-title {
+    font-size: 1.2rem;
+  }
+
+  /* Standalone (non-inline) targets below 44px. Links inside a sentence are
+     exempt under WCAG 2.5.8 and are left in the text flow deliberately. */
+  .site-logo {
+    min-height: 44px;
+  }
+
+  .trust-logos a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  /* --- Tap targets ------------------------------------------------------ */
+  .footer-col a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.85rem;
+  }
+
+  .hero-usecases-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .cookie-expand {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  /* --- Consistent gutters: these four sections had no breakpoint and kept
+     2rem while hero/features/use-cases dropped to 1rem ------------------- */
+  .definition,
+  .how-it-works,
+  .faq,
+  .trust {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* --- Docs sidebar text ---------------------------------------------------
+   main.css still paints the sidebar in Docusaurus' original light-theme greys
+   (#393939, #717171, #333a56). On the brutalist dark ground those land at
+   1.62:1 — invisible. Unhiding the sidebar on mobile made this reachable, so
+   it now has to follow the theme tokens. Applies to desktop as well. */
+body[data-theme="tactical"] .toc .toggleNav,
+body[data-theme="swiss"] .toc .toggleNav,
+body[data-theme="tactical"] .navBreadcrumb a,
+body[data-theme="swiss"] .navBreadcrumb a,
+body[data-theme="tactical"] .navBreadcrumb span,
+body[data-theme="swiss"] .navBreadcrumb span {
+  color: var(--fg-primary);
+}
+
+body[data-theme="tactical"] .toc .toggleNav .navGroup .navGroupCategoryTitle,
+body[data-theme="swiss"] .toc .toggleNav .navGroup .navGroupCategoryTitle {
+  color: var(--link-accent);
+  font-family: var(--font-mono);
+}
+
+body[data-theme="tactical"] .toc .toggleNav .navGroup .navGroupSubcategoryTitle,
+body[data-theme="swiss"] .toc .toggleNav .navGroup .navGroupSubcategoryTitle {
+  color: var(--fg-primary);
+  font-family: var(--font-mono);
+}
+
+/* #tocToggler toggles body.tocActive to reveal .onPageNav — but this theme
+   removes the on-page TOC outright (line ~261, "give space to content"), so the
+   control does nothing. It only became visible when the breadcrumb bar was
+   restored on mobile; a dead control is worse than none. */
+.toc .toggleNav .navBreadcrumb .tocToggler {
+  display: none;
+}
+
+body[data-theme="tactical"] .toc .toggleNav ul li a,
+body[data-theme="swiss"] .toc .toggleNav ul li a {
+  color: var(--fg-secondary);
+}
+
+body[data-theme="tactical"] .toc .toggleNav ul li.navListItemActive a,
+body[data-theme="swiss"] .toc .toggleNav ul li.navListItemActive a,
+body[data-theme="tactical"] .toc .toggleNav ul li a:hover,
+body[data-theme="swiss"] .toc .toggleNav ul li a:hover,
+body[data-theme="tactical"] .toc .toggleNav ul li a:focus,
+body[data-theme="swiss"] .toc .toggleNav ul li a:focus {
+  color: var(--link-accent);
+}
+
+body[data-theme="tactical"] .toc .toggleNav .navGroup h3 i:not(:empty),
+body[data-theme="swiss"] .toc .toggleNav .navGroup h3 i:not(:empty) {
+  color: var(--fg-dim);
+}
+
+/* The toggle carries TWO icon systems: Docusaurus' ::before/::after chevron-X
+   from main.css, and a .hamburger-menu > .line1/2/3 markup added by this theme
+   (painted #393939, invisible on the dark ground). Stacked, they render as a
+   muddle. Drop the pseudo-elements, keep and theme the three lines. */
+body[data-theme="tactical"] .toc .toggleNav .navToggle:after,
+body[data-theme="tactical"] .toc .toggleNav .navToggle:before,
+body[data-theme="swiss"] .toc .toggleNav .navToggle:after,
+body[data-theme="swiss"] .toc .toggleNav .navToggle:before {
+  display: none;
+}
+
+body[data-theme="tactical"] .navToggle .hamburger-menu,
+body[data-theme="swiss"] .navToggle .hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+  height: 44px;
+  position: relative;
+}
+
+body[data-theme="tactical"] .navToggle .hamburger-menu > div,
+body[data-theme="swiss"] .navToggle .hamburger-menu > div {
+  width: 18px;
+  height: 2px;
+  background-color: var(--fg-primary);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* createToggler() puts .docsSliderActive on #docsNav — morph lines into an X.
+   Both bars are absolutely centred rather than translated, so the X closes
+   regardless of how the flex gaps resolve. */
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu > div {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu .line1 {
+  transform: rotate(45deg);
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu .line2 {
+  opacity: 0;
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu .line3 {
+  transform: rotate(-45deg);
+}
+
+/* Sidebar links are standalone targets, not inline prose */
+@media (max-width: 1024px) {
+
+  body[data-theme="tactical"] .toc .toggleNav ul li a,
+  body[data-theme="swiss"] .toc .toggleNav ul li a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    font-size: 0.85rem;
+  }
+
+  body[data-theme="tactical"] .docs-prevnext a,
+  body[data-theme="swiss"] .docs-prevnext a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
 }
