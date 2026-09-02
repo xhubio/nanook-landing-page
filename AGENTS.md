@@ -103,14 +103,16 @@ only gate between a draft and the live site.
 
 ### Theme
 
-Two themes, both live: `data-theme="tactical"` (dark, the default, set on `<body>` in all
-175 occurrences) and `swiss` (light). A toggle persists the choice in `localStorage`.
+Two themes, both live: `data-theme="light"` (the default since the 2026-09-02 redesign, set on
+`<body>` in all pages) and `dark`. A toggle persists the choice in `localStorage`; `js/theme.js`
+migrates the pre-redesign values `tactical`/`swiss` to `dark`/`light`.
 
 🔵 Diagrams are authored as Excalidraw JSON, rendered to PNG, and **inverted by CSS** in
 light mode:
 
 ```css
-body[data-theme="swiss"] .blog-diagram { filter: invert(1) hue-rotate(180deg); }
+body[data-theme] .post img.blog-diagram { filter: var(--diagram-filter); }
+/* --diagram-filter: invert(1) hue-rotate(180deg) on light, none on dark */
 ```
 
 ⇒ Author diagrams **for the dark theme** (dark background, white text). The light variant
@@ -125,7 +127,7 @@ is derived, never drawn twice.
 
 ### `llms.txt`
 
-A 39-line machine-readable index of the docs at the site root. **If you add or move a
+A machine-readable index of the docs at the site root. **If you add or move a
 docs page, update it** — it is the one file whose whole purpose is to be read by an agent,
 and it has no generator watching it.
 
@@ -140,7 +142,7 @@ and it has no generator watching it.
    reformat or regenerate it.
 4. **Deployment is a push to `main`.** No CI, no tests, no preview. What you commit is
    live — so check the rendered file locally before pushing.
-   🔴 **Nach jeder Änderung an `css/brutalist.css` oder `js/theme.js`:
+   🔴 **Nach jeder Änderung an `css/nanook.css` oder `js/theme.js`:
    `tools/cache-bust.sh` ausführen** (schreibt einen Inhalts-Hash als `?v=` in alle
    HTML-Dateien; idempotent). Ohne den Bump überdeckt der Browser-Cache
    (GitHub Pages, max-age 600) den Deploy bis zu 10 Minuten — und beim lokalen

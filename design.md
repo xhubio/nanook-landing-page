@@ -9,150 +9,189 @@ inverted.)
 Working rules for the repo itself (registration points, twins, deployment traps)
 live in `AGENTS.md`. This file covers the visual system only.
 
+> **2026-09-02 — system replaced.** The Industrial Brutalist system (dark
+> telemetry default, Inter 900 display, JetBrains Mono body, red accent, CRT
+> grain) was retired on the user's word ("diese Design hier übernehmen"). The
+> old stylesheet stays on disk as `css/brutalist.css` for reference; nothing
+> links to it. The system below is the one every page runs on now.
+
+## Provenance
+
+- **Source mode:** url · `hallmark study https://platform.claude.com/docs/en/home`
+  (2026-09-02), followed by `hallmark redesign` on the user's instruction to
+  adopt it site-wide.
+- **Status of the source:** a public reference the user pointed at for their own
+  brand's site. What was adopted is **structural**: macrostructure, archetypes,
+  type roles, paper band, accent discipline, motion stance, rhythm of the
+  section head. What was **not** adopted: the source's proprietary typefaces
+  (replaced by free faces in the same roles, user's pick), its brand colour
+  (Nanook keeps its own red, demoted to a mark), its copy, its imagery.
+- **Confidence:** paper and accent bands are exact from the source CSS; the
+  values below are Nanook's own, tuned inside those bands. Rhythm was not
+  observable from HTML (URL-mode blind spot); section spacing below is a
+  decision, not a measurement.
+
 ## Genre
 
-editorial — the site's voice is *Industrial Brutalist*: hard rules, mono labels,
-telemetry framing on the landing page; the blog runs the same system in a calmer,
-broadsheet register.
+modern-minimal — developer tool / API documentation register. Light paper, one
+light serif display note, sans body, blue for interaction only, quiet ink
+buttons, small radii, no reveals. Restraint with conviction.
 
 ## Macrostructure families
 
-- **Landing page** (`/index.html`): existing hand-built brutalist page
-  (hero + diagram + features + use cases + FAQ + trust). Locked as-is; not part
-  of any rotation.
-- **Content — blog index** (`/blog/`): **Index-First**. The page is the archive:
-  label + one factual sentence, then dated rows with hairlines. No hero, no
-  display type at the top, no self-duplicating sidebar.
+- **Landing page** (`/index.html`): **Ecosystem Index** — the page is a set of
+  discovery surfaces (what it is · where to start · how it works · use cases ·
+  questions · who uses it). Hero: **H2 Split Diptych**, ratio 6/6, headline +
+  lede + three quiet CTAs left, a real code sample with tabs right (Install ·
+  Generate · Output — all from the tutorials, never invented), divider =
+  negative space. Section heads: **S2 Hanging** — h2 + one-sentence lead, no
+  rules, no numbers, no eyebrows. Content blocks: 2-up/3-up card grids with
+  whole-card links; the workflow as a horizontal **F4 step sequence rendered as
+  a tab strip**; FAQ as quiet `<details>` rows; **T2 logo wall** hairline.
+- **Content — blog index** (`/blog/`): **Index-First**. Display title + one
+  factual sentence, then dated rows with hairlines. No sidebar.
 - **Content — blog posts** (`/blog/YYYY/MM/DD/<slug>`): **Long Document**.
-  Single readable column (measure `--measure`), the article leads; related-posts
-  index sits *after* the article, open, untoggled. No reveals.
-- Blog column (index + posts) is **centered** in the shell — user decision
-  2026-08-31, replacing the earlier left-biased asymmetry. Posts run **one
-  shared column width** (44rem frame = reading measure); the index keeps the
-  wider 58rem broadsheet frame.
-- **Docs** (`/docs/**`): existing Docusaurus shell, themed via overrides.
-  Locked as-is. New: **`/docs/` hub** (2026-08-31 — the URL was a bare 404):
-  hand-built `docs/index.html` in the Index-First register (label + sentence +
-  five hairline rows), centered 44rem column, styles under `.docs-hub` in
-  `css/brutalist.css`. Same day, same register: **`/docs/api/` hub** (8 module
-  groups, reuses `.docs-hub` classes) plus a noindex redirect stub at `/api/`;
-  the site nav's API link targets the hub sitewide.
-- **Root pages** (2026-09-02): `/about`, `/imprint`, `/privacyPolicy` →
-  **Long Document** as the hand-built `.long-doc` register (centered 44rem
-  column, display title on a double rule, Plex Sans prose, mono tables; a
-  `.lede` only where the opening paragraph earns it — About). `/help`,
-  `/users` → **Index-First**, reusing `.docs-hub`; Users rows carry a
-  monochrome mark (`.has-logo`, ink derived per theme from `data-ink`). All
-  five left the Docusaurus shell (`.postContainer`, `.gridBlock`,
-  `.showcaseSection`); `.html` + `/index.html` twins are byte-identical again.
-  The Index-First label (`.docs-hub-head`) is the page's `h1`, styled as the
-  mono micro-label — one `h1` per page on the two docs hubs, help and users.
+  One centered 44rem column; the article leads; related-posts index follows,
+  open. No reveals.
+- **Docs** (`/docs/**`): existing Docusaurus shell, themed via overrides —
+  sidebar rail left (N3 register), prose column. **Hubs** (`/docs/`,
+  `/docs/api/`, `/help`, `/users`): **Ecosystem Index** in miniature — display
+  title + lead, then a 2-up grid of whole-card links (`.docs-hub`, CSS-only over
+  the existing row markup).
+- **Root pages** (`/about`, `/imprint`, `/privacyPolicy`): **Long Document**
+  (`.long-doc`), centered 44rem column, serif display title, sans prose.
+- **404**: status line, serif figure, three exits. `noindex`.
 
 ## Theme
 
-The house palette. Dual theme on `body[data-theme="tactical" | "swiss"]`,
-anchor hue **28** (warm red). All values OKLCH; neutrals carry the anchor hue at
-low chroma (0.006–0.014). Canonical definitions live in
-`css/brutalist.css` § CUSTOM PROPERTIES — that file is the single source of
-truth; this table is the human summary.
+Dual theme on `body[data-theme="light" | "dark"]`, **light is the default**
+(user decision 2026-09-02; the previous default was dark). Neutrals carry the
+brand hue **28** at very low chroma (0.003–0.008) so both themes stay one
+family. All values OKLCH. Canonical definitions live in `css/nanook.css`
+§ TOKENS — that file is the single source of truth; this table is the human
+summary.
 
-| Token | tactical (dark) | swiss (light) |
+| Token | light (default) | dark |
 | --- | --- | --- |
-| `--bg-primary` | oklch(14.5% 0.008 28) | oklch(96.6% 0.006 28) |
-| `--bg-secondary` | oklch(18.2% 0.009 28) | oklch(93.1% 0.008 28) |
-| `--bg-elevated` | oklch(21.8% 0.010 28) | oklch(99.0% 0.004 28) |
-| `--fg-primary` | oklch(93.7% 0.006 28) | oklch(11.5% 0.006 28) |
-| `--fg-secondary` | oklch(68.6% 0.008 28) | oklch(38.7% 0.008 28) |
-| `--fg-dim` | oklch(63.3% 0.008 28) | oklch(50.0% 0.010 28) |
-| `--accent-red` | oklch(58.8% 0.231 28.3) | same |
-| `--link-accent` | oklch(64.3% 0.243 27.6) | oklch(53.7% 0.211 28.3) |
-| `--accent-ink` | oklch(99.0% 0.004 28) | same |
-| `--border-color` | oklch(28.5% 0.012 28) | oklch(82.4% 0.012 28) |
-| `--focus-ring` | = `--link-accent` | = `--link-accent` |
+| `--bg-primary` (paper) | oklch(98.8% 0.003 28) | oklch(16% 0.004 28) |
+| `--bg-secondary` (paper-2: code, stripes, hover) | oklch(96.8% 0.004 28) | oklch(20% 0.005 28) |
+| `--bg-elevated` (cards) | oklch(99.6% 0.002 28) | oklch(23% 0.005 28) |
+| `--fg-primary` (ink) | oklch(17% 0.004 28) | oklch(94% 0.004 28) |
+| `--fg-secondary` | oklch(40% 0.006 28) | oklch(76% 0.005 28) |
+| `--fg-dim` (muted) | oklch(50% 0.008 28) | oklch(64% 0.006 28) |
+| `--link-accent` (links, active nav, tab underline) | oklch(43.3% 0.128 257) | oklch(74% 0.12 257) |
+| `--accent` (focus ring, selection, small fills) | oklch(57.5% 0.163 256) | oklch(74% 0.12 257) |
+| `--accent-ink` (text on `--accent`) | oklch(99% 0.003 28) | oklch(16% 0.004 28) |
+| `--brand` (the mark only) | oklch(58.8% 0.20 28) | oklch(66% 0.18 28) |
+| `--border-color` (hairline) | oklch(90% 0.005 28) | oklch(30% 0.006 28) |
+| `--border-bright` (visible rule, inputs) | oklch(82% 0.008 28) | oklch(38% 0.007 28) |
+| `--focus-ring` | = `--accent` | = `--accent` |
 
-Accent discipline: red is for interaction (links, hover, active nav, focus) and
-small marks — never large text blocks, never fills beyond a few percent of the
-viewport. Contrast floor: WCAG 4.5:1 body / 3:1 large, verified in **both**
-themes on every change.
+Accent discipline: **blue is for interaction** — links (underlined, offset
+3px, underline at 40 % strength), active nav item, active tab, focus ring,
+selection. **The brand red is a mark, not a colour**: it appears in exactly two
+places, the small square after the wordmark and the 404 figure. Buttons are ink
+on paper (primary: ink fill, paper text; secondary: hairline outline) — never
+accent-filled. Contrast floor: WCAG 4.5:1 body / 3:1 large and rings, verified
+in **both** themes on every change (ink 18.5:1 / 16.3:1, secondary 8.9 / 9.0,
+muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
 
 ## Typography
 
-- **Display**: Inter 800/900 — locked by explicit user decision (2026-08-31).
-  A swap to a non-default display face remains an *open user decision*; do not
-  swap silently.
-- **Body (apparatus)**: JetBrains Mono 400/700 — labels, dates, meta, tables,
-  code, the blog index, the further-reading strip, and all docs/landing copy.
-  The mono voice is the site's signature; it is no longer the *prose* face.
-- **Reading (article prose)**: IBM Plex Sans 400/600 + italic 400 at 17px
-  (`--font-reading`/`--text-reading`, lede `--text-lede` 19px), line-height
-  1.7 — user decision 2026-08-31 ("redesign, so dass es lesbar ist"). Scope:
-  `.lonePost` (blog articles) and `.docsContainer` (docs prose — extension
-  requested by the user the same day) p/li/blockquote.
-- 2+1 rule: this site now runs 2 + 1 (Inter display · Plex Sans reading ·
-  JetBrains Mono apparatus). Loaded via `@import` at the top of
-  `css/brutalist.css`, weights capped at 400/600/ital-400.
-- Prose measure: `--measure` (68ch) on running text. On blog **posts** the
-  frame itself equals the measure (44rem) — one shared column width for head,
-  prose, tables and code (user decision 2026-08-31, „ausgewogen"); wide
-  tables/code scroll inside their own container. On docs, tables/code may
-  still take the full column (deliberate asymmetry).
-- Headings roman, never italic. Labels: mono, uppercase, letter-spacing 0.08em+,
-  **floor 12px (`--text-xs`) on every viewport** — resolved 2026-08-31 (was
-  desktop-only open); toggle/footer/cookie labels now sit on the floor.
-- Open user decision: footer bracket voice (`[ MORE ]`) vs the plain masthead
-  nav — unify only on the user's word.
-- Type scale tokens `--text-*` (1.25 ratio) in `css/brutalist.css` § SCALES.
+- **Display**: **Source Serif 4**, weight **300** (landing h1, 52px cap) and
+  **400** (article / hub / page titles, 31–39px). Optical size axis on. Roman
+  only — headings are never italic. Tracking −0.01em. User decision
+  2026-09-02 (replaces Inter 800/900).
+- **Body / UI**: **IBM Plex Sans** 400 / 500 / 600 + italic 400. Everything
+  that is not display or code: prose, nav, buttons, section h2/h3, card titles,
+  labels, footer, cookie banner. Section h2 = Plex Sans 500 at 22px; card
+  titles 600 at 16px; eyebrows and labels = muted Plex Sans, sentence case,
+  **no uppercase tracking, no mono labels**.
+- **Mono**: **JetBrains Mono** 400 / 600 — code blocks, inline code, the hero
+  sample, tables of figures. Not a label voice any more.
+- 2+1 rule: Source Serif 4 display · Plex Sans body · JetBrains Mono outlier
+  (code only). Loaded via one Google Fonts `<link>` in every page head
+  (Source Serif 4 opsz 8..60 / wght 300..400 · Plex Sans 400/500/600/i400 ·
+  JetBrains Mono 400/600).
+- Prose: 17px / 1.7 (`--text-reading`), lede 19px, measure `--measure` 68ch.
+  Blog posts run one shared 44rem column; docs prose may let tables and code
+  take the full column.
+- Scale: `--text-*` (1.25 ratio) plus `--text-display` (clamp 2.5rem → 3.25rem)
+  and `--text-display-s` (clamp 2rem → 2.44rem). Floor 12px on every label
+  (`--text-xs`).
 
 ## Spacing · motion · layers
 
-- 4-pt named scale `--space-3xs … --space-3xl` (+ `-sm2/-md2/-lg2` legacy 4-pt
-  steps). Named tokens only; no raw values in new code.
-- Easings `--ease-out / --ease-in / --ease-in-out`; durations
-  `--dur-short/-mid/-long`. Motion stance: **motion-cut** — entrance animation
-  exists only on the landing hero, everything else is just there.
-  `prefers-reduced-motion` collapses all of it.
-- z-scale `--z-base … --z-film`; nav (`--z-sticky-nav` 300) always above
-  in-page sticky (`--z-sticky` 200).
+- 4-pt named scale `--space-3xs … --space-3xl` (+ `-sm2/-md2/-lg2` legacy
+  4-pt steps). Named tokens only; no raw values in new code.
+- Section rhythm on the landing page is **uneven on purpose**: hero 3rem top /
+  4rem bottom (bottom-heavy, so it sits into the page), the definition tight
+  on top, sections 3rem/4rem, the use-case anchor 4rem/6rem, the FAQ tight on
+  top, the trust strip tight, footer generous (clamp 2.5–4rem). Container
+  72rem, content left-aligned inside it.
+- Radii: `--radius-sm` 4px (controls), `--radius-md` 6px (code, inputs),
+  `--radius-card` 10px. The old `border-radius: 0 !important` is gone.
+- Easings `--ease-out / --ease-in / --ease-in-out`; durations `--dur-micro`
+  60ms · `--dur-short` 200ms · `--dur-long` 320ms. Motion stance:
+  **motion-cut** — no entrance reveals anywhere (the source has none either).
+  What moves: colour/underline on hover and the tab-panel crossfade (150ms).
+  `prefers-reduced-motion` collapses even that.
+- z-scale `--z-base … --z-overlay`; nav (`--z-sticky-nav` 300) above in-page
+  sticky (`--z-sticky` 200). The grain/scanline film layer no longer exists.
 
 ## Chrome (fixed — not per-page rotatable)
 
-- **Nav: N6 masthead** ≥ 641px (wordmark + 2px rule + link row, sticky,
-  `--header-h`); compact bar + JS drawer below (injected by `js/theme.js` —
-  no HTML edits, markup is baked into all 178 pages).
-- **Footer**: link columns + copyright line — kept by explicit user decision
-  (2026-08-31). The editorial default would be Ft1/Ft4; changing it is an open
-  user decision, not a per-build pick.
-- Cookie banner, theme toggle (CRT/INK), CRT grain film: as built.
-- **Skip link** (`.skip-link`, injected by `js/theme.js`): first focusable
-  element on every page, accent-red block, visible only on keyboard focus.
-- **Current-page marker**: `js/theme.js` sets `aria-current="page"` on the
-  masthead link for the active section (blog / docs / api); styled ink +
-  red underline.
-- **404** (`/404.html`): telemetry status line, display figure, three exits
-  (start page / quickstart / blog). `noindex`, no canonical, not in the sitemap.
+- **Nav: N1b-register bar** — fixed height 56px, always solid, hairline below.
+  Wordmark (logo + "Nanook" + brand-red square) left, the four links next to it
+  (Docs · API · Blog · GitHub), theme toggle right. Built by CSS over the
+  baked markup (`.header-right { display: contents }`); below 640px the
+  compact bar + JS drawer from `js/theme.js` (hamburger injected — no HTML
+  edits).
+- **Footer**: logo + two link columns + copyright line, as baked into every
+  page — restyled as a quiet index (sentence-case column heads, hairline
+  above, generous padding). Ft3 is allowed because every page of this site is
+  a docs root or hub.
+- Theme toggle labels read **Light / Dark**; cookie banner sentence case;
+  skip link (injected) is an ink block; `aria-current="page"` on the active
+  nav link (ink + blue underline).
+- **404** (`/404.html`): status line, display figure in brand red, three
+  exits. `noindex`, not in the sitemap.
 
 ## Per-page allowances
 
-- Landing page MAY keep its diagram enrichment + hero animations.
-- Content pages (blog, docs): **typography only** — no enrichment, no reveals.
+- Landing page MAY carry the architecture figure (`img/arch.svg`, authored
+  dark-first, CSS-inverted on light paper — same rule as blog diagrams) and
+  the tabbed code sample. Nothing else is enrichment.
+- Content pages (blog, docs, hubs, root pages): **typography only** — no
+  enrichment, no reveals.
 - Diagrams are authored for the dark theme and CSS-inverted for light
   (see AGENTS.md § Theme).
 
+## CTA voice
+
+- Primary: ink fill, paper text, radius-sm, 40px tall, Plex Sans 500,
+  sentence case, a verb or a destination ("Quickstart", "Read the guide").
+- Secondary: hairline outline (`--border-bright`), ink text, same geometry.
+- Tertiary: plain text link with the blue underline.
+- All three: hover shifts background one step, active translates 1px, focus
+  ring instant, never animated in. Labels never wrap.
+
 ## What pages MUST share
 
-Wordmark treatment · palette + accent discipline · both themes · the two font
-families · spacing/motion/z tokens · focus-ring treatment · masthead + footer.
+Wordmark treatment · palette + accent discipline · both themes · the three
+faces in their roles · spacing/motion/z tokens · focus-ring treatment · the
+bar + footer · sentence-case labels.
 
 ## What pages MAY differ on
 
-Macrostructure within the family table above · section rhythm · rule weight
-(hairline vs double rules) · label density (the landing page is loud, the blog
-is calm — both are the system).
+Macrostructure within the family table above · section rhythm · card density
+(2-up on hubs, 3-up on the landing use cases) · whether a page has a lead
+sentence under its title.
 
 ## Exports
 
 This is a no-build static site; tokens are **not** duplicated into a separate
 `tokens.css` (a second stylesheet nothing imports would drift). The canonical
-export IS `css/brutalist.css` § SCALES + § CUSTOM PROPERTIES. Tailwind/DTCG/
-shadcn export formats are intentionally omitted — no consumer exists in this
-repo; generate them on demand from the table above if ever needed.
+export IS `css/nanook.css` § SCALES + § TOKENS. Tailwind/DTCG/shadcn export
+formats are intentionally omitted — no consumer exists in this repo; generate
+them on demand from the table above if ever needed.

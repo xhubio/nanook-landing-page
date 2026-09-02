@@ -1,39 +1,50 @@
 # Nanook
 
-> Nanook is an open-source toolkit for test case and test data creation. It combines equivalence class tables with data generators to systematically define, document, and generate test data for software testing.
+> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.0.1 (2026-08-29).
 
 ## Documentation
 - [Documentation Hub](https://nanook.xhub.io/docs): Entry page linking quickstart, guide, tutorials, modules, and API reference
-- [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): 5-minute introduction to creating equivalence class tables and generating test data
+- [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): Introduction to creating an equivalence class table and generating test data from it
 - [General Overview](https://nanook.xhub.io/docs/guide/generalOverview): Architecture and concepts of Nanook Table
 - [Equivalence Class Tables](https://nanook.xhub.io/docs/guide/equivalence/overview): How to define test cases using equivalence classes
-- [Matrix Tables](https://nanook.xhub.io/docs/guide/matrix/overview): Cartesian product test case generation
-- [Data Generators](https://nanook.xhub.io/docs/guide/generatrorCommand/generator): Custom data generator functions
+- [Matrix Tables](https://nanook.xhub.io/docs/guide/matrix/overview): Pairwise or combinatorial relationships between two dimensions of test parameters
+- [Data Generators](https://nanook.xhub.io/docs/guide/generatrorCommand/generator): Generator directives and custom generator functions
 - [Static Data](https://nanook.xhub.io/docs/guide/generatrorCommand/static): Static test data definitions
 - [References](https://nanook.xhub.io/docs/guide/generatrorCommand/reference): Cross-table data references
+- [Instance IDs](https://nanook.xhub.io/docs/guide/advanced/instanceIds): How repeated generator calls produce one coherent record
+- [Current 3.x documentation in the repository](https://github.com/xhubio/nanook-table/tree/master/docs): Guides (decision, matrix and specification tables, directives), tutorials and API reference for the TypeScript version. The API pages on this site describe the 1.x API.
 
 ## Tutorials
 - [Create Equivalence Class Table](https://nanook.xhub.io/docs/tutorials/createEquivalenceClassTable): Step-by-step guide
 - [Transform to Data Generator](https://nanook.xhub.io/docs/tutorials/transform2dataGenerator): Convert tables to generators
 - [Create Data Generator](https://nanook.xhub.io/docs/tutorials/createGenerator): Build custom generators
 - [Create Writer](https://nanook.xhub.io/docs/tutorials/createWriter): Export data in custom formats
+- [Create Filter Processor](https://nanook.xhub.io/docs/tutorials/createFilterProcessor): Select test cases by tags
 
-## API Reference
-- [API Hub](https://nanook.xhub.io/docs/api): Entry page listing all eight module groups of the API reference
-- [Processor](https://nanook.xhub.io/docs/api/processor/Processor): Core processing engine
-- [Data Generator Base](https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorBase): Base class for generators
+## API Reference (1.x, historical)
+- [API Hub](https://nanook.xhub.io/docs/api): Entry page listing all eight module groups of the 1.x API reference
+- [Processor](https://nanook.xhub.io/docs/api/processor/Processor): 1.x processing class (TestcaseProcessor in 3.x)
+- [Data Generator Base](https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorBase): Base class for generators (the registry is TDGServiceRegistry in 1.x, DataGeneratorRegistry in 3.x)
 - [Table Decision](https://nanook.xhub.io/docs/api/model-decision/TableDecision): Decision table model
 - [File Processor](https://nanook.xhub.io/docs/api/file-processor/FileProcessor): Spreadsheet file handling
+- [3.x API reference in the repository](https://github.com/xhubio/nanook-table/tree/master/docs/api): model, data generator, file processor, processor, logger
+
+## Blog
+- [How We Test a SaaS Application with Nanook](https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook): Field report — decision tables as the single source of a Playwright suite
+- [AI-Assisted Equivalence Class Tables with Claude Code](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables): The Claude Code skill and slash command shipped with the repository
 
 ## Key Facts
-- Open source (GitHub: https://github.com/xhubio/nanook-table)
-- Written in JavaScript/Node.js
-- Reads test definitions from LibreOffice, Excel, or Google Sheets spreadsheets
-- Generates test data in JSON, CSV, or any custom format
-- Supports equivalence class partitioning and boundary value analysis
-- Customizable generators and exporters via plugins
+- Open source, MIT license (GitHub: https://github.com/xhubio/nanook-table; npm: @xhubio/nanook-table, current release 3.0.1, 2026-08-29)
+- Written in TypeScript; one ESM package with type declarations; requires Node.js >= 22
+- Reads XLSX files (.xlsx and .xls via the built-in importer); other formats need a custom importer
+- Table types: <DECISION_TABLE> (equivalence class table), <MATRIX_TABLE>, <SPECIFICATION_TABLE> (also <SPECIFICATION>; field rules converted into a decision table)
+- Cell directives: gen:<instanceId>:<generator>:<parameter> calls a generator, ref: references a value from another test case, plain cells are static values
+- Built-in Faker generator (@faker-js/faker); custom generators extend DataGeneratorBase
+- Writes one JSON file per test case by default; any other format (CSV, database, API) through a custom writer
+- Tag-based filters select which test cases are processed
+- Claude Code skill create-equivalence-class-table and slash command /createEquivalenceClassTable are part of the repository (since 2.1.0)
 - Used by Deutsche Bahn and other enterprises
-- Created by xhub.io
+- Published by BeeBack UG (haftungsbeschränkt), xhub.io
 
 ## Contact
 - Website: https://nanook.xhub.io

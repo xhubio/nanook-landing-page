@@ -25,9 +25,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="/css/brutalist.css?v=058d4b47" />
+  <link rel="stylesheet" href="/css/nanook.css?v=4c2ba5e1" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -68,24 +68,23 @@
 </script>
 </head>
 
-<body data-theme="tactical">
-  <div class="crt-overlay" aria-hidden="true"></div>
+<body data-theme="light">
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
             <li><a href="/docs/api">API</a></li>
-            <li><a href="/blog">BLOG</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-label-dark">Dark</span>
           <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
-          <span class="theme-toggle-label-light">INK</span>
+          <span class="theme-toggle-label-light">Light</span>
         </button>
       </div>
     </div>
@@ -369,7 +368,8 @@
               <h1 id="__docusaurus" class="postHeaderTitle">Testcase Data</h1>
             </header>
             <article>
-              <div><span></span></div>
+              <div><span><p class="version-note"><strong>Version note:</strong> this reference describes Nanook 1.x (JavaScript). Since 2.0 (March 2026) Nanook is TypeScript/ESM; <code>Processor</code> is now <code>TestcaseProcessor</code>, <code>TDGServiceRegistry</code> is <code>DataGeneratorRegistry</code>. The current reference lives in the repository: <a href="https://github.com/xhubio/nanook-table/tree/master/docs/api">docs/api</a>.</p>
+                  </span></div>
             </article>
           </div>
           <div class="docs-prevnext"><a class="docs-prev button" href="/docs/api/processor/Reference"><span
@@ -384,12 +384,12 @@
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">DOCS</samp>
+        <samp class="footer-heading">Docs</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
       <div class="footer-col">
-        <samp class="footer-heading">[ MORE ]</samp>
+        <samp class="footer-heading">More</samp>
         <a href="/about">About</a>
         <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
@@ -397,20 +397,20 @@
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
-    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
           href="https://xhub.io">BeeBack UG</a>.</samp></div>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
     <div class="cookie-inner">
       <div class="cookie-main">
-        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <samp class="cookie-title">Cookie preferences</samp>
         <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
           cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
         <div class="cookie-actions">
-          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
-          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
-          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
         </div>
       </div>
       <div class="cookie-categories">
@@ -418,7 +418,7 @@
           <div class="cookie-cat-header">
             <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
                 class="cookie-slider cookie-slider-locked"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
                 class="cookie-cat-badge">Always active</span></div>
             <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
               aria-label="Toggle details">+</button>
@@ -431,7 +431,7 @@
               </tr>
               <tr>
                 <td><samp>Cookies</samp></td>
-                <td><code>nanook-theme</code> — Stores your theme preference (CRT/INK)</td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
               </tr>
               <tr>
                 <td><samp>Duration</samp></td>
@@ -448,7 +448,7 @@
           <div class="cookie-cat-header">
             <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
                 class="cookie-slider"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
             <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
               aria-label="Toggle details">+</button>
           </div>
@@ -484,7 +484,7 @@
   </div>
   <script>
   </script>
-  <script src="/js/theme.js?v=9e964aff"></script>
+  <script src="/js/theme.js?v=088033b9"></script>
   <script src="/js/cookies.js"></script>
 </body>
 

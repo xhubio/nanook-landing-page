@@ -27,9 +27,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="/css/brutalist.css?v=058d4b47" />
+  <link rel="stylesheet" href="/css/nanook.css?v=4c2ba5e1" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -64,24 +64,23 @@
 </script>
 </head>
 
-<body data-theme="tactical">
-  <div class="crt-overlay" aria-hidden="true"></div>
+<body data-theme="light">
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
       <div class="header-right">
         <nav class="site-nav">
           <ul>
-            <li><a href="/docs/quickstart/quickstart">DOCS</a></li>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
             <li><a href="/docs/api">API</a></li>
-            <li><a href="/blog">BLOG</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">GITHUB</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
           </ul>
         </nav>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-          <span class="theme-toggle-label-dark">CRT</span>
+          <span class="theme-toggle-label-dark">Dark</span>
           <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
-          <span class="theme-toggle-label-light">INK</span>
+          <span class="theme-toggle-label-light">Light</span>
         </button>
       </div>
     </div>
@@ -280,7 +279,7 @@
                     the concept of classes with equivalent behavior within a single application.
                     For example, the &quot;Not Empty Field&quot; class behavior is the same regardless of type and
                     number of characters provided.
-                    The ECT can be created with LibreOffice, Microsoft Office, or Google Spreadsheet.</p>
+                    The ECT can be created with any spreadsheet application that saves XLSX files — Excel, LibreOffice Calc, or Google Sheets via download.</p>
                   <p>In this Quickstart we’ll look at the example of a simple log-in dialogue. The
                     ECT representing a login dialogue is shown below.</p>
                   <p><img src="/img/quickstart/equivalence-class-table-quickstart.png"
@@ -332,28 +331,75 @@
                           d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z">
                         </path>
                       </svg></a>Generating test data</h2>
-                  <p>Finally, let's generate the test data on the basis of table we just created.
-                    First, the &quot;quickstart-source&quot; repository has to be cloned using the command</p>
-                  <pre><code class="hljs"> git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/xhubioTable/quickstart-source.git
+                  <p>Finally, let's generate the test data on the basis of the table we just created. Install the
+                    package into a Node.js project (Node.js 22 or newer):</p>
+                  <pre><code class="hljs">npm install @xhubio/nanook-table
 </code></pre>
-                  <p>Then we initiate data generation calling</p>
-                  <pre><code class="hljs">yarn install
+                  <p>Save the table as <code>resources/login.xlsx</code>, save the script below as
+                    <code>generate.mts</code> and run it with <code>node generate.mts</code> (Node.js 22.18 or newer
+                    runs <code>.mts</code> files directly; older 22.x needs <code>--experimental-strip-types</code>).
+                    It uses the same calls as the example that produced the data on the start page:</p>
+                  <pre><code class="hljs">import {
+  LoggerMemory, FileProcessor, ImporterXlsx,
+  ParserDecision, DataGeneratorRegistry, GeneratorFaker,
+  TestcaseProcessor, type InterfaceWriter
+} from '@xhubio/nanook-table'
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+const fileProcessor = new FileProcessor({ logger })
+fileProcessor.registerImporter(
+  'xlsx',
+  new ImporterXlsx()
+)
+fileProcessor.registerParser(
+  '&lt;DECISION_TABLE&gt;',
+  new ParserDecision({ logger })
+)
+await fileProcessor.load(['resources/login.xlsx'])
+
+const registry = new DataGeneratorRegistry()
+registry.registerGenerator(
+  'faker',
+  new GeneratorFaker({ logger })
+)
+
+const collected: unknown[] = []
+const writer: InterfaceWriter = {
+  logger,
+  async before() {},
+  async write(tc) {
+    collected.push(JSON.parse(JSON.stringify(tc)))
+  },
+  async after() {},
+}
+
+const processor = new TestcaseProcessor({
+  logger,
+  tables: fileProcessor.tables,
+  generatorRegistry: registry,
+  writer: [writer],
+})
+await processor.process()
+
+console.log(JSON.stringify(collected[0], null, 2))
 </code></pre>
-                  <p>This will install the required dependencies to run data geneartion. For more information on yarn,
-                    please check: <a href="https://yarnpkg.com/">https://yarnpkg.com/</a></p>
-                  <pre><code class="hljs">node src/quickstart.js
-</code></pre>
-                  <p>And starting our quickstart application in the root folder of the project. For more information on
-                    node.js, please check <a href="https://nodejs.org/">https://nodejs.org/</a></p>
-                  <p>In our example the test data will be generated in the form of five JSON files (one for each test
-                    case) that can be found in the folder &quot;tdg&quot; (for Test Data Generation),
-                    which is based on the &quot;Generator Function&quot; column of our ECT. It is possible to define
-                    static
-                    data as done for the class &quot;valid user id&quot; or dynamic data using a generator function as
-                    shown for the &quot;userId not
-                    existent&quot; class. The corresponding data generator for email generation is present in the
-                    &quot;src&quot;-folder (GeneratorPerson.js)
-                    and used in the quickstart.js file.</p>
+                  <p>The pictured table calls a generator named <code>generatorPerson</code> in the class &quot;userId not
+                    existent&quot;. Either register a generator under that name or change that cell to
+                    <code>gen::faker:internet.email</code>, which the script registers. Parsing and generation errors
+                    are printed, because the logger writes to the console.</p>
+                  <p>The original example repository <code>quickstart-source</code> from 2019 is archived (last
+                    change November 2020) and targets Nanook 1.x; its <code>yarn install</code> and
+                    <code>node src/quickstart.js</code> steps no longer apply.</p>
+                  <p>The script collects one record per test case — the five test cases defined in columns F to J,
+                    out of the nine possible combinations. Nanook's default writer would instead store each one as
+                    <code>tdg/&lt;name&gt;/testcaseData.json</code> (&quot;tdg&quot; for Test Data Generation). Which
+                    data a record holds follows the &quot;Generator Function&quot; column of the ECT: static data, as
+                    for the class &quot;valid user id&quot;, or generated data through a generator directive, as for
+                    the class &quot;userId not existent&quot;. The script registers the built-in Faker generator under
+                    the name <code>faker</code>; a custom generator like the GeneratorPerson of the original example
+                    is a TypeScript class that extends <code>DataGeneratorBase</code>.</p>
                 </span>
                 <p>Ready to learn more? Check out the <a href="/docs/tutorials/overview">full tutorials</a> or read the
                   <a href="/docs/guide/generalOverview">Nanook Table overview</a>.
@@ -377,12 +423,12 @@
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">DOCS</samp>
+        <samp class="footer-heading">Docs</samp>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
       </div>
       <div class="footer-col">
-        <samp class="footer-heading">[ MORE ]</samp>
+        <samp class="footer-heading">More</samp>
         <a href="/about">About</a>
         <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
@@ -390,20 +436,20 @@
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
-    <div class="footer-copyright"><samp>&copy; 2018-2026 NANOOK.XHUB.IO &mdash; An Open Source Project by <a
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
           href="https://xhub.io">BeeBack UG</a>.</samp></div>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
     <div class="cookie-inner">
       <div class="cookie-main">
-        <samp class="cookie-title">[ COOKIE PREFERENCES ]</samp>
+        <samp class="cookie-title">Cookie preferences</samp>
         <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
           cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
         <div class="cookie-actions">
-          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">ACCEPT ALL</button>
-          <button onclick="savePreferences()" class="cookie-btn cookie-save">SAVE PREFERENCES</button>
-          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">DECLINE ALL</button>
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
         </div>
       </div>
       <div class="cookie-categories">
@@ -411,7 +457,7 @@
           <div class="cookie-cat-header">
             <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
                 class="cookie-slider cookie-slider-locked"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">ESSENTIAL</samp><span
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
                 class="cookie-cat-badge">Always active</span></div>
             <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
               aria-label="Toggle details">+</button>
@@ -424,7 +470,7 @@
               </tr>
               <tr>
                 <td><samp>Cookies</samp></td>
-                <td><code>nanook-theme</code> — Stores your theme preference (CRT/INK)</td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
               </tr>
               <tr>
                 <td><samp>Duration</samp></td>
@@ -441,7 +487,7 @@
           <div class="cookie-cat-header">
             <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
                 class="cookie-slider"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">ANALYTICS</samp></div>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
             <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
               aria-label="Toggle details">+</button>
           </div>
@@ -477,7 +523,7 @@
   </div>
   <script>
   </script>
-  <script src="/js/theme.js?v=9e964aff"></script>
+  <script src="/js/theme.js?v=088033b9"></script>
   <script src="/js/cookies.js"></script>
 </body>
 

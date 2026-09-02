@@ -1,17 +1,25 @@
-/* Theme Toggle — Nanook */
+/* Theme Toggle — Nanook
+   Themes are "light" (default) and "dark". Until 2026-09-02 they were
+   called "swiss" and "tactical"; a stored value in the old vocabulary is
+   migrated on first visit so nobody lands on an unstyled page. */
 (function () {
   var saved = localStorage.getItem('nanook-theme');
-  if (saved) document.body.setAttribute('data-theme', saved);
+  if (saved === 'tactical') saved = 'dark';
+  else if (saved === 'swiss') saved = 'light';
+  if (saved === 'light' || saved === 'dark') {
+    document.body.setAttribute('data-theme', saved);
+    localStorage.setItem('nanook-theme', saved);
+  }
 })();
 
 function toggleTheme() {
   var current = document.body.getAttribute('data-theme');
-  var next = current === 'tactical' ? 'swiss' : 'tactical';
+  var next = current === 'dark' ? 'light' : 'dark';
   document.body.setAttribute('data-theme', next);
   localStorage.setItem('nanook-theme', next);
 }
 
-/* Mobile Nav — injected at runtime so the 178 pre-rendered HTML pages
+/* Mobile Nav — injected at runtime so the pre-rendered HTML pages
    stay untouched. theme.js is loaded on every one of them. */
 (function () {
   function initMobileNav() {
@@ -63,14 +71,14 @@ function toggleTheme() {
   }
 })();
 
-/* Skip link + current-page nav marker — injected so the 178 pre-rendered
+/* Skip link + current-page nav marker — injected so the pre-rendered
    pages stay untouched. */
 (function () {
   function init() {
     /* Skip to content: first focusable element on every page */
     if (!document.querySelector('.skip-link')) {
       var target = document.querySelector(
-        '.lonePost, .posts, .documentContainer, .docsContainer, .hero, main'
+        'main, .lonePost, .posts, .documentContainer, .docsContainer, .hero'
       );
       if (target) {
         if (!target.id) target.id = 'main-content';
@@ -82,7 +90,7 @@ function toggleTheme() {
       }
     }
 
-    /* Mark the masthead link for the section the reader is in */
+    /* Mark the bar link for the section the reader is in */
     var path = location.pathname;
     var section = null;
     if (path.indexOf('/blog') === 0) section = '/blog';

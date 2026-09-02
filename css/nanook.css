@@ -1,0 +1,3033 @@
+/* Hallmark · genre: modern-minimal · design-system: design.md · designed-as-app
+ * macrostructure: Ecosystem Index (landing) · Index-First (blog index) ·
+ *   Long Document (posts, root pages) · Ecosystem Index, miniature (hubs)
+ * H2 hero knobs: ratio=6/6, right=code sample (tabs), divider=negative-space
+ * nav: N1b bar (CSS over the baked markup) · footer: Ft3 (docs root, baked)
+ * theme: studied-DNA (source: https://platform.claude.com/docs/en/home)
+ *   paper oklch(98.8% 0.003 28) · accent oklch(43.3% 0.128 257) blue, interaction only
+ *   brand oklch(58.8% 0.20 28) — a mark, two slots (wordmark square, 404 figure)
+ * display: roman serif, light (Source Serif 4 300/400) · body: neutral grotesque
+ *   (IBM Plex Sans) · code: JetBrains Mono — user's picks, 2026-09-02
+ * studied: yes · DNA-source: url · observed-fonts: anthropicSerif + anthropicSans
+ *   + anthropicMono (proprietary, not used) · observed-accent: oklch(57.5% 0.163 256)
+ *   · rhythm: unknown (URL mode)
+ * enrichment: none (a real code sample from the tutorials + the existing
+ *   architecture figure) · motion: cut — no reveals, tab crossfade only
+ * pre-emit critique: P4 H4 E4 S4 R5 V4
+ * slop test 2026-09-02: contrast: pass (40–41) · nav: N1b · footer: Ft3 ·
+ *   slop: pass (42–45; 42 by studied DNA, links left-clustered, no CTA) ·
+ *   honest: pass (46) · chrome: pass (47) · tokens: pass (48) ·
+ *   responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50–57)
+ *   verified in Playwright at 320 / 375 / 414 / 768 / 1280, both themes
+ * history: 2026-09-02 system swap — replaces css/brutalist.css (kept on disk,
+ *   unlinked). Structural Docusaurus + mobile overrides carried over from it;
+ *   every theme-bearing rule rewritten. Light is the default theme now.
+ */
+
+/* ============================================================
+   NANOOK — DESIGN SYSTEM
+   Light paper · one serif note · sans body · blue for interaction
+   ============================================================ */
+
+/* ============================================================
+   SCALES — theme-independent, so they live on :root
+   ============================================================ */
+:root {
+  /* 4-pt spacing scale */
+  --space-3xs: 0.25rem;   /*  4px */
+  --space-2xs: 0.5rem;    /*  8px */
+  --space-xs:  0.75rem;   /* 12px */
+  --space-sm:  1rem;      /* 16px */
+  --space-sm2: 1.25rem;   /* 20px */
+  --space-md:  1.5rem;    /* 24px */
+  --space-md2: 1.75rem;   /* 28px */
+  --space-lg:  2rem;      /* 32px */
+  --space-lg2: 2.5rem;    /* 40px */
+  --space-xl:  3rem;      /* 48px */
+  --space-2xl: 4rem;      /* 64px */
+  --space-3xl: 6rem;      /* 96px */
+
+  /* motion — three named easings, never the browser default `ease`.
+     Stance is motion-cut: nothing reveals, only state changes move. */
+  --dur-micro: 60ms;
+  --dur-short: 200ms;
+  --dur-long:  320ms;
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in:     cubic-bezier(0.7, 0, 0.84, 0);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  /* radii — small on purpose */
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-card: 10px;
+
+  /* bar height — drives sticky offset and scroll-margin */
+  --header-h: 56px;
+
+  /* widths: the shell (bar, footer, docs) and the page column (landing, hubs) */
+  --shell-max: 87.5rem;   /* 1400px — the Docusaurus shell width */
+  --page-max:  72rem;     /* 1152px — landing sections, hubs */
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+
+  /* prose measure — 45-75ch is the readable band */
+  --measure: 68ch;
+
+  /* the three faces — one role each (2+1) */
+  --font-display: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  --font-body: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  --font-reading: var(--font-body);   /* alias kept for older selectors */
+
+  /* type scale — 1.25 (major third) on a 1rem base, plus the display pair */
+  --text-xs:   0.75rem;    /* 12px  — labels floor */
+  --text-sm:   0.875rem;   /* 14px  — nav, meta, card copy */
+  --text-base: 1rem;       /* 16px  — UI, card titles */
+  --text-md:   1.25rem;    /* 20px  — row titles */
+  --text-title: 1.375rem;  /* 22px  — section h2 */
+  --text-lg:   1.5625rem;  /* 25px  */
+  --text-xl:   1.953rem;   /* 31px  — hub / index titles */
+  --text-2xl:  2.441rem;   /* 39px  — article display title */
+  --text-display-s: clamp(1.953rem, 1.6rem + 1.5vw, 2.441rem);
+  --text-display:   clamp(2.5rem, 2rem + 2vw, 3.25rem);   /* 40 → 52px */
+  --text-reading: 1.0625rem;  /* 17px — article body */
+  --text-lede:    1.1875rem;  /* 19px — article lede  */
+
+  /* z-index — named levels */
+  --z-base:       0;
+  --z-raised:     1;
+  --z-lifted:     10;
+  --z-sticky:     200;   /* in-page sticky, e.g. the docs sidebar */
+  --z-sticky-nav: 300;   /* the bar */
+  --z-overlay:    400;   /* cookie consent */
+}
+
+/* ============================================================
+   TOKENS — LIGHT (default)
+   Neutrals carry the brand hue 28 at trace chroma; blue is the only
+   working colour; the brand red survives as a mark.
+   ============================================================ */
+body[data-theme="light"] {
+  --bg-primary:     oklch(98.8% 0.003 28);
+  --bg-secondary:   oklch(96.8% 0.004 28);
+  --bg-elevated:    oklch(99.6% 0.002 28);
+  --fg-primary:     oklch(17% 0.004 28);
+  --fg-secondary:   oklch(40% 0.006 28);
+  --fg-dim:         oklch(50% 0.008 28);
+  --link-accent:    oklch(43.3% 0.128 257);   /* 7.8:1 on paper */
+  --link-underline: oklch(43.3% 0.128 257 / 0.4);
+  --accent:         oklch(57.5% 0.163 256);   /* 4.3:1 — rings, selection */
+  --accent-ink:     oklch(99% 0.003 28);
+  --brand:          oklch(58.8% 0.20 28);
+  --border-color:   oklch(90% 0.005 28);
+  --border-bright:  oklch(82% 0.008 28);
+  --focus-ring:     var(--accent);
+  --overlay-scrim:  oklch(17% 0.004 28 / 0.4);
+  --shadow-drawer:  oklch(17% 0.004 28 / 0.12);
+  --logo-filter:    invert(1);                 /* the mark is drawn white */
+  --diagram-filter: invert(1) hue-rotate(180deg);   /* dark-first artwork */
+  --photo-filter:   none;
+  --trust-filter:   grayscale(1) brightness(0.4);
+  --trust-filter-alt: grayscale(1) brightness(0.3) contrast(1.2);
+  /* code tokens (prism) */
+  --code-comment:  oklch(55% 0.01 28);
+  --code-keyword:  oklch(43% 0.13 257);
+  --code-string:   oklch(45% 0.11 150);
+  --code-number:   oklch(48% 0.14 40);
+  --code-function: oklch(40% 0.10 300);
+  --code-punct:    oklch(45% 0.006 28);
+}
+
+/* ============================================================
+   TOKENS — DARK
+   Same hues; lightness and chroma move, nothing else.
+   ============================================================ */
+body[data-theme="dark"] {
+  --bg-primary:     oklch(16% 0.004 28);
+  --bg-secondary:   oklch(20% 0.005 28);
+  --bg-elevated:    oklch(23% 0.005 28);
+  --fg-primary:     oklch(94% 0.004 28);
+  --fg-secondary:   oklch(76% 0.005 28);
+  --fg-dim:         oklch(64% 0.006 28);
+  --link-accent:    oklch(74% 0.12 257);      /* 8.4:1 on paper */
+  --link-underline: oklch(74% 0.12 257 / 0.4);
+  --accent:         oklch(74% 0.12 257);
+  --accent-ink:     oklch(16% 0.004 28);
+  --brand:          oklch(66% 0.18 28);
+  --border-color:   oklch(30% 0.006 28);
+  --border-bright:  oklch(38% 0.007 28);
+  --focus-ring:     var(--accent);
+  --overlay-scrim:  oklch(10% 0.004 28 / 0.6);
+  --shadow-drawer:  oklch(8% 0.004 28 / 0.4);
+  --logo-filter:    none;
+  --diagram-filter: none;
+  --photo-filter:   brightness(0.9) contrast(1.1);
+  --trust-filter:   grayscale(1) brightness(0.8) invert(1);
+  --trust-filter-alt: grayscale(1) invert(1) brightness(1.5);
+  --code-comment:  oklch(62% 0.01 28);
+  --code-keyword:  oklch(78% 0.10 257);
+  --code-string:   oklch(78% 0.10 150);
+  --code-number:   oklch(80% 0.12 60);
+  --code-function: oklch(80% 0.09 300);
+  --code-punct:    oklch(72% 0.006 28);
+}
+
+/* ============================================================
+   RESET & BASE (SHARED)
+   ============================================================ */
+html {
+  /* `clip`, not `hidden` — clip does not create a scroll container, so the
+     sticky bar keeps working */
+  overflow-x: clip;
+  scroll-behavior: smooth;
+}
+
+body[data-theme] {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-primary);
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  transition: background-color var(--dur-long) var(--ease-out),
+    color var(--dur-long) var(--ease-out);
+}
+
+body[data-theme] *,
+body[data-theme] *::before,
+body[data-theme] *::after {
+  box-sizing: border-box;
+}
+
+/* the hand-built pages sit in a <main>; main.css lets it shrink to its
+   content, which centred a narrow column on the hubs and the 404 */
+body[data-theme] main {
+  display: block;
+  width: 100%;
+}
+
+/* Kill inherited Docusaurus chrome (header + footer only) and the retired
+   CRT film — the overlay div is still baked into every page */
+body[data-theme] .fixedHeaderContainer,
+body[data-theme] .homeContainer,
+body[data-theme] .homeSplashFade,
+body[data-theme] .nav-footer,
+body[data-theme] .crt-overlay {
+  display: none !important;
+}
+
+body[data-theme] ::selection {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* Balanced headings, no orphaned last words in prose — progressive
+   enhancement, ignored by engines without text-wrap support */
+h1,
+h2,
+h3,
+.postHeaderTitle,
+.hero-title {
+  text-wrap: balance;
+}
+
+.post p,
+.post li,
+.post-content p,
+.definition p,
+.faq-answer,
+.section-lead,
+.card p,
+.use-case-card p {
+  text-wrap: pretty;
+}
+
+/* Display headers wrap inside long words */
+h1,
+h2,
+h3,
+.hero-title,
+.postHeaderTitle {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+/* Code blocks must scroll, not clip. main.css sets `pre code{display:inline}`
+   and no overflow, so long lines were cut off and unreachable. */
+pre {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* ============================================================
+   LINKS — blue, underlined, offset; the underline carries 40 % ink
+   ============================================================ */
+body[data-theme] a {
+  color: var(--link-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color var(--dur-micro) var(--ease-out),
+    text-decoration-color var(--dur-micro) var(--ease-out);
+}
+
+body[data-theme] a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* chrome links (bar, footer, cards, buttons) are not underlined prose links */
+body[data-theme] .site-logo,
+body[data-theme] .site-nav a,
+body[data-theme] .footer-col a,
+body[data-theme] .footer-logo a,
+body[data-theme] .btn,
+body[data-theme] .card-link,
+body[data-theme] .docs-hub-row,
+body[data-theme] .postHeaderTitle a,
+body[data-theme] .trust-logos a,
+body[data-theme] .docs-prevnext a,
+body[data-theme] .blog-recent a,
+body[data-theme] .toc a,
+body[data-theme] .navBreadcrumb a,
+body[data-theme] .hash-link {
+  text-decoration: none;
+}
+
+/* ============================================================
+   GATE 26 · THE EIGHT STATES — focus, active, disabled, busy
+   The ring never transitions: it must be there on the first frame.
+   ============================================================ */
+body[data-theme] :focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  transition: none;
+}
+
+body[data-theme] .btn:focus-visible,
+body[data-theme] .theme-toggle:focus-visible,
+body[data-theme] .nav-toggle:focus-visible,
+body[data-theme] .tab:focus-visible,
+body[data-theme] .cookie-btn:focus-visible {
+  outline-offset: 3px;
+}
+
+body[data-theme] .btn:active,
+body[data-theme] .theme-toggle:active,
+body[data-theme] .nav-toggle:active,
+body[data-theme] .cookie-btn:active,
+body[data-theme] .cookie-expand:active,
+body[data-theme] .tab:active,
+body[data-theme] .site-nav a:active,
+body[data-theme] .step-links a:active,
+body[data-theme] .footer-col a:active,
+body[data-theme] .card:active {
+  transform: translateY(1px);
+}
+
+body[data-theme] button:disabled,
+body[data-theme] [aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+body[data-theme] [aria-busy="true"] {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+/* ============================================================
+   BUTTONS — ink on paper, never accent-filled
+   primary: ink fill · secondary: hairline outline · text: plain
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  min-height: 40px;
+  padding: 0 var(--space-sm);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .btn-primary {
+  background-color: var(--fg-primary);
+  border-color: var(--fg-primary);
+  color: var(--bg-primary);
+}
+
+body[data-theme] .btn-primary:hover {
+  background-color: var(--fg-secondary);
+  border-color: var(--fg-secondary);
+  color: var(--bg-primary);
+}
+
+body[data-theme] .btn-secondary {
+  background-color: transparent;
+  border-color: var(--border-bright);
+  color: var(--fg-primary);
+}
+
+body[data-theme] .btn-secondary:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--fg-dim);
+  color: var(--fg-primary);
+}
+
+body[data-theme] .btn-text {
+  background-color: transparent;
+  color: var(--fg-primary);
+  padding-inline: var(--space-xs);
+}
+
+body[data-theme] .btn-text:hover {
+  background-color: var(--bg-secondary);
+  color: var(--fg-primary);
+}
+
+/* error / success are label-level states, never colour alone */
+body[data-theme] .btn[data-state="error"] {
+  border-color: var(--brand);
+  color: var(--brand);
+  background: transparent;
+}
+
+body[data-theme] .btn[data-state="success"] {
+  border-color: var(--link-accent);
+  color: var(--link-accent);
+  background: transparent;
+}
+
+/* ============================================================
+   HEADER — N1b bar over the baked markup
+   logo | links | toggle (+ hamburger below 640px). .header-right is a
+   wrapper in the HTML; display:contents promotes its children into the
+   grid so the links can sit next to the wordmark.
+   ============================================================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky-nav);
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  transition: background-color var(--dur-long) var(--ease-out),
+    border-color var(--dur-long) var(--ease-out);
+}
+
+.header-inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+  height: var(--header-h);
+  display: grid;
+  grid-template-columns: auto 1fr auto auto;
+  align-items: center;
+  column-gap: var(--space-md);
+  position: relative;
+}
+
+.header-right {
+  display: contents;
+}
+
+.site-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 44px;
+}
+
+.site-logo img {
+  height: 26px;
+  width: auto;
+  filter: var(--logo-filter);
+  transition: filter var(--dur-long) var(--ease-out);
+}
+
+.site-name {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-base);
+  letter-spacing: -0.005em;
+  color: var(--fg-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+}
+
+/* the brand mark: one 6px square, slot 1 of 2 */
+.site-name::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 1px;
+  background-color: var(--brand);
+}
+
+.site-nav {
+  justify-self: start;
+}
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: var(--space-3xs);
+  align-items: center;
+}
+
+.site-nav li {
+  margin: 0 !important;
+}
+
+body[data-theme] .site-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-secondary);
+  white-space: nowrap;
+  box-shadow: inset 0 -2px 0 transparent;
+  transition: background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .site-nav a:hover {
+  background-color: var(--bg-secondary);
+  color: var(--fg-primary);
+}
+
+/* current section — set as aria-current by js/theme.js */
+body[data-theme] .site-nav a[aria-current="page"] {
+  color: var(--fg-primary);
+  box-shadow: inset 0 -2px 0 var(--link-accent);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+/* ============================================================
+   THEME TOGGLE — Light / Dark, a quiet control
+   ============================================================ */
+.theme-toggle {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 36px;
+  padding: 0 var(--space-xs);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--fg-dim);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+.theme-toggle:hover {
+  background-color: var(--bg-secondary);
+  color: var(--fg-primary);
+}
+
+.theme-toggle-track {
+  width: 28px;
+  height: 14px;
+  border: 1px solid var(--border-bright);
+  border-radius: 7px;
+  position: relative;
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+
+.theme-toggle-thumb {
+  position: absolute;
+  top: 1px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: var(--fg-dim);
+  transition: transform var(--dur-short) var(--ease-in-out);
+}
+
+/* the baked markup reads "Dark · track · Light": the thumb sits toward the
+   active label — left for dark, right for light */
+body[data-theme="dark"] .theme-toggle-thumb {
+  left: 1px;
+  background-color: var(--accent);
+}
+
+body[data-theme="light"] .theme-toggle-thumb {
+  left: 1px;
+  transform: translateX(14px);
+}
+
+.theme-toggle-label-dark,
+.theme-toggle-label-light {
+  transition: color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme="light"] .theme-toggle-label-light,
+body[data-theme="dark"] .theme-toggle-label-dark {
+  color: var(--fg-primary);
+}
+
+/* --- Mobile nav toggle (button is injected by js/theme.js) -------------- */
+.nav-toggle {
+  display: none;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  justify-self: end;
+}
+
+.nav-toggle span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: var(--fg-primary);
+  transition: transform var(--dur-short) var(--ease-in-out),
+    opacity var(--dur-short) var(--ease-in-out);
+}
+
+.site-header.nav-open .nav-toggle span {
+  position: absolute;
+  top: 50%;
+  margin-top: -1px;
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(1) {
+  transform: rotate(45deg);
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(2) {
+  opacity: 0;
+}
+
+.site-header.nav-open .nav-toggle span:nth-child(3) {
+  transform: rotate(-45deg);
+}
+
+/* Skip link — injected by js/theme.js as the first element in <body>;
+   invisible until keyboard focus, then an ink block above the bar */
+.skip-link {
+  position: fixed;
+  top: var(--space-2xs);
+  left: var(--space-2xs);
+  z-index: calc(var(--z-overlay) + 1);
+  transform: translateY(calc(-100% - var(--space-lg)));
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+
+body[data-theme] .skip-link {
+  color: var(--bg-primary);
+  background: var(--fg-primary);
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  transform: none;
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* ============================================================
+   LANDING — shared section grammar (S2 hanging head)
+   ============================================================ */
+.section {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: var(--space-xl) var(--gutter) var(--space-2xl);
+}
+
+/* uneven on purpose: the definition follows the hero closely, the use cases
+   (the anchor people jump to) get the most air, the FAQ sits tight */
+.section.definition {
+  padding-top: var(--space-lg);
+}
+
+.section#use-cases {
+  padding-block: var(--space-2xl) var(--space-3xl);
+}
+
+.section.faq {
+  padding-top: var(--space-md);
+}
+
+.section-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  margin-bottom: var(--space-lg);
+}
+
+.section-head h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-title);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+}
+
+.section-lead {
+  margin: 0;
+  max-width: 36rem;
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
+/* ============================================================
+   HERO — H2 split diptych: copy left, real code right
+   ============================================================ */
+.hero {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  /* bottom-heavy: the hero sits into the page instead of floating above it */
+  padding: var(--space-xl) var(--gutter) var(--space-2xl);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-xl);
+  /* both columns hang from the top: the copy and the tab strip start on one
+     line, and a short panel (Install) leaves air below instead of floating
+     beside a centred block */
+  align-items: start;
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-md);
+  min-width: 0;
+}
+
+.hero-eyebrow {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--fg-dim);
+}
+
+.hero-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: var(--text-display);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+  font-optical-sizing: auto;
+}
+
+.hero-lede {
+  margin: 0;
+  max-width: 30rem;
+  font-size: var(--text-md);
+  line-height: 1.5;
+  color: var(--fg-secondary);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-2xs);
+}
+
+.hero-aside {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+body[data-theme] .hero-aside a {
+  color: var(--fg-dim);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+body[data-theme] .hero-aside a:hover {
+  color: var(--fg-primary);
+}
+
+.hero-sample {
+  min-width: 0;
+}
+
+/* ============================================================
+   TABS — one component, two uses: the hero code sample and the
+   "How it works" step strip. Buttons carry role=tab; panels carry
+   role=tabpanel. Without JS every panel stays visible, stacked.
+   ============================================================ */
+.tabs {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.tablist {
+  display: flex;
+  gap: var(--space-3xs);
+  border-bottom: 1px solid var(--border-color);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
+  min-height: 40px;
+  padding: 0 var(--space-xs);
+  margin-bottom: -1px;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-dim);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+
+.tab:hover {
+  color: var(--fg-primary);
+}
+
+.tab[aria-selected="true"] {
+  color: var(--fg-primary);
+  border-bottom-color: var(--link-accent);
+}
+
+/* !important on purpose: the per-use panel rules below set display:flex /
+   display:grid at the same specificity, and hidden must always win */
+.tabpanel[hidden] {
+  display: none !important;
+}
+
+/* the crossfade — the only motion on the page besides state colour */
+.tabpanel {
+  animation: tab-in 150ms var(--ease-out);
+}
+
+@keyframes tab-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* the code sample: a typographic frame, not window chrome. The hero follows
+   the active panel's height (the box is capped below, so the tall samples
+   scroll inside it); a short panel leaves no reserved band under the copy */
+.hero-sample .tabpanel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.hero-sample pre {
+  /* the box keeps the hero inside a 1280x800 fold; long samples scroll inside */
+  max-height: 24rem;
+  overflow: auto;
+  margin: 0;
+  padding: var(--space-md);
+  background-color: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-primary);
+  tab-size: 2;
+}
+
+.hero-sample pre code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  display: block;
+}
+
+.sample-source {
+  margin: 0;
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+}
+
+/* ============================================================
+   DEFINITION — "What is Nanook?" + the architecture figure
+   ============================================================ */
+.definition p {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--text-reading);
+  line-height: 1.7;
+  color: var(--fg-secondary);
+}
+
+.arch-figure {
+  margin: var(--space-lg) 0 0;
+  padding: var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  background-color: var(--bg-elevated);
+}
+
+.arch-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: var(--diagram-filter);
+}
+
+.arch-figure figcaption {
+  margin-top: var(--space-xs);
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+}
+
+/* ============================================================
+   CARDS — whole-card links, one container signal (hairline)
+   ============================================================ */
+.card-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  background-color: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+
+.card:hover,
+.card:focus-within {
+  border-color: var(--border-bright);
+}
+
+.card h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.card p {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
+body[data-theme] .card-link {
+  color: inherit;
+}
+
+.card-link::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-card);
+}
+
+.card:hover h3,
+.card:focus-within h3 {
+  color: var(--link-accent);
+}
+
+.card--wide {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+}
+
+.card--wide h3 {
+  flex: 0 0 auto;
+}
+
+.card--wide p {
+  flex: 1 1 20rem;
+}
+
+/* ============================================================
+   HOW IT WORKS — F4 step sequence as a tab strip, link lists
+   ============================================================ */
+.steps .tabpanel {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md) var(--space-2xl);
+  padding-top: var(--space-2xs);
+}
+
+.steps .tabpanel[hidden] {
+  display: none;
+}
+
+.step-text {
+  margin: 0;
+  max-width: var(--measure);
+  font-size: var(--text-reading);
+  line-height: 1.7;
+  color: var(--fg-secondary);
+}
+
+.step-links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.step-links li {
+  margin: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.step-links li:last-child {
+  border-bottom: 1px solid var(--border-color);
+}
+
+body[data-theme] .step-links a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 44px;
+  padding: var(--space-2xs) 0;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-primary);
+  text-decoration: none;
+}
+
+body[data-theme] .step-links a::after {
+  content: '→';
+  color: var(--fg-dim);
+  transition: color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .step-links a:hover {
+  color: var(--link-accent);
+}
+
+body[data-theme] .step-links a:hover::after {
+  color: var(--link-accent);
+}
+
+.step-links .step-kind {
+  display: block;
+  font-size: var(--text-xs);
+  font-weight: 400;
+  color: var(--fg-dim);
+}
+
+/* ============================================================
+   USE CASES — uniform 3-up cards; the open card carries links
+   ============================================================ */
+.use-cases-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+}
+
+.use-case-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  background-color: var(--bg-elevated);
+}
+
+.use-case-card h3 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.use-case-card p {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
+.use-case-card--open {
+  background-color: var(--bg-secondary);
+  border-style: dashed;
+}
+
+/* ============================================================
+   FAQ — quiet details rows
+   ============================================================ */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  max-width: 48rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+  min-height: 56px;
+  padding: var(--space-xs) 0;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--fg-primary);
+  list-style: none;
+  cursor: pointer;
+  transition: color var(--dur-short) var(--ease-out);
+}
+
+.faq-question::-webkit-details-marker {
+  display: none;
+}
+
+.faq-question::after {
+  content: '+';
+  flex: 0 0 auto;
+  width: 1.5rem;
+  text-align: center;
+  font-size: var(--text-md);
+  font-weight: 400;
+  color: var(--fg-dim);
+}
+
+.faq-item[open] .faq-question::after {
+  content: '−';
+}
+
+.faq-question:hover {
+  color: var(--link-accent);
+}
+
+.faq-answer {
+  margin: 0;
+  padding: 0 0 var(--space-md);
+  max-width: var(--measure);
+  font-size: var(--text-reading);
+  line-height: 1.7;
+  color: var(--fg-secondary);
+}
+
+/* ============================================================
+   TRUST — T2 logo wall, hairline, monochrome
+   ============================================================ */
+.trust {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--gutter) var(--space-2xl);
+}
+
+.trust-inner {
+  border-top: 1px solid var(--border-color);
+  padding-top: var(--space-md);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-md) var(--space-xl);
+}
+
+.trust-label {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+  flex: 0 0 auto;
+}
+
+.trust-logos {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.trust-logos img {
+  height: 32px;
+  width: auto;
+  opacity: 0.55;
+  filter: var(--trust-filter);
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+
+.trust-logos img[alt="invoice-api.xhub.io"] {
+  height: 40px;
+  filter: var(--trust-filter-alt);
+}
+
+.trust-logos a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 44px;
+}
+
+.trust-logos a:hover img,
+.trust-logos img:hover {
+  opacity: 0.9;
+}
+
+.trust-logo-with-label samp {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-primary);
+  opacity: 0.55;
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+
+.trust-logo-with-label:hover samp {
+  opacity: 0.9;
+}
+
+/* ============================================================
+   FOOTER — the baked two-column index, restyled
+   ============================================================ */
+.site-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: var(--bg-primary);
+  transition: background-color var(--dur-long) var(--ease-out);
+}
+
+.footer-inner {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: clamp(2.5rem, 2rem + 2vw, 4rem) var(--gutter) var(--space-lg);
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: var(--space-xl);
+}
+
+.footer-logo a {
+  display: inline-block;
+}
+
+.footer-logo img {
+  width: 40px;
+  height: auto;
+  opacity: 0.8;
+  filter: var(--logo-filter);
+  transition: opacity var(--dur-short) var(--ease-out);
+}
+
+.footer-logo img:hover {
+  opacity: 1;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3xs);
+}
+
+.footer-heading {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-dim);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme] .footer-col a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  font-size: var(--text-sm);
+  color: var(--fg-secondary);
+  white-space: nowrap;
+}
+
+body[data-theme] .footer-col a:hover {
+  color: var(--fg-primary);
+}
+
+.footer-copyright {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-md) var(--gutter) var(--space-lg);
+}
+
+.footer-copyright samp {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+}
+
+body[data-theme] .footer-copyright a {
+  color: var(--fg-dim);
+}
+
+body[data-theme] .footer-copyright a:hover {
+  color: var(--fg-primary);
+}
+
+/* ============================================================
+   COOKIE CONSENT BANNER — a card over a scrim
+   ============================================================ */
+.cookie-banner {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5vh var(--gutter);
+  padding: 5dvh var(--gutter);
+  background: var(--overlay-scrim);
+  overflow-y: auto;
+}
+
+.cookie-inner {
+  max-width: 44rem;
+  width: 100%;
+  padding: var(--space-lg);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  color: var(--fg-primary);
+}
+
+.cookie-main {
+  margin-bottom: var(--space-md);
+}
+
+.cookie-title {
+  display: block;
+  margin-bottom: var(--space-2xs);
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.cookie-text {
+  margin: 0 0 var(--space-sm);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
+.cookie-actions {
+  display: flex;
+  gap: var(--space-2xs);
+  flex-wrap: wrap;
+}
+
+.cookie-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 0 var(--space-sm);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-primary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+.cookie-accept {
+  background: var(--fg-primary);
+  border-color: var(--fg-primary);
+  color: var(--bg-primary);
+}
+
+.cookie-accept:hover {
+  background: var(--fg-secondary);
+  border-color: var(--fg-secondary);
+}
+
+.cookie-save:hover,
+.cookie-decline:hover {
+  background: var(--bg-secondary);
+  border-color: var(--fg-dim);
+}
+
+.cookie-categories {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.cookie-category {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--bg-primary);
+}
+
+.cookie-cat-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: var(--space-xs) var(--space-sm);
+}
+
+.cookie-cat-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.cookie-cat-name {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-primary);
+}
+
+.cookie-cat-badge {
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+}
+
+.cookie-expand {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  background: none;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  line-height: 1;
+  color: var(--fg-dim);
+  cursor: pointer;
+  transition: color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    transform var(--dur-short) var(--ease-in-out);
+}
+
+.cookie-expand:hover {
+  color: var(--fg-primary);
+  border-color: var(--border-bright);
+}
+
+.cookie-category.open .cookie-expand {
+  transform: rotate(45deg);
+}
+
+.cookie-cat-details {
+  display: none;
+  padding: 0 var(--space-sm) var(--space-sm);
+}
+
+.cookie-category.open .cookie-cat-details {
+  display: block;
+}
+
+.cookie-table {
+  width: 100%;
+  font-size: var(--text-xs);
+  border-collapse: collapse;
+}
+
+.cookie-table td {
+  padding: var(--space-3xs) var(--space-2xs);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--fg-secondary);
+  vertical-align: top;
+}
+
+.cookie-table td:first-child {
+  width: 6rem;
+  color: var(--fg-dim);
+}
+
+.cookie-table code {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.3em;
+}
+
+/* Toggle switch */
+.cookie-toggle {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.cookie-toggle input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cookie-slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background: var(--border-bright);
+  border-radius: 10px;
+  transition: background-color var(--dur-short) var(--ease-out);
+}
+
+.cookie-slider::before {
+  content: '';
+  position: absolute;
+  height: 14px;
+  width: 14px;
+  left: 3px;
+  bottom: 3px;
+  border-radius: 7px;
+  background: var(--bg-primary);
+  transition: transform var(--dur-short) var(--ease-in-out);
+}
+
+.cookie-toggle input:checked + .cookie-slider {
+  background: var(--fg-primary);
+}
+
+.cookie-toggle input:checked + .cookie-slider::before {
+  transform: translateX(16px);
+}
+
+.cookie-toggle input:focus-visible + .cookie-slider {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.cookie-slider-locked {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ============================================================
+   DOCUSAURUS CONTENT PAGES — structural overrides (carried over)
+   ============================================================ */
+body[data-theme] .navPusher {
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+  min-height: 60vh;
+  min-height: 60dvh;
+}
+
+body[data-theme] .docMainWrapper {
+  background: var(--bg-primary);
+  display: flex !important;
+  gap: var(--space-xl);
+  padding: var(--space-lg) 0 !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
+}
+
+body[data-theme] .navPusher,
+body[data-theme] div.navPusher {
+  max-width: var(--shell-max) !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+  padding: 0 var(--gutter) !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+
+body[data-theme] .documentContainer {
+  max-width: var(--shell-max);
+  margin: 0 auto;
+  padding: var(--space-lg) var(--gutter);
+}
+
+/* Let the flex children actually shrink so a pre can take over scrolling */
+body[data-theme] .documentContainer,
+body[data-theme] .docMainWrapper > * {
+  min-width: 0;
+}
+
+/* Sidebar rail */
+body[data-theme] .docsNavContainer {
+  background: transparent;
+  border-right: 1px solid var(--border-color);
+  width: 260px !important;
+  min-width: 260px !important;
+  flex-shrink: 0 !important;
+}
+
+/* Desktop only: the sidebar is always open, so the breadcrumb toggle is hidden.
+   Below 1025px these must NOT apply — Docusaurus' own #navToggler (already wired
+   in every docs/blog page) needs the breadcrumb bar to be reachable. */
+@media (min-width: 1025px) {
+  body[data-theme] .toc .navBreadcrumb {
+    display: none !important;
+  }
+
+  body[data-theme] .navGroups {
+    display: block !important;
+    padding: 0 var(--space-sm) 0 0 !important;
+  }
+
+  body[data-theme] .navGroup ul.hide {
+    display: block !important;
+  }
+}
+
+/* Mobile: the breadcrumb toggle bar */
+@media (max-width: 1024px) {
+  body[data-theme] .toc .navBreadcrumb {
+    display: flex !important;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-height: 48px;
+    padding: 0 var(--space-sm);
+    background-color: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    font-family: var(--font-body);
+    overflow: visible;
+  }
+
+  body[data-theme] .toc .navBreadcrumb h2 {
+    font-family: var(--font-body);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--fg-primary);
+  }
+
+  body[data-theme] .toc .navToggle {
+    width: 44px;
+    height: 44px;
+    margin-right: 0;
+    flex: 0 0 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+body[data-theme] .docsContainer {
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  padding: 0 !important;
+  width: 100% !important;
+}
+
+body[data-theme] .container {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+}
+
+body[data-theme] .wrapper {
+  max-width: 100% !important;
+  width: 100% !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+body[data-theme] .docMainWrapper.wrapper {
+  padding: var(--space-lg) 0 !important;
+  align-items: flex-start !important;
+}
+
+body[data-theme] .mainContainer {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  flex: 1 !important;
+  box-sizing: border-box !important;
+  background: var(--bg-primary) !important;
+  color: var(--fg-primary) !important;
+}
+
+body[data-theme] .docsContainer .wrapper {
+  max-width: 100% !important;
+  padding: 0 !important;
+  overflow-wrap: break-word;
+  width: 100% !important;
+}
+
+body[data-theme] .docsContainer .post {
+  max-width: 100% !important;
+}
+
+/* docs prose sits in a reading column; tables and code may run wider */
+body[data-theme] .docsContainer .post {
+  max-width: 52rem !important;
+}
+
+/* onPageNav — hide it, give space to content */
+body[data-theme] .onPageNav {
+  display: none !important;
+}
+
+/* #tocToggler toggles body.tocActive to reveal .onPageNav — removed above,
+   so the control does nothing. A dead control is worse than none. */
+.toc .toggleNav .navBreadcrumb .tocToggler {
+  display: none;
+}
+
+/* --- Sidebar text --------------------------------------------------------- */
+body[data-theme] .navGroupCategoryTitle,
+body[data-theme] .toc .toggleNav .navGroup .navGroupCategoryTitle {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-primary);
+}
+
+body[data-theme] .navGroupSubcategoryTitle,
+body[data-theme] .toc .toggleNav .navGroup .navGroupSubcategoryTitle {
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-dim);
+}
+
+body[data-theme] .navListItem {
+  padding: 0;
+  border-bottom: 0;
+}
+
+body[data-theme] .navItem,
+body[data-theme] .toc .toggleNav ul li a {
+  display: block;
+  padding: var(--space-2xs) var(--space-xs);
+  border-left: 0;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--fg-secondary);
+  transition: background-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .navItem:hover,
+body[data-theme] .toc .toggleNav ul li a:hover,
+body[data-theme] .toc .toggleNav ul li a:focus {
+  background-color: var(--bg-secondary);
+  color: var(--fg-primary);
+}
+
+body[data-theme] .navListItemActive .navItem,
+body[data-theme] .toc .toggleNav ul li.navListItemActive a {
+  background-color: var(--bg-secondary);
+  color: var(--fg-primary);
+  font-weight: 500;
+  box-shadow: inset 2px 0 0 var(--link-accent);
+}
+
+body[data-theme] .navItem .nav-date,
+body[data-theme] .nav-date {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+  margin-bottom: var(--space-3xs);
+  font-variant-numeric: tabular-nums;
+}
+
+body[data-theme] .toc .toggleNav,
+body[data-theme] .navBreadcrumb a,
+body[data-theme] .navBreadcrumb span {
+  color: var(--fg-primary);
+}
+
+body[data-theme] .toc .toggleNav .navGroup h3 i:not(:empty) {
+  color: var(--fg-dim);
+}
+
+/* The toggle carries TWO icon systems: Docusaurus' ::before/::after chevron-X
+   from main.css, and a .hamburger-menu > .line1/2/3 markup. Drop the
+   pseudo-elements, keep and theme the three lines. */
+body[data-theme] .toc .toggleNav .navToggle:after,
+body[data-theme] .toc .toggleNav .navToggle:before {
+  display: none;
+}
+
+body[data-theme] .navToggle .hamburger-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  width: 18px;
+  height: 44px;
+  position: relative;
+}
+
+body[data-theme] .navToggle .hamburger-menu > div {
+  width: 18px;
+  height: 2px;
+  background-color: var(--fg-primary);
+  transition: transform var(--dur-short) var(--ease-in-out),
+    opacity var(--dur-short) var(--ease-in-out);
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu > div {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -1px;
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu .line1 {
+  transform: rotate(45deg);
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu .line2 {
+  opacity: 0;
+}
+
+.docsNavContainer.docsSliderActive .navToggle .hamburger-menu .line3 {
+  transform: rotate(-45deg);
+}
+
+/* --- Prose --------------------------------------------------------------- */
+body[data-theme] .post {
+  color: var(--fg-primary);
+}
+
+body[data-theme] .postHeaderTitle {
+  color: var(--fg-primary);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  font-optical-sizing: auto;
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+body[data-theme] .post h2 {
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-title);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: var(--space-xl);
+}
+
+body[data-theme] .post h3 {
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-reading);
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+body[data-theme] .post h4 {
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  font-weight: 600;
+}
+
+body[data-theme] .post p,
+body[data-theme] .post li,
+body[data-theme] .post blockquote {
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-size: var(--text-reading);
+  line-height: 1.7;
+  max-width: var(--measure);
+}
+
+body[data-theme] .post strong {
+  font-weight: 600;
+}
+
+/* main.css paints blockquotes Docusaurus-yellow with an 8px stripe */
+body[data-theme] .post blockquote {
+  margin-inline: 0;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border: 0;
+  border-left: 2px solid var(--border-bright);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--fg-secondary);
+}
+
+body[data-theme] .post blockquote p,
+body[data-theme] .post blockquote li {
+  color: var(--fg-secondary);
+}
+
+body[data-theme] .post a {
+  color: var(--link-accent);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  border-bottom: 0;
+}
+
+body[data-theme] .post a:hover {
+  text-decoration-color: currentColor;
+}
+
+/* Docusaurus heading anchors are empty <a class="anchor"> scroll targets;
+   titles are links too, but not prose links — no underline on either */
+body[data-theme] .post a.anchor,
+body[data-theme] .post .postHeaderTitle a,
+body[data-theme] .post h2 a,
+body[data-theme] .post h3 a {
+  border-bottom: 0;
+  text-decoration: none;
+}
+
+/* Code */
+body[data-theme] .post pre,
+body[data-theme] pre[class*="language-"] {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-primary);
+  text-shadow: none;
+}
+
+body[data-theme] .post code,
+body[data-theme] code[class*="language-"] {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.15em 0.4em;
+  border: 0;
+  color: var(--fg-primary);
+  text-shadow: none;
+}
+
+body[data-theme] .post pre code,
+body[data-theme] pre[class*="language-"] code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+/* prism tokens follow the system, not prism's default magenta */
+body[data-theme] .token.comment,
+body[data-theme] .token.prolog,
+body[data-theme] .token.doctype,
+body[data-theme] .token.cdata {
+  color: var(--code-comment);
+}
+
+body[data-theme] .token.punctuation,
+body[data-theme] .token.operator {
+  color: var(--code-punct);
+}
+
+body[data-theme] .token.property,
+body[data-theme] .token.tag,
+body[data-theme] .token.boolean,
+body[data-theme] .token.number,
+body[data-theme] .token.constant,
+body[data-theme] .token.symbol {
+  color: var(--code-number);
+}
+
+body[data-theme] .token.selector,
+body[data-theme] .token.attr-name,
+body[data-theme] .token.string,
+body[data-theme] .token.char,
+body[data-theme] .token.builtin {
+  color: var(--code-string);
+}
+
+body[data-theme] .token.atrule,
+body[data-theme] .token.attr-value,
+body[data-theme] .token.keyword {
+  color: var(--code-keyword);
+}
+
+body[data-theme] .token.function,
+body[data-theme] .token.class-name {
+  color: var(--code-function);
+}
+
+body[data-theme] .token.operator,
+body[data-theme] .token.entity,
+body[data-theme] .token.url {
+  background: none;
+}
+
+/* Tables */
+body[data-theme] .post table {
+  border-collapse: collapse;
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+body[data-theme] .post th {
+  background: var(--bg-secondary);
+  color: var(--fg-dim);
+  border: 1px solid var(--border-color);
+  padding: var(--space-2xs) var(--space-xs);
+  text-align: left;
+  text-transform: none;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+body[data-theme] .post td {
+  border: 1px solid var(--border-color);
+  padding: var(--space-2xs) var(--space-xs);
+  color: var(--fg-primary);
+}
+
+/* main.css ships GitHub's light zebra stripes (#f6f8fa / #dfe2e5); the
+   cookie table sits on every page, so this is scoped to the theme */
+body[data-theme] table tr {
+  background-color: transparent;
+  border-top: 1px solid var(--border-color);
+}
+
+body[data-theme] table tr:nth-child(2n) {
+  background-color: var(--bg-secondary);
+}
+
+/* Images in docs */
+body[data-theme] .post img {
+  filter: var(--photo-filter);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  margin: var(--space-sm) 0;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Prev/Next navigation */
+body[data-theme] .docs-prevnext {
+  border-top: 1px solid var(--border-color);
+  margin-top: var(--space-xl);
+  padding-top: var(--space-md);
+}
+
+body[data-theme] .docs-prevnext a,
+body[data-theme] .docs-prevnext .button,
+body[data-theme] .blog-recent .button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 var(--space-sm);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--fg-primary);
+  background: transparent;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .docs-prevnext a:hover,
+body[data-theme] .docs-prevnext .button:hover,
+body[data-theme] .blog-recent .button:hover {
+  background: var(--bg-secondary);
+  border-color: var(--fg-dim);
+  color: var(--fg-primary);
+}
+
+/* Heading anchors were hover-only — focus and coarse pointers reveal them too */
+body[data-theme] .hash-link-icon {
+  fill: var(--fg-dim);
+}
+
+body[data-theme] h1:focus-within .hash-link,
+body[data-theme] h2:focus-within .hash-link,
+body[data-theme] h3:focus-within .hash-link,
+body[data-theme] h4:focus-within .hash-link,
+body[data-theme] .hash-link:focus-visible {
+  opacity: 1 !important;
+  transition: none;
+}
+
+@media (hover: none) {
+  body[data-theme] .hash-link {
+    opacity: 0.45;
+  }
+}
+
+/* Legacy anchor-offset hack: main.css gives .postHeader/.postHeaderTitle a
+   ::before spacer (height:200px; margin-top:-200px) that stretches the h1's
+   box upward and swallows taps on the sidebar toggle. scroll-margin-top
+   below does the same job properly. */
+.docsContainer .wrapper .post .postHeader:before,
+.docsContainer .wrapper .post .postHeaderTitle:before {
+  display: none;
+}
+
+/* Sticky bar must not swallow anchor targets */
+:target,
+section[id],
+h1[id],
+h2[id],
+h3[id],
+h4[id] {
+  scroll-margin-top: calc(var(--header-h) + var(--space-sm));
+}
+
+/* Grid blocks (legacy help markup, if any page still carries it) */
+body[data-theme] .gridBlock .blockContent h2 {
+  color: var(--fg-primary);
+  font-family: var(--font-body);
+  font-weight: 500;
+}
+
+body[data-theme] .gridBlock .blockContent p {
+  color: var(--fg-secondary);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+}
+
+body[data-theme] .blogContainer {
+  background: var(--bg-primary);
+  color: var(--fg-primary);
+}
+
+body[data-theme] .blogContainer .posts .post {
+  border-bottom-color: var(--border-color);
+}
+
+body[data-theme] .post hr,
+body[data-theme] .blogContainer hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Blog diagrams are authored dark-first; light paper inverts them */
+.blog-diagram {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: var(--space-md) 0;
+}
+
+body[data-theme] .post img.blog-diagram {
+  filter: var(--diagram-filter);
+}
+
+/* ============================================================
+   BLOG — Index-First archive · Long Document posts (CSS over the
+   baked markup; :has() scopes the two page types)
+   ============================================================ */
+.docMainWrapper:has(.posts) .mainContainer,
+.docMainWrapper:has(.lonePost) .mainContainer {
+  margin-inline: 0;
+}
+
+.docMainWrapper:has(.posts) .mainContainer > .wrapper {
+  max-width: 58rem !important;
+  margin-inline: auto !important;
+}
+
+.docMainWrapper:has(.lonePost) .mainContainer > .wrapper {
+  max-width: 44rem !important;
+  margin-inline: auto !important;
+}
+
+/* The index IS the index — the sidebar goes */
+.docMainWrapper:has(.posts) .docsNavContainer {
+  display: none;
+}
+
+.blog-index-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-lg);
+  padding-block: var(--space-md) var(--space-md);
+  border-bottom: 1px solid var(--border-color);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme] .blog-index-label {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme] .blog-index-desc {
+  margin: 0;
+  font-size: var(--text-base);
+  color: var(--fg-secondary);
+  max-width: var(--measure);
+}
+
+body[data-theme] .blog-index-feed {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--link-accent);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.docMainWrapper:has(.posts) .posts .post {
+  border-radius: 0;
+  margin-bottom: 0;
+  padding-block: var(--space-md);
+}
+
+.docMainWrapper:has(.posts) .postHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3xs) var(--space-md);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme] .docMainWrapper:has(.posts) .postHeaderTitle {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-md);
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+body[data-theme] .docMainWrapper:has(.posts) .postHeaderTitle a {
+  color: var(--fg-primary);
+}
+
+body[data-theme] .docMainWrapper:has(.posts) .postHeaderTitle a:hover {
+  color: var(--link-accent);
+}
+
+body[data-theme] .docMainWrapper:has(.posts) .post-meta {
+  margin: 0 0 0 auto;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.docMainWrapper:has(.posts) .authorBlock {
+  display: none;
+}
+
+body[data-theme] .docMainWrapper:has(.posts) .post-content p {
+  margin-block: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.docMainWrapper:has(.posts) .post-content code {
+  font-size: 0.9em;
+}
+
+/* Lead story: the newest entry carries the serif */
+body[data-theme] .docMainWrapper:has(.posts) .posts .post:first-child .postHeaderTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.docMainWrapper:has(.posts) .posts .post:first-child {
+  padding-block: var(--space-lg);
+}
+
+.docMainWrapper:has(.posts) .posts .post:first-child .post-content p {
+  -webkit-line-clamp: 3;
+}
+
+/* Posts — the article leads; related posts follow it, open */
+.docMainWrapper:has(.lonePost) {
+  flex-direction: column;
+}
+
+.docMainWrapper:has(.lonePost) .docsNavContainer {
+  order: 2;
+  position: static !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 44rem;
+  height: auto !important;
+  border-right: 0 !important;
+  border-bottom: 0;
+  background: transparent;
+  margin-top: var(--space-md);
+  margin-inline: auto;
+  overflow: visible;
+}
+
+body[data-theme] .docMainWrapper:has(.lonePost) .navBreadcrumb {
+  display: none !important;
+}
+
+body[data-theme] .docMainWrapper:has(.lonePost) .toc section .navGroups {
+  display: block !important;
+  padding: var(--space-sm) 0 0 !important;
+  border-top: 1px solid var(--border-color);
+}
+
+.docMainWrapper:has(.lonePost) .navListItem.navListItemActive {
+  display: none;
+}
+
+body[data-theme] .docMainWrapper:has(.lonePost) .toc .toggleNav .navGroup .navGroupCategoryTitle {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-dim);
+  margin-bottom: var(--space-2xs);
+}
+
+body[data-theme] .lonePost .postHeader {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+body[data-theme] .lonePost .postHeaderTitle {
+  margin-bottom: var(--space-sm);
+}
+
+body[data-theme] .lonePost .postHeaderTitle a {
+  color: var(--fg-primary);
+}
+
+body[data-theme] .lonePost .postHeaderTitle a:hover {
+  color: var(--link-accent);
+}
+
+body[data-theme] .lonePost .post-meta,
+body[data-theme] .lonePost p.post-meta,
+body[data-theme] .lonePost .authorBlock p {
+  margin: 0 0 var(--space-3xs);
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--fg-dim);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Lede: the opening paragraph steps up one rung */
+body[data-theme] .lonePost .post > div > span > p:first-of-type {
+  font-size: var(--text-lede);
+  line-height: 1.6;
+  color: var(--fg-primary);
+}
+
+/* The strip already lists the archive; the lone "Recent Posts" button above it
+   would say the same thing twice. */
+.docMainWrapper:has(.lonePost) .blog-recent {
+  display: none;
+}
+
+/* ============================================================
+   HUBS — /docs/ · /docs/api/ · /help · /users
+   Ecosystem Index in miniature: serif title + lead, then whole-card
+   links in a 2-up grid. CSS-only over the .docs-hub row markup.
+   ============================================================ */
+.docs-hub {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: var(--space-2xl) var(--gutter) var(--space-3xl);
+}
+
+.docs-hub-head {
+  border-bottom: 0;
+  padding-bottom: 0;
+  margin-bottom: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.docs-hub-head h1,
+.docs-hub-head samp {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--fg-primary);
+  font-optical-sizing: auto;
+}
+
+.docs-hub-head p {
+  margin: 0;
+  max-width: 36rem;
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
+/* the docs/api/help hubs wrap their rows in <nav>, the users page in <div> */
+.docs-hub > nav,
+.docs-hub > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-md);
+  max-width: none;
+  margin: 0;
+}
+
+body[data-theme] .docs-hub-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  padding: var(--space-md);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-card);
+  background-color: var(--bg-elevated);
+  color: inherit;
+  transition: border-color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .docs-hub-row:hover,
+body[data-theme] .docs-hub-row:focus-visible {
+  border-color: var(--border-bright);
+}
+
+.docs-hub-row h2 {
+  margin: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-base);
+  line-height: 1.3;
+  letter-spacing: 0;
+  color: var(--fg-primary);
+  transition: color var(--dur-short) var(--ease-out);
+}
+
+.docs-hub-row p {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-secondary);
+}
+
+.docs-hub-row:hover h2 {
+  color: var(--link-accent);
+}
+
+body[data-theme] .docs-hub-row:active {
+  transform: translateY(1px);
+}
+
+/* Rows that carry a mark (Users): the mark sits left on a fixed plate */
+body[data-theme] .docs-hub-row.has-logo {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.docs-hub-row .row-logo {
+  flex: 0 0 8rem;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.docs-hub-row .row-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.docs-hub-row .row-logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 2.25rem;
+  transition: filter var(--dur-short) var(--ease-out);
+}
+
+/* Marks are monochrome and ink-matched. data-ink names the source file:
+   "dark"  = light fill authored for the dark theme;
+   "light" = colour mark authored for white paper. */
+body[data-theme="dark"] .row-logo img[data-ink="light"] {
+  filter: grayscale(1) brightness(0) invert(0.81);
+}
+
+body[data-theme="light"] .row-logo img[data-ink="dark"] {
+  filter: brightness(0.3);
+}
+
+body[data-theme="light"] .row-logo img[data-ink="light"] {
+  filter: grayscale(1) brightness(0) invert(0.24);
+}
+
+.docs-hub-row.has-logo p {
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+/* ============================================================
+   LONG DOCUMENT — /about · /imprint · /privacyPolicy
+   ============================================================ */
+.long-doc {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: var(--space-2xl) var(--gutter) var(--space-3xl);
+}
+
+.long-doc-head {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.long-doc-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-2xl);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+  font-optical-sizing: auto;
+}
+
+.long-doc h2 {
+  margin: var(--space-xl) 0 var(--space-sm);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-title);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+}
+
+.long-doc-head + h2 {
+  margin-top: 0;
+}
+
+.long-doc h3 {
+  margin: var(--space-lg) 0 var(--space-2xs);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-reading);
+  line-height: 1.3;
+  color: var(--fg-primary);
+}
+
+.long-doc p,
+.long-doc li {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-reading);
+  line-height: 1.7;
+  color: var(--fg-primary);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.long-doc ul {
+  margin: 0 0 var(--space-sm);
+  padding-left: var(--space-md);
+}
+
+.long-doc li {
+  margin-bottom: var(--space-3xs);
+}
+
+.long-doc .lede {
+  font-size: var(--text-lede);
+  line-height: 1.6;
+  color: var(--fg-secondary);
+}
+
+.long-doc strong {
+  font-weight: 600;
+}
+
+.long-doc .table-scroll {
+  overflow-x: auto;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.long-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.long-doc th {
+  padding: var(--space-2xs) var(--space-xs);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--fg-dim);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.long-doc td {
+  padding: var(--space-2xs) var(--space-xs);
+  border: 1px solid var(--border-color);
+  color: var(--fg-primary);
+  vertical-align: top;
+}
+
+/* ============================================================
+   404 — status line, serif figure in the brand red (slot 2 of 2)
+   ============================================================ */
+.notfound {
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding: var(--space-3xl) var(--gutter);
+}
+
+body[data-theme] .notfound-status {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-dim);
+  margin-bottom: var(--space-sm);
+}
+
+body[data-theme] .notfound-code {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(4rem, 12vw, 7rem);   /* single 3-char figure */
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--brand);
+  margin: 0 0 var(--space-md);
+}
+
+body[data-theme] .notfound-text {
+  font-size: var(--text-reading);
+  color: var(--fg-secondary);
+  max-width: var(--measure);
+  margin: 0 0 var(--space-lg);
+}
+
+.notfound-links {
+  list-style: none;
+  margin: 0;
+  padding: var(--space-sm) 0 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.notfound-links li {
+  margin: 0;
+}
+
+body[data-theme] .notfound-links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--text-base);
+}
+
+/* ============================================================
+   RESPONSIVE — content-driven steps up from the single column
+   ============================================================ */
+@media (min-width: 40rem) {
+  .card-grid--2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .card-grid--2 .card--wide {
+    grid-column: 1 / -1;
+  }
+
+  .use-cases-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .docs-hub > nav,
+  .docs-hub > div {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .steps .tabpanel {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    align-items: start;
+  }
+}
+
+@media (min-width: 60rem) {
+  .use-cases-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* --- Tablet and below: hero stacks, docs sidebar returns to the flow ---- */
+@media (max-width: 60rem) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-xl);
+    padding: var(--space-xl) var(--gutter) var(--space-lg);
+  }
+
+}
+
+@media (max-width: 1024px) {
+  body[data-theme] .docMainWrapper {
+    flex-direction: column !important;
+    gap: var(--space-md);
+  }
+
+  body[data-theme] .docsNavContainer {
+    width: 100% !important;
+    min-width: 100% !important;
+    border-right: none !important;
+    border-bottom: 0;
+    /* main.css pins this fixed below 1023px; without the reset it overlays
+       the article. Back into the flow, height driven by the toggle state. */
+    position: relative !important;
+    max-height: none;
+    height: auto !important;
+    overflow-y: visible;
+    z-index: var(--z-sticky) !important;
+  }
+
+  /* Sidebar links are standalone targets, not inline prose */
+  body[data-theme] .toc .toggleNav ul li a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    min-height: 44px;
+  }
+
+  body[data-theme] .docs-prevnext a {
+    min-height: 44px;
+  }
+}
+
+/* --- Phones: compact bar + drawer, single columns, tap targets ---------- */
+@media (max-width: 640px) {
+  :root {
+    --header-h: 52px;
+  }
+
+  .header-inner {
+    column-gap: var(--space-xs);
+  }
+
+  .site-logo img {
+    height: 24px;
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-nav {
+    display: none;
+  }
+
+  .site-header.nav-open .site-nav {
+    display: block;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: var(--bg-primary);
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 12px 24px var(--shadow-drawer);
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: var(--space-2xs) var(--space-sm);
+  }
+
+  .site-nav li {
+    width: 100%;
+  }
+
+  body[data-theme] .site-nav a {
+    display: flex;
+    min-height: 44px;
+    font-size: var(--text-base);
+    color: var(--fg-primary);
+    box-shadow: none;
+  }
+
+  body[data-theme] .site-nav a[aria-current="page"] {
+    box-shadow: inset 2px 0 0 var(--link-accent);
+    border-radius: var(--radius-sm);
+  }
+
+  .theme-toggle {
+    min-width: 44px;
+    min-height: 44px;
+    justify-content: center;
+    padding-inline: var(--space-2xs);
+  }
+
+  .theme-toggle-label-dark,
+  .theme-toggle-label-light {
+    display: none;
+  }
+
+  .hero {
+    padding: var(--space-lg) var(--gutter) var(--space-md);
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .section {
+    padding: var(--space-lg) var(--gutter) var(--space-xl);
+  }
+
+  .card--wide {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-lg);
+  }
+
+  body[data-theme] .footer-col a {
+    min-height: 44px;
+  }
+
+  .cookie-banner {
+    padding: 0 var(--space-sm);
+  }
+
+  .cookie-inner {
+    padding: var(--space-md) var(--space-sm);
+    border-radius: 0 0 var(--radius-card) var(--radius-card);
+  }
+
+  .cookie-actions {
+    flex-wrap: wrap;
+  }
+
+  .cookie-btn {
+    flex: 1 1 100%;
+    min-height: 44px;
+  }
+
+  .cookie-cat-header {
+    flex-wrap: wrap;
+    gap: var(--space-2xs);
+  }
+
+  .cookie-expand {
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+
+  .blog-index-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-2xs);
+  }
+
+  .blog-index-feed {
+    min-height: 0;
+  }
+
+  .docMainWrapper:has(.posts) .postHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  body[data-theme] .docMainWrapper:has(.posts) .post-meta {
+    margin-left: 0;
+  }
+
+  body[data-theme] .docMainWrapper:has(.posts) .posts .post:first-child .postHeaderTitle {
+    font-size: var(--text-lg);
+  }
+
+  body[data-theme] .lonePost .postHeaderTitle,
+  body[data-theme] .postHeaderTitle,
+  .long-doc-head h1 {
+    font-size: var(--text-xl);
+  }
+
+  .docs-hub,
+  .long-doc {
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+}
+
+@media (max-width: 40rem) {
+  /* three long step labels never fit one row on a phone — stack them, the
+     marker moves to the left edge, nothing hides off-screen */
+  .steps .tablist {
+    flex-direction: column;
+    border-bottom: 0;
+    overflow: visible;
+    gap: 0;
+  }
+
+  .steps .tab {
+    justify-content: flex-start;
+    margin-bottom: 0;
+    padding-inline: var(--space-sm);
+    border-bottom: 0;
+    border-left: 2px solid transparent;
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  }
+
+  .steps .tab[aria-selected="true"] {
+    border-left-color: var(--link-accent);
+    background-color: var(--bg-secondary);
+  }
+}
+
+@media (max-width: 480px) {
+  /* Mark above name — the row never squeezes the name to two words a line */
+  body[data-theme] .docs-hub-row.has-logo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION — the little that moves stops moving
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   LABEL FLOOR — nothing reads below 12px on any viewport
+   ============================================================ */
+.cookie-cat-badge,
+.cookie-table,
+.cookie-table code,
+.sample-source,
+.arch-figure figcaption,
+.footer-copyright samp,
+.step-links .step-kind,
+body[data-theme] .navGroupSubcategoryTitle,
+body[data-theme] .nav-date {
+  font-size: var(--text-xs);
+}
