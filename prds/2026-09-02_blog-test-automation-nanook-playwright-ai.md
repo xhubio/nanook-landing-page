@@ -7,10 +7,10 @@
 | **Title** | Writing Tests Got Cheap. Specifying Them Didn't. |
 | **Subtitle** | Test automation with Nanook and Playwright in the age of AI |
 | **URL Slug** | `/blog/2026/09/02/test-automation-nanook-playwright-ai` |
-| **Author** | Torsten Link |
+| **Author** | Patrick Jerominek (changed 2026-09-02; was Torsten Link) |
 | **Estimated Publish Date** | 2026-09-02 |
 | **Word Count Target** | 1,100--1,400 words planned; published at ~1,750 (six sections instead of the seven-point sketch, each with its measured example) |
-| **Status** | Published 2026-09-02 |
+| **Status** | Draft — unpublished 2026-09-02 (was live the same day via the auto-commit); file kept at `blog/2026/09/02/…html` with noindex, no twin, deregistered everywhere |
 | **Type** | Field report / argument |
 | **Source material** | `docs/articles/2026-08-15_notes_ai-nanook-playwright.md` in github.com/xhubio/nanook-table (working notes, 2026-08-15/16) |
 
@@ -110,7 +110,7 @@ all read. The post shows the drift that happens without it, what the table found
 
 ## SEO block
 - Meta description (<= 160 chars): "AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still."
-- og:type article, JSON-LD Article, author Torsten Link
+- og:type article, JSON-LD Article, author Patrick Jerominek
 
 ## Numbers used (all from the notes; re-derive before republishing)
 894 / 192 unbounded vs bounded text columns (sample) · 1168 % -> 100 %, 8 of 8 · 3 -> 7 of 7
@@ -121,3 +121,13 @@ further forms in five products · 278 formulas in
 ## Not in this post (own posts if wanted)
 - The OIDC / trusted-publishing story (releases failing since June)
 - The nine-answers / list-view / detector findings from the later notes
+
+## Diagrams (added 2026-09-02, hand-maintained SVG, dark-first, CSS-inverted in light mode)
+
+| Figure | File | Placed after | Source of the content |
+|---|---|---|---|
+| Where a failing test gets resolved | `img/blog/drift-fixed-point.svg` | the correction quote in "The drift" | the three-spaces company name, seven rewritten expectations (notes) |
+| The test-case table names cases; the data table holds the fields | `img/blog/two-tables-registration.svg` | the "Two things made it scale" paragraph | the registration example in the skill (`SKILL.md` § Orchestrierung); the fourth column drawn as existing user + invalid input so that four columns cover the four declared combinations; `User` field names generic, no class names invented |
+| Before/now: one runner | `img/blog/one-runner-vs-spec-per-surface.svg` (reused from the 2026-08-21 post) | the "Where Playwright enters" paragraph | field report |
+| Why the sum can pass 100 % | `img/blog/cascade-coverage.svg` | the coverage-arithmetic paragraph | a three-field, two-class illustration (13 of 8 vs 8 of 8); the 1,168 % / 100 % / 8 of 8 figures from the notes appear only in the footnote |
+| Calibrate the instrument | `img/blog/two-runs-four-causes.svg` | the "After the fix" paragraph | 18 of 18 red, cookie banner, 20 minutes; 10/10 in 43 s, causes 5/3/1/1 (notes) |

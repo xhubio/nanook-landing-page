@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 440" width="800" height="440" font-family="'JetBrains Mono', monospace" font-size="13" fill="#ffffff">
+  <rect width="800" height="440" fill="#0A0A0A"/>
+  <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="700">Why the sum can pass 100 %, and how the cascade fixes it</text>
+  <text x="400" y="52" text-anchor="middle" font-size="11">three fields, two classes each: 2 × 2 × 2 = 8 combinations · e1–e3 target one error each · ok is the happy path</text>
+  <line x1="400" y1="66" x2="400" y2="308" stroke="#333333" stroke-dasharray="4 4"/>
+
+  <!-- LEFT: open on both sides of the target -->
+  <text x="200" y="86" text-anchor="middle" fill="#f59e0b" font-weight="700">open on both sides of the target</text>
+  <text x="180" y="110" text-anchor="middle" font-size="11">e1</text><text x="224" y="110" text-anchor="middle" font-size="11">e2</text><text x="268" y="110" text-anchor="middle" font-size="11">e3</text><text x="312" y="110" text-anchor="middle" font-size="11">ok</text>
+  <line x1="50" y1="118" x2="340" y2="118" stroke="#333333"/>
+  <text x="50" y="138">f1 valid</text>
+  <text x="224" y="138" text-anchor="middle" fill="#f59e0b">a</text><text x="268" y="138" text-anchor="middle" fill="#f59e0b">a</text><text x="312" y="138" text-anchor="middle">x</text>
+  <text x="50" y="156" fill="#E61919">f1 error</text>
+  <text x="180" y="156" text-anchor="middle">x</text><text x="224" y="156" text-anchor="middle" fill="#f59e0b">e</text><text x="268" y="156" text-anchor="middle" fill="#f59e0b">e</text>
+  <text x="50" y="182">f2 valid</text>
+  <text x="180" y="182" text-anchor="middle" fill="#f59e0b">a</text><text x="268" y="182" text-anchor="middle" fill="#f59e0b">a</text><text x="312" y="182" text-anchor="middle">x</text>
+  <text x="50" y="200" fill="#E61919">f2 error</text>
+  <text x="180" y="200" text-anchor="middle" fill="#f59e0b">e</text><text x="224" y="200" text-anchor="middle">x</text><text x="268" y="200" text-anchor="middle" fill="#f59e0b">e</text>
+  <text x="50" y="226">f3 valid</text>
+  <text x="180" y="226" text-anchor="middle" fill="#f59e0b">a</text><text x="224" y="226" text-anchor="middle" fill="#f59e0b">a</text><text x="312" y="226" text-anchor="middle">x</text>
+  <text x="50" y="244" fill="#E61919">f3 error</text>
+  <text x="180" y="244" text-anchor="middle" fill="#f59e0b">e</text><text x="224" y="244" text-anchor="middle" fill="#f59e0b">e</text><text x="268" y="244" text-anchor="middle">x</text>
+  <line x1="50" y1="256" x2="340" y2="256" stroke="#333333"/>
+  <text x="50" y="278">product</text>
+  <text x="180" y="278" text-anchor="middle">4</text><text x="224" y="278" text-anchor="middle">4</text><text x="268" y="278" text-anchor="middle">4</text><text x="312" y="278" text-anchor="middle">1</text>
+  <text x="50" y="302" fill="#E61919" font-weight="700">sum 13 of 8 ≈ 163 %</text>
+  <text x="50" y="322" font-size="11" fill="#E61919">(error, error, valid) is counted in e1 and again in e2</text>
+
+  <!-- RIGHT: cascade -->
+  <text x="600" y="86" text-anchor="middle" fill="#4CAF50" font-weight="700">cascade: open only after the target</text>
+  <text x="580" y="110" text-anchor="middle" font-size="11">e1</text><text x="624" y="110" text-anchor="middle" font-size="11">e2</text><text x="668" y="110" text-anchor="middle" font-size="11">e3</text><text x="712" y="110" text-anchor="middle" font-size="11">ok</text>
+  <line x1="450" y1="118" x2="740" y2="118" stroke="#333333"/>
+  <text x="450" y="138">f1 valid</text>
+  <text x="624" y="138" text-anchor="middle">x</text><text x="668" y="138" text-anchor="middle">x</text><text x="712" y="138" text-anchor="middle">x</text>
+  <text x="450" y="156" fill="#E61919">f1 error</text>
+  <text x="580" y="156" text-anchor="middle">x</text>
+  <text x="450" y="182">f2 valid</text>
+  <text x="580" y="182" text-anchor="middle" fill="#4CAF50">a</text><text x="668" y="182" text-anchor="middle">x</text><text x="712" y="182" text-anchor="middle">x</text>
+  <text x="450" y="200" fill="#E61919">f2 error</text>
+  <text x="580" y="200" text-anchor="middle" fill="#4CAF50">e</text><text x="624" y="200" text-anchor="middle">x</text>
+  <text x="450" y="226">f3 valid</text>
+  <text x="580" y="226" text-anchor="middle" fill="#4CAF50">a</text><text x="624" y="226" text-anchor="middle" fill="#4CAF50">a</text><text x="712" y="226" text-anchor="middle">x</text>
+  <text x="450" y="244" fill="#E61919">f3 error</text>
+  <text x="580" y="244" text-anchor="middle" fill="#4CAF50">e</text><text x="624" y="244" text-anchor="middle" fill="#4CAF50">e</text><text x="668" y="244" text-anchor="middle">x</text>
+  <line x1="450" y1="256" x2="740" y2="256" stroke="#333333"/>
+  <text x="450" y="278">product</text>
+  <text x="580" y="278" text-anchor="middle">4</text><text x="624" y="278" text-anchor="middle">2</text><text x="668" y="278" text-anchor="middle">1</text><text x="712" y="278" text-anchor="middle">1</text>
+  <text x="450" y="302" fill="#4CAF50" font-weight="700">sum 8 of 8 = 100 %</text>
+  <text x="450" y="322" font-size="11" fill="#4CAF50">each combination counted exactly once</text>
+
+  <text x="400" y="358" text-anchor="middle" font-size="12">x selects · a preferred, generated · e admissible, counted; generated only without an a</text>
+  <text x="400" y="384" text-anchor="middle" font-size="12" fill="#E61919">that day: the first complete table reported 1,168 % — after restructuring, 100 %, 8 of 8</text>
+  <text x="400" y="410" text-anchor="middle" font-size="12" fill="#f59e0b">the better question afterwards: does every class have its own x? a twenty-line checker answers it</text>
+</svg>

@@ -16,7 +16,7 @@
   <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
-  <meta name="robots" content="index, follow" />
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href="https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai" />
   <link rel="shortcut icon" href="/img/favicon.png" />
   <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
@@ -36,8 +36,7 @@
   "datePublished": "2026-09-02",
   "author": {
     "@type": "Person",
-    "name": "Torsten Link",
-    "url": "https://cv.xhub.io/de/torsten.link"
+    "name": "Patrick Jerominek"
   },
   "publisher": {
     "@type": "Organization",
@@ -94,8 +93,6 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
-                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/09/02/test-automation-nanook-playwright-ai"><samp
-                          class="nav-date">2026-09</samp> Tests Got Cheap</a></li>
                     <li class="navListItem"><a class="navItem"
                         href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
                         E-Invoices: 40 Dialects</a></li>
@@ -131,8 +128,7 @@
                 <h1 class="postHeaderTitle"><a href="/blog/2026/09/02/test-automation-nanook-playwright-ai">Writing Tests Got Cheap. Specifying Them Didn't.</a></h1>
                 <p class="post-meta">September 2, 2026</p>
                 <div class="authorBlock">
-                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
-                      rel="noreferrer noopener">Torsten Link</a></p>
+                  <p class="post-authorName">Patrick Jerominek</p>
                 </div>
               </header>
               <div><span>
@@ -158,6 +154,10 @@
 
                   <p>The correction came back immediately: <em>&ldquo;If the Excel says we expect a format check, then we
                       expect one. That it isn&rsquo;t implemented is a different matter.&rdquo;</em></p>
+
+                  <p><img class="blog-diagram" src="/img/blog/drift-fixed-point.svg"
+                      alt="Two columns. Left, without a fixed point: the application accepts three spaces as a company name, an arrow from the application to the test reads the model rewrites the expectation, the test goes from expecting rejected to expecting accepted, and the caption says a bug and a feature look the same. Right, the table as the fixed point: the decision table says whitespace only is rejected, one arrow leads from the table to the test, the application below accepts it, and the distance between test and application is labelled the bug list"
+                      width="800" loading="lazy" /></p>
 
                   <p>That sentence is the argument in one line; <a href="/blog/2026/08/21/testing-a-saas-with-nanook">the
                       field report</a> makes it at length. The short form: a model leans towards what it can observe.
@@ -186,10 +186,18 @@
                     true before the test types anything. The generator reads it off instead of inferring it. A new
                     entity means one more row, not a change to the generator code.</p>
 
+                  <p><img class="blog-diagram" src="/img/blog/two-tables-registration.svg"
+                      alt="Left, the data table User with Execute F: the fields email and password with their classes, and the columns OK_1 for one valid user and E_1 to E_16 for sixteen invalid users; it produces nothing on its own. Right, the test-case table Registration with Execute T: four columns for new user valid, new user invalid, existing user valid and existing user invalid; secondary data rows session loggedOut, existingUser none and existingUser ref 1 User OK_1; primary data rows user ref 1 User OK_1 and user ref User E_1 to E_16; summary 4 of 4 combinations, 100 percent, with 1, 16, 1 and 16 generated cases per column"
+                      width="800" loading="lazy" /></p>
+
                   <p>Where Playwright enters: the Nanook table produces data; the specs are generic functions per page. There
                     is no generated <code>.spec.ts</code> to maintain. The suite this happened in &mdash; 117 tables,
                     1,981 cases &mdash; is described in <a href="/blog/2026/08/21/testing-a-saas-with-nanook">the field
                       report</a>.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/one-runner-vs-spec-per-surface.svg"
+                      alt="Before: each table feeds its own generated spec file, quotes.spec.ts, invoices.spec.ts, bookings.spec.ts, and each one wants maintaining. Now: the tables feed one runner, suiten.spec.ts, that reads the suites as data; nothing is generated, nothing to maintain per surface"
+                      width="800" loading="lazy" /></p>
 
                   <h2>What the table asked</h2>
 
@@ -214,6 +222,10 @@
                     an action, and a twenty-line checker answers it &mdash; on its first run it found a gap in a table
                     written ten minutes earlier.</p>
 
+                  <p><img class="blog-diagram" src="/img/blog/cascade-coverage.svg"
+                      alt="Three fields with two classes each, eight combinations, columns e1, e2, e3 and ok. Left, open on both sides of the target: a and e marks on every non-target field, products 4, 4, 4 and 1, sum 13 of 8 equals 163 percent, because the combination error, error, valid is counted in e1 and again in e2. Right, the cascade: fields before the target closed on valid, fields after it open, products 4, 2, 1 and 1, sum 8 of 8 equals 100 percent, every combination counted once. Footnotes: x selects, a preferred, e admissible but not generated; that day the first table reported 1,168 percent and 100 percent after restructuring; the better question afterwards is whether every class has its own x"
+                      width="800" loading="lazy" /></p>
+
                   <h2>Failing for the wrong reasons</h2>
 
                   <p>The first browser run came back 18 of 18 red, including the happy path. That last detail is the
@@ -235,6 +247,10 @@
                     register an account through Apple, and the form offers no button. That is not a bug report a human
                     would have filed, because nobody looks for a feature they never saw. It fell out of a table that
                     enumerated the possibilities.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/two-runs-four-causes.svg"
+                      alt="Run 1 with 18 cases: eighteen red squares, the happy path included; the cause is a cookie banner over the page that intercepts every click, twenty minutes of runtime and zero statements about the software. Run 2 with 20 cases in 43 seconds: ten green squares and ten red squares grouped 5, 3, 1 and 1: five where the form accepts what it should reject, three where the server accepts it too including the same email twice with 200 twice and two ids, one where the rule exists one layer further back, and one where the backend can register through Apple while the form has no button. Footnote: an all-red result is a suspicion about the instrument, not a finding about the software"
+                      width="800" loading="lazy" /></p>
 
                   <h2>What the model is genuinely good at</h2>
 

@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 420" width="800" height="420" font-family="'JetBrains Mono', monospace" font-size="13" fill="#ffffff">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <defs>
+    <marker id="arrO" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#f59e0b"/></marker>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4CAF50"/></marker>
+  </defs>
+  <text x="400" y="32" text-anchor="middle" font-size="16" font-weight="700">Where a failing test gets resolved</text>
+  <line x1="400" y1="52" x2="400" y2="376" stroke="#333333" stroke-dasharray="4 4"/>
+
+  <!-- LEFT: no fixed point -->
+  <text x="200" y="66" text-anchor="middle" fill="#f59e0b" font-weight="700">without a fixed point</text>
+  <rect x="60" y="86" width="280" height="54" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="200" y="108" text-anchor="middle">application</text>
+  <text x="200" y="128" text-anchor="middle" font-size="11">accepts "&#160;&#160;&#160;" as a company name</text>
+  <path d="M200,140 V226" fill="none" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrO)"/>
+  <text x="212" y="178" fill="#f59e0b" font-size="11">the model rewrites</text>
+  <text x="212" y="194" fill="#f59e0b" font-size="11">the expectation</text>
+  <rect x="60" y="228" width="280" height="54" fill="none" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="200" y="250" text-anchor="middle" fill="#f59e0b">test</text>
+  <text x="200" y="270" text-anchor="middle" font-size="11">expected: rejected → now: accepted</text>
+  <text x="200" y="318" text-anchor="middle" fill="#f59e0b" font-size="12">green again — seven expectations rewritten that day</text>
+  <text x="200" y="342" text-anchor="middle" fill="#E61919" font-size="12" font-weight="700">a bug and a feature look the same</text>
+
+  <!-- RIGHT: the table as fixed point -->
+  <text x="600" y="66" text-anchor="middle" fill="#4CAF50" font-weight="700">the table as the fixed point</text>
+  <rect x="460" y="86" width="280" height="54" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <text x="600" y="108" text-anchor="middle" fill="#4CAF50">decision table · should</text>
+  <text x="600" y="128" text-anchor="middle" font-size="11">company name, whitespace only → rejected</text>
+  <path d="M600,140 V226" fill="none" stroke="#4CAF50" stroke-width="2" marker-end="url(#arrG)"/>
+  <text x="612" y="186" fill="#4CAF50" font-size="11">one direction</text>
+  <rect x="460" y="228" width="280" height="54" fill="none" stroke="#4CAF50" stroke-width="1.5"/>
+  <text x="600" y="250" text-anchor="middle" fill="#4CAF50">test</text>
+  <text x="600" y="270" text-anchor="middle" font-size="11">expects: rejected</text>
+  <text x="600" y="303" text-anchor="middle" font-size="11">the distance to reality is the bug list</text>
+  <rect x="460" y="314" width="280" height="54" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="600" y="336" text-anchor="middle">application · does</text>
+  <text x="600" y="356" text-anchor="middle" font-size="11" fill="#E61919">accepts it → red, and that is a bug</text>
+
+  <text x="400" y="404" text-anchor="middle" font-size="12">a grid of fields, classes and crosses shows the drift; three hundred lines of generated code hide it</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 800 460" width="800" height="460" font-family="'JetBrains Mono', monospace" font-size="13" fill="#ffffff">
+  <rect width="800" height="460" fill="#0A0A0A"/>
+  <defs>
+    <marker id="arrG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4CAF50"/></marker>
+  </defs>
+  <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="700">The test-case table names cases; the data table holds the fields</text>
+
+  <!-- LEFT: data table User -->
+  <rect x="30" y="56" width="200" height="300" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="130" y="82" text-anchor="middle" font-weight="700">User</text>
+  <text x="130" y="100" text-anchor="middle" font-size="11">data table · Execute = F</text>
+  <line x1="46" y1="112" x2="214" y2="112" stroke="#333333"/>
+  <text x="46" y="136">email</text>
+  <text x="46" y="152" font-size="11">valid + invalid classes</text>
+  <text x="46" y="178">password</text>
+  <text x="46" y="194" font-size="11">valid + invalid classes</text>
+  <line x1="46" y1="210" x2="214" y2="210" stroke="#333333"/>
+  <text x="46" y="234" font-size="11">columns (cases)</text>
+  <text x="46" y="254" fill="#4CAF50">OK_1</text>
+  <text x="100" y="254" font-size="11">one valid user</text>
+  <text x="46" y="276" fill="#E61919">E_1 … E_16</text>
+  <text x="46" y="292" font-size="11" fill="#E61919">sixteen invalid users</text>
+  <text x="130" y="326" text-anchor="middle" font-size="11">produces nothing on its own,</text>
+  <text x="130" y="342" text-anchor="middle" font-size="11">referenced only</text>
+
+  <!-- RIGHT: test-case table Registration -->
+  <text x="270" y="82" font-weight="700">Registration</text>
+  <text x="270" y="100" font-size="11">test-case table · Execute = T</text>
+  <text x="560" y="98" text-anchor="middle" font-size="10">new user</text>
+  <text x="560" y="111" text-anchor="middle" font-size="10">valid</text>
+  <text x="620" y="98" text-anchor="middle" font-size="10">new user</text>
+  <text x="620" y="111" text-anchor="middle" font-size="10">invalid</text>
+  <text x="680" y="98" text-anchor="middle" font-size="10">existing</text>
+  <text x="680" y="111" text-anchor="middle" font-size="10">valid</text>
+  <text x="740" y="98" text-anchor="middle" font-size="10">existing</text>
+  <text x="740" y="111" text-anchor="middle" font-size="10">invalid</text>
+  <line x1="270" y1="120" x2="770" y2="120" stroke="#333333"/>
+
+  <text x="270" y="142" fill="#f59e0b" font-size="11">Secondary data · the base state</text>
+  <text x="270" y="166">session       loggedOut</text>
+  <text x="560" y="166" text-anchor="middle">x</text><text x="620" y="166" text-anchor="middle">x</text><text x="680" y="166" text-anchor="middle">x</text><text x="740" y="166" text-anchor="middle">x</text>
+  <text x="270" y="190">existingUser  none</text>
+  <text x="560" y="190" text-anchor="middle">x</text><text x="620" y="190" text-anchor="middle">x</text>
+  <text x="270" y="214">existingUser  ref:1:User::OK_1</text>
+  <text x="680" y="214" text-anchor="middle">x</text><text x="740" y="214" text-anchor="middle">x</text>
+
+  <text x="270" y="242" fill="#f59e0b" font-size="11">Primary data · the input</text>
+  <text x="270" y="266">user   ref:1:User::OK_1</text>
+  <text x="560" y="266" text-anchor="middle">x</text><text x="680" y="266" text-anchor="middle">x</text>
+  <text x="270" y="290" fill="#E61919">user   ref::User::[E_1-16]</text>
+  <text x="620" y="290" text-anchor="middle" fill="#E61919">x</text><text x="740" y="290" text-anchor="middle" fill="#E61919">x</text>
+  <line x1="270" y1="304" x2="770" y2="304" stroke="#333333"/>
+  <text x="270" y="326" fill="#4CAF50" font-weight="700">4 of 4 combinations · 100 %</text>
+  <text x="560" y="326" text-anchor="middle" fill="#4CAF50">1</text><text x="620" y="326" text-anchor="middle" fill="#4CAF50">16</text><text x="680" y="326" text-anchor="middle" fill="#4CAF50">1</text><text x="740" y="326" text-anchor="middle" fill="#4CAF50">16</text>
+  <text x="770" y="344" text-anchor="end" font-size="10" fill="#4CAF50">generated cases per column</text>
+
+  <!-- reference arrow -->
+  <path d="M262,286 C246,286 240,282 234,272" fill="none" stroke="#4CAF50" stroke-width="1.5" marker-end="url(#arrG)"/>
+
+  <text x="30" y="386" font-size="12" fill="#4CAF50">sixteen invalid users arrive as one cell; a seventeenth changes nothing here — fields live in User only</text>
+  <text x="30" y="408" font-size="12">the same instance id 1 in base state and input → the same user is created, then typed</text>
+  <text x="30" y="430" font-size="12" fill="#f59e0b">a new entity is one more row in the base state, not a change to the generator</text>
+</svg>

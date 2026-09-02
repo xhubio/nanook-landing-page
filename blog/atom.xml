@@ -9,16 +9,6 @@
     <logo>https://nanook.xhub.io/img/logo.svg</logo>
     <rights>Copyright  2022 nanook.xhub.io</rights>
     <entry>
-        <title type="html"><![CDATA[Writing Tests Got Cheap. Specifying Them Didn't.]]></title>
-        <id>https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai</id>
-        <link href="https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai"/>
-        <updated>2026-09-02T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
         <title type="html"><![CDATA[Testing E-Invoices for 40 Country/Format Combinations]]></title>
         <id>https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables</id>
         <link href="https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables"/>

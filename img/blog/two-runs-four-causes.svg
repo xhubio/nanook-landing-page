@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 800 420" width="800" height="420" font-family="'JetBrains Mono', monospace" font-size="13" fill="#ffffff">
+  <rect width="800" height="420" fill="#0A0A0A"/>
+  <text x="400" y="30" text-anchor="middle" font-size="16" font-weight="700">Calibrate the instrument before reading it</text>
+
+  <!-- run 1 -->
+  <text x="40" y="70" font-weight="700">run 1 · 18 cases</text>
+  <g fill="#E61919">
+    <rect x="40" y="82" width="24" height="24"/><rect x="70" y="82" width="24" height="24"/><rect x="100" y="82" width="24" height="24"/><rect x="130" y="82" width="24" height="24"/><rect x="160" y="82" width="24" height="24"/><rect x="190" y="82" width="24" height="24"/><rect x="220" y="82" width="24" height="24"/><rect x="250" y="82" width="24" height="24"/><rect x="280" y="82" width="24" height="24"/><rect x="310" y="82" width="24" height="24"/><rect x="340" y="82" width="24" height="24"/><rect x="370" y="82" width="24" height="24"/><rect x="400" y="82" width="24" height="24"/><rect x="430" y="82" width="24" height="24"/><rect x="460" y="82" width="24" height="24"/><rect x="490" y="82" width="24" height="24"/><rect x="520" y="82" width="24" height="24"/><rect x="550" y="82" width="24" height="24"/>
+  </g>
+  <text x="40" y="128" font-size="11" fill="#E61919">18 red, the happy path included</text>
+  <text x="40" y="146" font-size="11">cause: a cookie banner over the page intercepts every click</text>
+  <text x="40" y="164" font-size="11" fill="#f59e0b">twenty minutes of runtime, zero statements about the software</text>
+
+  <!-- run 2 -->
+  <text x="40" y="212" font-weight="700">run 2 · 20 cases · 43 seconds</text>
+  <g fill="#4CAF50">
+    <rect x="40" y="224" width="24" height="24"/><rect x="70" y="224" width="24" height="24"/><rect x="100" y="224" width="24" height="24"/><rect x="130" y="224" width="24" height="24"/><rect x="160" y="224" width="24" height="24"/><rect x="190" y="224" width="24" height="24"/><rect x="220" y="224" width="24" height="24"/><rect x="250" y="224" width="24" height="24"/><rect x="280" y="224" width="24" height="24"/><rect x="310" y="224" width="24" height="24"/>
+  </g>
+  <g fill="#E61919">
+    <rect x="340" y="224" width="24" height="24"/><rect x="370" y="224" width="24" height="24"/><rect x="400" y="224" width="24" height="24"/><rect x="430" y="224" width="24" height="24"/><rect x="460" y="224" width="24" height="24"/>
+    <rect x="496" y="224" width="24" height="24"/><rect x="526" y="224" width="24" height="24"/><rect x="556" y="224" width="24" height="24"/>
+    <rect x="592" y="224" width="24" height="24"/>
+    <rect x="628" y="224" width="24" height="24"/>
+  </g>
+  <text x="187" y="268" text-anchor="middle" font-size="11" fill="#4CAF50">10 green</text>
+  <text x="400" y="268" text-anchor="middle" font-size="11" fill="#E61919">5</text>
+  <text x="541" y="268" text-anchor="middle" font-size="11" fill="#E61919">3</text>
+  <text x="604" y="268" text-anchor="middle" font-size="11" fill="#E61919">1</text>
+  <text x="640" y="268" text-anchor="middle" font-size="11" fill="#E61919">1</text>
+  <text x="680" y="242" font-size="11" fill="#E61919">10 red,</text>
+  <text x="680" y="258" font-size="11" fill="#E61919">four causes</text>
+
+  <text x="40" y="304" font-size="12" fill="#E61919">5  the form accepts what it should reject</text>
+  <text x="40" y="324" font-size="12" fill="#E61919">3  the server accepts it too — the same email twice: 200 twice, two ids, one row in the database</text>
+  <text x="40" y="344" font-size="12" fill="#E61919">1  the rule exists, one layer further back than assumed</text>
+  <text x="40" y="364" font-size="12" fill="#E61919">1  the backend can register through Apple; the form has no button — nobody was looking for this</text>
+
+  <text x="400" y="402" text-anchor="middle" font-size="12" fill="#f59e0b">an all-red result is a suspicion about the instrument, not a finding about the software</text>
+</svg>

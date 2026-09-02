@@ -52,6 +52,10 @@ The body may stay German (Claude reads it either way); the frontmatter should be
   count and the logger's warnings and errors) and `check-classes.mts` (the twenty-line check
   "does every equivalence class have its own `x`", counting only `x`). Both are what the
   site's Claude Code quickstart and the blog post "Writing Tests Got Cheap" (2026-09-02) describe; today every user re-derives them.
+- **Fix the registration example** in § "Orchestrierung: Datentabellen und Testfall-Tabellen":
+  columns 2 and 4 are identical (`nein` + `ungueltig`); the fourth combination, existing user
+  + invalid input, is missing, so the grid cannot reach the 100 % it claims. Column 4 should
+  read `ja` → x, `nein` → empty.
 - **One contradiction to resolve**: "Happy-Path TC, Nicht-Zielfeld: NUR die gueltige
   EqClass mit `x`" (Marker-Regeln, rule 2) versus "`e` im Gutfall heisst 'mir egal' — und das
   ist erlaubt" (later section). State which one wins, and when.
