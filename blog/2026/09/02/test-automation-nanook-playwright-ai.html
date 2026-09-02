@@ -144,9 +144,9 @@
                     Generating the test was never the hard part. Deciding what to test, and holding that decision
                     still, is.</p>
 
-                  <p>This is a report from a day and a night in August, spent on one small feature area of our own SaaS
+                  <p>This is a report on AI test automation from a day and a night in August, spent on one small feature area of our own SaaS
                     &mdash; registration and login &mdash; with a model doing the typing and a decision table doing
-                    the deciding. The numbers are the ones we measured. The day is written up at length in the
+                    the deciding. The numbers are the ones we measured. All of it is written up at length in the
                     <a href="https://github.com/xhubio/nanook-table/blob/master/docs/articles/2026-08-15_notes_ai-nanook-playwright.md">working
                       notes in the repository</a>; this is the short version, and the one argument it comes down to.</p>
 
@@ -186,7 +186,7 @@
                     true before the test types anything. The generator reads it off instead of inferring it. A new
                     entity means one more row, not a change to the generator code.</p>
 
-                  <p>Where Playwright enters: the Nanook table produces data, the specs are generic functions per page. There
+                  <p>Where Playwright enters: the Nanook table produces data; the specs are generic functions per page. There
                     is no generated <code>.spec.ts</code> to maintain. The suite this happened in &mdash; 117 tables,
                     1,981 cases &mdash; is described in <a href="/blog/2026/08/21/testing-a-saas-with-nanook">the field
                       report</a>.</p>
@@ -255,7 +255,7 @@
                     idea: check whether the message the user sees is the message we wrote. The blast radius needed a
                     machine: sixteen more forms with the same defect across five products, listed in about four
                     seconds. Neither is impressive alone. The pair took under a minute, and the follow-up belongs in a
-                    lint rule, so it cannot be relearned again.</p>
+                    lint rule, so nobody has to learn it a fourth time.</p>
 
                   <h2>What the file remembered</h2>
 
@@ -283,8 +283,9 @@
 
                   <p>Start with the <a href="/docs/quickstart/quickstart">Nanook Quickstart</a>; the <a
                       href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">Claude Code skill</a> drafts the first
-                    table, and <a href="/blog/2026/08/22/login-example-ai-generated-table">the login example</a> shows
-                    one end to end.</p>
+                    table, as the <a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a> shows, and <a
+                      href="/blog/2026/08/22/login-example-ai-generated-table">the login example</a> shows one end to
+                    end.</p>
 
 
                 </span></div>

@@ -38,7 +38,7 @@
             <title><![CDATA[How We Test a SaaS Application with Nanook]]></title>
             <link>https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook</link>
             <guid>https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook</guid>
-            <pubDate>Thu, 21 Aug 2026 06:00:00 GMT</pubDate>
+            <pubDate>Fri, 21 Aug 2026 06:00:00 GMT</pubDate>
             <description><![CDATA[<p>A field report from our own products: 16 hand-written spec files replaced by 117 decision tables and 1,981 data-driven cases, run by a single runner that reads the tables as data &mdash; with the numbers, the defects it surfaced, and what decision tables do not solve.</p> ]]></description>
         </item>
         <item>
