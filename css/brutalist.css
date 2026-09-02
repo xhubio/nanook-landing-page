@@ -10,6 +10,10 @@
  *          snapped to grid (4 documented geometry/em exceptions), cache-bust
  *          via tools/cache-bust.sh; blog column centered + posts on one
  *          shared 44rem column (balance, user decisions 2026-08-31);
+ *          site pages pass 2026-09-02: /about /imprint /privacyPolicy →
+ *          Long Document (.long-doc), /help /users → Index-First
+ *          (.docs-hub); five root pages out of the raw Docusaurus
+ *          shell, twins byte-identical, privacy double-h1 fixed;
  *          open by user decision: 43 footer shape · 1 Inter display face ·
  *          footer bracket voice ([ MORE ] vs plain masthead)
  */
@@ -3544,6 +3548,239 @@ body[data-theme="swiss"] .notfound-links a {
   font-family: var(--font-mono);
   font-size: var(--text-sm);
   color: var(--link-accent);
+}
+
+/* ============================================================
+   SITE PAGES (2026-09-02) — /about · /imprint · /privacyPolicy
+   → Long Document (.long-doc) · /help · /users → Index-First
+   (reuse .docs-hub). pre-emit critique: P4 H4 E4 S4 R5 V4
+   The five root pages still ran in the raw Docusaurus shell
+   (.gridBlock, .showcaseSection, .postContainer). They now sit
+   in the two content families design.md allows: one centered
+   44rem column (= the blog article frame), reading face for
+   prose, mono for apparatus, no reveals, no eyebrows. Inserted
+   above the POLISH PASS so the micro-label floor keeps the last
+   word by order.
+   ============================================================ */
+
+/* --- Index-First rows that carry a mark (Users) -------------------------
+   The mark sits left on a fixed plate, name + host right, one hairline. */
+.docs-hub-row.has-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.docs-hub-row .row-logo {
+  flex: 0 0 9rem;           /* 144px plate — the widest mark reaches 36px tall */
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.docs-hub-row .row-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.docs-hub-row .row-logo img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 2.25rem;      /* 36px — same plate height as the landing trust row */
+  transition: filter var(--dur-short) var(--ease-out);
+}
+
+/* Marks are monochrome and ink-matched. data-ink names the source file:
+   "dark"  = light fill authored for the dark theme (DB, BitDiver);
+   "light" = colour mark authored for white paper (Weltportfolio).
+   CSS derives the other theme — the same dark-first rule as the blog
+   diagrams (AGENTS.md § Theme). invert() after brightness(0) yields a
+   flat grey, so both kinds land on one ink per theme. */
+body[data-theme="tactical"] .row-logo img[data-ink="light"] {
+  filter: grayscale(1) brightness(0) invert(0.81);
+}
+
+body[data-theme="swiss"] .row-logo img[data-ink="dark"] {
+  filter: brightness(0.3);
+}
+
+body[data-theme="swiss"] .row-logo img[data-ink="light"] {
+  filter: grayscale(1) brightness(0) invert(0.24);
+}
+
+/* The hub label is the page's h1 (one h1 per page, lektor 2026-09-02) —
+   same voice as the samp it replaces on the two docs hubs, help, users */
+.docs-hub-head h1 {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--fg-dim);
+}
+
+/* The host line is apparatus, not prose */
+.docs-hub-row.has-logo p {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+/* --- Long Document — hand-built root pages ------------------------------
+   Same head as a blog article (display title on a double rule), same
+   column, same reading face; no meta line because these pages have no
+   honest date or author to print. */
+.long-doc {
+  max-width: 44rem;
+  margin-inline: auto;
+  padding: var(--space-xl) var(--space-sm) var(--space-3xl);
+}
+
+.long-doc-head {
+  border-bottom: 3px double var(--border-bright);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-lg);
+}
+
+.long-doc-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--fg-primary);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.long-doc h2 {
+  margin: var(--space-xl) 0 var(--space-sm);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-lg);
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--fg-primary);
+  overflow-wrap: anywhere;
+}
+
+/* A page that opens on a section head (Imprint) sits straight on the rule */
+.long-doc-head + h2 {
+  margin-top: 0;
+}
+
+.long-doc h3 {
+  margin: var(--space-lg) 0 var(--space-2xs);
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-md);
+  line-height: 1.25;
+  color: var(--fg-primary);
+}
+
+.long-doc p,
+.long-doc li {
+  margin: 0 0 var(--space-sm);
+  font-family: var(--font-reading);
+  font-size: var(--text-reading);
+  line-height: 1.7;
+  color: var(--fg-secondary);
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.long-doc ul {
+  margin: 0 0 var(--space-sm);
+  padding-left: var(--space-md);
+}
+
+.long-doc li {
+  margin-bottom: var(--space-3xs);
+}
+
+/* Lede: the opening paragraph steps up one rung and carries full ink */
+.long-doc .lede {
+  font-size: var(--text-lede);
+  line-height: 1.65;
+  color: var(--fg-primary);
+}
+
+/* Plex Sans 700 is not loaded; 600 carries emphasis without flaring */
+.long-doc strong {
+  font-weight: 600;
+  color: var(--fg-primary);
+}
+
+/* the base body[data-theme] a rule out-ranks a bare class — pin the link */
+body[data-theme="tactical"] .long-doc a,
+body[data-theme="swiss"] .long-doc a {
+  color: var(--link-accent);
+  border-bottom: 1px solid var(--accent-red-glow);
+  transition: color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme="tactical"] .long-doc a:hover,
+body[data-theme="swiss"] .long-doc a:hover {
+  color: var(--accent-red-hover);
+  border-bottom-color: var(--link-accent);
+}
+
+/* Tables (Privacy): mono apparatus; wide ones scroll inside their own
+   container — the column never widens for them (design.md) */
+.long-doc .table-scroll {
+  overflow-x: auto;
+  margin: var(--space-sm) 0 var(--space-md);
+}
+
+.long-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-variant-numeric: tabular-nums;
+}
+
+.long-doc th {
+  padding: var(--space-2xs) var(--space-xs);
+  border: 1px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--fg-dim);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.long-doc td {
+  padding: var(--space-2xs) var(--space-xs);
+  border: 1px solid var(--border-color);
+  color: var(--fg-secondary);
+  vertical-align: top;
+}
+
+@media (max-width: 640px) {
+
+  .long-doc-head h1 {
+    font-size: var(--text-xl);
+  }
+}
+
+@media (max-width: 480px) {
+
+  /* Mark above name — the row never squeezes the name to two words a line */
+  .docs-hub-row.has-logo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
 }
 
 /* ============================================================

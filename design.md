@@ -37,6 +37,16 @@ broadsheet register.
   `css/brutalist.css`. Same day, same register: **`/docs/api/` hub** (8 module
   groups, reuses `.docs-hub` classes) plus a noindex redirect stub at `/api/`;
   the site nav's API link targets the hub sitewide.
+- **Root pages** (2026-09-02): `/about`, `/imprint`, `/privacyPolicy` →
+  **Long Document** as the hand-built `.long-doc` register (centered 44rem
+  column, display title on a double rule, Plex Sans prose, mono tables; a
+  `.lede` only where the opening paragraph earns it — About). `/help`,
+  `/users` → **Index-First**, reusing `.docs-hub`; Users rows carry a
+  monochrome mark (`.has-logo`, ink derived per theme from `data-ink`). All
+  five left the Docusaurus shell (`.postContainer`, `.gridBlock`,
+  `.showcaseSection`); `.html` + `/index.html` twins are byte-identical again.
+  The Index-First label (`.docs-hub-head`) is the page's `h1`, styled as the
+  mono micro-label — one `h1` per page on the two docs hubs, help and users.
 
 ## Theme
 
