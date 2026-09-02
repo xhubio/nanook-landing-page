@@ -310,7 +310,8 @@ field4 valid        |   a   |   a   |   a   |       |   x
                     <li><a href="https://claude.ai/claude-code" target="_blank" rel="noreferrer noopener">Claude
                         Code</a> installed and configured</li>
                     <li>The <code>nanook-table</code> repository cloned locally (the skill and command are part of the
-                      repo)</li>
+                      repo) &mdash; or a copy of the skill in your own project, since it also ships inside the npm
+                      package (see the note below)</li>
                     <li><code>exceljs</code> available as a dependency (used by the generated scripts to create
                       formatted Excel files)</li>
                   </ul>
@@ -326,6 +327,11 @@ field4 valid        |   a   |   a   |   a   |       |   x
                     mechanics while you focus on the decisions that actually matter: <em>what</em> to test and
                     <em>why</em>.
                   </p>
+
+                  <p><em>Note (September 2026): cloning the repository is no longer the only way to get the skill. It ships
+                      inside the npm package; copy it from <code>node_modules</code> into your project&rsquo;s
+                      <code>.claude/skills</code> folder as described in the <a href="/docs/quickstart/claude-code">Quickstart
+                        with Claude Code</a>.</em></p>
 
                   <p><strong>Want to try it?</strong> Clone <a href="https://github.com/xhubio/nanook-table/"
                       target="_blank" rel="noreferrer noopener">nanook-table</a>, open Claude Code, and run

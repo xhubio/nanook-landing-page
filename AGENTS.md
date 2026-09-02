@@ -25,6 +25,11 @@ conveniences:
 
 ⇒ **A layout change is a 150-file edit.** Budget accordingly, or decline and say why.
 
+Docs-Sidebar-Einträge (die 40 Guide-/Tutorial-/Quickstart-/Modul-Seiten samt Twins, Kennung
+`navGroupCategoryTitle collapsible">Quickstart`) werden per Skript eingefügt, nicht von Hand —
+so wie am 2026-09-02 der Eintrag `/docs/quickstart/claude-code`. Die 110 API-Seiten tragen eine
+andere Sidebar und bleiben unberührt.
+
 🔴 **`CLAUDE.md` line 17 claims an `/en/` locale mirror. It does not exist.** Do not
 follow that instruction; it is stale.
 

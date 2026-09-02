@@ -97,7 +97,7 @@
         "@type": "HowToStep",
         "position": 1,
         "name": "Define your test cases",
-        "text": "Write the test cases as a decision table in any editor that saves XLSX — Excel, LibreOffice Calc, or Google Sheets via download. The sheet starts with the marker <DECISION_TABLE>, lists the fields with their equivalence classes and has one column per test case. Matrix and specification tables live in the same workbook. No code at this stage; the Claude Code skill shipped with the repository can draft the table for you."
+        "text": "Write the test cases as a decision table in any editor that saves XLSX — Excel, LibreOffice Calc, or Google Sheets via download. The sheet starts with the marker <DECISION_TABLE>, lists the fields with their equivalence classes and has one column per test case. Matrix and specification tables live in the same workbook. No code at this stage; the Claude Code skill shipped with the package can draft the table for you; see the Quickstart with Claude Code."
       },
       {
         "@type": "HowToStep",
@@ -164,7 +164,7 @@
         "name": "Can an AI assistant create the tables?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Since version 2.1.0 the repository ships a Claude Code skill (create-equivalence-class-table) and a slash command (/createEquivalenceClassTable) that draft a formatted decision table for a page, form or endpoint. The blog post AI-Assisted Equivalence Class Tables with Claude Code shows a run."
+          "text": "Yes. Since version 2.1.0 the repository ships a Claude Code skill (create-equivalence-class-table) and a slash command (/createEquivalenceClassTable) that draft a formatted decision table for a page, form or endpoint. The blog post AI-Assisted Equivalence Class Tables with Claude Code shows a run. The skill also ships inside the npm package: copy it into your project's .claude folder and follow the Quickstart with Claude Code."
         }
       },
       {
@@ -219,7 +219,7 @@
         <p class="hero-lede">Combine the power of equivalence class tables and data generators.</p>
         <div class="hero-actions">
           <a href="/docs/quickstart/quickstart" class="btn btn-primary">Quickstart</a>
-          <a href="/docs/guide/generalOverview" class="btn btn-secondary">Read the guide</a>
+          <a href="/docs/quickstart/claude-code" class="btn btn-secondary">Quickstart with Claude Code</a>
           <a href="/docs/api" class="btn btn-text">API reference</a>
         </div>
         <p class="hero-aside"><a href="#use-cases">See the use cases ↓</a></p>
@@ -230,6 +230,8 @@
           <div class="tablist" role="tablist" aria-label="Code sample">
             <button class="tab" role="tab" type="button" id="tab-install" aria-controls="panel-install"
               aria-selected="true">Install</button>
+            <button class="tab" role="tab" type="button" id="tab-draft" aria-controls="panel-draft"
+              aria-selected="false" tabindex="-1">Draft the table</button>
             <button class="tab" role="tab" type="button" id="tab-generate" aria-controls="panel-generate"
               aria-selected="false" tabindex="-1">Generate</button>
             <button class="tab" role="tab" type="button" id="tab-output" aria-controls="panel-output"
@@ -247,6 +249,24 @@
 #   TableMatrix, …</code></pre>
             <p class="sample-source">From the <a href="https://github.com/xhubio/nanook-table#installation">README</a>
               of @xhubio/nanook-table 3.0.1.</p>
+          </div>
+          <div class="tabpanel" role="tabpanel" id="panel-draft" aria-labelledby="tab-draft" tabindex="0">
+            <pre><code>$ claude
+&gt; /createEquivalenceClassTable Login Form
+
+  17.5 minutes, 56 turns, no further input
+
+  resources/login-form-tests.xlsx
+    User   7 columns, 15 combinations, 100 %
+    Login  7 columns, 48 combinations, 100 %
+  scripts/create-login-form-table.ts
+  scripts/check-login-form-table.ts
+  scripts/generate-login-form-fixtures.ts
+
+$ node scripts/generate-login-form-fixtures.ts
+  11 fixtures written to fixtures/login-form</code></pre>
+            <p class="sample-source">Summary of the run behind the <a href="/docs/quickstart/claude-code">Quickstart with
+                Claude Code</a> (2 September 2026). The skill has shipped with the package since 2.1.0.</p>
           </div>
           <div class="tabpanel" role="tabpanel" id="panel-generate" aria-labelledby="tab-generate" tabindex="0">
             <pre><code>import {
@@ -285,9 +305,13 @@ const writer: InterfaceWriter = {
   async after() {},
 }
 
+const tables = Object.fromEntries(
+  fileProcessor.tables.map((t) => [t.tableName, t])
+)
+
 const processor = new TestcaseProcessor({
   logger,
-  tables: fileProcessor.tables,
+  tables,
   generatorRegistry: registry,
   writer: [writer],
 })
@@ -408,7 +432,8 @@ console.log(JSON.stringify(collected[0], null, 2))</code></pre>
             LibreOffice Calc, or Google Sheets via download. The sheet starts with the marker
             <code>&lt;DECISION_TABLE&gt;</code>, lists the fields with their equivalence classes and has one column per
             test case. Matrix and specification tables live in the same workbook. No code at this stage; the Claude
-            Code skill shipped with the repository can draft the table for you.</p>
+            Code skill shipped with the package can draft the table for you; see the <a
+              href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>.</p>
           <ul class="step-links">
             <li><a href="/docs/guide/equivalence/overview"><span class="step-name">Equivalence class tables <span
                     class="step-kind">Guide</span></span></a></li>
@@ -419,6 +444,8 @@ console.log(JSON.stringify(collected[0], null, 2))</code></pre>
                     repository</span></span></a></li>
             <li><a href="/docs/tutorials/createEquivalenceClassTable"><span class="step-name">Create an equivalence
                   class table <span class="step-kind">Tutorial</span></span></a></li>
+            <li><a href="/docs/quickstart/claude-code"><span class="step-name">Quickstart with Claude Code <span
+                    class="step-kind">Docs</span></span></a></li>
             <li><a href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><span class="step-name">AI-assisted
                   tables with Claude Code <span class="step-kind">Blog</span></span></a></li>
           </ul>
@@ -566,7 +593,9 @@ console.log(JSON.stringify(collected[0], null, 2))</code></pre>
             (<code>create-equivalence-class-table</code>) and a slash command
             (<code>/createEquivalenceClassTable</code>) that draft a formatted decision table for a page, form or
             endpoint. The blog post <a href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">AI-Assisted
-              Equivalence Class Tables with Claude Code</a> shows a run.</p>
+              Equivalence Class Tables with Claude Code</a> shows a run. The skill also ships inside the npm package: copy
+            it into your project&rsquo;s <code>.claude</code> folder and follow the <a
+              href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>.</p>
         </details>
         <details class="faq-item">
           <summary class="faq-question">Is Nanook free to use?</summary>

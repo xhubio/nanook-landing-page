@@ -5,6 +5,7 @@
 ## Documentation
 - [Documentation Hub](https://nanook.xhub.io/docs): Entry page linking quickstart, guide, tutorials, modules, and API reference
 - [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): Introduction to creating an equivalence class table and generating test data from it
+- [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code): Copy the skill from the npm package into your project, let Claude Code draft the decision table, generate the data with Nanook
 - [General Overview](https://nanook.xhub.io/docs/guide/generalOverview): Architecture and concepts of Nanook Table
 - [Equivalence Class Tables](https://nanook.xhub.io/docs/guide/equivalence/overview): How to define test cases using equivalence classes
 - [Matrix Tables](https://nanook.xhub.io/docs/guide/matrix/overview): Pairwise or combinatorial relationships between two dimensions of test parameters
@@ -47,7 +48,7 @@
 - Built-in Faker generator (@faker-js/faker); custom generators extend DataGeneratorBase
 - Writes one JSON file per test case by default; any other format (CSV, database, API) through a custom writer
 - Tag-based filters select which test cases are processed
-- Claude Code skill create-equivalence-class-table and slash command /createEquivalenceClassTable are part of the repository (since 2.1.0)
+- Claude Code skill create-equivalence-class-table and slash command /createEquivalenceClassTable ship in the repository and inside the npm package (since 2.1.0); copy them into a project's .claude folder to use them there
 - Used by Deutsche Bahn and other enterprises
 - Published by BeeBack UG (haftungsbeschränkt), xhub.io
 
