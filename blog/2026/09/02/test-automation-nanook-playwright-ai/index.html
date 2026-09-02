@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Writing Tests Got Cheap. Specifying Them Didn't. · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still." />
+  <meta property="og:title" content="Writing Tests Got Cheap. Specifying Them Didn't. · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai" />
+  <meta property="og:description"
+    content="AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Writing Tests Got Cheap. Specifying Them Didn't.",
+  "datePublished": "2026-09-02",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/09/02/test-automation-nanook-playwright-ai"><samp
+                          class="nav-date">2026-09</samp> Tests Got Cheap</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/09/02/test-automation-nanook-playwright-ai">Writing Tests Got Cheap. Specifying Them Didn't.</a></h1>
+                <p class="post-meta">September 2, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p>An AI writes a Playwright spec faster than any of us. Ask for &ldquo;tests for the login&rdquo; and
+                    something plausible appears within seconds. That is precisely why the interesting question has
+                    moved. Whether those tests cover the cases that matter, whether they will still cover them next
+                    month, and whether anyone but their author can read them &mdash; all three are unanswered.
+                    Generating the test was never the hard part. Deciding what to test, and holding that decision
+                    still, is.</p>
+
+                  <p>This is a report from a day and a night in August, spent on one small feature area of our own SaaS
+                    &mdash; registration and login &mdash; with a model doing the typing and a decision table doing
+                    the deciding. The numbers are the ones we measured. The day is written up at length in the
+                    <a href="https://github.com/xhubio/nanook-table/blob/master/docs/articles/2026-08-15_notes_ai-nanook-playwright.md">working
+                      notes in the repository</a>; this is the short version, and the one argument it comes down to.</p>
+
+                  <h2>The drift</h2>
+
+                  <p>Working through a table of validation rules, the model adjusted seven expectations to match what the
+                    application actually did. The application accepted a company name consisting of three spaces; the
+                    table said it should be rejected; the model &ldquo;fixed&rdquo; the table.</p>
+
+                  <p>The correction came back immediately: <em>&ldquo;If the Excel says we expect a format check, then we
+                      expect one. That it isn&rsquo;t implemented is a different matter.&rdquo;</em></p>
+
+                  <p>That sentence is the argument in one line; <a href="/blog/2026/08/21/testing-a-saas-with-nanook">the
+                      field report</a> makes it at length. The short form: a model leans towards what it can observe.
+                    Faced with a failing test and a passing application, it resolves the contradiction in favour of the
+                    thing it can measure, and left alone it arrives at tests that describe what the software does. From
+                    then on a bug and a feature look the same. The table is the fixed point. It states what should
+                    happen; the distance between that and reality is the bug list, not an inconsistency to be smoothed
+                    away &mdash; and a person can see that distance, because a table is a grid of fields, classes and
+                    crosses, not three hundred lines of generated code that nobody diffs.</p>
+
+                  <h2>One grid</h2>
+
+                  <p>A <a href="/docs/guide/equivalence/overview">decision table</a> lists the fields of a form, the equivalence classes each field can fall into
+                    &mdash; valid, empty, whitespace only, too long, malformed &mdash; and one column per test case,
+                    marking which class applies. The registration table from that day has three rows and four cases and
+                    covers 100&nbsp;% of the combinations it declares. That is the whole specification, and a domain
+                    expert can read it.</p>
+
+                  <p>Two things made it scale beyond a toy. First, there are two kinds of table. Data tables
+                    (<code>User</code>, <code>CompanyDE</code>) define fields and classes and produce nothing on their
+                    own; test-case tables (<code>Registration</code>, <code>Login</code>) define cases and pull the
+                    classes in by reference. The registration table contains no field definitions at all. It says:
+                    session logged out, a user exists or does not, the input is valid or invalid &mdash; with the
+                    sixteen invalid users arriving as a single range reference, <code>ref::User::[E_1-16]</code>.
+                    Second, the secondary-data section of a table is the description of the base state: what must be
+                    true before the test types anything. The generator reads it off instead of inferring it. A new
+                    entity means one more row, not a change to the generator code.</p>
+
+                  <p>Where Playwright enters: the Nanook table produces data, the specs are generic functions per page. There
+                    is no generated <code>.spec.ts</code> to maintain. The suite this happened in &mdash; 117 tables,
+                    1,981 cases &mdash; is described in <a href="/blog/2026/08/21/testing-a-saas-with-nanook">the field
+                      report</a>.</p>
+
+                  <h2>What the table asked</h2>
+
+                  <p>Filling in a cell labelled &ldquo;too long&rdquo; forces a question: how long is too long? Nobody
+                    knew. Measuring the schema answered it: in the packages we sampled, 894 text columns had no upper
+                    bound and 192 had one. The registration form had no limit at all, neither in the form schema nor in
+                    the database. A whole document could be stored as a user name. The table found this, not a test
+                    run. A prompt for &ldquo;some tests for registration&rdquo; would have produced a test for a limit
+                    that does not exist, and it would have passed.</p>
+
+                  <p>The coverage arithmetic asked a second question. The first complete table reported 1,168&nbsp;%
+                    coverage &mdash; a structural error, not a rounding one: marking a field as &ldquo;any valid
+                    value&rdquo; in every column multiplies combinations that were already counted. The fix is a
+                    cascade &mdash; a field is open only in the error columns of the fields before it and closed from
+                    its own block onward &mdash; and after restructuring the table sat at exactly 100&nbsp;%, 8 of 8
+                    combinations, no duplicates. The practitioner&rsquo;s caveat that came with it deserves quoting:
+                    <em>&ldquo;The cascade pattern is only an aid, and it doesn&rsquo;t always work.&rdquo;</em> The
+                    arithmetic tells you when a table is inconsistent; it does not design the table. Later, another
+                    table sat at 99.2&nbsp;% with six classes that had no test case at all, because &ldquo;any of
+                    these&rdquo; counts as covered while the generator only ever picks the preferred one. The
+                    percentage is the wrong question. &ldquo;Does every class have its own test case?&rdquo; produces
+                    an action, and a twenty-line checker answers it &mdash; on its first run it found a gap in a table
+                    written ten minutes earlier.</p>
+
+                  <h2>Failing for the wrong reasons</h2>
+
+                  <p>The first browser run came back 18 of 18 red, including the happy path. That last detail is the
+                    lesson. Eighteen red tests look like a verdict on the application, but if the valid case fails too,
+                    the verdict is about the measuring instrument. The cause was a cookie banner, a dialog layered over
+                    the page that intercepted every click. Twenty minutes of runtime, zero statements about the
+                    software. An all-red result is not a finding. It is a suspicion, about yourself &mdash; and it
+                    applies to AI-written tests specifically, because a model will happily generate a hundred tests
+                    that all fail for one shared, invisible reason, and the failure list reads like diligence.</p>
+
+                  <p>After the fix, the run &mdash; by then twenty cases &mdash; came back 10 green, 10 red, 43 seconds.
+                    Now the red ones meant something, and they sorted into
+                    four causes. Five cases where the form accepts what it should reject. Three where the server
+                    accepts what it should reject &mdash; including the same email address twice: 200 twice, two
+                    different user ids, while the database, checked before reporting, holds a unique constraint on the
+                    address and no duplicate among its 60 users. So the row is not written twice, but the client is
+                    told it succeeded; for a user that is indistinguishable from a bug. One case where a rule exists
+                    but lives one layer further back than assumed. And one nobody was looking for: the backend can
+                    register an account through Apple, and the form offers no button. That is not a bug report a human
+                    would have filed, because nobody looks for a feature they never saw. It fell out of a table that
+                    enumerated the possibilities.</p>
+
+                  <h2>What the model is genuinely good at</h2>
+
+                  <p>Generators, scaffolding, and chasing a defect through an object graph. The defect that proved it:
+                    generation produced 3 of 7 login cases, silently. The instruction was to write a unit test that reproduces it before changing
+                    anything. The first fixture was red for the wrong reason &mdash; a missing header row made the
+                    parser discard the sheet &mdash; and was rebuilt. The real failure was two defects, not one: a
+                    referenced table&rsquo;s existence was checked but the instance was indexed unchecked, and directives
+                    inherited from a referenced table were re-pointed at a node that never receives data. Measured with
+                    two instance ids side by side, fixed with a diff limited to the two corrections, 197 tests green,
+                    and the symptom measured again end to end: 7 of 7. The reason both had survived so long: the
+                    library logged the error to a logger the test harness never read. The instrument was blind.</p>
+
+                  <p>And scope. A form with <code>type="email"</code> and no <code>noValidate</code> lets the browser
+                    block submission before the application validates, in the browser&rsquo;s language, while the
+                    translated message sits unrendered in the bundle. The customer form in the same application had
+                    this right, with a fifteen-line comment dated three days earlier. The finding needed a human-shaped
+                    idea: check whether the message the user sees is the message we wrote. The blast radius needed a
+                    machine: sixteen more forms with the same defect across five products, listed in about four
+                    seconds. Neither is impressive alone. The pair took under a minute, and the follow-up belongs in a
+                    lint rule, so it cannot be relearned again.</p>
+
+                  <h2>What the file remembered</h2>
+
+                  <p>Late in the day the spreadsheet a human opens still stopped at two countries, while sixteen had
+                    been generated into a different workbook. The tests were green on sixteen; the artefact a person
+                    works with was already behind by lunchtime. Worse, the generated sheets had none of the formulas
+                    that make the hand-built <code>CompanyDE</code> readable &mdash; 278 of them, counting the marks per
+                    field group so that a zero in a case column shows an incomplete case without running anything.
+                    <code>CompanyDE</code> had been built by the model too, in the same session, one context compaction
+                    earlier. By the afternoon the model was generating a poorer version of a thing it had designed that
+                    morning, and the project&rsquo;s own skill file had said how to do it all along, unread.</p>
+
+                  <p>Three consequences, and they are the practical core of this piece. Write the format down where the
+                    work happens &mdash; a README next to the spreadsheets, not in a chat log. When generating an
+                    artefact that already exists, read the existing one first. And a skill file is worth nothing
+                    unread. The model&rsquo;s memory of its own decisions is the least durable artefact in the room,
+                    less durable than the spreadsheet, the skill file or the commit message.</p>
+
+                  <p>That is the through-line. A test suite is a measuring instrument and has to be calibrated before its
+                    readings mean anything, and the instrument&rsquo;s own specification is an artefact too &mdash; one
+                    that decays faster than anything else. The table outlived the model&rsquo;s memory of how to build
+                    it. It is the shared language between the domain expert, the developer and the model; everything
+                    downstream is derived, and the table is the thing you maintain. Writing tests got cheap. Specifying
+                    them didn&rsquo;t.</p>
+
+                  <p>Start with the <a href="/docs/quickstart/quickstart">Nanook Quickstart</a>; the <a
+                      href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">Claude Code skill</a> drafts the first
+                    table, and <a href="/blog/2026/08/22/login-example-ai-generated-table">the login example</a> shows
+                    one end to end.</p>
+
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=088033b9"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

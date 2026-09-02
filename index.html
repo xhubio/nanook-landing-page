@@ -35,7 +35,7 @@
     href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="/css/main.css" />
-  <link rel="stylesheet" href="/css/nanook.css?v=4c2ba5e1" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -182,6 +182,7 @@
 </head>
 
 <body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
 
   <!-- HEADER -->
   <header class="site-header">
@@ -593,6 +594,13 @@ console.log(JSON.stringify(collected[0], null, 2))</code></pre>
                 src="/img/users/invoice-api-xhub.png" alt="invoice-api.xhub.io" width="60" height="60" loading="lazy" />
             </picture>
             <samp>invoice-api.xhub.io</samp>
+          </a>
+          <a href="https://dashandwerk.xhub.io" target="_blank" rel="noopener" class="trust-logo-with-label">
+            <samp>dashandwerk.xhub.io</samp>
+          </a>
+          <a href="https://bitdiver.xhub.io" target="_blank" rel="noopener" class="trust-logo-with-label">
+            <img src="/img/fa.svg" alt="BitDiver" width="40" height="40" loading="lazy" />
+            <samp>bitdiver.xhub.io</samp>
           </a>
         </div>
       </div>

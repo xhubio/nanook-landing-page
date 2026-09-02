@@ -10,7 +10,7 @@
 | **Author** | Torsten Link |
 | **Estimated Publish Date** | 2026-08-29 |
 | **Word Count Target** | 2,200--2,800 words |
-| **Status** | Draft PRD |
+| **Status** | Published 2026-09-02 |
 | **Type** | Field report / case study |
 
 ---
@@ -279,7 +279,7 @@ turn into a red test.
 | Quickstart guide | `/docs/quickstart/quickstart` |
 | Equivalence class guide | `/docs/guide/equivalence/overview` |
 | Create an equivalence class table | `/docs/tutorials/createEquivalenceClassTable` |
-| Multiplicity sections | `/docs/guide/multiplicity/overview` |
+| Multiplicity sections | `/docs/guide/equivalence/sections#multiplicitysection` |
 | Matrix tables | `/docs/guide/matrix/overview` |
 | Custom generators | `/docs/tutorials/createGenerator` |
 | How We Test a SaaS Application with Nanook | `/blog/2026/08/21/testing-a-saas-with-nanook` |
@@ -291,7 +291,7 @@ turn into a red test.
 Primary CTA:
 > **If your domain has a specification, your test oracle is already written -- in someone else's
 > repository.** Start with the [Quickstart](/docs/quickstart/quickstart), then read the
-> [multiplicity guide](/docs/guide/multiplicity/overview): it is the difference between testing one
+> [multiplicity guide](/docs/guide/equivalence/sections#multiplicitysection): it is the difference between testing one
 > currency code and testing all 178.
 
 Secondary CTA:

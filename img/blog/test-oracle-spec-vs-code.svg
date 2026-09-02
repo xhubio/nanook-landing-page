@@ -23,7 +23,7 @@
   <path d="M610 230 V150" stroke="#4CAF50" stroke-width="2" fill="none" marker-end="url(#ag)"/>
   <text x="640" y="196" font-size="12" fill="#4CAF50">one direction</text>
   <text x="610" y="330" text-anchor="middle" fill="#4CAF50" font-weight="700">finds the bug in the code</text>
-  <text x="610" y="352" text-anchor="middle" font-size="12">326 missing, 386 an invention</text>
+  <text x="610" y="352" text-anchor="middle" font-size="12">326 missing, 386 not in BR-DE-17</text>
   <!-- middle -->
   <line x1="400" y1="80" x2="400" y2="370" stroke="#333333" stroke-dasharray="4 4"/>
   <text x="400" y="400" text-anchor="middle" font-size="12" fill="#E61919">380 was our default. 326 was the customer&#8217;s invoice.</text>

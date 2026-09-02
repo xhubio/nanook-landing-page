@@ -2,12 +2,42 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nanook.xhub.io/blog</id>
     <title>Nanook Blog</title>
-    <updated>2026-08-21T06:00:00.000Z</updated>
+    <updated>2026-09-02T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nanook.xhub.io/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Nanook news and events.</subtitle>
     <logo>https://nanook.xhub.io/img/logo.svg</logo>
     <rights>Copyright  2022 nanook.xhub.io</rights>
+    <entry>
+        <title type="html"><![CDATA[Writing Tests Got Cheap. Specifying Them Didn't.]]></title>
+        <id>https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai</id>
+        <link href="https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai"/>
+        <updated>2026-09-02T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Testing E-Invoices for 40 Country/Format Combinations]]></title>
+        <id>https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables</id>
+        <link href="https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables"/>
+        <updated>2026-08-29T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Forty country/format combinations, 35,117 equivalence classes, and eight fields our API accepted but never wrote. Testing against the specification, not our own code.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[One Login Form, Eight Test Cases: A Worked Example]]></title>
+        <id>https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table</id>
+        <link href="https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table"/>
+        <updated>2026-08-22T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>A complete worked example: one prompt, one decision table, eight generated test cases with real data. Everything shown is output from an actual run.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[How We Test a SaaS Application with Nanook]]></title>
         <id>https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook</id>

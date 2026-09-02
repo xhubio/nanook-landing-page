@@ -3001,6 +3001,119 @@ body[data-theme] .notfound-links a {
 }
 
 /* ============================================================
+   LONG DOCUMENT — code, ordered lists, sub-heads, and the compact
+   module nav of the generated 3.x API pages (tools/build-api-v3.py)
+   ============================================================ */
+.long-doc pre {
+  margin: 0 0 var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-primary);
+  overflow-x: auto;
+}
+
+.long-doc code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.15em 0.4em;
+  color: var(--fg-primary);
+}
+
+.long-doc pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+
+.long-doc ol {
+  margin: 0 0 var(--space-sm);
+  padding-left: var(--space-md);
+}
+
+.long-doc h4 {
+  margin: var(--space-md) 0 var(--space-2xs);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: var(--text-base);
+  line-height: 1.3;
+  color: var(--fg-primary);
+  overflow-wrap: anywhere;
+}
+
+.long-doc blockquote {
+  margin: 0 0 var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+  background: var(--bg-secondary);
+  border-left: 2px solid var(--border-bright);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  color: var(--fg-secondary);
+}
+
+.long-doc hr {
+  border: 0;
+  border-top: 1px solid var(--border-color);
+  margin: var(--space-lg) 0;
+}
+
+.api-kicker {
+  margin: 0 0 var(--space-2xs);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-dim);
+}
+
+.api-nav ul {
+  list-style: none;
+  margin: 0 0 var(--space-md);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs);
+}
+
+body[data-theme] .api-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 36px;
+  padding: 0 var(--space-xs);
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--fg-secondary);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+body[data-theme] .api-nav a:hover {
+  background-color: var(--bg-secondary);
+  color: var(--fg-primary);
+}
+
+body[data-theme] .api-nav a[aria-current="page"] {
+  color: var(--fg-primary);
+  box-shadow: inset 0 -2px 0 var(--link-accent);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.long-doc p.provenance,
+.long-doc ul.provenance,
+.long-doc ul.provenance li {
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+.long-doc ul.provenance {
+  margin-bottom: var(--space-lg);
+}
+
+/* ============================================================
    REDUCED MOTION — the little that moves stops moving
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {

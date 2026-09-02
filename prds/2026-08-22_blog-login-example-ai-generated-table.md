@@ -10,7 +10,7 @@
 | **Author** | Torsten Link |
 | **Estimated Publish Date** | 2026-08-22 |
 | **Word Count Target** | 1,200--1,600 words |
-| **Status** | Draft PRD |
+| **Status** | Published 2026-09-02 |
 | **Type** | Tutorial / worked example |
 
 ---
@@ -149,7 +149,7 @@ take **one** run and use it consistently; do not mix values from different runs,
 | Create an equivalence class table | `/docs/tutorials/createEquivalenceClassTable` |
 | Equivalence class guide | `/docs/guide/equivalence/overview` |
 | Custom generators | `/docs/tutorials/createGenerator` |
-| Directives (`gen:` syntax) | `/docs/guide/directives` |
+| Directives (`gen:` syntax) | `/docs/guide/generatrorCommand/generator` |
 | GitHub repository | `https://github.com/xhubio/nanook-table/` |
 
 ## Call to Action

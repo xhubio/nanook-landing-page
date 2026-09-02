@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>File processor · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The file processor module handles loading spreadsheet files and parsing their sheets into table models. It includes the importer abstraction, individual…" />
+  <meta property="og:title" content="File processor · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api/v3/file-processor" />
+  <meta property="og:description" content="The file processor module handles loading spreadsheet files and parsing their sheets into table models. It includes the importer abstraction, individual…" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api/v3/file-processor" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc api-v3" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">API reference · Nanook 3.x</p>
+        <h1>File processor</h1>
+      </header>
+      <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor" aria-current="page">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
+      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md">docs/api/file-processor.md</a> in the
+        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.0.1:</p>
+      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+<p>The file processor module handles loading spreadsheet files and
+parsing their sheets into table models. It includes the importer
+abstraction, individual parsers for each table type, and the
+specification-to-decision converter with its rule converter plugin
+system.</p>
+<pre class="typescript"><code>import {
+  ImporterInterface,
+  ImporterXlsx,
+  FileProcessor,
+  ParserInterface,
+  ParserDecision,
+  ParserMatrix,
+  ParserSpecification,
+  ParserSpecificationConverter,
+  RuleConverterRegistry,
+  createDefaultConverterRegistry
+} from &#39;nanook-table&#39;</code></pre>
+<hr />
+<h2 id="importerinterface">ImporterInterface</h2>
+<p>Abstract interface for spreadsheet readers. An importer loads a file
+and provides cell-level access to its content. The
+<code>FileProcessor</code> depends on this interface, so you can replace
+the XLSX importer with one for a different file format.</p>
+<h3 id="methods">Methods</h3>
+<h4
+id="async-loadfilefilename-string-promisevoid"><code>async loadFile(fileName: string): Promise&lt;void&gt;</code></h4>
+<p>Opens and loads the given file. After this call, the importer's sheet
+data is available for reading.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fileName</code></td>
+<td><code>string</code></td>
+<td>Path to the file to load</td>
+</tr>
+</tbody>
+</table></div>
+<h4 id="sheetnames-string"><code>sheetNames(): string[]</code></h4>
+<p>Returns an array of sheet names in the loaded file, in the original
+order they appear.</p>
+<pre class="typescript"><code>const importer = new ImporterXlsx()
+await importer.loadFile(&#39;tests.xlsx&#39;)
+const sheets = importer.sheetNames()
+// [&#39;LoginTests&#39;, &#39;RegistrationTests&#39;, &#39;PaymentMatrix&#39;]</code></pre>
+<h4
+id="cellvaluesheetname-string-column-number-row-number-string--undefined"><code>cellValue(sheetName: string, column: number, row: number): string | undefined</code></h4>
+<p>Returns the value of a single cell. Column and row indices are
+zero-based.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sheetName</code></td>
+<td><code>string</code></td>
+<td>The name of the sheet</td>
+</tr>
+<tr>
+<td><code>column</code></td>
+<td><code>number</code></td>
+<td>Column index, starting at <code>0</code></td>
+</tr>
+<tr>
+<td><code>row</code></td>
+<td><code>number</code></td>
+<td>Row index, starting at <code>0</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Returns <code>undefined</code> if the cell is empty.</p>
+<h4 id="clear-void"><code>clear(): void</code></h4>
+<p>Releases the loaded file data to free memory. Call this after parsing
+is complete.</p>
+<hr />
+<h2 id="importerxlsx">ImporterXlsx</h2>
+<p>XLSX implementation of <code>ImporterInterface</code>. Uses the
+<code>xlsx</code> library to read Excel files (.xlsx, .xls).</p>
+<h3 id="properties">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sheets</code></td>
+<td><code>Map&lt;string, unknown&gt;</code></td>
+<td>Internal storage of loaded sheet data, keyed by sheet name</td>
+</tr>
+<tr>
+<td><code>converter</code></td>
+<td><code>object</code></td>
+<td>Column name/number converter (maps Excel column letters to
+zero-based indices)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="example">Example</h3>
+<pre class="typescript"><code>import { ImporterXlsx } from &#39;nanook-table&#39;
+
+const importer = new ImporterXlsx()
+await importer.loadFile(&#39;resources/tests.xlsx&#39;)
+
+for (const name of importer.sheetNames()) {
+  const firstCell = importer.cellValue(name, 0, 0)
+  console.log(`Sheet &quot;${name}&quot; starts with: ${firstCell}`)
+}
+
+importer.clear()</code></pre>
+<hr />
+<h2 id="fileprocessor">FileProcessor</h2>
+<p>Orchestrates the loading and parsing of spreadsheet files. It uses an
+importer to read cells and delegates to registered parsers based on the
+table type marker found in each sheet's first cell.</p>
+<h3 id="constructor">Constructor</h3>
+<pre class="typescript"><code>new FileProcessor({ logger }: { logger: LoggerInterface })</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>Logger instance for diagnostic messages</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>FileProcessor</code> requires an importer and parsers to be
+registered before calling <code>load()</code>. Use
+<code>createDefaultFileProcessor()</code> to get a pre-configured
+instance with all standard parsers.</p>
+<h3 id="properties-1">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tables</code></td>
+<td><code>TableInterface[]</code></td>
+<td>Array of parsed table models. Populated after calling
+<code>load()</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-1">Methods</h3>
+<h4
+id="async-loadfilename-string-promisevoid"><code>async load(fileName: string): Promise&lt;void&gt;</code></h4>
+<p>Loads the given file, iterates over all sheets, and parses each one
+into a table model. The parser is selected based on the table type
+marker in cell <code>(0, 0)</code> of each sheet.</p>
+<p>After this call, the <code>tables</code> property contains all parsed
+table models.</p>
+<pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;nanook-table&#39;
+
+const logger = new LoggerMemory()
+const fp = await createDefaultFileProcessor(logger)
+await fp.load(&#39;resources/tests.xlsx&#39;)
+
+console.log(`Loaded ${fp.tables.length} tables`)
+for (const table of fp.tables) {
+  console.log(`- ${table.name} (${table.tableType})`)
+}</code></pre>
+<h4
+id="registerimporterimporter-importerinterface-void"><code>registerImporter(importer: ImporterInterface): void</code></h4>
+<p>Sets the importer to use for loading files.</p>
+<h4
+id="registerparsertabletype-string-parser-parserinterface-void"><code>registerParser(tableType: string, parser: ParserInterface): void</code></h4>
+<p>Registers a parser for the given table type marker. When a sheet's
+first cell matches the marker, this parser is used.</p>
+<hr />
+<h2 id="parserinterface">ParserInterface</h2>
+<p>Abstract interface for table parsers. Each concrete parser knows how
+to read a specific table type from raw spreadsheet cells and produce a
+table model.</p>
+<h3 id="methods-2">Methods</h3>
+<h4
+id="parsesheetname-string-importer-importerinterface-tableinterface"><code>parse(sheetName: string, importer: ImporterInterface): TableInterface</code></h4>
+<p>Parses the sheet with the given name using the provided importer and
+returns a table model.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>sheetName</code></td>
+<td><code>string</code></td>
+<td>The name of the sheet to parse</td>
+</tr>
+<tr>
+<td><code>importer</code></td>
+<td><code>ImporterInterface</code></td>
+<td>The importer providing cell access</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Returns:</strong> A <code>TableInterface</code>
+implementation (e.g., <code>TableDecision</code>,
+<code>TableMatrix</code>).</p>
+<hr />
+<h2 id="parserdecision">ParserDecision</h2>
+<p>Parser for sheets marked with <code>&lt;DECISION_TABLE&gt;</code>.
+Reads the sheet structure -- sections, sub-sections, field definitions,
+and test case columns -- and produces a <code>TableDecision</code>
+model.</p>
+<h3 id="sheet-structure">Sheet Structure</h3>
+<p>A decision table sheet has the following structure:</p>
+<pre><code>Row 0:  &lt;DECISION_TABLE&gt;   |  tc1  |  tc2  |  tc3  | ...
+        ─────────────────────────────────────────────────
+        FieldSection: &quot;Login Data&quot;
+          userId            |  x    |       |  x    |
+          password          |       |  x    |  x    |
+        TagSection: &quot;Tags&quot;
+          smoke             |  x    |       |  x    |
+        FilterSection: &quot;Filter&quot;
+          myFilter          |  val  |       |  val  |
+        ExecuteSection
+        NeverExecuteSection
+        MultiplicitySection
+        SummarySection: &quot;Summary&quot;
+          expected result   |  err  |  err  |  ok   |
+        &lt;END&gt;</code></pre>
+<h3 id="recognized-section-types">Recognized Section Types</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Section Marker</th>
+<th>Handler</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>FieldSection</code></td>
+<td><code>handleFieldSection</code></td>
+<td>Defines fields with sub-sections for equivalence classes</td>
+</tr>
+<tr>
+<td><code>TagSection</code></td>
+<td><code>handleTagSection</code></td>
+<td>Defines tags for test case filtering</td>
+</tr>
+<tr>
+<td><code>FilterSection</code></td>
+<td><code>handleFilterSection</code></td>
+<td>Defines filter expressions per test case</td>
+</tr>
+<tr>
+<td><code>GeneratorSwitchSection</code></td>
+<td><code>handleGeneratorSwitchSection</code></td>
+<td>Lists generators to disable per test case</td>
+</tr>
+<tr>
+<td><code>MultiplicitySection</code></td>
+<td><code>handleMultiplicitySection</code></td>
+<td>Sets how many times each test case is generated</td>
+</tr>
+<tr>
+<td><code>ExecuteSection</code></td>
+<td><code>handleExecuteSection</code></td>
+<td>Controls whether each test case is executed</td>
+</tr>
+<tr>
+<td><code>NeverExecuteSection</code></td>
+<td><code>handleNeverExecuteSection</code></td>
+<td>Marks test cases as never executed</td>
+</tr>
+<tr>
+<td><code>SummarySection</code></td>
+<td><code>handleSummarySection</code></td>
+<td>Free-text summary information</td>
+</tr>
+<tr>
+<td><code>MultiRowSection</code></td>
+<td><code>handleMultiRowSection</code></td>
+<td>Generic multi-row data section</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-3">Methods</h3>
+<h4
+id="parsesheetname-string-importer-importerinterface-tabledecision"><code>parse(sheetName: string, importer: ImporterInterface): TableDecision</code></h4>
+<p>Parses the decision table and returns a <code>TableDecision</code>
+model.</p>
+<hr />
+<h2 id="parsermatrix">ParserMatrix</h2>
+<p>Parser for sheets marked with <code>&lt;MATRIX_TABLE&gt;</code>.
+Reads a two-dimensional matrix of test parameters and produces a
+<code>TableMatrix</code> model.</p>
+<h3 id="sheet-structure-1">Sheet Structure</h3>
+<p>A matrix table has row headers on the left, column headers on top,
+and data values at their intersections. Each non-empty intersection
+becomes a test case.</p>
+<h3 id="methods-4">Methods</h3>
+<h4
+id="parsesheetname-string-importer-importerinterface-tablematrix"><code>parse(sheetName: string, importer: ImporterInterface): TableMatrix</code></h4>
+<p>Parses the matrix table and returns a <code>TableMatrix</code>
+model.</p>
+<hr />
+<h2 id="parserspecification">ParserSpecification</h2>
+<p>Parser for sheets marked with
+<code>&lt;SPECIFICATION_TABLE&gt;</code>. Reads a high-level
+specification of fields, rules, and severities, and produces a
+<code>SpecificationModel</code>.</p>
+<h3 id="sheet-structure-2">Sheet Structure</h3>
+<p>A specification table has three sections:</p>
+<ol type="1">
+<li><strong>Fields</strong> -- listed vertically with their applicable
+rules marked per column</li>
+<li><strong>Severities</strong> -- defines severity levels for rule
+violations</li>
+<li><strong>Rules</strong> -- defines the available rules and their
+descriptions</li>
+</ol>
+<h3 id="methods-5">Methods</h3>
+<h4
+id="parsespecificationsheetname-string-importer-importerinterface-specificationmodel"><code>parseSpecification(sheetName: string, importer: ImporterInterface): SpecificationModel</code></h4>
+<p>Parses the specification sheet and returns a
+<code>SpecificationModel</code>.</p>
+<hr />
+<h2 id="parserspecificationconverter">ParserSpecificationConverter</h2>
+<p>Converts a <code>SpecificationModel</code> into a
+<code>TableDecision</code>. This is the bridge between the high-level
+specification format and the concrete decision table that the processor
+can execute.</p>
+<p>The converter creates:</p>
+<ul>
+<li>A primary data section with equivalence classes derived from the
+field rules</li>
+<li>An execution section</li>
+<li>A severity section</li>
+<li>A secondary data section (if a primary key rule is present)</li>
+<li>A summary section</li>
+</ul>
+<h3 id="constructor-1">Constructor</h3>
+<pre class="typescript"><code>new ParserSpecificationConverter(options?: {
+  logger?: LoggerInterface
+  converterRegistry?: RuleConverterRegistry
+})</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>Logger instance</td>
+</tr>
+<tr>
+<td><code>converterRegistry</code></td>
+<td><code>RuleConverterRegistry</code></td>
+<td>Registry of rule converter plugins. If not provided, uses
+<code>createDefaultConverterRegistry()</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-6">Methods</h3>
+<h4
+id="convertspecification-specificationmodel-tabledecision"><code>convert(specification: SpecificationModel): TableDecision</code></h4>
+<p>Converts the specification model into a decision table.</p>
+<pre class="typescript"><code>import {
+  ParserSpecification,
+  ParserSpecificationConverter,
+  ImporterXlsx
+} from &#39;nanook-table&#39;
+
+const importer = new ImporterXlsx()
+await importer.loadFile(&#39;spec.xlsx&#39;)
+
+const parser = new ParserSpecification()
+const spec = parser.parseSpecification(&#39;MySpec&#39;, importer)
+
+const converter = new ParserSpecificationConverter()
+const decisionTable = converter.convert(spec)</code></pre>
+<hr />
+<h2 id="ruleconverterplugin">RuleConverterPlugin</h2>
+<p>Interface for plugins that convert specification rules into
+equivalence classes. Each plugin handles one type of rule.</p>
+<pre class="typescript"><code>interface RuleConverterPlugin {
+  /** Unique name identifying this converter */
+  name: string
+
+  /** Human-readable description of what this converter does */
+  description: string
+
+  /** Convert a rule into equivalence classes */
+  convert(context: RuleConversionContext): EquivalenceClassResult
+}</code></pre>
+<hr />
+<h2 id="ruleconversioncontext">RuleConversionContext</h2>
+<p>Context object passed to <code>RuleConverterPlugin.convert()</code>.
+Contains all information needed to derive equivalence classes from a
+rule.</p>
+<pre class="typescript"><code>interface RuleConversionContext {
+  /** The field definition being processed */
+  field: FieldDefinition
+
+  /** The specific rule being converted */
+  rule: RuleDefinition
+
+  /** All rules that apply to this field */
+  allFieldRules: RuleDefinition[]
+
+  /** The full specification model */
+  specification: SpecificationModel
+}</code></pre>
+<hr />
+<h2 id="equivalenceclassresult">EquivalenceClassResult</h2>
+<p>The return type of a rule converter plugin. Contains the valid and
+error equivalence classes derived from a rule.</p>
+<pre class="typescript"><code>interface EquivalenceClassResult {
+  validClasses: EquivalenceClassEntry[]
+  errorClasses: EquivalenceClassEntry[]
+}</code></pre>
+<hr />
+<h2 id="equivalenceclassentry">EquivalenceClassEntry</h2>
+<p>A single equivalence class within a result.</p>
+<pre class="typescript"><code>interface EquivalenceClassEntry {
+  /** Display name of the equivalence class */
+  name: string
+
+  /** Optional explanatory comment */
+  comment?: string
+
+  /** Optional severity level for error classes */
+  severity?: string
+}</code></pre>
+<hr />
+<h2 id="ruleconverterregistry">RuleConverterRegistry</h2>
+<p>Registry for rule converter plugins. Used by
+<code>ParserSpecificationConverter</code> to look up the appropriate
+converter for each rule type.</p>
+<h3 id="methods-7">Methods</h3>
+<h4
+id="registerplugin-ruleconverterplugin-void"><code>register(plugin: RuleConverterPlugin): void</code></h4>
+<p>Registers a converter plugin. The plugin's <code>name</code> property
+is used as the key.</p>
+<h4
+id="getname-string-ruleconverterplugin"><code>get(name: string): RuleConverterPlugin</code></h4>
+<p>Returns the plugin registered under the given name. Throws an error
+if not found.</p>
+<h4
+id="hasname-string-boolean"><code>has(name: string): boolean</code></h4>
+<p>Returns <code>true</code> if a plugin with the given name is
+registered.</p>
+<h4 id="names-string"><code>names(): string[]</code></h4>
+<p>Returns an array of all registered plugin names.</p>
+<h3 id="custom-rule-converter-example">Custom Rule Converter
+Example</h3>
+<pre class="typescript"><code>import { RuleConverterRegistry } from &#39;nanook-table&#39;
+import type {
+  RuleConverterPlugin,
+  RuleConversionContext,
+  EquivalenceClassResult
+} from &#39;nanook-table&#39;
+
+const myPlugin: RuleConverterPlugin = {
+  name: &#39;maxLength&#39;,
+  description: &#39;Generates classes for maximum length validation&#39;,
+  convert(context: RuleConversionContext): EquivalenceClassResult {
+    return {
+      validClasses: [
+        { name: &#39;within limit&#39;, comment: &#39;Value within max length&#39; }
+      ],
+      errorClasses: [
+        { name: &#39;exceeds limit&#39;, comment: &#39;Value exceeds max length&#39; }
+      ]
+    }
+  }
+}
+
+const registry = new RuleConverterRegistry()
+registry.register(myPlugin)</code></pre>
+<hr />
+<h2
+id="createdefaultconverterregistry">createDefaultConverterRegistry()</h2>
+<p>Factory function that creates a <code>RuleConverterRegistry</code>
+pre-populated with all built-in rule converter plugins.</p>
+<pre class="typescript"><code>import { createDefaultConverterRegistry } from &#39;nanook-table&#39;
+
+const registry = createDefaultConverterRegistry()
+console.log(registry.names()) // list of all built-in converter names</code></pre>
+<hr />
+<h2 id="parser-constants">Parser Constants</h2>
+<p>The parsers use the following constants when reading spreadsheet
+data:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>START_ROW</code></td>
+<td><code>0</code></td>
+<td>Default starting row in a sheet</td>
+</tr>
+<tr>
+<td><code>START_COLUMN</code></td>
+<td><code>0</code></td>
+<td>Default starting column in a sheet</td>
+</tr>
+<tr>
+<td><code>MAX_EMPTY_LINES</code></td>
+<td><code>30</code></td>
+<td>Maximum consecutive empty lines before the parser assumes the table
+has ended</td>
+</tr>
+<tr>
+<td><code>KEY_TABLE_END</code></td>
+<td><code>'&lt;END&gt;'</code></td>
+<td>Marker string in a cell that explicitly marks the end of a
+table</td>
+</tr>
+</tbody>
+</table></div>
+
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=088033b9"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

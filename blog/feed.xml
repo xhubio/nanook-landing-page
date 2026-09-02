@@ -4,7 +4,7 @@
         <title>Nanook Blog</title>
         <link>https://nanook.xhub.io/blog</link>
         <description>The best place to stay up-to-date with the latest Nanook news and events.</description>
-        <lastBuildDate>Thu, 21 Aug 2026 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 02 Sep 2026 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -13,6 +13,27 @@
             <link>https://nanook.xhub.io/blog</link>
         </image>
         <copyright>Copyright  2022 nanook.xhub.io</copyright>
+        <item>
+            <title><![CDATA[Writing Tests Got Cheap. Specifying Them Didn't.]]></title>
+            <link>https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai</link>
+            <guid>https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai</guid>
+            <pubDate>Wed, 02 Sep 2026 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>AI test automation, measured: an AI writes Playwright tests in seconds and moves the hard part to the specification. How a Nanook decision table holds it still.</p> ]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Testing E-Invoices for 40 Country/Format Combinations]]></title>
+            <link>https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables</link>
+            <guid>https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables</guid>
+            <pubDate>Sat, 29 Aug 2026 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>Forty country/format combinations, 35,117 equivalence classes, and eight fields our API accepted but never wrote. Testing against the specification, not our own code.</p> ]]></description>
+        </item>
+        <item>
+            <title><![CDATA[One Login Form, Eight Test Cases: A Worked Example]]></title>
+            <link>https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table</link>
+            <guid>https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table</guid>
+            <pubDate>Sat, 22 Aug 2026 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>A complete worked example: one prompt, one decision table, eight generated test cases with real data. Everything shown is output from an actual run.</p> ]]></description>
+        </item>
         <item>
             <title><![CDATA[How We Test a SaaS Application with Nanook]]></title>
             <link>https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook</link>

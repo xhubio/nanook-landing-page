@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Data generator · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The data generator module provides the interface and base implementation for all data generators. Generators are responsible for producing test data values.…" />
+  <meta property="og:title" content="Data generator · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api/v3/data-generator" />
+  <meta property="og:description" content="The data generator module provides the interface and base implementation for all data generators. Generators are responsible for producing test data values.…" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api/v3/data-generator" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc api-v3" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">API reference · Nanook 3.x</p>
+        <h1>Data generator</h1>
+      </header>
+      <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator" aria-current="page">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
+      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md">docs/api/data-generator.md</a> in the
+        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.0.1:</p>
+      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+<p>The data generator module provides the interface and base
+implementation for all data generators. Generators are responsible for
+producing test data values. The processor calls generators based on
+<code>GeneratorDirective</code> entries created from the
+spreadsheet.</p>
+<pre class="typescript"><code>import {
+  DataGeneratorInterface,
+  DataGeneratorBase,
+  DataGeneratorRegistry,
+  GeneratorFaker
+} from &#39;nanook-table&#39;</code></pre>
+<h2 id="generator-lifecycle">Generator Lifecycle</h2>
+<p>The processor manages generators through a well-defined
+lifecycle:</p>
+<pre><code>1. loadStore()                    -- called once at startup for each registered generator
+2. For each test case:
+   a. generate()                  -- produce data for a GeneratorDirective
+   b. createPostProcessDirectives()  -- optionally return additional directives
+   c. postProcess()               -- called for each post-process directive
+3. saveStore()                    -- called once at shutdown for each registered generator</code></pre>
+<p>Between test cases, <code>clearContext()</code> may be called to
+reset per-run state while preserving the store.</p>
+<hr />
+<h2 id="datageneratorinterface">DataGeneratorInterface</h2>
+<p>Abstract interface that all data generators must implement. Defines
+the contract between the processor and any generator.</p>
+<h3 id="constructor">Constructor</h3>
+<pre class="typescript"><code>new DataGeneratorInterface(options: {
+  logger: LoggerInterface
+  serviceRegistry?: DataGeneratorRegistry
+  unique?: boolean
+  maxUniqueTries?: number
+  varDir?: string
+  useStore?: boolean
+})</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>required</td>
+<td>Logger instance for diagnostic output</td>
+</tr>
+<tr>
+<td><code>serviceRegistry</code></td>
+<td><code>DataGeneratorRegistry</code></td>
+<td><code>undefined</code></td>
+<td>Registry providing access to other generators. Allows generators to
+compose with each other</td>
+</tr>
+<tr>
+<td><code>unique</code></td>
+<td><code>boolean</code></td>
+<td><code>true</code></td>
+<td>When <code>true</code>, the generator should return unique values.
+The definition of "unique" is generator-specific</td>
+</tr>
+<tr>
+<td><code>maxUniqueTries</code></td>
+<td><code>number</code></td>
+<td><code>100</code></td>
+<td>Maximum attempts to generate a unique value before throwing an
+error</td>
+</tr>
+<tr>
+<td><code>varDir</code></td>
+<td><code>string</code></td>
+<td><code>undefined</code></td>
+<td>Directory path for reading/writing persistent store files</td>
+</tr>
+<tr>
+<td><code>useStore</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>Whether the generator should persist data between runs</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="properties">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>The logger instance</td>
+</tr>
+<tr>
+<td><code>serviceRegistry</code></td>
+<td><code>DataGeneratorRegistry</code></td>
+<td>The registry of all available generators</td>
+</tr>
+<tr>
+<td><code>unique</code></td>
+<td><code>boolean</code></td>
+<td>Whether uniqueness is enforced</td>
+</tr>
+<tr>
+<td><code>maxUniqueTries</code></td>
+<td><code>number</code></td>
+<td>Maximum uniqueness retry count</td>
+</tr>
+<tr>
+<td><code>uniqueSet</code></td>
+<td><code>Set&lt;string&gt;</code></td>
+<td>Stores previously generated values for uniqueness checks</td>
+</tr>
+<tr>
+<td><code>instanceData</code></td>
+<td><code>Map&lt;string, unknown&gt;</code></td>
+<td>Maps instance IDs to previously generated data. Ensures the same
+instance ID returns the same value</td>
+</tr>
+<tr>
+<td><code>varDir</code></td>
+<td><code>string</code></td>
+<td>Store directory path</td>
+</tr>
+<tr>
+<td><code>useStore</code></td>
+<td><code>boolean</code></td>
+<td>Whether the store is active</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The name under which this generator is registered. Set automatically
+by the registry</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods">Methods</h3>
+<h4
+id="async-loadstore-promisevoid"><code>async loadStore(): Promise&lt;void&gt;</code></h4>
+<p>Loads previously persisted data from the store file. Called once by
+the processor before any generation begins. Implementations that do not
+use a store can leave this as a no-op.</p>
+<h4
+id="async-savestore-promisevoid"><code>async saveStore(): Promise&lt;void&gt;</code></h4>
+<p>Persists the current store data to a file. Called once by the
+processor after all generation is complete.</p>
+<h4
+id="getgeneratorgeneratorname-string-datageneratorinterface"><code>getGenerator(generatorName: string): DataGeneratorInterface</code></h4>
+<p>Retrieves another generator from the service registry by name. Throws
+an error if the generator is not found. This enables generators to
+delegate to or compose with other generators.</p>
+<pre class="typescript"><code>// Inside a custom generator
+const faker = this.getGenerator(&#39;GeneratorFaker&#39;)</code></pre>
+<h4 id="clearcontext-void"><code>clearContext(): void</code></h4>
+<p>Resets the <code>uniqueSet</code> and <code>instanceData</code>.
+Called between independent generation runs to clear per-run state
+without affecting the persistent store.</p>
+<h4
+id="async-generateinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promiseunknown"><code>async generate(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;unknown&gt;</code></h4>
+<p>Generates a value for the given directive. This is the primary
+generation method.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>instanceId</code></td>
+<td><code>string</code></td>
+<td>A unique ID for this test case instance. The same instance ID should
+yield the same data</td>
+</tr>
+<tr>
+<td><code>testcase</code></td>
+<td><code>TestcaseData</code></td>
+<td>The test case data object being built. Contains data already
+generated by other generators</td>
+</tr>
+<tr>
+<td><code>generatorDirective</code></td>
+<td><code>GeneratorDirective</code></td>
+<td>The directive describing what to generate, including generator name
+and config</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Returns:</strong> The generated data, or
+<code>undefined</code> if the generator cannot produce data yet (e.g.,
+because it depends on data from another generator that has not run yet).
+The processor will retry generators that return
+<code>undefined</code>.</p>
+<h4
+id="async-createpostprocessdirectivesinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promisegeneratordirective"><code>async createPostProcessDirectives(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;GeneratorDirective[]&gt;</code></h4>
+<p>Called after <code>generate()</code> returns successfully. Returns an
+array of additional directives for post-processing. Each returned
+directive will cause a later call to <code>postProcess()</code>.</p>
+<p>This is useful when a generator needs to perform additional work
+after all primary generators have completed.</p>
+<h4
+id="async-postprocessinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promisevoid"><code>async postProcess(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;void&gt;</code></h4>
+<p>Called for each directive returned by
+<code>createPostProcessDirectives()</code>, after all primary generation
+is complete. Post-processing can modify the <code>testcase</code> data
+object directly and does not return a value.</p>
+<hr />
+<h2 id="datageneratorbase">DataGeneratorBase</h2>
+<p>Base implementation of <code>DataGeneratorInterface</code>. Provides
+store loading/saving, instance ID management, and the uniqueness
+mechanism. Most custom generators should extend this class rather than
+implementing the interface directly.</p>
+<h3 id="inherited-behavior">Inherited Behavior</h3>
+<ul>
+<li><strong>Instance ID caching</strong>: If <code>generate()</code> is
+called with an instance ID that has already been used, the previously
+generated value is returned without calling <code>_doGenerate()</code>
+again.</li>
+<li><strong>Uniqueness enforcement</strong>: When <code>unique</code> is
+<code>true</code>, the base class retries <code>_doGenerate()</code> up
+to <code>maxUniqueTries</code> times until a value is produced that is
+not already in <code>uniqueSet</code>.</li>
+<li><strong>Store persistence</strong>: <code>loadStore()</code> reads
+from and <code>saveStore()</code> writes to a JSON file at
+<code>${varDir}/${storeFileName}</code>.</li>
+</ul>
+<h3 id="additional-properties">Additional Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>storeName</code></td>
+<td><code>string</code></td>
+<td>The base name used for the store file. Defaults to the generator
+name</td>
+</tr>
+<tr>
+<td><code>store</code></td>
+<td><code>Record&lt;string, unknown&gt;</code></td>
+<td>The data object that is persisted. Generators can store arbitrary
+data here</td>
+</tr>
+<tr>
+<td><code>storeFileName</code></td>
+<td><code>string</code></td>
+<td>Computed file name for the store (read-only). Derived from
+<code>storeName</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-1">Methods</h3>
+<h4
+id="_dogenerateinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promiseunknown"><code>_doGenerate(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;unknown&gt;</code></h4>
+<p><strong>Override this method in subclasses.</strong> This is where
+the actual data generation logic goes. The base class
+<code>generate()</code> method handles instance ID caching and
+uniqueness; <code>_doGenerate()</code> is only called when new data is
+actually needed.</p>
+<pre class="typescript"><code>import { DataGeneratorBase } from &#39;nanook-table&#39;
+import type { GeneratorDirective } from &#39;nanook-table&#39;
+
+class GeneratorTimestamp extends DataGeneratorBase {
+  async _doGenerate(
+    instanceId: string,
+    testcase: TestcaseData,
+    generatorDirective: GeneratorDirective
+  ): Promise&lt;string&gt; {
+    return new Date().toISOString()
+  }
+}</code></pre>
+<h4
+id="getstoredata-recordstring-unknown"><code>getStoreData(): Record&lt;string, unknown&gt;</code></h4>
+<p>Returns the data as it would be written to the store. Useful for
+inspecting store state without saving to disk.</p>
+<h3 id="creating-a-custom-generator">Creating a Custom Generator</h3>
+<pre class="typescript"><code>import {
+  DataGeneratorBase,
+  DataGeneratorRegistry,
+  LoggerMemory
+} from &#39;nanook-table&#39;
+import type { GeneratorDirective, TestcaseData } from &#39;nanook-table&#39;
+
+class GeneratorCounter extends DataGeneratorBase {
+  private counter = 0
+
+  async _doGenerate(
+    instanceId: string,
+    testcase: TestcaseData,
+    generatorDirective: GeneratorDirective
+  ): Promise&lt;number&gt; {
+    this.counter += 1
+    return this.counter
+  }
+}
+
+// Register the generator
+const logger = new LoggerMemory()
+const registry = new DataGeneratorRegistry()
+const counter = new GeneratorCounter({ logger, serviceRegistry: registry })
+registry.registerGenerator(&#39;counter&#39;, counter)</code></pre>
+<hr />
+<h2 id="datageneratorregistry">DataGeneratorRegistry</h2>
+<p>A registry that stores generator instances by name. The processor
+uses the registry to look up generators when executing
+<code>GeneratorDirective</code> entries. Generators can also use it to
+access other generators for composition.</p>
+<h3 id="methods-2">Methods</h3>
+<h4
+id="registergeneratorname-string-generator-datageneratorinterface-void"><code>registerGenerator(name: string, generator: DataGeneratorInterface): void</code></h4>
+<p>Registers a generator under the given name. Also sets the
+<code>name</code> property on the generator instance.</p>
+<pre class="typescript"><code>const registry = new DataGeneratorRegistry()
+const faker = new GeneratorFaker({ logger })
+registry.registerGenerator(&#39;GeneratorFaker&#39;, faker)</code></pre>
+<h4
+id="getgeneratorname-string-datageneratorinterface"><code>getGenerator(name: string): DataGeneratorInterface</code></h4>
+<p>Returns the generator registered under the given name. Throws an
+error if no generator with that name exists.</p>
+<pre class="typescript"><code>const faker = registry.getGenerator(&#39;GeneratorFaker&#39;)</code></pre>
+<h4
+id="async-loadstore-promisevoid-1"><code>async loadStore(): Promise&lt;void&gt;</code></h4>
+<p>Calls <code>loadStore()</code> on every registered generator. The
+processor calls this once at startup.</p>
+<h4
+id="async-savestore-promisevoid-1"><code>async saveStore(): Promise&lt;void&gt;</code></h4>
+<p>Calls <code>saveStore()</code> on every registered generator. The
+processor calls this once at shutdown.</p>
+<hr />
+<h2 id="generatorfaker">GeneratorFaker</h2>
+<p>A built-in generator that uses <code>@faker-js/faker</code> to
+produce data. The Faker method to call is specified in the
+<code>config</code> property of the <code>GeneratorDirective</code>.</p>
+<h3 id="usage-in-spreadsheets">Usage in Spreadsheets</h3>
+<p>In the generator column of your equivalence class table, use:</p>
+<pre><code>gen:GeneratorFaker:{&quot;method&quot;: &quot;person.firstName&quot;}
+gen:GeneratorFaker:{&quot;method&quot;: &quot;internet.email&quot;}
+gen:GeneratorFaker:{&quot;method&quot;: &quot;number.int&quot;, &quot;args&quot;: [{&quot;min&quot;: 1, &quot;max&quot;: 100}]}</code></pre>
+<h3 id="configuration">Configuration</h3>
+<p>The <code>config</code> object in the directive supports:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>method</code></td>
+<td><code>string</code></td>
+<td>The Faker method path, e.g., <code>'person.firstName'</code>,
+<code>'internet.email'</code>, <code>'number.int'</code></td>
+</tr>
+<tr>
+<td><code>args</code></td>
+<td><code>unknown[]</code></td>
+<td>Optional array of arguments passed to the Faker method</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="properties-1">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>The logger instance</td>
+</tr>
+<tr>
+<td><code>unique</code></td>
+<td><code>boolean</code></td>
+<td>Whether generated values must be unique. Default is
+<code>false</code> for GeneratorFaker</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="example">Example</h3>
+<pre class="typescript"><code>import {
+  GeneratorFaker,
+  DataGeneratorRegistry,
+  LoggerMemory
+} from &#39;nanook-table&#39;
+
+const logger = new LoggerMemory()
+const registry = new DataGeneratorRegistry()
+const faker = new GeneratorFaker({ logger, serviceRegistry: registry })
+registry.registerGenerator(&#39;GeneratorFaker&#39;, faker)</code></pre>
+<p>The <code>createDefaultGeneratorRegistry()</code> factory function in
+the processor module creates a registry with <code>GeneratorFaker</code>
+already registered.</p>
+
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=088033b9"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

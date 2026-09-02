@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Processor · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The processor module contains the main orchestrator (TestcaseProcessor), the writer interface, filter implementations, and factory functions for quick setup." />
+  <meta property="og:title" content="Processor · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api/v3/processor" />
+  <meta property="og:description" content="The processor module contains the main orchestrator (TestcaseProcessor), the writer interface, filter implementations, and factory functions for quick setup." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api/v3/processor" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc api-v3" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">API reference · Nanook 3.x</p>
+        <h1>Processor</h1>
+      </header>
+      <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor" aria-current="page">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
+      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md">docs/api/processor.md</a> in the
+        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.0.1:</p>
+      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+<p>The processor module contains the main orchestrator
+(<code>TestcaseProcessor</code>), the writer interface, filter
+implementations, and factory functions for quick setup.</p>
+<pre class="typescript"><code>import {
+  TestcaseProcessor,
+  InterfaceWriter,
+  FilterProcessorInterface,
+  SimpleArrayFilterProcessor,
+  SimpleArrayIgnoreFilterProcessor,
+  createDefaultGeneratorRegistry,
+  createDefaultWriter,
+  createDefaultFileProcessor
+} from &#39;nanook-table&#39;</code></pre>
+<hr />
+<h2 id="testcaseprocessor">TestcaseProcessor</h2>
+<p>The central orchestrator that ties together table models, data
+generators, and writers. It iterates over all tables and their
+executable test cases, runs generators to produce data, and passes the
+results to writers.</p>
+<h3 id="constructor">Constructor</h3>
+<pre class="typescript"><code>new TestcaseProcessor(options: {
+  logger: LoggerInterface
+  generatorRegistry: DataGeneratorRegistry
+  writer: InterfaceWriter | InterfaceWriter[]
+})</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>Logger instance for diagnostic output</td>
+</tr>
+<tr>
+<td><code>generatorRegistry</code></td>
+<td><code>DataGeneratorRegistry</code></td>
+<td>Registry containing all available data generators</td>
+</tr>
+<tr>
+<td><code>writer</code></td>
+<td><code>InterfaceWriter | InterfaceWriter[]</code></td>
+<td>One or more writers that receive generated test case data</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="properties">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tables</code></td>
+<td><code>TableInterface[]</code></td>
+<td>The table models to process. Set this after creating the processor,
+typically from <code>FileProcessor.tables</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods">Methods</h3>
+<h4
+id="async-process-promisevoid"><code>async process(): Promise&lt;void&gt;</code></h4>
+<p>Processes all tables and generates test data. This is the main entry
+point that runs the full generation pipeline.</p>
+<p>The processing steps are:</p>
+<ol type="1">
+<li>Call <code>loadStore()</code> on the generator registry (loads all
+generator stores)</li>
+<li>Call <code>before()</code> on each writer</li>
+<li>For each table in <code>tables</code>: a. For each executable test
+case in the table:
+<ul>
+<li>Create directives from the test case definition</li>
+<li>Execute static directives (write literal values)</li>
+<li>Execute reference directives (resolve cross-table references)</li>
+<li>Execute generator directives in order:
+<ul>
+<li>Call <code>generate()</code> on the appropriate generator</li>
+<li>Retry generators that return <code>undefined</code> (dependency not
+yet available)</li>
+<li>Call <code>createPostProcessDirectives()</code> after each generator
+succeeds</li>
+</ul></li>
+<li>Execute all post-process directives (sorted by order)</li>
+<li>Apply filters</li>
+<li>Call <code>write()</code> on each writer with the completed test
+case data</li>
+</ul></li>
+<li>Call <code>after()</code> on each writer</li>
+<li>Call <code>saveStore()</code> on the generator registry (persists
+all generator stores)</li>
+</ol>
+<h3 id="example">Example</h3>
+<pre class="typescript"><code>import {
+  LoggerMemory,
+  TestcaseProcessor,
+  createDefaultFileProcessor,
+  createDefaultGeneratorRegistry,
+  createDefaultWriter
+} from &#39;nanook-table&#39;
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+// Set up components
+const fileProcessor = await createDefaultFileProcessor(logger)
+const registry = createDefaultGeneratorRegistry()
+const writer = createDefaultWriter(logger)
+
+// Load and process
+await fileProcessor.load(&#39;resources/tests.xlsx&#39;)
+
+const processor = new TestcaseProcessor({
+  logger,
+  generatorRegistry: registry,
+  writer
+})
+processor.tables = fileProcessor.tables
+
+await processor.process()</code></pre>
+<h3 id="registering-filters">Registering Filters</h3>
+<p>Filters can be registered on the processor to include or exclude test
+cases based on their tags.</p>
+<pre class="typescript"><code>const processor = new TestcaseProcessor({ logger, generatorRegistry, writer })
+
+// Only process test cases tagged with &#39;smoke&#39;
+processor.registerFilter(new SimpleArrayFilterProcessor(&#39;include&#39;, &#39;,&#39;))
+
+// Skip test cases tagged with &#39;slow&#39;
+processor.registerFilter(new SimpleArrayIgnoreFilterProcessor(&#39;exclude&#39;, &#39;,&#39;))</code></pre>
+<hr />
+<h2 id="interfacewriter">InterfaceWriter</h2>
+<p>Abstract base class for writers. A writer receives fully generated
+test case data and writes it to some output destination (files,
+database, console, etc.).</p>
+<h3 id="constructor-1">Constructor</h3>
+<pre class="typescript"><code>new InterfaceWriter({ logger }: { logger: LoggerInterface })</code></pre>
+<h3 id="methods-1">Methods</h3>
+<h4
+id="async-before-promisevoid"><code>async before(): Promise&lt;void&gt;</code></h4>
+<p>Called once before the processor starts generating test cases. Use
+this for initialization (creating output directories, opening database
+connections, writing file headers, etc.).</p>
+<h4
+id="async-writetestcasedata-testcasedata-promisevoid"><code>async write(testcaseData: TestcaseData): Promise&lt;void&gt;</code></h4>
+<p>Called once for each generated test case. The
+<code>testcaseData</code> object contains all generated field values,
+metadata, tags, and filter results.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>testcaseData</code></td>
+<td><code>TestcaseData</code></td>
+<td>The fully populated test case data object</td>
+</tr>
+</tbody>
+</table></div>
+<h4
+id="async-after-promisevoid"><code>async after(): Promise&lt;void&gt;</code></h4>
+<p>Called once after all test cases have been processed. Use this for
+cleanup (closing files, finalizing output, writing summaries, etc.).</p>
+<h3 id="custom-writer-example">Custom Writer Example</h3>
+<pre class="typescript"><code>import { InterfaceWriter } from &#39;nanook-table&#39;
+import type { TestcaseData } from &#39;nanook-table&#39;
+
+class ConsoleWriter extends InterfaceWriter {
+  async before(): Promise&lt;void&gt; {
+    console.log(&#39;--- Start of test data ---&#39;)
+  }
+
+  async write(testcaseData: TestcaseData): Promise&lt;void&gt; {
+    const name = testcaseData.name
+    console.log(`Test case: ${name}`)
+    console.log(JSON.stringify(testcaseData.data, null, 2))
+  }
+
+  async after(): Promise&lt;void&gt; {
+    console.log(&#39;--- End of test data ---&#39;)
+  }
+}</code></pre>
+<h3 id="using-multiple-writers">Using Multiple Writers</h3>
+<p>The processor accepts an array of writers. All writers receive every
+test case.</p>
+<pre class="typescript"><code>import { TestcaseProcessor } from &#39;nanook-table&#39;
+
+const jsonWriter = createDefaultWriter(logger)
+const consoleWriter = [new ConsoleWriter({ logger })]
+
+const processor = new TestcaseProcessor({
+  logger,
+  generatorRegistry: registry,
+  writer: [...jsonWriter, ...consoleWriter]
+})</code></pre>
+<hr />
+<h2 id="filterprocessorinterface">FilterProcessorInterface</h2>
+<p>Abstract interface for filter processors. Filters are used to include
+or exclude test cases from processing based on their tags and a filter
+expression.</p>
+<h3 id="properties-1">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The name of this filter processor. Matches the filter name used in
+the spreadsheet's FilterSection</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-2">Methods</h3>
+<h4
+id="filtertags-string-expression-string-boolean"><code>filter(tags: string[], expression: string): boolean</code></h4>
+<p>Evaluates the filter expression against the test case's tags.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tags</code></td>
+<td><code>string[]</code></td>
+<td>All tags defined on the test case</td>
+</tr>
+<tr>
+<td><code>expression</code></td>
+<td><code>string</code></td>
+<td>The filter expression from the spreadsheet cell</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Returns:</strong> <code>true</code> if the test case passes
+the filter (should be processed), <code>false</code> if it should be
+skipped.</p>
+<hr />
+<h2 id="simplearrayfilterprocessor">SimpleArrayFilterProcessor</h2>
+<p>An include filter. Splits the expression by a delimiter and checks
+whether any of the resulting values exist in the test case's tags. If a
+match is found, the test case is processed.</p>
+<h3 id="constructor-2">Constructor</h3>
+<pre class="typescript"><code>new SimpleArrayFilterProcessor(name: string, delimiter: string)</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The filter name, referenced in the spreadsheet</td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td><code>string</code></td>
+<td>Character used to split the expression into individual values</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="example-1">Example</h3>
+<pre class="typescript"><code>import { SimpleArrayFilterProcessor } from &#39;nanook-table&#39;
+
+const filter = new SimpleArrayFilterProcessor(&#39;include&#39;, &#39;,&#39;)
+
+// Expression &quot;smoke,regression&quot; matches test case with tag &quot;smoke&quot;
+filter.filter([&#39;smoke&#39;, &#39;login&#39;], &#39;smoke,regression&#39;)
+// Returns: true
+
+// No match
+filter.filter([&#39;payment&#39;], &#39;smoke,regression&#39;)
+// Returns: false</code></pre>
+<hr />
+<h2
+id="simplearrayignorefilterprocessor">SimpleArrayIgnoreFilterProcessor</h2>
+<p>An exclude filter. The inverse of
+<code>SimpleArrayFilterProcessor</code>. Splits the expression by a
+delimiter and checks whether any of the resulting values exist in the
+test case's tags. If a match is found, the test case is skipped.</p>
+<h3 id="constructor-3">Constructor</h3>
+<pre class="typescript"><code>new SimpleArrayIgnoreFilterProcessor(name: string, delimiter: string)</code></pre>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The filter name, referenced in the spreadsheet</td>
+</tr>
+<tr>
+<td><code>delimiter</code></td>
+<td><code>string</code></td>
+<td>Character used to split the expression into individual values</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="example-2">Example</h3>
+<pre class="typescript"><code>import { SimpleArrayIgnoreFilterProcessor } from &#39;nanook-table&#39;
+
+const filter = new SimpleArrayIgnoreFilterProcessor(&#39;exclude&#39;, &#39;,&#39;)
+
+// Expression &quot;slow,flaky&quot; matches test case with tag &quot;slow&quot; -&gt; excluded
+filter.filter([&#39;slow&#39;, &#39;login&#39;], &#39;slow,flaky&#39;)
+// Returns: false (test case is excluded)
+
+// No match -&gt; not excluded
+filter.filter([&#39;smoke&#39;, &#39;login&#39;], &#39;slow,flaky&#39;)
+// Returns: true (test case is processed)</code></pre>
+<hr />
+<h2 id="factory-functions">Factory Functions</h2>
+<p>These convenience functions create pre-configured instances with
+sensible defaults. Use them for quick setup.</p>
+<h3
+id="createdefaultgeneratorregistry">createDefaultGeneratorRegistry()</h3>
+<p>Creates a <code>DataGeneratorRegistry</code> with
+<code>GeneratorFaker</code> already registered under the name
+<code>'GeneratorFaker'</code>.</p>
+<pre class="typescript"><code>import { createDefaultGeneratorRegistry } from &#39;nanook-table&#39;
+
+const registry = createDefaultGeneratorRegistry()
+// registry.getGenerator(&#39;GeneratorFaker&#39;) is available
+
+// Add your own generators
+registry.registerGenerator(&#39;myGenerator&#39;, new MyGenerator({ logger }))</code></pre>
+<h3
+id="createdefaultwriterlogger-loggerinterface-interfacewriter">createDefaultWriter(logger:
+LoggerInterface): InterfaceWriter[]</h3>
+<p>Creates an array containing the default JSON file writer. This writer
+outputs one JSON file per test case into a <code>tdg/</code>
+directory.</p>
+<pre class="typescript"><code>import { createDefaultWriter, LoggerMemory } from &#39;nanook-table&#39;
+
+const logger = new LoggerMemory()
+const writers = createDefaultWriter(logger)</code></pre>
+<h3
+id="createdefaultfileprocessorlogger-loggerinterface-promisefileprocessor">createDefaultFileProcessor(logger:
+LoggerInterface): Promise&lt;FileProcessor&gt;</h3>
+<p>Creates a <code>FileProcessor</code> pre-configured with:</p>
+<ul>
+<li><code>ImporterXlsx</code> as the importer</li>
+<li><code>ParserDecision</code> for <code>&lt;DECISION_TABLE&gt;</code>
+sheets</li>
+<li><code>ParserMatrix</code> for <code>&lt;MATRIX_TABLE&gt;</code>
+sheets</li>
+<li><code>ParserSpecification</code> for
+<code>&lt;SPECIFICATION&gt;</code> sheets (the legacy marker
+<code>&lt;SPECIFICATION_TABLE&gt;</code> is also registered so existing
+workbooks keep loading)</li>
+</ul>
+<pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;nanook-table&#39;
+
+const logger = new LoggerMemory()
+const fileProcessor = await createDefaultFileProcessor(logger)
+await fileProcessor.load(&#39;resources/tests.xlsx&#39;)</code></pre>
+
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=088033b9"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

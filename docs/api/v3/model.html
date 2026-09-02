@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Model · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The model module defines the core interfaces and classes that represent tables, test case definitions, and directives. Every table type (decision, matrix,…" />
+  <meta property="og:title" content="Model · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api/v3/model" />
+  <meta property="og:description" content="The model module defines the core interfaces and classes that represent tables, test case definitions, and directives. Every table type (decision, matrix,…" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api/v3/model" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc api-v3" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">API reference · Nanook 3.x</p>
+        <h1>Model</h1>
+      </header>
+      <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model" aria-current="page">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
+      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md">docs/api/model.md</a> in the
+        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.0.1:</p>
+      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+<p>The model module defines the core interfaces and classes that
+represent tables, test case definitions, and directives. Every table
+type (decision, matrix, specification) implements these interfaces, and
+every processor operates on them.</p>
+<pre class="typescript"><code>import {
+  TableInterface,
+  TestcaseDefinitionInterface,
+  DirectiveBase,
+  StaticDirective,
+  GeneratorDirective,
+  ReferenceDirective,
+  FieldDirective,
+  MetaTable,
+  MetaTestcase,
+  FilterInterface,
+  PREFIX_GENERATOR,
+  PREFIX_REFERENCE
+} from &#39;nanook-table&#39;</code></pre>
+<h2 id="tableinterface">TableInterface</h2>
+<p>Common interface implemented by all table models
+(<code>TableDecision</code>, <code>TableMatrix</code>). The processor
+operates on this interface without knowing the concrete table type.</p>
+<h3 id="properties">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The name of this table, typically derived from the sheet name</td>
+</tr>
+<tr>
+<td><code>tableType</code></td>
+<td><code>string</code></td>
+<td>The type identifier for this table (e.g., <code>'decision'</code>,
+<code>'matrix'</code>)</td>
+</tr>
+<tr>
+<td><code>meta</code></td>
+<td><code>MetaTable</code></td>
+<td>Metadata about the table, including the source file name</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods">Methods</h3>
+<h4
+id="gettestcasefornametestcasename-string-testcasedefinitioninterface"><code>getTestcaseForName(testcaseName: string): TestcaseDefinitionInterface</code></h4>
+<p>Returns the test case definition with the given name. Throws an error
+if no test case with that name exists in the table.</p>
+<pre class="typescript"><code>const table: TableInterface = // ... loaded table
+const tc = table.getTestcaseForName(&#39;tc1&#39;)
+console.log(tc.testcaseName, tc.execute)</code></pre>
+<h4
+id="gettestcasesforexecution-generatortestcasedefinitioninterface"><code>getTestcasesForExecution(): Generator&lt;TestcaseDefinitionInterface&gt;</code></h4>
+<p>A generator function that yields all test case definitions that
+should be executed. Test cases marked with <code>execute = false</code>
+or <code>neverExecute = true</code> are excluded.</p>
+<pre class="typescript"><code>for (const tc of table.getTestcasesForExecution()) {
+  console.log(tc.testcaseName)
+}</code></pre>
+<h4
+id="processrangestestcasename-string-string"><code>processRanges(testcaseName: string): string[]</code></h4>
+<p>Parses a test case name that may contain a range expression and
+returns an array of individual test case names. For example,
+<code>'tc12-14'</code> expands to <code>['tc12', 'tc13', 'tc14']</code>.
+If the name is not a range, returns a single-element array.</p>
+<pre class="typescript"><code>const names = table.processRanges(&#39;tc3-5&#39;)
+// [&#39;tc3&#39;, &#39;tc4&#39;, &#39;tc5&#39;]</code></pre>
+<hr />
+<h2 id="testcasedefinitioninterface">TestcaseDefinitionInterface</h2>
+<p>Interface for a single test case definition within a table. Each
+column in a decision table or each combination in a matrix table
+produces one test case definition.</p>
+<h3 id="properties-1">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td><code>string</code></td>
+<td>Unique identifier (UUID) for this test case</td>
+</tr>
+<tr>
+<td><code>testcaseName</code></td>
+<td><code>string</code></td>
+<td>The name of this test case (e.g., <code>'tc1'</code>). Used to look
+up the test case in the table</td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>Record&lt;string, Record&lt;string, string&gt;&gt;</code></td>
+<td>The cell data for this test case, organized by section and row</td>
+</tr>
+<tr>
+<td><code>execute</code></td>
+<td><code>boolean</code></td>
+<td>Whether this test case should be executed. <code>false</code> means
+it exists only as a reference target</td>
+</tr>
+<tr>
+<td><code>neverExecute</code></td>
+<td><code>boolean</code></td>
+<td>If <code>true</code>, this test case is never executed, even when
+referenced from another test case</td>
+</tr>
+<tr>
+<td><code>multiplicity</code></td>
+<td><code>number</code></td>
+<td>How many times this test case should be generated. Default is
+<code>1</code></td>
+</tr>
+<tr>
+<td><code>table</code></td>
+<td><code>TableInterface</code></td>
+<td>Reference back to the table this test case belongs to</td>
+</tr>
+<tr>
+<td><code>tableType</code></td>
+<td><code>string</code></td>
+<td>The table type of the parent table</td>
+</tr>
+<tr>
+<td><code>tableName</code></td>
+<td><code>string</code></td>
+<td>The name of the parent table</td>
+</tr>
+<tr>
+<td><code>tableMeta</code></td>
+<td><code>MetaTable</code></td>
+<td>The metadata of the parent table</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-1">Methods</h3>
+<h4
+id="createdirectives-testcasedirectivesinterface"><code>createDirectives(): TestcaseDirectivesInterface</code></h4>
+<p>Analyzes the test case data and creates all directives needed to
+generate this test case. This is the primary method that translates
+spreadsheet cell values into actionable generation instructions.</p>
+<pre class="typescript"><code>const directives = testcase.createDirectives()
+
+for (const sd of directives.static) {
+  console.log(`Static: ${sd.fieldName} = ${sd.value}`)
+}
+
+for (const gd of directives.generator) {
+  console.log(`Generator: ${gd.fieldName} -&gt; ${gd.generatorName}`)
+}
+
+for (const rd of directives.reference) {
+  console.log(`Reference: ${rd.fieldName} -&gt; ${rd.targetTableName}.${rd.targetFieldName}`)
+}</code></pre>
+<h4 id="createtags-string"><code>createTags(): string[]</code></h4>
+<p>Returns all tags defined for this test case. Tags come from
+<code>TagSection</code> rows in the table and are used for
+filtering.</p>
+<pre class="typescript"><code>const tags = testcase.createTags()
+// [&#39;smoke&#39;, &#39;regression&#39;, &#39;login&#39;]</code></pre>
+<h4
+id="createfilter-filterinterface"><code>createFilter(): FilterInterface[]</code></h4>
+<p>Returns all filter definitions for this test case. Each filter has a
+name and a value expression.</p>
+<pre class="typescript"><code>const filters = testcase.createFilter()
+for (const f of filters) {
+  console.log(`Filter: ${f.filterName} = ${f.filterValue}`)
+}</code></pre>
+<h4
+id="creategeneratorswitches-string"><code>createGeneratorSwitches(): string[]</code></h4>
+<p>Returns a list of generator names that should be switched off (not
+executed) for this test case.</p>
+<pre class="typescript"><code>const switches = testcase.createGeneratorSwitches()
+// [&#39;generatorPassword&#39;] -- this generator will be skipped</code></pre>
+<hr />
+<h2 id="testcasedirectivesinterface">TestcaseDirectivesInterface</h2>
+<p>The return type of <code>createDirectives()</code>. Groups all
+directives by type.</p>
+<pre class="typescript"><code>interface TestcaseDirectivesInterface {
+  generator: GeneratorDirective[]
+  static: StaticDirective[]
+  reference: ReferenceDirective[]
+  field: FieldDirective[]
+}</code></pre>
+<hr />
+<h2 id="directivebase">DirectiveBase</h2>
+<p>Abstract base class for all directive types. Contains the metadata
+common to every directive.</p>
+<h3 id="properties-2">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fieldName</code></td>
+<td><code>string</code></td>
+<td>The name of the field this directive applies to</td>
+</tr>
+<tr>
+<td><code>testcaseMeta</code></td>
+<td><code>MetaTestcase</code></td>
+<td>Metadata about the test case and table this directive originates
+from</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="staticdirective">StaticDirective</h2>
+<p>Extends <code>DirectiveBase</code>. Represents a literal value that
+should be written directly to the test case output without calling a
+generator.</p>
+<h3 id="properties-3">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fieldName</code></td>
+<td><code>string</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>testcaseMeta</code></td>
+<td><code>MetaTestcase</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td><code>string</code></td>
+<td>The static value to write</td>
+</tr>
+</tbody>
+</table></div>
+<p>In the spreadsheet, any cell value in the generator column that does
+not start with a recognized prefix (<code>gen:</code> or
+<code>ref:</code>) is treated as static data.</p>
+<hr />
+<h2 id="generatordirective">GeneratorDirective</h2>
+<p>Extends <code>DirectiveBase</code>. Represents a call to a named data
+generator. Created when a cell value starts with the <code>gen:</code>
+prefix.</p>
+<h3 id="properties-4">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fieldName</code></td>
+<td><code>string</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>testcaseMeta</code></td>
+<td><code>MetaTestcase</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>generatorName</code></td>
+<td><code>string</code></td>
+<td>The registered name of the generator to call</td>
+</tr>
+<tr>
+<td><code>config</code></td>
+<td><code>Record&lt;string, unknown&gt;</code></td>
+<td>Configuration parameters passed to the generator</td>
+</tr>
+<tr>
+<td><code>instanceIdSuffix</code></td>
+<td><code>string | undefined</code></td>
+<td>Optional suffix appended to the instance ID. When two directives
+share the same suffix, the generator returns the same data</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td><code>number</code></td>
+<td>Execution order. Directives are sorted by this value before
+execution. Default is <code>1000</code></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="spreadsheet-syntax">Spreadsheet Syntax</h3>
+<pre><code>gen:&lt;generatorName&gt;(&lt;instanceIdSuffix&gt;):&lt;config&gt;</code></pre>
+<p>Examples:</p>
+<ul>
+<li><code>gen:faker:{"method": "person.firstName"}</code> -- call
+GeneratorFaker with the given config</li>
+<li><code>gen:password(pwd):{"minLength": 8}</code> -- call the password
+generator; uses instance ID suffix <code>pwd</code></li>
+</ul>
+<hr />
+<h2 id="referencedirective">ReferenceDirective</h2>
+<p>Extends <code>DirectiveBase</code>. Represents a reference to data
+generated by another table and test case. Created when a cell value
+starts with the <code>ref:</code> prefix.</p>
+<h3 id="properties-5">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fieldName</code></td>
+<td><code>string</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>testcaseMeta</code></td>
+<td><code>MetaTestcase</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>targetTableName</code></td>
+<td><code>string</code></td>
+<td>The name of the table being referenced</td>
+</tr>
+<tr>
+<td><code>targetFieldName</code></td>
+<td><code>string</code></td>
+<td>The field name in the target table</td>
+</tr>
+<tr>
+<td><code>targetTestcaseName</code></td>
+<td><code>string</code></td>
+<td>The test case name in the target table</td>
+</tr>
+<tr>
+<td><code>instanceIdSuffix</code></td>
+<td><code>string | undefined</code></td>
+<td>Optional suffix for the instance ID</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="spreadsheet-syntax-1">Spreadsheet Syntax</h3>
+<pre><code>ref:&lt;targetTableName&gt;:&lt;targetFieldName&gt;:&lt;targetTestcaseName&gt;(&lt;instanceIdSuffix&gt;)</code></pre>
+<hr />
+<h2 id="fielddirective">FieldDirective</h2>
+<p>Extends <code>DirectiveBase</code>. Represents a field selection
+marker. Used internally to track which fields are active in a test
+case.</p>
+<h3 id="properties-6">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fieldName</code></td>
+<td><code>string</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>testcaseMeta</code></td>
+<td><code>MetaTestcase</code></td>
+<td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="filterinterface">FilterInterface</h2>
+<p>Defines a filter that can be applied to test cases during
+processing.</p>
+<h3 id="properties-7">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>filterName</code></td>
+<td><code>string</code></td>
+<td>The name of the filter processor to use</td>
+</tr>
+<tr>
+<td><code>filterValue</code></td>
+<td><code>string</code></td>
+<td>The filter expression passed to the filter processor</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="metatable">MetaTable</h2>
+<p>Metadata about a table's origin.</p>
+<h3 id="properties-8">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fileName</code></td>
+<td><code>string</code></td>
+<td>The source file path</td>
+</tr>
+<tr>
+<td><code>tableName</code></td>
+<td><code>string</code></td>
+<td>The name of the table (sheet name)</td>
+</tr>
+<tr>
+<td><code>tableType</code></td>
+<td><code>string</code></td>
+<td>The type of the table</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="metatestcase">MetaTestcase</h2>
+<p>Metadata about a specific test case. Extends the table metadata with
+test case identification.</p>
+<h3 id="properties-9">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>fileName</code></td>
+<td><code>string</code></td>
+<td>The source file path</td>
+</tr>
+<tr>
+<td><code>tableName</code></td>
+<td><code>string</code></td>
+<td>The name of the table</td>
+</tr>
+<tr>
+<td><code>tableType</code></td>
+<td><code>string</code></td>
+<td>The type of the table</td>
+</tr>
+<tr>
+<td><code>testcaseName</code></td>
+<td><code>string</code></td>
+<td>The name of the test case</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="constants">Constants</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Constant</th>
+<th>Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PREFIX_GENERATOR</code></td>
+<td><code>'gen'</code></td>
+<td>The prefix that identifies generator commands in cell values</td>
+</tr>
+<tr>
+<td><code>PREFIX_REFERENCE</code></td>
+<td><code>'ref'</code></td>
+<td>The prefix that identifies reference commands in cell values</td>
+</tr>
+</tbody>
+</table></div>
+
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=088033b9"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

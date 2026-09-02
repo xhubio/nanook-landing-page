@@ -21,10 +21,11 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="/css/nanook.css?v=4c2ba5e1" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
 </head>
 
 <body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
@@ -51,12 +52,32 @@
       <h1>API Reference</h1>
       <p>The interfaces and classes of every Nanook module, grouped the way the
         packages are.</p>
-      <p>This reference describes Nanook 1.x (JavaScript). Since 2.0 (March 2026) Nanook is
-        TypeScript/ESM; <code>Processor</code> is now <code>TestcaseProcessor</code>,
-        <code>TDGServiceRegistry</code> is <code>DataGeneratorRegistry</code>. The current reference lives in
-        the repository: <a href="https://github.com/xhubio/nanook-table/tree/master/docs/api">docs/api</a>.</p>
+      <p>The five rows marked 3.x are the current reference, generated from the repository's
+        <a href="https://github.com/xhubio/nanook-table/tree/master/docs/api">docs/api</a>. The groups below
+        them describe Nanook 1.x (JavaScript): <code>Processor</code> is now <code>TestcaseProcessor</code>,
+        <code>TDGServiceRegistry</code> is <code>DataGeneratorRegistry</code>.</p>
     </header>
     <nav aria-label="API module groups">
+      <a class="docs-hub-row" href="/docs/api/v3/processor">
+        <h2>Processor <span class="row-tag">3.x</span></h2>
+        <p>TestcaseProcessor, the writer interface, filters, and the factory functions for a quick setup.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/v3/model">
+        <h2>Model <span class="row-tag">3.x</span></h2>
+        <p>Table and test case interfaces, the directive types, metadata.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/v3/data-generator">
+        <h2>Data generator <span class="row-tag">3.x</span></h2>
+        <p>Generator interface, DataGeneratorBase, DataGeneratorRegistry, GeneratorFaker.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/v3/file-processor">
+        <h2>File processor <span class="row-tag">3.x</span></h2>
+        <p>Importers, parsers for decision, matrix and specification tables, the specification converter.</p>
+      </a>
+      <a class="docs-hub-row" href="/docs/api/v3/logger">
+        <h2>Logger <span class="row-tag">3.x</span></h2>
+        <p>LoggerInterface and the in-memory LoggerMemory.</p>
+      </a>
       <a class="docs-hub-row" href="/docs/api/model/TableInterface">
         <h2>model</h2>
         <p>The base contracts — TableInterface, TestcaseDefinitionInterface — and

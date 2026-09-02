@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Logger · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="The logger module provides a logging interface used by all Nanook components and an in-memory implementation suitable for development, testing, and…" />
+  <meta property="og:title" content="Logger · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/api/v3/logger" />
+  <meta property="og:description" content="The logger module provides a logging interface used by all Nanook components and an in-memory implementation suitable for development, testing, and…" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/api/v3/logger" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc api-v3" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">API reference · Nanook 3.x</p>
+        <h1>Logger</h1>
+      </header>
+      <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger" aria-current="page">Logger</a></li></ul></nav>
+      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md">docs/api/logger.md</a> in the
+        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.0.1:</p>
+      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+<p>The logger module provides a logging interface used by all Nanook
+components and an in-memory implementation suitable for development,
+testing, and production use.</p>
+<pre class="typescript"><code>import {
+  LoggerInterface,
+  LoggerMemory,
+  getLoggerMemory
+} from &#39;nanook-table&#39;</code></pre>
+<hr />
+<h2 id="loggerinterface">LoggerInterface</h2>
+<p>Abstract base class that defines the logging contract. All Nanook
+components accept a <code>LoggerInterface</code> and use it for
+diagnostic output. You can implement this interface to integrate with
+any logging framework (Winston, Pino, console, etc.).</p>
+<h3 id="log-levels">Log Levels</h3>
+<p>Log levels are ordered by severity. Setting the logger to a given
+level means it will only output messages at that level or higher.</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Level</th>
+<th>Numeric Value</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>debug</code></td>
+<td><code>0</code></td>
+<td>Detailed diagnostic information</td>
+</tr>
+<tr>
+<td><code>info</code></td>
+<td><code>1</code></td>
+<td>General informational messages</td>
+</tr>
+<tr>
+<td><code>warning</code></td>
+<td><code>2</code></td>
+<td>Potentially problematic situations</td>
+</tr>
+<tr>
+<td><code>error</code></td>
+<td><code>3</code></td>
+<td>Error conditions that allow continued operation</td>
+</tr>
+<tr>
+<td><code>fatal</code></td>
+<td><code>4</code></td>
+<td>Severe errors that may cause the process to abort</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="properties">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>level</code></td>
+<td><code>string | number</code></td>
+<td>The current log level. Messages below this level are suppressed. Can
+be set as a string (<code>'debug'</code>, <code>'info'</code>, etc.) or
+a number (<code>0</code>--<code>4</code>)</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods">Methods</h3>
+<h4 id="clear-void"><code>clear(): void</code></h4>
+<p>Clears all stored log entries. The specific behavior depends on the
+implementation.</p>
+<h4
+id="getlevelnumberlevel-string-number"><code>getLevelNumber(level: string): number</code></h4>
+<p>Converts a log level string to its numeric value.</p>
+<pre class="typescript"><code>logger.getLevelNumber(&#39;warning&#39;) // 2
+logger.getLevelNumber(&#39;debug&#39;)   // 0</code></pre>
+<h4 id="gettime-string"><code>getTime(): string</code></h4>
+<p>Returns the current time formatted for log entries. The format is
+implementation-specific.</p>
+<h4
+id="async-debugmessage-string--object-promisevoid"><code>async debug(message: string | object): Promise&lt;void&gt;</code></h4>
+<p>Logs a message at the <code>debug</code> level (numeric value
+<code>0</code>).</p>
+<pre class="typescript"><code>await logger.debug(&#39;Processing table: LoginTests&#39;)
+await logger.debug({ table: &#39;LoginTests&#39;, testcases: 5 })</code></pre>
+<h4
+id="async-infomessage-string--object-promisevoid"><code>async info(message: string | object): Promise&lt;void&gt;</code></h4>
+<p>Logs a message at the <code>info</code> level (numeric value
+<code>1</code>).</p>
+<pre class="typescript"><code>await logger.info(&#39;File loaded successfully&#39;)</code></pre>
+<h4
+id="async-warningmessage-string--object-promisevoid"><code>async warning(message: string | object): Promise&lt;void&gt;</code></h4>
+<p>Logs a message at the <code>warning</code> level (numeric value
+<code>2</code>).</p>
+<pre class="typescript"><code>await logger.warning(&#39;Sheet &quot;OldFormat&quot; uses deprecated section type&#39;)</code></pre>
+<h4
+id="async-errormessage-string--object-promisevoid"><code>async error(message: string | object): Promise&lt;void&gt;</code></h4>
+<p>Logs a message at the <code>error</code> level (numeric value
+<code>3</code>).</p>
+<pre class="typescript"><code>await logger.error(&#39;Generator &quot;myGen&quot; failed after 100 uniqueness retries&#39;)</code></pre>
+<h4
+id="async-fatalmessage-string--object-promisevoid"><code>async fatal(message: string | object): Promise&lt;void&gt;</code></h4>
+<p>Logs a message at the <code>fatal</code> level (numeric value
+<code>4</code>).</p>
+<pre class="typescript"><code>await logger.fatal(&#39;Cannot open file: tests.xlsx&#39;)</code></pre>
+<h3 id="implementing-a-custom-logger">Implementing a Custom Logger</h3>
+<p>To integrate Nanook with your own logging infrastructure, extend
+<code>LoggerInterface</code> and override the <code>_writeLog</code>
+method:</p>
+<pre class="typescript"><code>import { LoggerInterface } from &#39;nanook-table&#39;
+
+class WinstonLogger extends LoggerInterface {
+  private winston: WinstonInstance
+
+  constructor(winston: WinstonInstance) {
+    super()
+    this.winston = winston
+  }
+
+  _writeLog(level: string, entry: string | object): void {
+    const message = typeof entry === &#39;string&#39; ? entry : JSON.stringify(entry)
+    this.winston.log(level, message)
+  }
+
+  clear(): void {
+    // Winston does not support clearing logs
+  }
+}</code></pre>
+<hr />
+<h2 id="loggermemory">LoggerMemory</h2>
+<p>In-memory logger that stores all log entries in arrays, organized by
+level. Optionally also writes to the console. This is the default logger
+used in examples and tests.</p>
+<h3 id="extends">Extends</h3>
+<p><code>LoggerInterface</code></p>
+<h3 id="constructor">Constructor</h3>
+<pre class="typescript"><code>new LoggerMemory()</code></pre>
+<h3 id="properties-1">Properties</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Type</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>writeConsole</code></td>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+<td>When <code>true</code>, log entries are also printed to
+<code>console</code>. Set this to <code>true</code> during development
+to see output</td>
+</tr>
+<tr>
+<td><code>entries</code></td>
+<td><code>LogEntries</code></td>
+<td><code>{ debug: [], info: [], warning: [], error: [], fatal: [] }</code></td>
+<td>All stored log entries, organized by level. Each entry contains the
+timestamp and message</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="methods-1">Methods</h3>
+<h4 id="clear-void-1"><code>clear(): void</code></h4>
+<p>Empties all log entry arrays.</p>
+<pre class="typescript"><code>const logger = new LoggerMemory()
+await logger.info(&#39;hello&#39;)
+console.log(logger.entries.info.length) // 1
+
+logger.clear()
+console.log(logger.entries.info.length) // 0</code></pre>
+<h3 id="example">Example</h3>
+<pre class="typescript"><code>import { LoggerMemory } from &#39;nanook-table&#39;
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+await logger.info(&#39;Starting generation&#39;)
+await logger.debug(&#39;Processing sheet: LoginTests&#39;)
+await logger.warning(&#39;Empty test case column found&#39;)
+
+// Access stored entries
+for (const entry of logger.entries.warning) {
+  console.log(`Warning at ${entry.time}: ${entry.message}`)
+}
+
+// Check for errors after processing
+if (logger.entries.error.length &gt; 0) {
+  console.log(`${logger.entries.error.length} errors occurred`)
+}</code></pre>
+<h3 id="log-entry-structure">Log Entry Structure</h3>
+<p>Each entry in the <code>entries</code> arrays is an object with:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>time</code></td>
+<td><code>string</code></td>
+<td>Formatted timestamp of when the entry was logged</td>
+</tr>
+<tr>
+<td><code>message</code></td>
+<td><code>string | object</code></td>
+<td>The logged message or data object</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="getloggermemory">getLoggerMemory()</h2>
+<p>Factory function that creates and returns a new
+<code>LoggerMemory</code> instance.</p>
+<pre class="typescript"><code>import { getLoggerMemory } from &#39;nanook-table&#39;
+
+const logger = getLoggerMemory()
+logger.writeConsole = true
+await logger.info(&#39;Ready&#39;)</code></pre>
+<p>This is a convenience shorthand for
+<code>new LoggerMemory()</code>.</p>
+<hr />
+<h2 id="usage-patterns">Usage Patterns</h2>
+<h3 id="development----console-output-enabled">Development -- console
+output enabled</h3>
+<pre class="typescript"><code>const logger = new LoggerMemory()
+logger.writeConsole = true
+logger.level = &#39;debug&#39;</code></pre>
+<h3 id="testing----capture-and-assert-on-log-entries">Testing -- capture
+and assert on log entries</h3>
+<pre class="typescript"><code>import { describe, it, expect } from &#39;vitest&#39;
+import { LoggerMemory } from &#39;nanook-table&#39;
+
+describe(&#39;my generator&#39;, () =&gt; {
+  it(&#39;logs a warning for empty config&#39;, async () =&gt; {
+    const logger = new LoggerMemory()
+    const gen = new MyGenerator({ logger })
+
+    await gen.generate(&#39;id1&#39;, testcase, directive)
+
+    expect(logger.entries.warning.length).toBe(1)
+    expect(logger.entries.warning[0].message).toContain(&#39;empty config&#39;)
+  })
+})</code></pre>
+<h3 id="production----suppress-low-level-output">Production -- suppress
+low-level output</h3>
+<pre class="typescript"><code>const logger = new LoggerMemory()
+logger.level = &#39;warning&#39; // only warning, error, and fatal are logged</code></pre>
+
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=088033b9"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

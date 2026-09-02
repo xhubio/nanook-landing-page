@@ -12,7 +12,7 @@
 - [Static Data](https://nanook.xhub.io/docs/guide/generatrorCommand/static): Static test data definitions
 - [References](https://nanook.xhub.io/docs/guide/generatrorCommand/reference): Cross-table data references
 - [Instance IDs](https://nanook.xhub.io/docs/guide/advanced/instanceIds): How repeated generator calls produce one coherent record
-- [Current 3.x documentation in the repository](https://github.com/xhubio/nanook-table/tree/master/docs): Guides (decision, matrix and specification tables, directives), tutorials and API reference for the TypeScript version. The API pages on this site describe the 1.x API.
+- [Current 3.x documentation in the repository](https://github.com/xhubio/nanook-table/tree/master/docs): Guides (decision, matrix and specification tables, directives), tutorials and API reference for the TypeScript version. The 1.x API pages on this site carry a version note; the 3.x reference is under /docs/api/v3/.
 
 ## Tutorials
 - [Create Equivalence Class Table](https://nanook.xhub.io/docs/tutorials/createEquivalenceClassTable): Step-by-step guide
@@ -27,7 +27,12 @@
 - [Data Generator Base](https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorBase): Base class for generators (the registry is TDGServiceRegistry in 1.x, DataGeneratorRegistry in 3.x)
 - [Table Decision](https://nanook.xhub.io/docs/api/model-decision/TableDecision): Decision table model
 - [File Processor](https://nanook.xhub.io/docs/api/file-processor/FileProcessor): Spreadsheet file handling
-- [3.x API reference in the repository](https://github.com/xhubio/nanook-table/tree/master/docs/api): model, data generator, file processor, processor, logger
+- [3.x API reference — Processor](https://nanook.xhub.io/docs/api/v3/processor): TestcaseProcessor, writers, filters, factory functions (generated from the repository)
+- [3.x API reference — Model](https://nanook.xhub.io/docs/api/v3/model): Table and test case interfaces, directive types
+- [3.x API reference — Data generator](https://nanook.xhub.io/docs/api/v3/data-generator): DataGeneratorBase, DataGeneratorRegistry, GeneratorFaker
+- [3.x API reference — File processor](https://nanook.xhub.io/docs/api/v3/file-processor): Importers, parsers, specification converter
+- [3.x API reference — Logger](https://nanook.xhub.io/docs/api/v3/logger): LoggerInterface, LoggerMemory
+- [3.x API reference source](https://github.com/xhubio/nanook-table/tree/master/docs/api): the Markdown these five pages are generated from
 
 ## Blog
 - [How We Test a SaaS Application with Nanook](https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook): Field report — decision tables as the single source of a Playwright suite

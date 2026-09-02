@@ -2,18 +2,26 @@
 
 <url><loc>https://nanook.xhub.io/about</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 <url><loc>https://nanook.xhub.io/imprint</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-<url><loc>https://nanook.xhub.io/blog</loc><lastmod>2026-08-21</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://nanook.xhub.io/blog</loc><lastmod>2026-09-02</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://nanook.xhub.io/docs</loc><lastmod>2026-09-02</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://nanook.xhub.io/docs/api</loc><lastmod>2026-09-02</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://nanook.xhub.io/</loc><lastmod>2026-09-02</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
 <url><loc>https://nanook.xhub.io/privacyPolicy</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
+<url><loc>https://nanook.xhub.io/blog/2026/09/02/test-automation-nanook-playwright-ai</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables</loc><lastmod>2026-08-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table</loc><lastmod>2026-08-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook</loc><lastmod>2026-08-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables</loc><lastmod>2026-03-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/03/20/test-data-manual-vs-automated</loc><lastmod>2026-03-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/02/25/reactivation</loc><lastmod>2026-03-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/03/01/equivalence-class-testing</loc><lastmod>2026-03-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2019/06/01/introducing</loc><lastmod>2026-03-28</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+<url><loc>https://nanook.xhub.io/blog/2026/03/01/equivalence-class-testing</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
+<url><loc>https://nanook.xhub.io/blog/2019/06/01/introducing</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
+<url><loc>https://nanook.xhub.io/docs/api/v3/processor</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nanook.xhub.io/docs/api/v3/model</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nanook.xhub.io/docs/api/v3/data-generator</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nanook.xhub.io/docs/api/v3/file-processor</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
+<url><loc>https://nanook.xhub.io/docs/api/v3/logger</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorBase</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 <url><loc>https://nanook.xhub.io/docs/api/dataGenerator/DataGeneratorInterface</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 <url><loc>https://nanook.xhub.io/docs/api/dataGenerator/GeneratorFaker</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
@@ -87,6 +95,7 @@
 <url><loc>https://nanook.xhub.io/docs/quickstart/quickstart</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://nanook.xhub.io/docs/tutorials/createEquivalenceClassTable</loc><lastmod>2026-03-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
+<url><loc>https://nanook.xhub.io/docs/tutorials/createFilterProcessor</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/docs/tutorials/createGenerator</loc><lastmod>2026-03-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/docs/tutorials/createWriter</loc><lastmod>2026-03-28</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/docs/tutorials/overview</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>

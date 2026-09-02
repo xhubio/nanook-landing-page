@@ -29,7 +29,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="/css/nanook.css?v=4c2ba5e1" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -54,6 +54,7 @@
 </head>
 
 <body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
   <header class="site-header">
     <div class="header-inner">
       <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
@@ -95,6 +96,13 @@
                 <div class="navGroup">
                   <h3 class="navGroupCategoryTitle">Recent Posts</h3>
                   <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/02/test-automation-nanook-playwright-ai"><samp
+                          class="nav-date">2026-09</samp> Tests Got Cheap</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/29/e-invoicing-decision-tables"><samp
+                          class="nav-date">2026-08</samp> E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
                     <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
                           class="nav-date">2026-08</samp> Testing a SaaS</a></li>
                     <li class="navListItem"><a class="navItem"
@@ -213,6 +221,7 @@
 
                   <h2>Getting Started</h2>
                   <p>The quickest way to try Nanook-Table is to clone the quickstart repository and run the example:</p>
+                  <p><em>Note (September 2026): the <code>quickstart-source</code> repository is archived (last change November 2020) and targets Nanook 1.x. Nanook 3 is installed with <code>npm install @xhubio/nanook-table</code> on Node.js 22 or newer &mdash; see the <a href="/docs/quickstart/quickstart">quickstart</a>.</em></p>
                   <pre><code>git clone https://github.com/xhubioTable/quickstart-source.git
 cd quickstart-source
 yarn install
