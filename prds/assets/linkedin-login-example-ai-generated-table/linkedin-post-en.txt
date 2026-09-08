@@ -1,0 +1,13 @@
+A login form. Two fields, one precondition. 36 combinations — how many test cases? Eight. The first run produced SEVEN.
+
+One line is the entry point: /createEquivalenceClassTable Login Form. The table follows the Claude Code skill's rules; Nanook generates the data.
+
+What the table says: the account state with 3 classes, email with 4, password with 3. Eight columns cover all 36 combinations — 100%, every class exactly once. Read one column and the method explains itself: E_passwordTooShort has an active account, a valid email and a password that is too short. EXACTLY ONE THING WRONG, everything else right. The test everyone has written — empty email AND short password — passes when the form rejects either one, and proves nothing about which.
+
+Why seven: a generator call threw, the error went to the log, the run continued. No red light. If nothing checks the count of cases against the count of columns, a case disappears quietly. The fix was ten lines.
+
+The full example — table, generated data, the limitation and the fix:
+
+👉 https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table
+
+#softwaretesting #testdesign #testdata #qa #claudecode

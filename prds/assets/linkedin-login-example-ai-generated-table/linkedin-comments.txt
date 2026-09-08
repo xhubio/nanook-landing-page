@@ -1,20 +1,14 @@
-=== Comment 1 — Torsten Link (author of the post; first comment under it) ===
+=== Kommentar 1 — Torsten Link (Autor des Beitrags; erster Kommentar unter dem Post) ===
 
-Two things the post does not say loudly enough. First, the discipline is the column, not the tool: in every error case exactly one thing is wrong and everything else is right, so a red result can only mean one thing. Second, the seven-of-eight is not a Nanook quirk to apologise for; it is what any generator pipeline does when a call fails and nobody counts. Count. The number of generated cases must equal the number of columns, every run.
+Zwei Dinge, die der Beitrag nicht laut genug sagt. Erstens: Die Disziplin steckt in der Spalte, nicht im Werkzeug. In jedem Fehlerfall ist genau eine Sache falsch und alles andere richtig, also kann ein rotes Ergebnis nur eines bedeuten. Zweitens: Die sieben von acht sind keine Nanook-Eigenheit, für die man sich entschuldigen müsste. Das passiert in jeder Generator-Pipeline, wenn ein Aufruf scheitert und niemand zählt. Also zählen. Die Zahl der erzeugten Fälle muss der Zahl der Spalten entsprechen, bei jedem Lauf.
 
-If you want to try it on your own form without cloning anything: the skill ships inside the npm package, and the quickstart walks through it step by step: https://nanook.xhub.io/docs/quickstart/claude-code
+Wer es am eigenen Formular ausprobieren will, ohne etwas zu klonen: Der Skill liegt im npm-Paket, und der Quickstart führt Schritt für Schritt durch: https://nanook.xhub.io/docs/quickstart/claude-code
 
-=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
 
-What I like about this example is who can read it. The table is the specification, and it is a grid: fields, classes, crosses. Someone who does not write TypeScript can check whether "too long" means 254 or 255, and when a class is added to email, the number of cases follows on its own. Nobody edits a test file. That is the part that stays valuable after day one, long after these eight cases have run.
+Was mir an dem Beispiel gefällt, ist, wer es lesen kann. Die Tabelle ist die Spezifikation, und sie ist ein Raster: Felder, Klassen, Kreuze. Wer kein TypeScript schreibt, kann trotzdem prüfen, ob „zu lang“ 254 oder 255 heißt, und kommt bei der E-Mail eine Klasse dazu, folgt die Zahl der Fälle von selbst. Niemand fasst eine Testdatei an. Das ist der Teil, der nach dem ersten Tag wertvoll bleibt, lange nachdem diese acht Fälle gelaufen sind.
 
-=== Repost — Patrick Jerominek resharing Torsten's post ===
-
-Seven test cases came back instead of eight, and nothing turned red. That line is why I am sharing this.
-
-Torsten's worked example takes one login form from a one-line prompt to a decision table and generated test data, and it keeps the part where it went wrong, because a tutorial without friction is a demo. Two fields, one precondition, 36 combinations, 8 cases. Check the number.
-
-=== Repost, German variant (for a German-speaking network) ===
+=== Repost — Patrick Jerominek teilt Torstens Beitrag ===
 
 Sieben Testfälle statt acht, und nichts wurde rot. Wegen dieser Zeile teile ich den Beitrag.
 

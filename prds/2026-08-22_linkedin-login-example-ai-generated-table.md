@@ -4,15 +4,43 @@
 |---|---|
 | **Links to** | `https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table` |
 | **Publish** | the blog post is live (since 2026-09-02) |
+| **Language** | German (the network is German-speaking; the linked article is English and the post says so). English versions kept as alternatives for an English-language company page |
 | **Author** | Draft A has no first person and works from any account; Draft B is written as "we" |
 | **Length** | ~180 words; LinkedIn cuts after about three lines (~210 characters), so line 1 carries the hook and the numbers on its own |
 | **Purpose** | Point at the worked example. The widest audience of any Nanook post: everybody understands a login form |
-| **Status** | Draft, 2026-09-08 (lektor pass applied) |
-| **Ready to paste** | `assets/linkedin-login-example-ai-generated-table/linkedin-post.txt` (Draft A, plain text) |
+| **Status** | Draft, 2026-09-08 (lektor pass applied; German primary since 2026-09-08) |
+| **Ready to paste** | `assets/linkedin-login-example-ai-generated-table/linkedin-post.txt` (Draft A, German) · `linkedin-post-en.txt` (English) · `linkedin-comments.txt` / `linkedin-comments-en.txt` |
 
 ---
 
-## Draft A — the number that went missing (recommended)
+## Draft A, German — primary
+
+> Ein Login-Formular. Zwei Felder, eine Vorbedingung. 36 Kombinationen — wie viele Testfälle?
+> Acht. Der erste Lauf lieferte **sieben**.
+>
+> Der Einstieg ist eine Zeile: /createEquivalenceClassTable Login Form. Die Tabelle folgt den
+> Regeln des Claude-Code-Skills, Nanook erzeugt die Daten.
+>
+> Was die Tabelle sagt: Kontozustand mit 3 Klassen, E-Mail mit 4, Passwort mit 3. Acht Spalten
+> decken alle 36 Kombinationen ab — 100%, jede Klasse genau einmal. Eine Spalte lesen, und die
+> Methode erklärt sich selbst: E_passwordTooShort hat ein aktives Konto, eine gültige E-Mail und
+> ein zu kurzes Passwort. **Genau eine Sache falsch**, alles andere richtig. Der Test, den jeder
+> schon geschrieben hat — leere E-Mail *und* kurzes Passwort — ist grün, sobald das Formular eines
+> von beiden ablehnt, und beweist nichts darüber, welches.
+>
+> Warum sieben: Ein Generator-Aufruf warf eine Exception, der Fehler ging ins Log, der Lauf lief
+> weiter. Nichts wurde rot. Wenn niemand die Zahl der erzeugten Fälle gegen die Zahl der Spalten
+> prüft, verschwindet ein Fall lautlos. Der Fix: zehn Zeilen.
+>
+> Das vollständige Beispiel mit Tabelle, generierten Daten, der Grenze und dem Fix (auf Englisch):
+>
+> 👉 [link]
+>
+> #softwaretesting #testautomatisierung #testdesign #qa #claudecode
+
+---
+
+## Draft A, English — the number that went missing
 
 > A login form. Two fields, one precondition. 36 combinations — how many test cases? Eight. The
 > first run produced **seven**.
@@ -39,7 +67,7 @@
 
 ---
 
-## Draft B — the counter-example lead
+## Draft B, English — the counter-example lead
 
 > The login test everyone has written: empty email *and* a short password. It passes when the
 > form rejects either one. It proves nothing about which.
@@ -104,41 +132,45 @@ dark-first; export a PNG before uploading, LinkedIn does not take SVG.
 ## Comments and repost
 
 Assumed roles: the post goes out from Torsten's account (blog author); Torsten adds the first
-comment, Patrick comments as the company; Patrick reshares. If the roles flip, swap the names, not
-the texts. Ready to paste: `assets/linkedin-login-example-ai-generated-table/linkedin-comments.txt`.
+comment, Patrick comments as the company; Patrick reshares the next day. If the roles flip, swap
+the names, not the texts. Ready to paste: `assets/linkedin-login-example-ai-generated-table/linkedin-comments.txt`
+(German) and `linkedin-comments-en.txt` (English).
 
-### Comment 1 — Torsten Link, first comment under the post
+### Kommentar 1 — Torsten Link, erster Kommentar unter dem Post
 
-> Two things the post does not say loudly enough. First, the discipline is the column, not the
-> tool: in every error case exactly one thing is wrong and everything else is right, so a red result
-> can only mean one thing. Second, the seven-of-eight is not a Nanook quirk to apologise for; it is
-> what any generator pipeline does when a call fails and nobody counts. Count. The number of
-> generated cases must equal the number of columns, every run.
+> Zwei Dinge, die der Beitrag nicht laut genug sagt. Erstens: Die Disziplin steckt in der Spalte,
+> nicht im Werkzeug. In jedem Fehlerfall ist genau eine Sache falsch und alles andere richtig, also
+> kann ein rotes Ergebnis nur eines bedeuten. Zweitens: Die sieben von acht sind keine
+> Nanook-Eigenheit, für die man sich entschuldigen müsste. Das passiert in jeder
+> Generator-Pipeline, wenn ein Aufruf scheitert und niemand zählt. Also zählen. Die Zahl der
+> erzeugten Fälle muss der Zahl der Spalten entsprechen, bei jedem Lauf.
 >
-> If you want to try it on your own form without cloning anything: the skill ships inside the npm
-> package, and the quickstart walks through it step by step:
+> Wer es am eigenen Formular ausprobieren will, ohne etwas zu klonen: Der Skill liegt im
+> npm-Paket, und der Quickstart führt Schritt für Schritt durch:
 > https://nanook.xhub.io/docs/quickstart/claude-code
 
-### Comment 2 — Patrick Jerominek, BeeBack UG
+### Kommentar 2 — Patrick Jerominek, BeeBack UG
 
-> What I like about this example is who can read it. The table is the specification, and it is a
-> grid: fields, classes, crosses. Someone who does not write TypeScript can check whether "too long"
-> means 254 or 255, and when a class is added to email, the number of cases follows on its own.
-> Nobody edits a test file. That is the part that stays valuable after day one, long after these
-> eight cases have run.
+> Was mir an dem Beispiel gefällt, ist, wer es lesen kann. Die Tabelle ist die Spezifikation, und
+> sie ist ein Raster: Felder, Klassen, Kreuze. Wer kein TypeScript schreibt, kann trotzdem prüfen,
+> ob „zu lang“ 254 oder 255 heißt, und kommt bei der E-Mail eine Klasse dazu, folgt die Zahl der
+> Fälle von selbst. Niemand fasst eine Testdatei an. Das ist der Teil, der nach dem ersten Tag
+> wertvoll bleibt, lange nachdem diese acht Fälle gelaufen sind.
 
-### Repost — Patrick Jerominek resharing the post
+### Repost — Patrick Jerominek teilt Torstens Beitrag
 
-> Seven test cases came back instead of eight, and nothing turned red. That line is why I am
-> sharing this.
+> Sieben Testfälle statt acht, und nichts wurde rot. Wegen dieser Zeile teile ich den Beitrag.
 >
-> Torsten's worked example takes one login form from a one-line prompt to a decision table and
-> generated test data, and it keeps the part where it went wrong, because a tutorial without
-> friction is a demo. Two fields, one precondition, 36 combinations, 8 cases. Check the number.
+> Torstens Beispiel führt ein Login-Formular von einem einzeiligen Prompt zur Entscheidungstabelle
+> und zu generierten Testdaten, und es lässt die Stelle drin, an der es schiefging, weil ein
+> Tutorial ohne Reibung nur eine Demo ist. Zwei Felder, eine Vorbedingung, 36 Kombinationen,
+> 8 Fälle. Zähl nach.
 
-German variant for a German-speaking network in the `.txt`.
+English versions of all three in `linkedin-comments-en.txt`.
 
 Notes: every figure is from the post (7 of 8, 36, 8, 254/255, "add a class and the case count
 follows"); the quickstart link in comment 1 points at the page that exists since 2026-09-02 and
 says nothing the page does not verify. Comments go out within the first hour; the repost the next
-day, so the post gets a second run in the feed.
+day, so the post gets a second run in the feed. The image keeps "Check the number." in English;
+switch the headline to "Zähl nach." in `linkedin-single.svg` if the post should be German
+throughout.

@@ -1,13 +1,13 @@
-A login form. Two fields, one precondition. 36 combinations — how many test cases? Eight. The first run produced SEVEN.
+Ein Login-Formular. Zwei Felder, eine Vorbedingung. 36 Kombinationen — wie viele Testfälle? Acht. Der erste Lauf lieferte SIEBEN.
 
-One line is the entry point: /createEquivalenceClassTable Login Form. The table follows the Claude Code skill's rules; Nanook generates the data.
+Der Einstieg ist eine Zeile: /createEquivalenceClassTable Login Form. Die Tabelle folgt den Regeln des Claude-Code-Skills, Nanook erzeugt die Daten.
 
-What the table says: the account state with 3 classes, email with 4, password with 3. Eight columns cover all 36 combinations — 100%, every class exactly once. Read one column and the method explains itself: E_passwordTooShort has an active account, a valid email and a password that is too short. EXACTLY ONE THING WRONG, everything else right. The test everyone has written — empty email AND short password — passes when the form rejects either one, and proves nothing about which.
+Was die Tabelle sagt: Kontozustand mit 3 Klassen, E-Mail mit 4, Passwort mit 3. Acht Spalten decken alle 36 Kombinationen ab — 100%, jede Klasse genau einmal. Eine Spalte lesen, und die Methode erklärt sich selbst: E_passwordTooShort hat ein aktives Konto, eine gültige E-Mail und ein zu kurzes Passwort. GENAU EINE SACHE FALSCH, alles andere richtig. Der Test, den jeder schon geschrieben hat — leere E-Mail UND kurzes Passwort — ist grün, sobald das Formular eines von beiden ablehnt, und beweist nichts darüber, welches.
 
-Why seven: a generator call threw, the error went to the log, the run continued. No red light. If nothing checks the count of cases against the count of columns, a case disappears quietly. The fix was ten lines.
+Warum sieben: Ein Generator-Aufruf warf eine Exception, der Fehler ging ins Log, der Lauf lief weiter. Nichts wurde rot. Wenn niemand die Zahl der erzeugten Fälle gegen die Zahl der Spalten prüft, verschwindet ein Fall lautlos. Der Fix: zehn Zeilen.
 
-The full example — table, generated data, the limitation and the fix:
+Das vollständige Beispiel mit Tabelle, generierten Daten, der Grenze und dem Fix (auf Englisch):
 
 👉 https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table
 
-#softwaretesting #testdesign #testdata #qa #claudecode
+#softwaretesting #testautomatisierung #testdesign #qa #claudecode
