@@ -1,0 +1,21 @@
+=== Comment 1 — Torsten Link (author of the post; first comment under it) ===
+
+Two things the post does not say loudly enough. First, the discipline is the column, not the tool: in every error case exactly one thing is wrong and everything else is right, so a red result can only mean one thing. Second, the seven-of-eight is not a Nanook quirk to apologise for; it is what any generator pipeline does when a call fails and nobody counts. Count. The number of generated cases must equal the number of columns, every run.
+
+If you want to try it on your own form without cloning anything: the skill ships inside the npm package, and the quickstart walks through it step by step: https://nanook.xhub.io/docs/quickstart/claude-code
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+What I like about this example is who can read it. The table is the specification, and it is a grid: fields, classes, crosses. Someone who does not write TypeScript can check whether "too long" means 254 or 255, and when a class is added to email, the number of cases follows on its own. Nobody edits a test file. That is the part that stays valuable after day one, long after these eight cases have run.
+
+=== Repost — Patrick Jerominek resharing Torsten's post ===
+
+Seven test cases came back instead of eight, and nothing turned red. That line is why I am sharing this.
+
+Torsten's worked example takes one login form from a one-line prompt to a decision table and generated test data, and it keeps the part where it went wrong, because a tutorial without friction is a demo. Two fields, one precondition, 36 combinations, 8 cases. Check the number.
+
+=== Repost, German variant (for a German-speaking network) ===
+
+Sieben Testfälle statt acht, und nichts wurde rot. Wegen dieser Zeile teile ich den Beitrag.
+
+Torstens Beispiel führt ein Login-Formular von einem einzeiligen Prompt zur Entscheidungstabelle und zu generierten Testdaten, und es lässt die Stelle drin, an der es schiefging, weil ein Tutorial ohne Reibung nur eine Demo ist. Zwei Felder, eine Vorbedingung, 36 Kombinationen, 8 Fälle. Zähl nach.
