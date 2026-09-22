@@ -49,6 +49,16 @@
         </author>
     </entry>
     <entry>
+        <title type="html"><![CDATA[A Service in Eleven Days, with an AI Agent and Tables That Contradict]]></title>
+        <id>https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict</id>
+        <link href="https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict"/>
+        <updated>2026-10-21T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>An event-driven service in eleven days with an AI agent: 806 tests, 214 generated cases, and the eight requirement defects the tables found before any code.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[A Table Cannot Stay Silent: Finding Contradictions in Requirements Before Any Code Exists]]></title>
         <id>https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables</id>
         <link href="https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables"/>

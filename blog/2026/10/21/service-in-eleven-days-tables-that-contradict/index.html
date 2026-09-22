@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>A Service in Eleven Days · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="An event-driven service in eleven days with an AI agent: 806 tests, 214 generated cases, and the eight requirement defects the tables found before any code." />
+  <meta property="og:title" content="A Service in Eleven Days · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict" />
+  <meta property="og:description"
+    content="An event-driven service in eleven days with an AI agent: 806 tests, 214 generated cases, and the eight requirement defects the tables found before any code." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "A Service in Eleven Days, with an AI Agent and Tables That Contradict",
+  "datePublished": "2026-10-21",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "An event-driven service in eleven days with an AI agent: 806 tests, 214 generated cases, and the eight requirement defects the tables found before any code.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/10/21/service-in-eleven-days-tables-that-contradict"><samp class="nav-date">2026-10</samp> A Service in Eleven Days</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/10/21/service-in-eleven-days-tables-that-contradict">A Service in Eleven Days, with an AI Agent and Tables That Contradict</a></h1>
+                <p class="post-meta">October 21, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p class="series-nav"><em>A companion to <a href="/blog/2026/10/20/requirements-into-decision-tables">part 5 of the series on agentic software development</a>: the service whose tables that part describes, written up in full. The series starts with <a href="/blog/2026/09/22/agentic-development-overview">part 1</a>.</em></p>
+
+                  <p class="lede">A field report. Anonymised: company and system names are replaced; the numbers are real.</p>
+
+                  <h2>What it is about</h2>
+                  <p>We built an event-driven service. It consumes messages from Kafka, keeps its state in Postgres, publishes decisions back out as messages, and answers requests from a web UI over REST.</p>
+                  <p>The domain is connections in regional rail. A passenger has to change trains and there is not enough time. A partner system (I will call it the <strong>connection controller</strong> here) sends a <strong>wait request</strong> to the control system: should the departing train wait? A dispatcher in the control centre decides, or the deadline expires. The service manages those requests, their deadlines, and the decisions.</p>
+                  <p>Nearly all of the code was written by an AI agent in the terminal: a tool that can read and write files and run commands. I designed, decided, reviewed, and contradicted.</p>
+                  <p>After eleven days: 8,053 lines of source code in 54 files, 9,183 lines of tests, <strong>806 tests</strong> (805 green, one skipped) in 44 files, 97 commits.</p>
+                  <p>The interesting part is not the speed. It is the order: <strong>first the tables, then the tests, then the service.</strong> And the finding that the tables broke the requirements before a line of code existed.</p>
+                  <h2>The tool in the middle: equivalence class tables</h2>
+                  <p>We use <strong>Nanook</strong>, a table engine that reads <a href="/docs/guide/equivalence/overview">equivalence class tables</a> from an Excel workbook and derives test cases from them. Two forms matter:</p>
+                  <ul>
+                  <li><strong>Decision table</strong>: what something <em>is</em>. Fields with their classes, and cases that cover combinations of classes. The engine computes what percentage of the combinations is covered.</li>
+                  <li><strong><a href="/docs/guide/matrix/overview">Matrix table</a></strong>: what something <em>becomes</em>. Rows are states, columns are events, each cell is the reaction.</li>
+                  </ul>
+                  <p>Our workbook ended up with 13 sheets. Eleven of them generate test cases; two are building blocks from which the matrix takes the meaning of its rows and columns.</p>
+                  <table>
+
+                  <tr>
+                  <th>Sheet</th>
+                  <th>checks</th>
+                  <th>Cases</th>
+                  <th>Combinations</th>
+                  <th>Coverage</th>
+                  </tr>
+
+
+                  <tr>
+                  <td>Request intake</td>
+                  <td>the inbound message</td>
+                  <td>20</td>
+                  <td>55,296</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Worklist filters</td>
+                  <td>the filters of the worklist</td>
+                  <td>24</td>
+                  <td>21,600</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Rejection</td>
+                  <td>a rejection over REST</td>
+                  <td>13</td>
+                  <td>864</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Approval</td>
+                  <td>an approval over REST</td>
+                  <td>13</td>
+                  <td>768</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Worklist query</td>
+                  <td>the worklist</td>
+                  <td>11</td>
+                  <td>256</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Bulk action</td>
+                  <td>bulk approval and rejection</td>
+                  <td>9</td>
+                  <td>72</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Deadline expiry</td>
+                  <td>the expiry of a deadline</td>
+                  <td>8</td>
+                  <td>30</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Time conversion, request context</td>
+                  <td>one pure function each</td>
+                  <td>6 + 6</td>
+                  <td>18 + 18</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>Time-of-day resolution</td>
+                  <td>a time without a date</td>
+                  <td>6</td>
+                  <td>6</td>
+                  <td>100 %</td>
+                  </tr>
+                  <tr>
+                  <td>State transitions</td>
+                  <td>8 states × 14 events</td>
+                  <td>98 cells</td>
+                  <td>—</td>
+                  <td>14 deliberate holes</td>
+                  </tr>
+
+                  </table>
+                  <p>From these sheets, <strong>214 test cases</strong> are generated as <strong>1,712 files</strong>. A check script holds the target numbers against them; if the workbook changes without the cases being regenerated, the test chain aborts.</p>
+                  <h2>Part 1: checking requirements by forcing them into a table</h2>
+                  <p>The designs were good. Twelve documents, cut by topic: data contract, data model, inbound processing, responsibility, deadlines, outbound, the REST boundary, the UI, operations, test integration. And still (this is the core of the report) it was <strong>building the tables</strong> that showed the holes.</p>
+                  <p>A table demands three things prose does not: <strong>every field needs classes</strong>, <strong>every combination needs a row</strong>, <strong>every row needs a result</strong>. Whoever fills that in can no longer stay politely vague.</p>
+                  <p>What came out:</p>
+                  <p><strong>A contradiction between two of our own artefacts.</strong> A sheet claimed that a certain record would be shown with a hint. The mapping rule and the code excluded exactly that record. Both cited the same design decision. Nobody had noticed, because nobody had walked the sheet row by row.</p>
+                  <p><strong>Seven filter criteria that had no effect</strong>, even though tests existed that ran against a real Postgres. The reason is instructive: an <em>empty</em> filter arrives correctly even if the implementation throws it away. The existing test had been built around the gap. Only the table, with its classes "set / empty / multiple", asked what happens for <em>set</em>.</p>
+                  <p><strong>An intersection with no answer.</strong> Priority 0 without a feeder: unclear in the domain. In the table, that combination now stands as an explicit exception instead of a row that asserts a result nobody decided. An open question that stays visible is better than a row that has to guess.</p>
+                  <p><strong>A fourth cancellation case that was its own state.</strong> In prose it read like a variant. In the matrix it got its own row, because it reacts to three events differently from the others.</p>
+                  <p><strong>Two numbers that did not match.</strong> The UI shows 50 rows per page; the database design said <code>LIMIT 20</code>. Both had been there for days, in two documents.</p>
+                  <p><strong>The deadline does not decide.</strong> Filling in the matrix showed that a deadline expiry sends no message out. It only changes what the UI shows. The event is no longer called "deadline expired"; it carries the name of the trigger it really is, the tick that compares the departure. A wrong name would have built an outbound message that must not exist.</p>
+                  <p><strong>The matrix forced database columns.</strong> Two columns of the model exist because one cell each demands them: one to be able to withdraw a forecast that was set, one to distinguish who decided. Without the cell, nobody would have asked for the column.</p>
+                  <p><strong>And it separated "ignore" from "error".</strong> In prose both looked the same: nothing happens. In the matrix they are two different reactions, an expected non-reaction and an entry in the log. That distinction became a design decision of its own.</p>
+                  <p>That is the real value. <strong>The table is not a test artefact; it is a verification tool for the requirement.</strong> It costs a day and finds things that would otherwise be found in production.</p>
+                  <h2>Part 2: first the tests, then the service</h2>
+                  <p>After that, implementation ran in a fixed order, and the order was not negotiable.</p>
+                  <p><strong>Step 1: the contract.</strong> All types, all errors, all ports: 18 port methods and four pure functions. Each of them throws "not implemented", with the same wording from one constant. No behaviour, only shape. The type check is green.</p>
+                  <p><strong>Step 2: the oracle.</strong> A loader that reads the generated case folders, and <strong>one</strong> place that translates the table's short codes into assertions. That translation is tested itself. Everything else in the test code does not interpret; it passes values through.</p>
+                  <p><strong>Step 3: red tests.</strong> Not a few, all of them. First 112 red with 15 green (the green ones were the tests of the oracle itself), then 245 red, <strong>all with the same message</strong>. A red chain is the target state here, and it is checkable: if all 245 fail with "not implemented", the suite does not yet test anything but itself.</p>
+                  <p><strong>Step 4: the implementation, stage by stage.</strong> Five stages, each with a prohibition:</p>
+                  <ol type="1">
+                  <li><strong>Pure functions</strong>: see only their input. No clock, no database.</li>
+                  <li><strong>Library against ports</strong>: the business logic against fakes, with an injected clock.</li>
+                  <li><strong>Persistence</strong>: against a real Postgres engine in the process that replays the real DDL script. No business rule at this stage.</li>
+                  <li><strong>Edges</strong>: Kafka adapters, HTTP, configuration, startup and shutdown.</li>
+                  <li><strong>End to end</strong>: the service as a bundle, with a smoke test.</li>
+                  </ol>
+                  <p>At the end of stage 2: <strong>280 tests green, and not a single expectation changed.</strong> Eight times something had to be adjusted, and it was always the setup of the case, never the expected result. Each of those eight corrections is recorded with a reason in the workbook or the design.</p>
+                  <p>That is the rule that carries the whole approach: <strong>when a test is red, change the code. If you want to change the expectation, change the table first, and write down why.</strong> Without that rule, an AI agent (or a human under time pressure) rewrites the expectation until it passes.</p>
+                  <p><strong>Step 5: counter-probes.</strong> A green test proves nothing if it would also be green when the thing does not work. So we deliberately broke seven safeguards and checked that exactly the right tests turned red:</p>
+                  <table>
+
+                  <tr>
+                  <th>Intervention</th>
+                  <th>expected</th>
+                  <th>measured</th>
+                  </tr>
+
+
+                  <tr>
+                  <td>typo in a model column</td>
+                  <td>the model gate fires</td>
+                  <td>2 red</td>
+                  </tr>
+                  <tr>
+                  <td>a database constraint removed</td>
+                  <td>the constraint is checked</td>
+                  <td>4 red</td>
+                  </tr>
+                  <tr>
+                  <td>responsibility derivation disabled</td>
+                  <td>assignment is effective</td>
+                  <td>5 of 8 red</td>
+                  </tr>
+                  <tr>
+                  <td>leader row removed</td>
+                  <td>only one instance decides</td>
+                  <td>red</td>
+                  </tr>
+                  <tr>
+                  <td>old withdrawal logic restored</td>
+                  <td>the new path is effective</td>
+                  <td>1 red</td>
+                  </tr>
+                  <tr>
+                  <td>local time instead of a fixed zone</td>
+                  <td>the zone is pinned</td>
+                  <td>exactly 3 red</td>
+                  </tr>
+                  <tr>
+                  <td>empty filter list read as an empty set</td>
+                  <td>empty means "no filter"</td>
+                  <td>13 red</td>
+                  </tr>
+
+                  </table>
+                  <p>One lesson from this that cost time: <strong>a counter-probe in the wrong place proves nothing.</strong> On the first attempt I rebuilt the old state at a spot the test does not touch. The test stayed green, and that looked like a useless safeguard. It was not useless; the probe was in the wrong place.</p>
+                  <h2>Part 3: from the Excel cell to the test file</h2>
+                  <p>The workbook is the source and is maintained <strong>by hand</strong>. A script generates the cases from it:</p>
+                  <pre><code class="hljs">wait-request-processing.xlsx
+        │   Nanook reads the sheets, resolves generators and references
+        ▼
+tests/fixtures/cases/&lt;sheet&gt;/&lt;case&gt;/   (8 files per case)
+        │   a loader pulls them into the tests
+        ▼
+Vitest</code></pre>
+                  <p>Three details that make the difference:</p>
+                  <p><strong>The generator does not interpret.</strong> The table's short codes (<code>INS&gt;OPEN</code>, <code>UPD&gt;CLERK</code>, <code>IGN</code>, <code>ERR</code>) travel unchanged into the case files. Interpretation happens at exactly one place in the test code. Whoever puts the interpretation into the generator ends up checking their own translation.</p>
+                  <p><strong>"Nothing expected" is a written value</strong>, not a missing one. The file then contains <code>{"artefact": "none", "reason": …}</code>. A missing file can be forgotten; a written "none" checks that really nothing happens.</p>
+                  <p><strong>A matrix cell takes its meaning from two other sheets.</strong> Row and column are references: the prior state comes from a state sheet, the event from an event sheet. Before that, the matrix only checked <em>whether</em> something goes out. Since the references, it checks <em>what</em>.</p>
+                  <p>The test for the state matrix contains 98 tests, exactly the 98 occupied cells. It iterates over the cases; it does not copy them. When a cell is added, a test is added, without anyone touching test code.</p>
+                  <h2>Part 4: ten gates, because an AI agent needs gates</h2>
+                  <p><code>pnpm test</code> is a chain. Every link prevents something that has happened once already:</p>
+                  <table>
+
+                  <tr>
+                  <th>Link</th>
+                  <th>prevents</th>
+                  </tr>
+
+
+                  <tr>
+                  <td>format, lint</td>
+                  <td>arguments about formalities in every diff</td>
+                  </tr>
+                  <tr>
+                  <td>type check as a <strong>separate</strong> step</td>
+                  <td>the bundler throws types away instead of checking them</td>
+                  </tr>
+                  <tr>
+                  <td>dead-code check</td>
+                  <td>leftovers nobody removed after a refactoring</td>
+                  </tr>
+                  <tr>
+                  <td>schema descriptor check</td>
+                  <td>the message schemas drifting away from the code</td>
+                  </tr>
+                  <tr>
+                  <td>workbook check</td>
+                  <td>Nanook reports errors <strong>in the logger</strong>, not as an exception; without a gate a broken sheet looks like a good one</td>
+                  </tr>
+                  <tr>
+                  <td>diagram check</td>
+                  <td>the drawing in the README falling behind the workbook</td>
+                  </tr>
+                  <tr>
+                  <td>cases check</td>
+                  <td>the workbook changed, the cases not regenerated</td>
+                  </tr>
+                  <tr>
+                  <td>build including smoke test</td>
+                  <td>build green, types green, 391 tests green, and the bundle does not start (it happened exactly like that)</td>
+                  </tr>
+                  <tr>
+                  <td>tests with coverage</td>
+                  <td>the rest</td>
+                  </tr>
+
+                  </table>
+                  <p>The real gate is not code coverage, though. It is the <strong>coverage of the table</strong>: every sheet has to cover 100 % of its class combinations, or the workbook build aborts. Code coverage says which lines ran. Table coverage says which <em>cases</em> were considered.</p>
+                  <h2>What I learned about the collaboration</h2>
+                  <p><strong>The agent is fast, but it is accommodating.</strong> Without the rule "change an expectation only with a reason", I would have had a green test suite on day two that no longer asserted anything. The rule costs nothing and is the most important sentence in the whole project.</p>
+                  <p><strong>Tools that fail silently are the most expensive ones.</strong> Three examples from these eleven days: a marker that holds in one table form and not in the other; set wrongly, it generates <em>zero</em> cases and reports success. A cell that has to stay empty although the documentation says otherwise. A multi-line formatted array that a change script silently skips. Every time, the result was "all green", and the check was gone. Hence the target numbers in the gate.</p>
+                  <p><strong>A tool's documentation is a claim; its source code is the evidence.</strong> Two passages of the skill documentation contradicted the code. Both times the code won.</p>
+                  <p><strong>What the agent does not replace is the decision.</strong> The designs contain a decision log, and it also records what was rejected: separate read and write paths, a drift gate of its own, state in memory with a single instance, partitioning by responsibility, and a database lock for the tick. The lock is the nicest example: it sounded right, but it could not be tested in the test environment (there is only one session there, so both instances get the lock) and it would have worked around the connection pool. Instead, leadership is a <strong>row</strong> in a table: pool-safe, testable, self-healing.</p>
+                  <p><strong>And: prose does not lie, it stays silent.</strong> No design was wrong. They were vague at exactly the places where the work later lies. A table cannot stay silent.</p>
+                  <h2>The numbers, to close</h2>
+                  <table>
+
+                  <tr>
+                  <td>Duration</td>
+                  <td>11 days, 12 designs on the first</td>
+                  </tr>
+                  <tr>
+                  <td>Commits</td>
+                  <td>97</td>
+                  </tr>
+                  <tr>
+                  <td>Source code</td>
+                  <td>8,053 lines in 54 files</td>
+                  </tr>
+                  <tr>
+                  <td>Test code</td>
+                  <td>9,183 lines in 44 files</td>
+                  </tr>
+                  <tr>
+                  <td>Tests</td>
+                  <td>806 (805 green, 1 skipped)</td>
+                  </tr>
+                  <tr>
+                  <td>Table sheets</td>
+                  <td>13, of which 11 with cases</td>
+                  </tr>
+                  <tr>
+                  <td>Generated cases</td>
+                  <td>214 with 1,712 files</td>
+                  </tr>
+                  <tr>
+                  <td>Table coverage</td>
+                  <td>100 % per sheet; the gate aborts otherwise</td>
+                  </tr>
+                  <tr>
+                  <td>State matrix</td>
+                  <td>8 × 14, 98 occupied cells, 14 deliberate holes</td>
+                  </tr>
+
+                  </table>
+
+                  <p>The procedure behind this service, step by step, is the guide <a href="/articles/event-driven-service-with-tables-and-an-agent">Building an Event-Driven Service with Tables and an AI Agent</a>.</p>
+
+                  <p class="series-nav"><em>Previous: <a href="/blog/2026/10/20/requirements-into-decision-tables">Part 5, A Table Cannot Stay Silent</a>. Next: <a href="/blog/2026/10/27/tests-first-red-chain">Part 6, Tests First, Then Implement All Plans</a>.</em></p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

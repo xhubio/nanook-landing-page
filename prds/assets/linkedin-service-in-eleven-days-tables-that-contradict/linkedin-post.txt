@@ -1,0 +1,18 @@
+Elf Tage, ein KI-Agent, 806 Tests. Das Interessante daran ist nicht die Geschwindigkeit.
+
+Wir haben einen ereignisgetriebenen Dienst gebaut: Kafka hinein, Postgres als Zustand, Kafka hinaus, REST für eine Oberfläche. Den Code hat fast vollständig ein KI-Agent geschrieben. Die Reihenfolge war nicht verhandelbar: ERST DIE TABELLEN, DANN DIE TESTS, DANN DER DIENST.
+
+Die Designs waren gut, zwölf Dokumente. Trotzdem hat erst das Bauen der Entscheidungstabellen die Löcher gezeigt, bevor eine Zeile Code existierte:
+
+• ein Widerspruch zwischen zwei eigenen Dokumenten
+• sieben Filter ohne Wirkung, trotz Tests gegen echtes Postgres
+• 50 Zeilen je Seite in der Oberfläche, LIMIT 20 im Datenbank-Entwurf
+• ein Ereignis, dessen Name eine Nachricht erzeugt hätte, die es nicht geben darf
+
+Danach: alle Tests zuerst. 245 rot, alle mit derselben Meldung. Dann die Umsetzung in fünf Stufen. Am Ende von Stufe zwei: 280 Tests grün, ohne eine einzige geänderte Erwartung.
+
+Der ganze Bericht mit der Mappe, der roten Kette, den Gegenproben und den zehn Gates (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict
+
+#softwaretesting #eventdriven #kafka #aiagents #testdesign

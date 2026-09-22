@@ -1,0 +1,18 @@
+Eleven days, one AI agent, 806 tests. The interesting part is not the speed.
+
+We built an event-driven service: Kafka in, Postgres as state, Kafka out, REST for a UI. Nearly all of the code was written by an AI agent. The order was not negotiable: FIRST THE TABLES, THEN THE TESTS, THEN THE SERVICE.
+
+The designs were good, twelve documents. Still, it was building the decision tables that showed the holes, before a line of code existed:
+
+• a contradiction between two of our own documents
+• seven filters with no effect, despite tests against a real Postgres
+• 50 rows per page in the UI, LIMIT 20 in the database design
+• an event whose name would have produced a message that must not exist
+
+Then: all tests first. 245 red, all with the same message. Then the implementation in five stages. At the end of stage two: 280 tests green, without a single changed expectation.
+
+The full report, with the workbook, the red chain, the counter-probes and the ten gates:
+
+👉 https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict
+
+#softwaretesting #eventdriven #kafka #aiagents #testdesign

@@ -42,6 +42,13 @@
             <description><![CDATA[<p>Design a service an AI agent can verify without Kafka or Postgres, write all tests first, prove 245 are red for the same reason, then let the agent implement.</p> ]]></description>
         </item>
         <item>
+            <title><![CDATA[A Service in Eleven Days, with an AI Agent and Tables That Contradict]]></title>
+            <link>https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict</link>
+            <guid>https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict</guid>
+            <pubDate>Wed, 21 Oct 2026 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>An event-driven service in eleven days with an AI agent: 806 tests, 214 generated cases, and the eight requirement defects the tables found before any code.</p> ]]></description>
+        </item>
+        <item>
             <title><![CDATA[A Table Cannot Stay Silent: Finding Contradictions in Requirements Before Any Code Exists]]></title>
             <link>https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables</link>
             <guid>https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables</guid>

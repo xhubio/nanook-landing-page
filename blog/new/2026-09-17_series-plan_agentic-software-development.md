@@ -1,6 +1,6 @@
 # Series Plan — Agentic Software Development
 
-Source: `2026-09-17_full-report_agentic-software-development.md` (the full report, ~9,400 words).
+Source: `2026-09-17_full-report_agentic-software-development.md` (the full report, ~9,400 words; published whole at `/articles/agentic-software-development`).
 
 The full report is cut into **nine blog posts**. Each post stands on its own (short recap of context in
 the first paragraph, no "as we saw in part 3" dependencies) and links to the previous and next part
@@ -17,24 +17,29 @@ parts 8 and 9 can be swapped.
 
 ## Overview
 
-| # | Title (working) | Slug | Report sections | Length |
-|---|---|---|---|---|
-| 1 | The agent writes the code. Everything around it decides whether you can trust it. | `agentic-development-overview` | 1, 2, 23 | ~1,300 w |
-| 2 | Fewer skills, shorter rules: setting up a coding agent that does not drown in its own instructions | `agent-toolbox-and-instruction-file` | 3, 4, 21 | ~1,600 w |
-| 3 | One root, many repositories: a directory layout and a requirements lifecycle for agent work | `directory-layout-requirements-lifecycle` | 5, 6 | ~1,700 w |
-| 4 | What the next session knows: a knowledge base and a memory of lessons | `knowledge-base-and-lesson-memory` | 7 | ~1,100 w |
-| 5 | A table cannot stay silent: finding contradictions in requirements before any code exists | `requirements-into-decision-tables` | 8, 9 | ~1,600 w |
-| 6 | Tests first, then "implement all plans": designing services an agent can verify | `tests-first-red-chain` | 10, 11 | ~1,800 w |
-| 7 | Working through 1,200 plans: a pipeline, a ledger, and many repositories | `plan-pipeline-and-release-cascades` | 12, 13, 19 | ~2,000 w |
-| 8 | The agent that pleases: absences, lying instruments, and invented evidence | `where-agentic-development-breaks` | 14, 15, 16, 17 | ~2,200 w |
-| 9 | Rules need exit codes, and green is not useful: what still went wrong | `rules-need-exit-codes` | 18, 20, 22 | ~1,700 w |
+| # | Title (working) | Slug | Report sections | Length | Date | Status (2026-09-22) |
+|---|---|---|---|---|---|---|
+| 1 | The agent writes the code. Everything around it decides whether you can trust it. | `agentic-development-overview` | 1, 2, 23 | ~1,300 w | 2026-09-22 | published |
+| 2 | Fewer skills, shorter rules: setting up a coding agent that does not drown in its own instructions | `agent-toolbox-and-instruction-file` | 3, 4, 21 | ~1,600 w | 2026-09-29 | scheduled, registered |
+| 3 | One root, many repositories: a directory layout and a requirements lifecycle for agent work | `directory-layout-requirements-lifecycle` | 5, 6 | ~1,700 w | 2026-10-06 | scheduled, registered |
+| 4 | What the next session knows: a knowledge base and a memory of lessons | `knowledge-base-and-lesson-memory` | 7 | ~1,100 w | 2026-10-13 | scheduled, registered |
+| 5 | A table cannot stay silent: finding contradictions in requirements before any code exists | `requirements-into-decision-tables` | 8, 9 | ~1,600 w | 2026-10-20 | scheduled, registered |
+| 5b | A service in eleven days, with an AI agent and tables that contradict (the field report, translated) | `service-in-eleven-days-tables-that-contradict` | — (source: `2026-09-16_blog_service-in-eleven-days.en.md`) | ~2,200 w | 2026-10-21 | scheduled, registered |
+| 6 | Tests first, then "implement all plans": designing services an agent can verify | `tests-first-red-chain` | 10, 11 | ~1,800 w | 2026-10-27 | scheduled, registered |
+| 7 | Working through 1,200 plans: a pipeline, a ledger, and many repositories | `plan-pipeline-and-release-cascades` | 12, 13, 19 | ~2,000 w | 2026-11-03 | scheduled, registered |
+| 8 | The agent that pleases: absences, lying instruments, and invented evidence | `where-agentic-development-breaks` | 14, 15, 16, 17 | ~2,200 w | 2026-11-10 | scheduled, registered |
+| 9 | Rules need exit codes, and green is not useful: what still went wrong | `rules-need-exit-codes` | 18, 20, 22 | ~1,700 w | 2026-11-17 | scheduled, registered |
 
-Existing, already written, to be linked from parts 5 and 6:
-- `2026-09-16_blog_dienst-mit-ki-und-tabellen.md` (field report, event-driven service) — German, needs translation before publishing.
-- `2026-09-16_leitfaden_event-driven-service.md` (step-by-step guide) — German, needs translation before publishing.
+The two German drafts of 2026-09-16 are translated and placed (2026-09-22):
+- `2026-09-16_blog_dienst-mit-ki-und-tabellen.md` → `2026-09-16_blog_service-in-eleven-days.en.md`, published as **part 5b** (`/blog/2026/10/21/service-in-eleven-days-tables-that-contradict`, linked from part 5).
+- `2026-09-16_leitfaden_event-driven-service.md` → `2026-09-16_guide_event-driven-service.en.md`, published as an **article** (`/articles/event-driven-service-with-tables-and-an-agent`, built by `tools/build-article.py`, linked from part 6 and from part 5b).
 
-Recommendation: publish the translated field report as **part 5b** directly after part 5, and the guide
-as a standalone reference post linked from part 6.
+The full report itself is on the site as one page, `/articles/agentic-software-development` (also built by
+`tools/build-article.py`; every section carries a pointer to its series part). `/articles` is the hub; the
+header navigation has an "Articles" entry on every page.
+
+LinkedIn companions: one German (primary) and one English text per part in `prds/assets/linkedin-<slug>/`;
+the English texts below are the drafts they were made from.
 
 ---
 
@@ -245,6 +250,35 @@ columns demanded by cells, ignore versus error). The three table rules from the 
 
 ---
 
+## Part 5b — A service in eleven days, with an AI agent and tables that contradict
+
+**Status:** scheduled 2026-10-21 as `/blog/2026/10/21/service-in-eleven-days-tables-that-contradict`, registered 2026-09-22 (PRD `prds/2026-10-21_blog-service-in-eleven-days-tables-that-contradict.md`). Translation of `2026-09-16_blog_dienst-mit-ki-und-tabellen.md`; companion to part 5, not a numbered part.
+
+**Content:** the event-driven service in full: domain and roles, the workbook (13 sheets, 214 cases, 1,712 files), the eight findings, contract → oracle → red chain → five stages → counter-probes, from the cell to the test file, the ten gates, what I learned, the numbers.
+
+### LinkedIn post (Part 5b)
+
+> Eleven days, one AI agent, 806 tests. The interesting part is not the speed.
+>
+> We built an event-driven service: Kafka in, Postgres as state, Kafka out, REST for a UI. Nearly all of the code was written by an AI agent. The order was not negotiable: FIRST THE TABLES, THEN THE TESTS, THEN THE SERVICE.
+>
+> The designs were good, twelve documents. Still, it was building the decision tables that showed the holes, before a line of code existed:
+>
+> • a contradiction between two of our own documents
+> • seven filters with no effect, despite tests against a real Postgres
+> • 50 rows per page in the UI, LIMIT 20 in the database design
+> • an event whose name would have produced a message that must not exist
+>
+> Then: all tests first. 245 red, all with the same message. Then the implementation in five stages. At the end of stage two: 280 tests green, without a single changed expectation.
+>
+> The full report, with the workbook, the red chain, the counter-probes and the ten gates:
+>
+> 👉 [link]
+>
+> #softwaretesting #eventdriven #kafka #aiagents #testdesign
+
+---
+
 ## Part 6 — Tests first, then "implement all plans"
 
 **Status:** scheduled 2026-10-27 as `/blog/2026/10/27/tests-first-red-chain`, registered 2026-09-22 (PRD `prds/2026-10-27_blog-tests-first-red-chain.md`).
@@ -412,14 +446,19 @@ persona, the sense check. What I would do again and what not. Closing with the t
 
 ---
 
-## Open points before publishing
+## Open points before publishing (status 2026-09-22)
 
-1. **Knowledge base attribution.** The knowledge base README in the SaaS repo references Andrej Karpathy's
-   LLM-wiki model; the briefing mentioned Boris Cherny. The report currently names neither — decide which
-   attribution (and link) is correct before part 4 goes out.
-2. **Anonymisation.** The report names the product categories of the SaaS platform, not customers, colleagues
-   or client systems. The client-project service stays anonymised as in the original field report.
-3. **Numbers** were measured on 2026-09-17 and will drift — re-measure (or keep the date) at publication time.
-4. **The two German drafts from 2026-09-16** need translation before they can be linked.
-5. **Nanook placement.** Parts 1–4 barely mention Nanook, which matches the tone rule; parts 5, 6 and 8 carry
-   the product naturally. Check whether the CTA at the end of each post should point to the quickstart.
+1. **Knowledge base attribution.** Decided: Andrej Karpathy's LLM-wiki model, linked to
+   https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f in part 4.
+2. **Anonymisation.** Kept: product categories only; the client-project service stays anonymised, also in
+   part 5b and the guide (domain "connections in regional rail", systems renamed).
+3. **Numbers** were measured on 2026-09-17; every part states that date. Re-measure before parts 7–9 go
+   out in November, or leave the date and say nothing more.
+4. **The two German drafts** are translated and registered (part 5b, guide article); see above.
+5. **Nanook placement.** Parts 2–4, 7–9 link the docs only where a sentence calls for it; the CTA to the
+   quickstart sits in part 1 and part 9. Part 5, 5b, 6 and 8 carry the product naturally.
+6. **Open with the author:** part 7 keeps both figures from the report, "up to nine sub-agents in
+   parallel" for the cascade (§13.2) and "at most three sub-agents at a time across all types" (§19).
+   Confirm which holds, or whether the cascade is exempt, and adjust one sentence.
+7. **Scheduling note.** All parts are registered in sidebar, feeds and sitemap with their future dates
+   (decision 2026-09-22); readers and crawlers see them before the dates.

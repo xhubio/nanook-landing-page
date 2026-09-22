@@ -35,6 +35,16 @@ ARTICLES = [{
         8: ("2026-11-10", "where-agentic-development-breaks", "The Agent That Pleases"),
         9: ("2026-11-17", "rules-need-exit-codes", "Rules Need Exit Codes"),
     },
+}, {
+    "slug": "event-driven-service-with-tables-and-an-agent",
+    "source": "blog/new/2026-09-16_guide_event-driven-service.en.md",
+    "title": "Guide: Building an Event-Driven Service with Tables and an AI Agent",
+    "meta_title": "Guide: An Event-Driven Service with Tables and an Agent",
+    "kicker": "Article · Guide",
+    "author": "Torsten Link", "author_url": "https://cv.xhub.io/de/torsten.link",
+    "date": "2026-09-16", "date_human": "16 September 2026",
+    "description": "A step-by-step guide to an event-driven service with decision tables and an AI coding agent: fifteen steps, the traps that cost time, what was not worth it.",
+    "parts": {}, "series": {},
 }]
 SHELL_SOURCE = "about.html"
 
@@ -85,14 +95,21 @@ def transform(fragment, a):
             return m.group(0)
         d, slug, short = a["series"][p]; y, mo, dd = d.split("-")
         return m.group(0) + f'\n<p class="provenance"><em>Expanded in <a href="/blog/{y}/{mo}/{dd}/{slug}">part {p} of the series, {short}</a>.</em></p>'
-    fragment = re.sub(r'(<h2 id="(\d+)-[^"]*">.*?</h2>)', hint, fragment)
+    if a["parts"]:
+        fragment = re.sub(r'(<h2 id="(\d+)-[^"]*">.*?</h2>)', hint, fragment)
     return fragment.strip(), lede
 
 
 def toc(fragment):
-    items = re.findall(r'<h2 id="(\d+-[^"]*)">(.*?)</h2>', fragment)
-    return '<nav class="article-toc" aria-label="Contents"><ol>' + "".join(
-        f'<li><a href="#{i}">{re.sub(r"^\d+\. ", "", t)}</a></li>' for i, t in items) + "</ol></nav>"
+    """Numbered list when the H2s are numbered from 1 (the report); otherwise a plain
+    list that keeps the headings' own numbering (the guide counts from 0)."""
+    items = re.findall(r'<h2 id="([^"]*)">(.*?)</h2>', fragment)
+    numbered = bool(items) and items[0][1].startswith("1. ") and all(re.match(r"\d+\. ", t) for _, t in items)
+    if numbered:
+        return '<nav class="article-toc" aria-label="Contents"><ol>' + "".join(
+            f'<li><a href="#{i}">{re.sub(r"^\d+\. ", "", t)}</a></li>' for i, t in items) + "</ol></nav>"
+    return '<nav class="article-toc" aria-label="Contents"><ul>' + "".join(
+        f'<li><a href="#{i}">{t}</a></li>' for i, t in items) + "</ul></nav>"
 
 
 def main():
@@ -107,7 +124,7 @@ def main():
         words = len(re.sub(r"<[^>]+>", " ", re.sub(r'<h2 id="contents">.*?</ol>', "", raw, flags=re.S)).split())
         fragment, lede = transform(raw, a)
         minutes = round(words / 230)
-        series_intro = ('<p>This report is also published as a nine-part series on the blog, one part a week from '
+        series_intro = '' if not a["parts"] else ('<p>This report is also published as a nine-part series on the blog, one part a week from '
                         '22 September 2026; each section below names the part that expands it. The series starts with '
                         '<a href="/blog/2026/09/22/agentic-development-overview">part 1, the two settings and the numbers</a>.</p>')
         main_html = f"""<main class="long-doc article" id="main-content">

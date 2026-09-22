@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Guide: An Event-Driven Service with Tables and an Agent · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A step-by-step guide to an event-driven service with decision tables and an AI coding agent: fifteen steps, the traps that cost time, what was not worth it." />
+  <meta property="og:title" content="Guide: An Event-Driven Service with Tables and an Agent · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/articles/event-driven-service-with-tables-and-an-agent" />
+  <meta property="og:description" content="A step-by-step guide to an event-driven service with decision tables and an AI coding agent: fifteen steps, the traps that cost time, what was not worth it." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/articles/event-driven-service-with-tables-and-an-agent" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Guide: Building an Event-Driven Service with Tables and an AI Agent",
+  "datePublished": "2026-09-16",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "A step-by-step guide to an event-driven service with decision tables and an AI coding agent: fifteen steps, the traps that cost time, what was not worth it.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/articles/event-driven-service-with-tables-and-an-agent"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc article" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">Article · Guide</p>
+        <h1>Guide: Building an Event-Driven Service with Tables and an AI Agent</h1>
+        <p class="provenance"><a href="https://cv.xhub.io/de/torsten.link">Torsten Link</a> · 16 September 2026 · about 2,400 words, 10 minutes</p>
+      </header>
+      <p class="lede">The procedure, step by step. Derived from a service that was built this way: Kafka in, Postgres as state, Kafka out, REST for a UI. Anonymised; company and system names are replaced.</p>
+      
+      <nav class="article-toc" aria-label="Contents"><ul><li><a href="#overview">Overview</a></li><li><a href="#0-housekeeping-what-comes-before-the-first-design">0. Housekeeping: what comes before the first design</a></li><li><a href="#1-cutting-the-undertaking">1. Cutting the undertaking</a></li><li><a href="#2-the-first-table-the-inbound-message">2. The first table: the inbound message</a></li><li><a href="#3-the-state-matrix">3. The state matrix</a></li><li><a href="#4-cross-check-design-against-table">4. Cross-check: design against table</a></li><li><a href="#5-data-model">5. Data model</a></li><li><a href="#6-the-contract">6. The contract</a></li><li><a href="#7-the-oracle">7. The oracle</a></li><li><a href="#8-generating-cases">8. Generating cases</a></li><li><a href="#9-the-red-chain">9. The red chain</a></li><li><a href="#10-implementing-in-five-stages">10. Implementing in five stages</a></li><li><a href="#11-counter-probes">11. Counter-probes</a></li><li><a href="#12-edges-and-smoke-test">12. Edges and smoke test</a></li><li><a href="#13-operations">13. Operations</a></li><li><a href="#14-closing-the-chain">14. Closing the chain</a></li><li><a href="#the-traps-that-cost-time">The traps that cost time</a></li><li><a href="#what-was-not-worth-it">What was not worth it</a></li><li><a href="#the-three-sentences-if-you-take-only-three">The three sentences, if you take only three</a></li></ul></nav>
+<p>The guide is an order, not a kit. Every step assumes the previous one is finished. Whoever swaps the order loses exactly the check that makes the step worthwhile.</p>
+<h2 id="overview">Overview</h2>
+<pre><code>0  Housekeeping     repository, tools, gates
+1  Cutting          the undertaking into small designs
+2  First table      the inbound message as a decision table
+3  State matrix     states × events, holes instead of error cases
+4  Cross-check      design against table, both directions
+5  Data model       columns that follow from cells
+6  Contract         types, errors, ports; everything throws &quot;not implemented&quot;
+7  Oracle           one place that interprets short codes
+8  Generate cases   from the cell to the test file
+9  Red chain        all tests red, with the same message
+10 Implement        five stages, each with a prohibition
+11 Counter-probes   break every safeguard once on purpose
+12 Edges            adapters, real database, smoke test
+13 Operations       several instances, heartbeat, cleanup
+14 Gates            close the chain</code></pre>
+<h2 id="0-housekeeping-what-comes-before-the-first-design">0. Housekeeping: what comes before the first design</h2>
+<p>A repository with a chain that checks everything that can be checked by machine. Otherwise every later check becomes an agreement nobody keeps.</p>
+<ul>
+<li>A formatter and a linter with a configuration that is not up for discussion.</li>
+<li><strong>Type check as a separate step.</strong> Whoever builds with a bundler has no type check; bundlers throw types away instead of checking them.</li>
+<li>A test runner with a coverage report.</li>
+<li>A check for dead code.</li>
+<li>A session document for the agent in the repository root: what holds here, which traps are known, which rule is not negotiable. The agent reads it at the start of every session.</li>
+</ul>
+<p>Rules that should be in there from the start:</p>
+<ol type="1">
+<li><strong>Tests first.</strong> Contract, then oracle, then red tests, then code.</li>
+<li><strong>An expectation is changed only after the table was changed first, with a reason.</strong></li>
+<li><strong>No clock in the business logic.</strong> Time comes in as a parameter.</li>
+<li><strong>No migration tool in the data access.</strong> The schema belongs to one place, the access to another.</li>
+</ol>
+<h2 id="1-cutting-the-undertaking">1. Cutting the undertaking</h2>
+<p>A monolithic design is neither read nor checked. Cut by topic, one document per topic, each self-contained enough that a plan of its own can come out of it.</p>
+<p>A proven cut for an event-driven service:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>No.</th>
+<th>Design</th>
+<th>Defines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>Overview</td>
+<td>vision, core decisions, glossary, <strong>decision log</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Data contract</td>
+<td>the messages: fields, required, enum values, keys</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Data model and persistence</td>
+<td>tables, indexes, permissions, who migrates</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Inbound processing</td>
+<td>ordering, conflicts, idempotency</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Responsibility</td>
+<td>who sees and may do what</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Deadlines and scheduling</td>
+<td>tick, grace periods, what a deadline triggers</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Outbound</td>
+<td>which message leaves when</td>
+</tr>
+<tr>
+<td>70</td>
+<td>Interface to the UI</td>
+<td>paths, roles, error shapes</td>
+</tr>
+<tr>
+<td>75</td>
+<td>UI</td>
+<td>view, filters, page size</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Operations</td>
+<td>instances, health, alerts, cleanup</td>
+</tr>
+<tr>
+<td>90</td>
+<td>Test integration</td>
+<td>how the service fits the existing test landscape</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two things go into every document:</p>
+<ul>
+<li><strong>Open questions</strong> as a section of their own. What is unclear stays visible.</li>
+<li>In the overview document, a <strong>decision log</strong> with numbers: decided, rejected, with the reason. The rejected alternative is the more valuable entry.</li>
+</ul>
+<h2 id="2-the-first-table-the-inbound-message">2. The first table: the inbound message</h2>
+<p>Take the message that triggers the service and build a decision table from it.</p>
+<p><strong>Procedure:</strong></p>
+<ol type="1">
+<li>Choose the fields that control behaviour. Not every field of the message, only those where something is decided.</li>
+<li>For every field, form <strong>classes</strong>: valid, boundary, missing, unknown enum value. Classes, not values.</li>
+<li>Add cases until coverage is 100 %. The engine computes the combinations; it also says which one is still missing.</li>
+<li>For every case, write down the <strong>expected result</strong>. "Nothing happens" is a value too, and it is written, not omitted.</li>
+</ol>
+<p><strong>What you learn here, still without code:</strong> which fields are required, which combinations are forbidden in the domain, and where the design has no answer.</p>
+<p>A field with four classes and a second with three give twelve combinations. If nobody can name a result for two of them, you have found two open domain questions, on the first day.</p>
+<h2 id="3-the-state-matrix">3. The state matrix</h2>
+<p>The second artefact is the matrix: <strong>rows = states</strong>, <strong>columns = events</strong>, <strong>cell = reaction</strong>.</p>
+<ul>
+<li>Build the states first as a sheet of their own, the events as a second one. The matrix references both instead of copying them. That way every cell carries <em>which</em> prior state and <em>which</em> event is meant; otherwise the test later only checks that something happens.</li>
+<li><strong>A forbidden transition is a hole in the grid</strong>, not an error case in a list. A hole is visible. A forgotten error case is not.</li>
+<li>Separate <strong>"ignore"</strong> from <strong>"error"</strong>. Both mean "nothing happens outwardly", but one is expected and the other belongs in the log. In prose the difference disappears.</li>
+<li>Keep the reactions as <strong>short codes</strong> (<code>INS&gt;OPEN</code>, <code>UPD&gt;CLERK</code>, <code>IGN</code>, <code>ERR</code>, <code>+OUT</code>). They have to fit in a cell and must not be prose.</li>
+</ul>
+<p><strong>The matrix is where the data model emerges.</strong> When a cell says "withdraw the forecast", you need a column that records that one was set. No design demands such columns on its own.</p>
+<h2 id="4-cross-check-design-against-table">4. Cross-check: design against table</h2>
+<p>Now the work that yields most of the benefit. Go both directions:</p>
+<ul>
+<li><strong>Design → table:</strong> does every rule in the design have a row? If not, either the rule is superfluous or the table is incomplete.</li>
+<li><strong>Table → design:</strong> does every row have a rule? If not, the table has guessed.</li>
+</ul>
+<p>A list of questions that has proven itself:</p>
+<ol type="1">
+<li>Do two documents contradict each other in a number? (page size, limit, deadline, time window)</li>
+<li>Does the table hold an expectation nobody decided?</li>
+<li>Is an event named after its <strong>effect</strong> or after its <strong>trigger</strong>? A wrong name builds outbound messages that must not exist.</li>
+<li>Is a "special case" of the prose really a state of its own? Check whether it reacts to at least one event differently from its neighbour.</li>
+<li>Is there a class "empty" or "missing" for every optional field? That is exactly where the bugs sit that later tests do not find: an empty filter arrives correctly even when it is thrown away.</li>
+</ol>
+<p>Record every finding: as an open question in the design, as an exception in the table, or as a decision in the log. <strong>No finding may stay only in conversation.</strong></p>
+<h2 id="5-data-model">5. Data model</h2>
+<p>Only now come the database tables. They follow from the matrix and the data contract.</p>
+<ul>
+<li><strong>One place migrates, another accesses.</strong> The migration tool owns the schema; the data access in the service only knows it. Between the two belongs a <strong>gate</strong>: a startup run that touches every modelled column and aborts at the first one missing. An empty table is enough for that.</li>
+<li>Name permissions <strong>per table</strong>, not with a bulk statement over the schema; that one only applies to tables that already exist when it runs.</li>
+<li>Consider whether the service may delete at all. If not: mark instead of delete, and then a partial unique index, a filter in <strong>every</strong> read query, and a cleanup job in the database belong with it.</li>
+<li>Every query with <code>LIMIT</code> needs a <strong>unique</strong> ordering. Otherwise a row appears twice or never when paging.</li>
+</ul>
+<h2 id="6-the-contract">6. The contract</h2>
+<p>Create everything, implement nothing:</p>
+<ul>
+<li>the types and schemas of the messages,</li>
+<li>the error classes,</li>
+<li>the <strong>ports</strong>: one contract each for persistence, outbound, clock, log, external data,</li>
+<li>the pure functions of the business logic.</li>
+</ul>
+<p>Every method throws "not implemented", and does so with <strong>one wording from one constant</strong>. The shared wording matters: it makes the red chain checkable.</p>
+<p>The goal of this step: the type check is green, and there is no behaviour.</p>
+<h2 id="7-the-oracle">7. The oracle</h2>
+<p>The test code needs one place that turns a short code into an assertion, and only that one.</p>
+<ul>
+<li>A <strong>loader</strong> that reads a case folder into an object.</li>
+<li>An <strong>interpretation</strong> that translates <code>INS&gt;OPEN</code> into "it was inserted, state open".</li>
+<li>That interpretation is <strong>tested itself</strong>.</li>
+</ul>
+<p>Everything else in the test code passes values through. Whoever puts the interpretation into the generator ends up checking their own translation against itself.</p>
+<h2 id="8-generating-cases">8. Generating cases</h2>
+<p>A script reads the workbook and writes one folder per case with files: input, prior state, expectations, metadata.</p>
+<p>Rules that have paid off:</p>
+<ul>
+<li><strong>The generator does not interpret.</strong> Short codes travel through unchanged.</li>
+<li><strong>"Nothing expected" is a written value</strong> with a reason, not a missing file.</li>
+<li><strong>Generated values carry a marker</strong>, so that a run stays reproducible.</li>
+<li><strong>Orphaned files are deleted</strong>, otherwise cases run that no longer exist.</li>
+<li><strong>Target numbers go into the check script</strong> (sheets, cases, cells). Without them a silent change goes unnoticed.</li>
+</ul>
+<h2 id="9-the-red-chain">9. The red chain</h2>
+<p>Write all tests before any business logic exists. Expected: <strong>every</strong> test red, <strong>all</strong> with the same message.</p>
+<p>This is the only moment at which you can prove that the tests assert something. Check the message by machine, not by eye; the test runner can emit it as structured data.</p>
+<p>A test that is red for another reason is a broken test. Found now, it costs minutes.</p>
+<h2 id="10-implementing-in-five-stages">10. Implementing in five stages</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Subject</th>
+<th>Prohibited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>pure functions</td>
+<td>no clock, no database, no message</td>
+</tr>
+<tr>
+<td>2</td>
+<td>business logic against ports</td>
+<td>no real infrastructure; injected clock; recorders instead of adapters</td>
+</tr>
+<tr>
+<td>3</td>
+<td>persistence</td>
+<td><strong>no business rule</strong>; only that what is meant is written and read back</td>
+</tr>
+<tr>
+<td>4</td>
+<td>edges</td>
+<td>configuration, startup, shutdown, adapters</td>
+</tr>
+<tr>
+<td>5</td>
+<td>end to end</td>
+<td>the built bundle, smoke test</td>
+</tr>
+</tbody>
+</table></div>
+<p>For stage 3, a database engine that runs <strong>in the process</strong> and replays the <strong>real</strong> DDL script is worth it. Then the test checks the schema, not an imitation of it.</p>
+<p>Keep the rule: red → change the code. If the expectation does not fit, change the table first and write down the reason. Correcting the <strong>setup</strong> of a case is allowed; moving the result is not.</p>
+<h2 id="11-counter-probes">11. Counter-probes</h2>
+<p>For every safeguard you built, one probe: remove the safeguard, run the tests, <strong>count</strong> what turns red.</p>
+<ul>
+<li>Expect a <strong>number</strong>, not "something goes red".</li>
+<li>Place the probe <strong>at the spot the test actually touches</strong>. A probe in the wrong place stays green and makes a good safeguard look useless.</li>
+<li>Note the intervention and the number. That is the evidence that the suite holds up.</li>
+</ul>
+<p>Candidates: the model gate, database constraints, the responsibility derivation, the time zone, the interpretation of empty lists, concurrency.</p>
+<h2 id="12-edges-and-smoke-test">12. Edges and smoke test</h2>
+<ul>
+<li>Keep adapters thin: translate, do not decide.</li>
+<li>Read configuration once at startup, check it, and <strong>abort</strong> on missing required values instead of running on.</li>
+<li><strong>Smoke test on the built bundle.</strong> Build green, types green, tests green, and the bundle does not start because an import is missing from the bundle. That is exactly what the probe is for.</li>
+</ul>
+<h2 id="13-operations">13. Operations</h2>
+<ul>
+<li><strong>Several instances</strong> are the normal case. Keep no state in memory.</li>
+<li>Exactly one instance may drive the tick. Use <strong>one row in a table</strong> with instance name and timestamp for that, not a session lock: a lock hangs on the connection, your pool has several, and in a test engine with one session both instances get it.</li>
+<li><strong>Write a heartbeat, alert on its absence.</strong> An alert on an error counter reports nothing when the process is no longer running at all.</li>
+<li><strong>Cleanup belongs in the database</strong>, not in the service. A service that may delete can delete too much.</li>
+<li>A built image is not in operation: if the runtime definition pins the version, that needs a step of its own.</li>
+</ul>
+<h2 id="14-closing-the-chain">14. Closing the chain</h2>
+<p>Every check you built belongs in <strong>one</strong> command. Order from cheap to expensive:</p>
+<pre><code>format → lint → typecheck → dead code → schema drift →
+workbook → diagram → cases → build + smoke test → tests</code></pre>
+<p>For every link: <strong>it must be able to end with a non-zero exit code.</strong> Tools that only log errors need a check script that turns the error into an abort.</p>
+<h2 id="the-traps-that-cost-time">The traps that cost time</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Trap</th>
+<th>Effect</th>
+<th>Remedy</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the table engine reports errors only in the logger</td>
+<td>a broken sheet looks healthy</td>
+<td>a check script of your own with target numbers</td>
+</tr>
+<tr>
+<td>a marker holds only in one table form</td>
+<td>zero cases generated silently</td>
+<td>check the case count against the target</td>
+</tr>
+<tr>
+<td>the tool's documentation contradicts the code</td>
+<td>a wrong assumption, no error</td>
+<td>look in the source, record the finding</td>
+</tr>
+<tr>
+<td>a multi-line formatted array</td>
+<td>the change script changes nothing, reports success</td>
+<td>measure the result at the parser, not at the script</td>
+</tr>
+<tr>
+<td>expectation adjusted instead of the code</td>
+<td>a green suite without a statement</td>
+<td>rule: table first, with a reason</td>
+</tr>
+<tr>
+<td>counter-probe in the wrong place</td>
+<td>a good safeguard looks useless</td>
+<td>place the probe where the test reads</td>
+</tr>
+<tr>
+<td>bundler without type check</td>
+<td>type errors wander into the repository</td>
+<td>a <code>--noEmit</code> step in the chain</td>
+</tr>
+<tr>
+<td>non-unique sort order</td>
+<td>a row twice or never when paging</td>
+<td>a second criterion with a unique value</td>
+</tr>
+<tr>
+<td>bulk grant over the schema</td>
+<td>a new table without permissions</td>
+<td>permissions per table</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="what-was-not-worth-it">What was not worth it</h2>
+<ul>
+<li><strong>A table for every trifle.</strong> Two pure functions with six cases would have been fine as an ordinary test. Tables pay off where combinations arise.</li>
+<li><strong>Very fine classes.</strong> More classes mean more combinations and more mandatory cases, without more insight. Use the classes at which behaviour <em>changes</em>.</li>
+<li><strong>A case with "Multiply" where one field would do.</strong> One multiplication took a sheet from 10 to 157 cases without a new statement.</li>
+</ul>
+<h2 id="the-three-sentences-if-you-take-only-three">The three sentences, if you take only three</h2>
+<ol type="1">
+<li><strong>A table cannot stay silent.</strong> Prose is quiet at the unclear places; a table demands a row there.</li>
+<li><strong>An expectation is changed only via its source, with a reason.</strong> Otherwise the test suite becomes accommodating, for a human under time pressure just as for an AI agent.</li>
+<li><strong>What fails silently is more expensive than what aborts.</strong> Every check needs a number and an exit code.</li>
+</ol>
+<p>The field report on the service this guide was derived from is on the blog: <a href="/blog/2026/10/21/service-in-eleven-days-tables-that-contradict">A Service in Eleven Days, with an AI Agent and Tables That Contradict</a>.</p>
+      <!-- built by tools/build-article.py from blog/new/2026-09-16_guide_event-driven-service.en.md on 2026-09-22; edit the Markdown, then rebuild -->
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

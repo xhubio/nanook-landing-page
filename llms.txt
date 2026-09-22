@@ -37,6 +37,7 @@
 
 ## Articles
 - [Articles](https://nanook.xhub.io/articles): Long-form field reports
+- [Guide: Building an Event-Driven Service with Tables and an AI Agent](https://nanook.xhub.io/articles/event-driven-service-with-tables-and-an-agent): Fifteen steps from the first design to the closed test chain, the traps that cost time, and what was not worth it
 - [Agentic Software Development](https://nanook.xhub.io/articles/agentic-software-development): The full report behind the nine-part series: nine months of building software with an AI coding agent, two settings with measured numbers, setup, process, tables, tests, failure modes
 
 ## Blog
@@ -46,6 +47,7 @@
 - [Working Through 1,200 Plans: A Pipeline, a Ledger, and Many Repositories](https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades): Part 7 of the series on agentic software development (2026-11-03)
 - [Tests First, Then "Implement All Plans": Designing Services an Agent Can Verify](https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain): Part 6 of the series on agentic software development (2026-10-27)
 - [A Table Cannot Stay Silent: Finding Contradictions in Requirements Before Any Code Exists](https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables): Part 5 of the series on agentic software development (2026-10-20)
+- [A Service in Eleven Days, with an AI Agent and Tables That Contradict](https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict): Companion to part 5: the event-driven service in full, 806 tests, 214 generated cases, the eight requirement defects the tables found (2026-10-21)
 - [What the Next Session Knows: A Knowledge Base and a Memory of Lessons](https://nanook.xhub.io/blog/2026/10/13/knowledge-base-and-lesson-memory): Part 4 of the series on agentic software development (2026-10-13)
 - [One Root, Many Repositories: A Directory Layout and a Requirements Lifecycle for Agent Work](https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle): Part 3 of the series on agentic software development (2026-10-06)
 - [Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions](https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file): Part 2 of the series on agentic software development (2026-09-29)
