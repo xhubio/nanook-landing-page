@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+One thing the post does not say loudly enough: the roles. The agent writes nearly all of the code. I design, decide, review, contradict, and above all I decide which of its claims I believe. That is the actual job, and it has not become smaller, only different.
+
+And the second: every rule in our setup exists because something went wrong, usually more than once. That is why the longest part of the series is the one about the failures. If you do not want to wait nine weeks, the whole report is on the site as one page: https://nanook.xhub.io/articles/agentic-software-development
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+What matters to me about this report: it sells nothing. The numbers are measured, with a date, and the failures come before the rules. In both settings, the thing that holds the agent still is a table a domain expert can read, not a prompt and not a test file. That is why we build Nanook, and why we write this up at this length.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+Nine months, one AI agent, nearly all of the code. Torsten writes down what has to stand around the agent for the result to be trusted, and, at length, what went wrong. Part 1 of 9, with the numbers.

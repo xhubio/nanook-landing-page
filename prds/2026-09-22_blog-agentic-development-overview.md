@@ -117,6 +117,8 @@ Files: `prds/assets/linkedin-agentic-development-overview/linkedin-post.txt` (Ge
 It is the least interesting part.", and the four things around the agent). Re-render with
 `qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
 
+Comments and repost (Torsten first comment, Patrick company comment within the first hour, Patrick repost the next day): `linkedin-comments.txt` (German, primary) and `linkedin-comments-en.txt`.
+
 ## Notes
 - Nanook appears twice: in sentence 2 of the short version (link to the guide) and in the closing
   CTA. Not in the lede (AGENTS.md tone rule).

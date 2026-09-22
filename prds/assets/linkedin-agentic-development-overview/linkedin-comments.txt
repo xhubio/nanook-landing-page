@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Eine Sache, die der Post nicht laut genug sagt: Die Rollen. Der Agent schreibt fast den gesamten Code. Ich entwerfe, entscheide, prüfe, widerspreche – und vor allem entscheide ich, welche seiner Behauptungen ich glaube. Das ist der eigentliche Job, und er ist nicht kleiner geworden, nur anders.
+
+Und die zweite: Jede Regel in unserem Setup gibt es, weil etwas schiefgegangen ist, meist mehr als einmal. Deshalb ist der längste Teil der Serie der über die Fehler. Wer nicht neun Wochen warten will, findet den ganzen Report als eine Seite hier (auf Englisch): https://nanook.xhub.io/articles/agentic-software-development
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Was mir an dem Bericht wichtig ist: Er verkauft nichts. Die Zahlen sind gemessen, mit Datum, und die Fehler stehen drin, bevor die Regeln kommen. In beiden Settings ist das Ding, das den Agenten festhält, eine Tabelle, die ein Fachmensch lesen kann – kein Prompt, keine Testdatei. Das ist der Grund, warum wir Nanook bauen, und der Grund, warum wir das hier so ausführlich aufschreiben.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Neun Monate, ein KI-Agent, fast der gesamte Code. Torsten schreibt auf, was um den Agenten herum stehen muss, damit man dem Ergebnis trauen kann – und, ausführlich, was schiefging. Teil 1 von 9, mit den Zahlen.
