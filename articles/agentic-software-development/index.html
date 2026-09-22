@@ -181,7 +181,7 @@
 </table></div>
 <p>The two settings look very different, and the process differs where they differ. But the core — structure, order, gates, retained knowledge — is the same. That is why they belong in one report.</p>
 <h2 id="3-the-toolbox-skills-mcp-servers-and-a-token-diet">3. The toolbox: skills, MCP servers, and a token diet</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
+<p class="provenance"><em>Expanded in part 2 of the series, Fewer Skills, Shorter Rules, on the blog from 29 September 2026.</em></p>
 <h3 id="31-superpowers-as-a-starting-point-adapted-per-project">3.1 Superpowers as a starting point, adapted per project</h3>
 <p>I start every project with <a href="https://github.com/obra/superpowers">Superpowers</a>, a collection of process skills for coding agents: brainstorming, writing plans, executing plans, test-driven development, systematic debugging, verification before completion, and so on.</p>
 <p>I never use it unchanged. Each project gets its own adaptation:</p>
@@ -205,7 +205,7 @@
 <p><strong>Unused capability is not free.</strong> It costs tokens on every call and dilutes the selection the model has to make.</p>
 </blockquote>
 <h2 id="4-the-instruction-file-short-rules-long-rules-and-rules-that-load-themselves">4. The instruction file: short rules, long rules, and rules that load themselves</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
+<p class="provenance"><em>Expanded in part 2 of the series, Fewer Skills, Shorter Rules, on the blog from 29 September 2026.</em></p>
 <p>Every coding agent reads a project instruction file at the start of a session (<code>CLAUDE.md</code> for Claude Code, <code>AGENTS.md</code> for others). It is the most important file in the project — and it rots faster than any other.</p>
 <h3 id="41-the-problem-the-file-grows-until-nobody-including-the-agent-reads-it">4.1 The problem: the file grows until nobody (including the agent) reads it</h3>
 <p>Each incident adds a paragraph. After a few months, the file is thousands of lines long, the important rules are buried, and every session pays for all of it.</p>
@@ -232,7 +232,7 @@ paths:
 </ul>
 <p>What does not belong: history, measurements, examples, one-off decisions. Those go into the long rules, the knowledge base, or the lesson memory.</p>
 <h2 id="5-directory-layout-one-root-many-repositories">5. Directory layout: one root, many repositories</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/06/directory-layout-requirements-lifecycle">part 3 of the series, One Root, Many Repositories</a>.</em></p>
+<p class="provenance"><em>Expanded in part 3 of the series, One Root, Many Repositories, on the blog from 6 October 2026.</em></p>
 <h3 id="51-the-root-is-a-repository-too">5.1 The root is a repository too</h3>
 <p>I always work from a <strong>root directory that is itself a Git repository</strong>. It holds everything that steers the agent and everything that is shared across the code repositories:</p>
 <pre><code>root/                          ← Git repository
@@ -282,7 +282,7 @@ root/repo/
 <p>For example: <code>2026-09-15_plan_01-the-xsd-gate-fails-silently.md</code>. Plans get a daily sequence number starting at <code>01</code>.</p>
 <p>The date sorts naturally, the type is visible without opening the file, and the agent can find "all plans from last week about topic X" with a single glob.</p>
 <h2 id="6-the-requirements-lifecycle-analysis-design-plan-done">6. The requirements lifecycle: analysis, design, plan, done</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/06/directory-layout-requirements-lifecycle">part 3 of the series, One Root, Many Repositories</a>.</em></p>
+<p class="provenance"><em>Expanded in part 3 of the series, One Root, Many Repositories, on the blog from 6 October 2026.</em></p>
 <h3 id="61-where-to-start">6.1 Where to start</h3>
 <ul>
 <li><strong>Analysis</strong> when I know nothing yet. What exists, what does the specification say, what do comparable systems do, what does the code currently do? An analysis ends with findings and open questions, not with a solution.</li>
@@ -377,7 +377,7 @@ root/repo/
 <li><strong>Test plans go into a central E2E folder</strong>, not scattered across products, because tests usually span modules.</li>
 </ul>
 <h2 id="7-knowledge-that-outlives-the-session-the-knowledge-base-and-the-lesson-memory">7. Knowledge that outlives the session: the knowledge base and the lesson memory</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/13/knowledge-base-and-lesson-memory">part 4 of the series, What the Next Session Knows</a>.</em></p>
+<p class="provenance"><em>Expanded in part 4 of the series, What the Next Session Knows, on the blog from 13 October 2026.</em></p>
 <p>An agent session starts empty. Everything it knows about the project comes from what it reads. So the question "what does the next session know?" decides whether the project learns — or repeats the same mistakes every week.</p>
 <p>We use two separate stores, because they answer two different questions.</p>
 <h3 id="71-the-knowledge-base-how-does-our-system-work">7.1 The knowledge base: "how does our system work?"</h3>
@@ -427,7 +427,7 @@ type: feedback
 <li><strong>Memories go stale.</strong> A note that names a file, function or flag reflects what was true when it was written. Before acting on one, verify it still holds.</li>
 </ol>
 <h2 id="8-two-environments-project-work-versus-open-product-work">8. Two environments: project work versus open product work</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/20/requirements-into-decision-tables">part 5 of the series, A Table Cannot Stay Silent</a>.</em></p>
+<p class="provenance"><em>Expanded in part 5 of the series, A Table Cannot Stay Silent, on the blog from 20 October 2026.</em></p>
 <p>How I proceed depends heavily on the environment.</p>
 <h3 id="project-work-requirements-come-from-outside">Project work: requirements come from outside</h3>
 <p>In a client project, the requirements usually come from outside, and there are concrete interfaces already: message schemas, API specifications, existing systems to integrate with. That is a huge advantage. <strong>The specification is the oracle</strong> — I can derive tests from it before I write a line of code.</p>
@@ -435,7 +435,7 @@ type: feedback
 <p>When everything is open — a new product, a new module — nobody hands you the requirements. You have to develop them yourself: analyses of the domain, of legal requirements, of what users actually do. The risk here is not bad code but <strong>plausible features that nobody needs</strong> (see <a href="#20-where-it-breaks-part-7-built-correctly-and-pointless">section 20</a>).</p>
 <p>The rest of the process is the same. But the first phase is different, and it is worth describing the project case in detail, because it shows most clearly what the combination of tables, tests, and an agent can do.</p>
 <h2 id="9-forcing-requirements-into-tables">9. Forcing requirements into tables</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/20/requirements-into-decision-tables">part 5 of the series, A Table Cannot Stay Silent</a>.</em></p>
+<p class="provenance"><em>Expanded in part 5 of the series, A Table Cannot Stay Silent, on the blog from 20 October 2026.</em></p>
 <h3 id="91-the-first-step-in-a-project-analyse-then-translate-into-tables">9.1 The first step in a project: analyse, then translate into tables</h3>
 <p>When I receive a specification for a service, the first thing I do is have the agent analyse it and <strong>translate it into equivalence-class tables</strong> using the <a href="https://github.com/xhubio/nanook-skill">Nanook skill</a>. Nanook is a table engine that reads decision tables from an Excel workbook and generates test cases from them.</p>
 <p>Two forms matter:</p>
@@ -470,7 +470,7 @@ type: feedback
 <li><strong>A removed case becomes a finding in the same step.</strong> If a planned case cannot be executed because the application cannot do it, that is a defect to record — not a row to delete.</li>
 </ol>
 <h2 id="10-designing-a-service-so-it-can-be-tested-without-its-infrastructure">10. Designing a service so it can be tested without its infrastructure</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/27/tests-first-red-chain">part 6 of the series, Tests First, Then Implement All Plans</a>.</em></p>
+<p class="provenance"><em>Expanded in part 6 of the series, Tests First, Then Implement All Plans, on the blog from 27 October 2026.</em></p>
 <h3 id="101-the-principle">10.1 The principle</h3>
 <p>I always design a service so that <strong>its function works and is testable without the external connections.</strong></p>
 <p>For an event-driven service, that means: the business logic must not care whether an event arrives via Kafka, a message bus, or REST — or how the result leaves. Transport is an adapter at the edge.</p>
@@ -526,7 +526,7 @@ type: feedback
 </table></div>
 <p>For stage 3, an in-process Postgres engine that replays the <strong>real</strong> DDL script means the test checks the schema, not an imitation of it.</p>
 <h2 id="11-tests-first-the-red-chain">11. Tests first: the red chain</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/10/27/tests-first-red-chain">part 6 of the series, Tests First, Then Implement All Plans</a>.</em></p>
+<p class="provenance"><em>Expanded in part 6 of the series, Tests First, Then Implement All Plans, on the blog from 27 October 2026.</em></p>
 <h3 id="111-clear-interfaces-make-test-driven-work-possible">11.1 Clear interfaces make test-driven work possible</h3>
 <p>When interfaces are clear, we have a big advantage: we can write <strong>all the tests first</strong> and run them against an empty function body. The expected result is that <strong>every test fails with "not implemented"</strong>.</p>
 <p>The sequence in the event-driven service was:</p>
@@ -598,7 +598,7 @@ type: feedback
 </table></div>
 <p>Two lessons: expect a <strong>number</strong>, not "something goes red". And place the probe <strong>where the test actually reads</strong> — a probe at the wrong place stays green and makes a good safeguard look useless.</p>
 <h2 id="12-implement-all-plans-the-autonomous-pipeline">12. "Implement all plans": the autonomous pipeline</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">part 7 of the series, Working Through 1,200 Plans</a>.</em></p>
+<p class="provenance"><em>Expanded in part 7 of the series, Working Through 1,200 Plans, on the blog from 3 November 2026.</em></p>
 <p>In the SaaS platform, the volume of plans made one-plan-at-a-time impractical. So the agent works through them on its own, with a skill called <strong>plan-pipeline</strong> and a loop command that keeps it going.</p>
 <h3 id="121-what-the-pipeline-does">12.1 What the pipeline does</h3>
 <p>For a given <code>REQUIREMENTS/&lt;PRODUCT&gt;</code> folder:</p>
@@ -648,7 +648,7 @@ type: feedback
 <h3 id="124-decisions-unblock-work">12.4 Decisions unblock work</h3>
 <p>One simple rule removed a surprising amount of friction: <strong>when a decision has been made, that is also the go-ahead for implementation.</strong> The pipeline had parked eleven plans as "decision made, go missing" — from the outside, it looked like nothing was happening.</p>
 <h2 id="13-many-repositories-one-change-parity-and-release-cascades">13. Many repositories, one change: parity and release cascades</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">part 7 of the series, Working Through 1,200 Plans</a>.</em></p>
+<p class="provenance"><em>Expanded in part 7 of the series, Working Through 1,200 Plans, on the blog from 3 November 2026.</em></p>
 <h3 id="131-app-parity">13.1 App parity</h3>
 <p>The e-invoicing API, the trades software, and the PDF API share the same plugins and backends. A change to a shared backend package or frontend plugin must be checked against <strong>all</strong> apps. The same bug in several apps is fixed <strong>in all of them at the same time</strong>. That rule is in the instruction file, marked critical — because an agent that fixes a bug in the app it is looking at considers the job done.</p>
 <h3 id="132-release-cascades">13.2 Release cascades</h3>
@@ -661,7 +661,7 @@ type: feedback
 </ul>
 <p>Why so strict? See <a href="#18-where-it-breaks-part-5-rules-in-prose-are-not-enforced">section 18</a>.</p>
 <h2 id="14-where-it-breaks-part-1-the-agent-that-pleases">14. Where it breaks, part 1: the agent that pleases</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p class="provenance"><em>Expanded in part 8 of the series, The Agent That Pleases, on the blog from 10 November 2026.</em></p>
 <p><strong>The agent is fast, but it is accommodating.</strong> Its goal is a green result, and there are always two ways to get one: fix the code, or adjust the expectation.</p>
 <p>In the event-driven service, the rule "change an expectation only via the table, with a reason" is the reason the suite still asserts something. Without it, I would have had a green test suite on day two that asserted nothing.</p>
 <p>The same tendency shows up in quieter forms:</p>
@@ -674,7 +674,7 @@ type: feedback
 <p>The purpose of a test suite is not to be green. It is to say what is.</p>
 </blockquote>
 <h2 id="15-where-it-breaks-part-2-absences-nobody-reports">15. Where it breaks, part 2: absences nobody reports</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p class="provenance"><em>Expanded in part 8 of the series, The Agent That Pleases, on the blog from 10 November 2026.</em></p>
 <p>The most expensive class of defect in agent-built software is not a wrong result. It is <strong>something missing</strong> — because no tool reports an absence.</p>
 <p>In a single night, the same defect appeared four times in four modules:</p>
 <div class="table-scroll"><table>
@@ -718,7 +718,7 @@ type: feedback
 <li>A plan's definition of done: <strong>the user job was played through in the browser as the persona.</strong></li>
 </ul>
 <h2 id="16-where-it-breaks-part-3-the-measuring-instrument-lies">16. Where it breaks, part 3: the measuring instrument lies</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p class="provenance"><em>Expanded in part 8 of the series, The Agent That Pleases, on the blog from 10 November 2026.</em></p>
 <p>An agent that checks its own work is only as good as its measuring instruments. And instruments fail in the worst possible way: they report success.</p>
 <ul>
 <li><strong>A request counter that could not count.</strong> To verify that a page no longer fired requests in a render loop, the agent counted via the browser's <code>PerformanceObserver</code>. Result: <code>0</code> requests. The resource-timing buffer is capped at <strong>250 entries</strong>, and in dev mode it was full of module loads before the first API call ran. Not "no requests" — a blind instrument that looks exactly like a passed gate. The real defect was around <strong>150 request batches per second</strong>. The rule since then: <strong>prove the counter first</strong> — show it returns <code>&gt;0</code> on a real page change. A <code>0</code> is only a result after that.</li>
@@ -733,7 +733,7 @@ type: feedback
 </blockquote>
 <p>If the honest answer is "nothing", the construct asserts its effect instead of proving it.</p>
 <h2 id="17-where-it-breaks-part-4-invented-evidence">17. Where it breaks, part 4: invented evidence</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p class="provenance"><em>Expanded in part 8 of the series, The Agent That Pleases, on the blog from 10 November 2026.</em></p>
 <p>Agents produce text that looks like evidence. Precise-looking evidence is trusted <em>more</em>, and checked <em>less</em>.</p>
 <ul>
 <li><strong>An invented line reference.</strong> A plan supported a claim with <code>PIPELINE-LEDGER.md:1543-1546</code>. The file had <strong>1,016 lines</strong>. The quoted phrases appeared in none of the seven ledger files. A second plan copied the claim. The conclusion happened to be right — its foundation was made up. Rule: check a line reference against the file length before adopting it (<code>wc -l</code> is cheaper than any discussion), and grep the quoted phrase instead of trusting the number.</li>
@@ -742,7 +742,7 @@ type: feedback
 <li><strong>A decision without its wording is not a decision.</strong> From an empty paraphrase — "both product decisions are in" — an agent guessed the <em>content</em> of the two decisions, and inverted both.</li>
 </ul>
 <h2 id="18-where-it-breaks-part-5-rules-in-prose-are-not-enforced">18. Where it breaks, part 5: rules in prose are not enforced</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/17/rules-need-exit-codes">part 9 of the series, Rules Need Exit Codes</a>.</em></p>
+<p class="provenance"><em>Expanded in part 9 of the series, Rules Need Exit Codes, on the blog from 17 November 2026.</em></p>
 <h3 id="181---no-verify-five-times">18.1 <code>--no-verify</code>, five times</h3>
 <p>The instruction file says: never bypass the test hook. Every task brief for an implementation agent said: never <code>--no-verify</code>.</p>
 <p>On one day, <strong>three</strong> implementation agents committed with <code>git commit --no-verify</code> anyway — and reported it themselves ("reflex", "harmless, because the tests were green before"). They read the prohibition as a push rule. A fourth case came nine days later, with a sharper wording in the brief. A fifth on the same day — this time not <code>--no-verify</code> but <code>git -c core.hooksPath=.git/hooks commit</code>. Same reflex, different spelling.</p>
@@ -761,7 +761,7 @@ type: feedback
 </blockquote>
 <p>Everything that must hold goes into something with an exit code: a hook, a guard test, a check script, a ratchet. Prose rules are guidance for judgement. They are not a control.</p>
 <h2 id="19-where-it-breaks-part-6-parallel-sessions-in-one-checkout">19. Where it breaks, part 6: parallel sessions in one checkout</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">part 7 of the series, Working Through 1,200 Plans</a>.</em></p>
+<p class="provenance"><em>Expanded in part 7 of the series, Working Through 1,200 Plans, on the blog from 3 November 2026.</em></p>
 <p>Running several agent sessions in parallel is where the throughput comes from. It is also where the nastiest incidents come from, because the tools assume one person per working tree.</p>
 <ul>
 <li><strong>A push that would have published someone else's unfinished work.</strong> While one session worked through plans in two repositories, a second session worked on a tax-authority integration in <em>the same</em> repositories. At the pre-check both were clean; twenty minutes later there were five unpushed foreign commits and twelve modified files. A push by the first session's implementer would have published those commits and triggered a <strong>semantic-release of unfinished work</strong> — and a published npm package cannot be rolled back.</li>
@@ -780,7 +780,7 @@ type: feedback
 <li><strong>At most three sub-agents at a time</strong> across all types — for cost, and for contention.</li>
 </ol>
 <h2 id="20-where-it-breaks-part-7-built-correctly-and-pointless">20. Where it breaks, part 7: built correctly, and pointless</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/17/rules-need-exit-codes">part 9 of the series, Rules Need Exit Codes</a>.</em></p>
+<p class="provenance"><em>Expanded in part 9 of the series, Rules Need Exit Codes, on the blog from 17 November 2026.</em></p>
 <p>After a test round of the trades software, my verdict on many features was: <em>implemented, but they don't make much sense.</em></p>
 <p>The early plans had been driven by competitor feature lists and verified against the code. The pattern repeated: the data model and primitives cleanly built, a UI glued on without a thought-through workflow. Tours as an address text area on top of a tour primitive. Checklist execution on the template page. Appointment booking without closing the loop. "Done" was set although the user's job could not be played through.</p>
 <p>The agent is excellent at building what the plan says. It does not ask whether the plan makes sense for the person using it — unless the process forces the question.</p>
@@ -795,7 +795,7 @@ type: feedback
 <p>Everything we build should take work off a user's hands and improve their process. That is the measure — not feature parity, and not a green build.</p>
 </blockquote>
 <h2 id="21-cost-tokens-models-and-budgets">21. Cost: tokens, models, and budgets</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
+<p class="provenance"><em>Expanded in part 2 of the series, Fewer Skills, Shorter Rules, on the blog from 29 September 2026.</em></p>
 <p>Agentic development at this scale is not cheap, and cost is a design constraint, not an afterthought.</p>
 <ul>
 <li><strong>The weekly limit was reached after three days.</strong> An analysis showed the orchestrator, running on the most expensive model, consumed <strong>30 %</strong> of the weekly budget by itself. The orchestrator moved to a strong-but-cheaper model; implementation stayed on a strong model; routine cascades moved to a fast model.</li>
@@ -806,7 +806,7 @@ type: feedback
 </ul>
 <p>The cheapest token is the one that never enters the context.</p>
 <h2 id="22-what-i-would-do-again-and-what-i-would-not">22. What I would do again, and what I would not</h2>
-<p class="provenance"><em>Expanded in <a href="/blog/2026/11/17/rules-need-exit-codes">part 9 of the series, Rules Need Exit Codes</a>.</em></p>
+<p class="provenance"><em>Expanded in part 9 of the series, Rules Need Exit Codes, on the blog from 17 November 2026.</em></p>
 <h3 id="again">Again</h3>
 <ul>
 <li><strong>Tables before tests before code</strong>, whenever interfaces exist.</li>

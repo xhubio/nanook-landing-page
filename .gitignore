@@ -6,3 +6,4 @@ tmp/
 .claude/skills/
 skills-lock.json
 .hallmark/
+__pycache__/

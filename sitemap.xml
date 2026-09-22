@@ -2,7 +2,7 @@
 
 <url><loc>https://nanook.xhub.io/about</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
 <url><loc>https://nanook.xhub.io/imprint</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
-<url><loc>https://nanook.xhub.io/blog</loc><lastmod>2026-11-17</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
+<url><loc>https://nanook.xhub.io/blog</loc><lastmod>2026-09-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://nanook.xhub.io/articles</loc><lastmod>2026-09-22</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
 <url><loc>https://nanook.xhub.io/articles/event-driven-service-with-tables-and-an-agent</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
 <url><loc>https://nanook.xhub.io/articles/agentic-software-development</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -11,15 +11,6 @@
 <url><loc>https://nanook.xhub.io/</loc><lastmod>2026-09-22</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
 <url><loc>https://nanook.xhub.io/privacyPolicy</loc><lastmod>2026-09-02</lastmod><changefreq>yearly</changefreq><priority>0.3</priority></url>
 
-<url><loc>https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file</loc><lastmod>2026-09-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle</loc><lastmod>2026-10-06</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/10/13/knowledge-base-and-lesson-memory</loc><lastmod>2026-10-13</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict</loc><lastmod>2026-10-21</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables</loc><lastmod>2026-10-20</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain</loc><lastmod>2026-10-27</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades</loc><lastmod>2026-11-03</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks</loc><lastmod>2026-11-10</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-<url><loc>https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes</loc><lastmod>2026-11-17</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview</loc><lastmod>2026-09-22</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables</loc><lastmod>2026-08-29</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
 <url><loc>https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table</loc><lastmod>2026-09-02</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>

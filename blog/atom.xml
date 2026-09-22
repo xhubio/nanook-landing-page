@@ -2,102 +2,12 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nanook.xhub.io/blog</id>
     <title>Nanook Blog</title>
-    <updated>2026-11-17T06:00:00.000Z</updated>
+    <updated>2026-09-22T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nanook.xhub.io/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Nanook news and events.</subtitle>
     <logo>https://nanook.xhub.io/img/logo.svg</logo>
     <rights>Copyright  2022 nanook.xhub.io</rights>
-    <entry>
-        <title type="html"><![CDATA[Rules Need Exit Codes, and Green Is Not Useful: What Still Went Wrong]]></title>
-        <id>https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes</id>
-        <link href="https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes"/>
-        <updated>2026-11-17T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>Five bypassed test hooks, eight unnoticed red CI runs, features built correctly and pointless. Why rules need exit codes, and what I would do again.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[The Agent That Pleases: Absences, Lying Instruments, and Invented Evidence]]></title>
-        <id>https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks</id>
-        <link href="https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks"/>
-        <updated>2026-11-10T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>Four ways an AI coding agent fails while reporting success: accommodating tests, absent features, lying instruments, invented evidence. Incidents and rules.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Working Through 1,200 Plans: A Pipeline, a Ledger, and Many Repositories]]></title>
-        <id>https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades</id>
-        <link href="https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades"/>
-        <updated>2026-11-03T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>How an autonomous agent pipeline worked through 1,240 plans across 74 repositories: a crash-safe ledger, release cascades, parallel sessions in one checkout.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Tests First, Then "Implement All Plans": Designing Services an Agent Can Verify]]></title>
-        <id>https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain</id>
-        <link href="https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain"/>
-        <updated>2026-10-27T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>Design a service an AI agent can verify without Kafka or Postgres, write all tests first, prove 245 are red for the same reason, then let the agent implement.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A Service in Eleven Days, with an AI Agent and Tables That Contradict]]></title>
-        <id>https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict</id>
-        <link href="https://nanook.xhub.io/blog/2026/10/21/service-in-eleven-days-tables-that-contradict"/>
-        <updated>2026-10-21T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>An event-driven service in eleven days with an AI agent: 806 tests, 214 generated cases, and the eight requirement defects the tables found before any code.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[A Table Cannot Stay Silent: Finding Contradictions in Requirements Before Any Code Exists]]></title>
-        <id>https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables</id>
-        <link href="https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables"/>
-        <updated>2026-10-20T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>Prose stays silent where the work is; a table cannot. How translating a specification into decision tables found eight defects before any code existed.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[What the Next Session Knows: A Knowledge Base and a Memory of Lessons]]></title>
-        <id>https://nanook.xhub.io/blog/2026/10/13/knowledge-base-and-lesson-memory</id>
-        <link href="https://nanook.xhub.io/blog/2026/10/13/knowledge-base-and-lesson-memory"/>
-        <updated>2026-10-13T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>An AI agent session starts empty. Two stores decide what the next one knows: a knowledge base and a memory of 327 lessons in about twenty failure classes.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[One Root, Many Repositories: A Directory Layout and a Requirements Lifecycle for Agent Work]]></title>
-        <id>https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle</id>
-        <link href="https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle"/>
-        <updated>2026-10-06T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>A directory layout for agent work, for a multi-product SaaS and for microservices, and the lifecycle a requirement passes through from analysis to done.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions]]></title>
-        <id>https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file</id>
-        <link href="https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file"/>
-        <updated>2026-09-29T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>Skills, MCP servers and an instruction file for a coding agent: 14 unused skills archived, 170 lines of rules that load themselves, and what the budget taught.</p> ]]></summary>
-        <author>
-            <name>Torsten Link</name>
-        </author>
-    </entry>
     <entry>
         <title type="html"><![CDATA[The Agent Writes the Code. Everything Around It Decides Whether You Can Trust It.]]></title>
         <id>https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview</id>

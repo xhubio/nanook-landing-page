@@ -77,6 +77,24 @@ def build_head(head, a, url):
     return head + '  <script type="application/ld+json">\n' + json.dumps(ld, indent=2, ensure_ascii=False) + "\n</script>\n"
 
 
+def _state():
+    try:
+        return json.load(open("blog/new/series-state.json", encoding="utf-8"))
+    except FileNotFoundError:
+        return {"parts": []}
+
+
+def unlink_unpublished(fragment):
+    """A link to a series part that is not published yet becomes plain text with its date."""
+    for p in _state()["parts"]:
+        if p["published"]:
+            continue
+        y, m, d = p["date"].split("-"); u = f"/blog/{y}/{m}/{d}/{p['slug']}"
+        months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        fragment = re.sub(r'<a href="' + re.escape(u) + r'">(.*?)</a>', lambda mm: f"{mm.group(1)}, on the blog from {int(d)} {months[int(m)]} {y}", fragment, flags=re.S)
+    return fragment
+
+
 def transform(fragment, a):
     """Drop the h1, the Contents section, the italic intro (returned as lede) and the
     trailing Related note; wrap tables; add series pointers after numbered H2s."""
@@ -89,12 +107,17 @@ def transform(fragment, a):
     fragment = re.sub(r"<hr />\s*", "", fragment)
     fragment = re.sub(r"<p><em>Related: .*?</em></p>\s*$", "", fragment, flags=re.S)
     fragment = fragment.replace("<table>", '<div class="table-scroll"><table>').replace("</table>", "</table></div>")
+    fragment = unlink_unpublished(fragment)
+    pub = {q["key"]: q["published"] for q in _state()["parts"]}
     def hint(m):
         n = int(m.group(2)); p = a["parts"].get(n)
         if not p:
             return m.group(0)
         d, slug, short = a["series"][p]; y, mo, dd = d.split("-")
-        return m.group(0) + f'\n<p class="provenance"><em>Expanded in <a href="/blog/{y}/{mo}/{dd}/{slug}">part {p} of the series, {short}</a>.</em></p>'
+        if pub.get(str(p), True):
+            return m.group(0) + f'\n<p class="provenance"><em>Expanded in <a href="/blog/{y}/{mo}/{dd}/{slug}">part {p} of the series, {short}</a>.</em></p>'
+        months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        return m.group(0) + f'\n<p class="provenance"><em>Expanded in part {p} of the series, {short}, on the blog from {int(dd)} {months[int(mo)]} {y}.</em></p>'
     if a["parts"]:
         fragment = re.sub(r'(<h2 id="(\d+)-[^"]*">.*?</h2>)', hint, fragment)
     return fragment.strip(), lede

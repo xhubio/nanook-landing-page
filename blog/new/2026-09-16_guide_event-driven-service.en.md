@@ -291,5 +291,5 @@ need a check script that turns the error into an abort.
 3. **What fails silently is more expensive than what aborts.** Every check needs a number and an
    exit code.
 
-The field report on the service this guide was derived from is on the blog:
+The field report on the service this guide was derived from:
 [A Service in Eleven Days, with an AI Agent and Tables That Contradict](/blog/2026/10/21/service-in-eleven-days-tables-that-contradict).

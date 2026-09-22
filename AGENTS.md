@@ -19,7 +19,7 @@ conveniences:
 | | Measured |
 |---|---|
 | Chrome (nav, header, footer) per page | ~40 % of each file |
-| Files carrying the blog sidebar | **38** (2026-09-22) |
+| Files carrying the blog sidebar | **31** (2026-09-22; 40 once the series is complete) |
 | Files carrying the docs sidebar | **150** |
 | `.html` + `/index.html` twin pairs | **86** |
 
@@ -69,7 +69,7 @@ Missing one is the normal failure mode here — the last publish missed two.
 |---|---|---|
 | 1 | `blog/YYYY/MM/DD/<slug>.html` | the post itself |
 | 2 | `blog/YYYY/MM/DD/<slug>/index.html` | **byte-identical twin** for the clean URL |
-| 3 | sidebar `<li class="navListItem">` in **38** files | the sidebar is baked into every blog page, including old ones |
+| 3 | sidebar `<li class="navListItem">` in **31** files (40 once the series is complete) | the sidebar is baked into every blog page, including old ones |
 | 4 | `blog/index.html` teaser | prepend a `div.post` block with an excerpt |
 | 5 | `blog/feed.xml` + `blog/atom.xml` | see below — these are effectively dead |
 | 6 | `sitemap.xml` | one `<url>` entry |
@@ -138,6 +138,17 @@ about.html shell, TOC from the H2s, a series pointer after each numbered H2, twi
 Edit the Markdown and rebuild; do not edit the generated HTML. The header nav entry "Articles"
 and the footer link are baked into all pages (219 files on 2026-09-22) — a new nav item is a
 site-wide scripted edit.
+
+### Series: staggered release (`tools/publish-part.py`)
+
+The agentic-development series (parts 1–9 and the companion 5b) is released one part a week.
+State lives in `blog/new/series-state.json` (`published` per part). Unpublished parts sit at their
+final path as `noindex` drafts without a twin and are registered nowhere. On the release day run
+`python3 tools/publish-part.py <slug>`: it registers the part at all six places, sets the
+Previous/Next navigation, links the row in part 1, rebuilds the articles (`tools/build-article.py`
+reads the state and links only published parts), updates the series plan, then re-copies all twins.
+Idempotent; parts must be published in order. `tools/unpublish-parts.py` reverses it for every
+part with `published: false` (used once, 2026-09-22). Shared code: `tools/series_lib.py`.
 
 ### `llms.txt`
 

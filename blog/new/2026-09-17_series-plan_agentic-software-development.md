@@ -20,15 +20,15 @@ parts 8 and 9 can be swapped.
 | # | Title (working) | Slug | Report sections | Length | Date | Status (2026-09-22) |
 |---|---|---|---|---|---|---|
 | 1 | The agent writes the code. Everything around it decides whether you can trust it. | `agentic-development-overview` | 1, 2, 23 | ~1,300 w | 2026-09-22 | published |
-| 2 | Fewer skills, shorter rules: setting up a coding agent that does not drown in its own instructions | `agent-toolbox-and-instruction-file` | 3, 4, 21 | ~1,600 w | 2026-09-29 | scheduled, registered |
-| 3 | One root, many repositories: a directory layout and a requirements lifecycle for agent work | `directory-layout-requirements-lifecycle` | 5, 6 | ~1,700 w | 2026-10-06 | scheduled, registered |
-| 4 | What the next session knows: a knowledge base and a memory of lessons | `knowledge-base-and-lesson-memory` | 7 | ~1,100 w | 2026-10-13 | scheduled, registered |
-| 5 | A table cannot stay silent: finding contradictions in requirements before any code exists | `requirements-into-decision-tables` | 8, 9 | ~1,600 w | 2026-10-20 | scheduled, registered |
-| 5b | A service in eleven days, with an AI agent and tables that contradict (the field report, translated) | `service-in-eleven-days-tables-that-contradict` | — (source: `2026-09-16_blog_service-in-eleven-days.en.md`) | ~2,200 w | 2026-10-21 | scheduled, registered |
-| 6 | Tests first, then "implement all plans": designing services an agent can verify | `tests-first-red-chain` | 10, 11 | ~1,800 w | 2026-10-27 | scheduled, registered |
-| 7 | Working through 1,200 plans: a pipeline, a ledger, and many repositories | `plan-pipeline-and-release-cascades` | 12, 13, 19 | ~2,000 w | 2026-11-03 | scheduled, registered |
-| 8 | The agent that pleases: absences, lying instruments, and invented evidence | `where-agentic-development-breaks` | 14, 15, 16, 17 | ~2,200 w | 2026-11-10 | scheduled, registered |
-| 9 | Rules need exit codes, and green is not useful: what still went wrong | `rules-need-exit-codes` | 18, 20, 22 | ~1,700 w | 2026-11-17 | scheduled, registered |
+| 2 | Fewer skills, shorter rules: setting up a coding agent that does not drown in its own instructions | `agent-toolbox-and-instruction-file` | 3, 4, 21 | ~1,600 w | 2026-09-29 | scheduled, unpublished draft |
+| 3 | One root, many repositories: a directory layout and a requirements lifecycle for agent work | `directory-layout-requirements-lifecycle` | 5, 6 | ~1,700 w | 2026-10-06 | scheduled, unpublished draft |
+| 4 | What the next session knows: a knowledge base and a memory of lessons | `knowledge-base-and-lesson-memory` | 7 | ~1,100 w | 2026-10-13 | scheduled, unpublished draft |
+| 5 | A table cannot stay silent: finding contradictions in requirements before any code exists | `requirements-into-decision-tables` | 8, 9 | ~1,600 w | 2026-10-20 | scheduled, unpublished draft |
+| 5b | A service in eleven days, with an AI agent and tables that contradict (the field report, translated) | `service-in-eleven-days-tables-that-contradict` | — (source: `2026-09-16_blog_service-in-eleven-days.en.md`) | ~2,200 w | 2026-10-21 | scheduled, unpublished draft |
+| 6 | Tests first, then "implement all plans": designing services an agent can verify | `tests-first-red-chain` | 10, 11 | ~1,800 w | 2026-10-27 | scheduled, unpublished draft |
+| 7 | Working through 1,200 plans: a pipeline, a ledger, and many repositories | `plan-pipeline-and-release-cascades` | 12, 13, 19 | ~2,000 w | 2026-11-03 | scheduled, unpublished draft |
+| 8 | The agent that pleases: absences, lying instruments, and invented evidence | `where-agentic-development-breaks` | 14, 15, 16, 17 | ~2,200 w | 2026-11-10 | scheduled, unpublished draft |
+| 9 | Rules need exit codes, and green is not useful: what still went wrong | `rules-need-exit-codes` | 18, 20, 22 | ~1,700 w | 2026-11-17 | scheduled, unpublished draft |
 
 The two German drafts of 2026-09-16 are translated and placed (2026-09-22):
 - `2026-09-16_blog_dienst-mit-ki-und-tabellen.md` → `2026-09-16_blog_service-in-eleven-days.en.md`, published as **part 5b** (`/blog/2026/10/21/service-in-eleven-days-tables-that-contradict`, linked from part 5).
@@ -87,7 +87,7 @@ series.
 
 ## Part 2 — Fewer skills, shorter rules
 
-**Status:** scheduled 2026-09-29 as `/blog/2026/09/29/agent-toolbox-and-instruction-file`, registered 2026-09-22 (PRD `prds/2026-09-29_blog-agent-toolbox-and-instruction-file.md`).
+**Status:** scheduled 2026-09-29 as `/blog/2026/09/29/agent-toolbox-and-instruction-file`, unpublished draft; publish with `tools/publish-part.py agent-toolbox-and-instruction-file` (PRD `prds/2026-09-29_blog-agent-toolbox-and-instruction-file.md`).
 
 **Content:** Superpowers as a starting point, adapted per project. Project-specific skills. Playwright
 MCP and one browser per parallel session. The token diet: 14 skills unused in 91 sessions → archived.
@@ -126,7 +126,7 @@ Cost: weekly limit after three days, orchestrator at 30 %, model assignment, max
 
 ## Part 3 — One root, many repositories
 
-**Status:** scheduled 2026-10-06 as `/blog/2026/10/06/directory-layout-requirements-lifecycle`, registered 2026-09-22 (PRD `prds/2026-10-06_blog-directory-layout-requirements-lifecycle.md`).
+**Status:** scheduled 2026-10-06 as `/blog/2026/10/06/directory-layout-requirements-lifecycle`, unpublished draft; publish with `tools/publish-part.py directory-layout-requirements-lifecycle` (PRD `prds/2026-10-06_blog-directory-layout-requirements-lifecycle.md`).
 
 **Content:** The root directory is a repository (4,284 commits of plans, rules and decisions). Layout for a
 multi-product SaaS with shared modules versus an event-driven microservice landscape (requirements per
@@ -170,7 +170,7 @@ blockers leave the plan.
 
 ## Part 4 — What the next session knows
 
-**Status:** scheduled 2026-10-13 as `/blog/2026/10/13/knowledge-base-and-lesson-memory`, registered 2026-09-22 (PRD `prds/2026-10-13_blog-knowledge-base-and-lesson-memory.md`).
+**Status:** scheduled 2026-10-13 as `/blog/2026/10/13/knowledge-base-and-lesson-memory`, unpublished draft; publish with `tools/publish-part.py knowledge-base-and-lesson-memory` (PRD `prds/2026-10-13_blog-knowledge-base-and-lesson-memory.md`).
 
 **Content:** Two stores for two questions. The knowledge base (own repository, raw → compiled wiki, one
 concept per file, dated, lint; topics development, test, deployment, production; target environment;
@@ -209,7 +209,7 @@ classes). The fourth attempt: a lesson solved locally comes back. Memories go st
 
 ## Part 5 — A table cannot stay silent
 
-**Status:** scheduled 2026-10-20 as `/blog/2026/10/20/requirements-into-decision-tables`, registered 2026-09-22 (PRD `prds/2026-10-20_blog-requirements-into-decision-tables.md`).
+**Status:** scheduled 2026-10-20 as `/blog/2026/10/20/requirements-into-decision-tables`, unpublished draft; publish with `tools/publish-part.py requirements-into-decision-tables` (PRD `prds/2026-10-20_blog-requirements-into-decision-tables.md`).
 
 **Content:** Project work versus open product work. In a project: analyse the specification, translate it
 into equivalence-class tables with the Nanook skill. Decision table versus matrix table. Why tables find what
@@ -252,7 +252,7 @@ columns demanded by cells, ignore versus error). The three table rules from the 
 
 ## Part 5b — A service in eleven days, with an AI agent and tables that contradict
 
-**Status:** scheduled 2026-10-21 as `/blog/2026/10/21/service-in-eleven-days-tables-that-contradict`, registered 2026-09-22 (PRD `prds/2026-10-21_blog-service-in-eleven-days-tables-that-contradict.md`). Translation of `2026-09-16_blog_dienst-mit-ki-und-tabellen.md`; companion to part 5, not a numbered part.
+**Status:** scheduled 2026-10-21 as `/blog/2026/10/21/service-in-eleven-days-tables-that-contradict`, unpublished draft; publish with `tools/publish-part.py service-in-eleven-days-tables-that-contradict` (PRD `prds/2026-10-21_blog-service-in-eleven-days-tables-that-contradict.md`).
 
 **Content:** the event-driven service in full: domain and roles, the workbook (13 sheets, 214 cases, 1,712 files), the eight findings, contract → oracle → red chain → five stages → counter-probes, from the cell to the test file, the ten gates, what I learned, the numbers.
 
@@ -281,7 +281,7 @@ columns demanded by cells, ignore versus error). The three table rules from the 
 
 ## Part 6 — Tests first, then "implement all plans"
 
-**Status:** scheduled 2026-10-27 as `/blog/2026/10/27/tests-first-red-chain`, registered 2026-09-22 (PRD `prds/2026-10-27_blog-tests-first-red-chain.md`).
+**Status:** scheduled 2026-10-27 as `/blog/2026/10/27/tests-first-red-chain`, unpublished draft; publish with `tools/publish-part.py tests-first-red-chain` (PRD `prds/2026-10-27_blog-tests-first-red-chain.md`).
 
 **Content:** Service design independent of transport (ports, thin adapters); why this matters more with an
 agent (it can verify itself after every step). Five stages with a prohibition each. The red chain: contract
@@ -321,7 +321,7 @@ reason. Counter-probes with counted results.
 
 ## Part 7 — Working through 1,200 plans
 
-**Status:** scheduled 2026-11-03 as `/blog/2026/11/03/plan-pipeline-and-release-cascades`, registered 2026-09-22 (PRD `prds/2026-11-03_blog-plan-pipeline-and-release-cascades.md`).
+**Status:** scheduled 2026-11-03 as `/blog/2026/11/03/plan-pipeline-and-release-cascades`, unpublished draft; publish with `tools/publish-part.py plan-pipeline-and-release-cascades` (PRD `prds/2026-11-03_blog-plan-pipeline-and-release-cascades.md`).
 
 **Content:** The plan pipeline: audit against the code, implement per step via sub-agents, release, move to
 done. The ledger: status vocabulary, immediate writes, write-ahead `IN FLIGHT`, size in bytes, head-only resume.
@@ -362,7 +362,7 @@ checkout: foreign commits, `git add -A`, stash, silent agents; push ban, worktre
 
 ## Part 8 — The agent that pleases
 
-**Status:** scheduled 2026-11-10 as `/blog/2026/11/10/where-agentic-development-breaks`, registered 2026-09-22 (PRD `prds/2026-11-10_blog-where-agentic-development-breaks.md`).
+**Status:** scheduled 2026-11-10 as `/blog/2026/11/10/where-agentic-development-breaks`, unpublished draft; publish with `tools/publish-part.py where-agentic-development-breaks` (PRD `prds/2026-11-10_blog-where-agentic-development-breaks.md`).
 
 **Content:** Four failure classes with real incidents. (1) The accommodating agent: removed test case, known
 defect encoded as green, "known defects are always red", nobody re-reads a red test. (2) Absences: four features
@@ -408,7 +408,7 @@ without its wording.
 
 ## Part 9 — Rules need exit codes, and green is not useful
 
-**Status:** scheduled 2026-11-17 as `/blog/2026/11/17/rules-need-exit-codes`, registered 2026-09-22 (PRD `prds/2026-11-17_blog-rules-need-exit-codes.md`).
+**Status:** scheduled 2026-11-17 as `/blog/2026/11/17/rules-need-exit-codes`, unpublished draft; publish with `tools/publish-part.py rules-need-exit-codes` (PRD `prds/2026-11-17_blog-rules-need-exit-codes.md`).
 
 **Content:** `--no-verify` five times despite explicit prohibitions; prohibitions must name the effect; the
 PreToolUse hook that denies bypasses. Eight red CI runs unnoticed; the push gate. "Red is the finding." Built
@@ -446,6 +446,43 @@ persona, the sense check. What I would do again and what not. Closing with the t
 
 ---
 
+## LinkedIn calendar (from 2026-09-23)
+
+One series post a week (part 5b follows part 5 two days later), never before the blog date of the
+part it links to. Torsten posts from his account; the German text is the primary one, the English
+one sits alongside it. Log the actual date in the
+last column once posted.
+
+| Part | LinkedIn | Blog date | Text | Posted |
+|---|---|---|---|---|
+| 1 | Wed 2026-09-23 | 2026-09-22 | `prds/assets/linkedin-agentic-development-overview/linkedin-post.txt` | |
+| 2 | Tue 2026-09-29 | 2026-09-29 | `prds/assets/linkedin-agent-toolbox-and-instruction-file/linkedin-post.txt` | |
+| 3 | Tue 2026-10-06 | 2026-10-06 | `prds/assets/linkedin-directory-layout-requirements-lifecycle/linkedin-post.txt` | |
+| 4 | Tue 2026-10-13 | 2026-10-13 | `prds/assets/linkedin-knowledge-base-and-lesson-memory/linkedin-post.txt` | |
+| 5 | Tue 2026-10-20 | 2026-10-20 | `prds/assets/linkedin-requirements-into-decision-tables/linkedin-post.txt` | |
+| 5b | Thu 2026-10-22 | 2026-10-21 | `prds/assets/linkedin-service-in-eleven-days-tables-that-contradict/linkedin-post.txt` | |
+| 6 | Tue 2026-10-27 | 2026-10-27 | `prds/assets/linkedin-tests-first-red-chain/linkedin-post.txt` | |
+| 7 | Tue 2026-11-03 | 2026-11-03 | `prds/assets/linkedin-plan-pipeline-and-release-cascades/linkedin-post.txt` | |
+| 8 | Tue 2026-11-10 | 2026-11-10 | `prds/assets/linkedin-where-agentic-development-breaks/linkedin-post.txt` | |
+| 9 | Tue 2026-11-17 | 2026-11-17 | `prds/assets/linkedin-rules-need-exit-codes/linkedin-post.txt` | |
+| — | Fri 2026-09-25 | 2026-08-22 | `prds/assets/linkedin-login-example-ai-generated-table/linkedin-post.txt` (login example, outside the series) | |
+
+The login-example post (comments and repost texts in the same folder) takes the free slot on
+Fri 2026-09-25 if it has not been posted yet.
+
+### Checklist per post
+
+1. On the blog date, run `python3 tools/publish-part.py <slug>` (parts in order; 5b after 5), commit,
+   push, and check that the linked URL answers 200. Until then the part is an unregistered draft.
+2. Torsten posts the German text from his account, the link on a line of its own after 👉, hashtags as in
+   the file. Check the paste: LinkedIn strips formatting, the files use CAPITALS where the drafts
+   had bold.
+3. Torsten adds the first comment (one thing the post does not say loudly enough); Patrick comments
+   as the company within the first hour (who can read the artefact); see
+   `prds/2026-08-22_linkedin-login-example-ai-generated-table.md`, section "Comments and repost".
+4. Patrick reposts the next day with two sentences of his own, in German.
+5. Log the date in the table above and set the row of the overview table to "published".
+
 ## Open points before publishing (status 2026-09-22)
 
 1. **Knowledge base attribution.** Decided: Andrej Karpathy's LLM-wiki model, linked to
@@ -454,11 +491,12 @@ persona, the sense check. What I would do again and what not. Closing with the t
    part 5b and the guide (domain "connections in regional rail", systems renamed).
 3. **Numbers** were measured on 2026-09-17; every part states that date. Re-measure before parts 7–9 go
    out in November, or leave the date and say nothing more.
-4. **The two German drafts** are translated and registered (part 5b, guide article); see above.
+4. **The two German drafts** are translated; the guide is live, part 5b is a scheduled draft (see 7).
 5. **Nanook placement.** Parts 2–4, 7–9 link the docs only where a sentence calls for it; the CTA to the
    quickstart sits in part 1 and part 9. Part 5, 5b, 6 and 8 carry the product naturally.
 6. **Open with the author:** part 7 keeps both figures from the report, "up to nine sub-agents in
    parallel" for the cascade (§13.2) and "at most three sub-agents at a time across all types" (§19).
    Confirm which holds, or whether the cascade is exempt, and adjust one sentence.
-7. **Scheduling note.** All parts are registered in sidebar, feeds and sitemap with their future dates
-   (decision 2026-09-22); readers and crawlers see them before the dates.
+7. **Scheduling.** Parts 2–9 and 5b are unpublished `noindex` drafts at their final paths (decision
+   2026-09-22, revised the same day); `tools/publish-part.py <slug>` registers a part on its date.
+   Only part 1, the full report and the guide are live.
