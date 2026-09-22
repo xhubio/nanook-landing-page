@@ -112,8 +112,10 @@ in the series table of part 1 (+ twin).
 ## LinkedIn companion
 
 Files: `prds/assets/linkedin-agentic-development-overview/linkedin-post.txt` (German, primary) and
-`linkedin-post-en.txt` (English, from the series plan). No image in this pass; the blog diagram can be
-exported to PNG (`qlmanage -t -s 1200`) if one is wanted.
+`linkedin-post-en.txt` (English, from the series plan). Image: `linkedin-single.svg` / `linkedin-single.png`
+(1200×1200, dark, monospace; the three figures 74 / ~14,000 / 9 months, the headline "The speed is real.
+It is the least interesting part.", and the four things around the agent). Re-render with
+`qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
 
 ## Notes
 - Nanook appears twice: in sentence 2 of the short version (link to the guide) and in the closing

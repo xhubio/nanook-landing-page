@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img"
+     aria-label="74 repositories, about 14,000 commits, about 1,240 plans done: nine months with an AI agent writing nearly all the code. Speed is the least interesting part. What decides whether you can trust the result: the structure it works in, the order of the steps, the checks it cannot talk its way past, the knowledge that survives the session. Part 1 of 9.">
+  <!-- LinkedIn single image, 1:1, companion to /blog/2026/09/22/agentic-development-overview.
+       Colours follow the Nanook dark theme; re-render with qlmanage -t -s 1200. -->
+  <defs>
+    <style>
+      .mono { font-family: "SFMono-Regular","JetBrains Mono",Menlo,Consolas,monospace; }
+      .kick { font-size: 24px; fill: #E61919; font-weight: 700; letter-spacing: 4px; }
+      .n    { font-size: 108px; font-weight: 700; letter-spacing: -4px; }
+      .lbl  { font-size: 22px; fill: #8a8a8a; }
+      .head { font-size: 50px; font-weight: 700; fill: #ffffff; letter-spacing: -1px; }
+      .sub  { font-size: 29px; fill: #d4d4d4; }
+      .row  { font-size: 30px; fill: #ffffff; }
+      .num  { font-size: 30px; fill: #4CAF50; font-weight: 700; }
+      .cap  { font-size: 26px; fill: #d4d4d4; }
+      .foot { font-size: 21px; fill: #8a8a8a; letter-spacing: 2px; }
+    </style>
+  </defs>
+  <rect width="1200" height="1200" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#E61919"/>
+
+  <text class="mono kick" x="90" y="120">NANOOK · AGENTIC SOFTWARE DEVELOPMENT</text>
+
+  <text class="mono n" x="90" y="290" fill="#8a8a8a">74</text>
+  <text class="mono lbl" x="90" y="335">repositories</text>
+  <text class="mono n" x="300" y="290" fill="#8a8a8a">~14,000</text>
+  <text class="mono lbl" x="300" y="335">commits</text>
+  <text class="mono n" x="800" y="290" fill="#ffffff">9</text>
+  <text class="mono lbl" x="800" y="335">months, an agent writing</text>
+  <text class="mono lbl" x="800" y="363">nearly all the code</text>
+
+  <line x1="90" y1="400" x2="1110" y2="400" stroke="#333333" stroke-width="2"/>
+
+  <text class="mono head" x="90" y="488">The speed is real.</text>
+  <text class="mono head" x="90" y="558" fill="#E61919">It is the least interesting part.</text>
+  <text class="mono sub" x="90" y="615">What decides whether you can trust the result</text>
+  <text class="mono sub" x="90" y="655">is everything around the agent:</text>
+
+  <rect x="90" y="700" width="1020" height="300" fill="#121212"/>
+  <rect x="90" y="700" width="10" height="300" fill="#4CAF50"/>
+  <text class="mono num" x="140" y="760">1</text>
+  <text class="mono row" x="200" y="760">the structure it works in</text>
+  <text class="mono num" x="140" y="820">2</text>
+  <text class="mono row" x="200" y="820">the order of the steps</text>
+  <text class="mono num" x="140" y="880">3</text>
+  <text class="mono row" x="200" y="880">the checks it cannot talk its way past</text>
+  <text class="mono num" x="140" y="940">4</text>
+  <text class="mono row" x="200" y="940">the knowledge that survives the session</text>
+
+  <text class="mono foot" x="90" y="1090">PART 1 OF 9 · THE OVERVIEW AND THE NUMBERS</text>
+  <text class="mono foot" x="90" y="1125">nanook.xhub.io/articles</text>
+</svg>
