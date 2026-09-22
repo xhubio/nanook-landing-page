@@ -54,11 +54,11 @@ buttons, small radii, no reveals. Restraint with conviction.
   One centered 44rem column; the article leads; related-posts index follows,
   open. No reveals.
 - **Docs** (`/docs/**`): existing Docusaurus shell, themed via overrides —
-  sidebar rail left (N3 register), prose column. **Hubs** (`/docs/`,
+  sidebar rail left (N3 register), prose column. **Hubs** (`/docs/`, `/articles/`,
   `/docs/api/`, `/help`, `/users`): **Ecosystem Index** in miniature — display
   title + lead, then a 2-up grid of whole-card links (`.docs-hub`, CSS-only over
   the existing row markup).
-- **Root pages** (`/about`, `/imprint`, `/privacyPolicy`): **Long Document**
+- **Root pages** (`/about`, `/imprint`, `/privacyPolicy`) and **articles** (`/articles/<slug>`): **Long Document**
   (`.long-doc`), centered 44rem column, serif display title, sans prose.
 - **404**: status line, serif figure, three exits. `noindex`.
 
@@ -142,8 +142,8 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
 ## Chrome (fixed — not per-page rotatable)
 
 - **Nav: N1b-register bar** — fixed height 56px, always solid, hairline below.
-  Wordmark (logo + "Nanook" + brand-red square) left, the four links next to it
-  (Docs · API · Blog · GitHub), theme toggle right. Built by CSS over the
+  Wordmark (logo + "Nanook" + brand-red square) left, the five links next to it
+  (Docs · API · Blog · Articles · GitHub), theme toggle right. Built by CSS over the
   baked markup (`.header-right { display: contents }`); below 640px the
   compact bar + JS drawer from `js/theme.js` (hamburger injected — no HTML
   edits).

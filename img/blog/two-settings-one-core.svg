@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400" width="800" height="400" font-family="'JetBrains Mono', monospace" font-size="13" fill="#ffffff">
+  <rect width="800" height="400" fill="#0A0A0A"/>
+  <text x="400" y="32" text-anchor="middle" font-size="16" font-weight="700">Two settings, one core · measured 2026-09-17</text>
+
+  <!-- LEFT: SaaS platform -->
+  <rect x="30" y="60" width="240" height="270" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="150" y="88" text-anchor="middle" font-weight="700">SaaS platform</text>
+  <text x="150" y="106" text-anchor="middle" font-size="11">five products · since Dec 2025</text>
+  <line x1="46" y1="118" x2="254" y2="118" stroke="#333333"/>
+  <text x="46" y="150" font-size="26" font-weight="700">74</text>
+  <text x="90" y="150" font-size="11">repositories</text>
+  <text x="46" y="192" font-size="26" font-weight="700">~14,000</text>
+  <text x="160" y="192" font-size="11">commits</text>
+  <text x="46" y="234" font-size="26" font-weight="700">~1,240</text>
+  <text x="146" y="234" font-size="11">plans done</text>
+  <text x="46" y="276" font-size="26" font-weight="700">327</text>
+  <text x="104" y="276" font-size="11">lessons kept</text>
+  <text x="150" y="312" text-anchor="middle" font-size="11" fill="#f59e0b">open product work</text>
+
+  <!-- RIGHT: event-driven service -->
+  <rect x="530" y="60" width="240" height="270" fill="none" stroke="#ffffff" stroke-width="1.5"/>
+  <text x="650" y="88" text-anchor="middle" font-weight="700">event-driven service</text>
+  <text x="650" y="106" text-anchor="middle" font-size="10">client project · Kafka/Postgres/REST</text>
+  <line x1="546" y1="118" x2="754" y2="118" stroke="#333333"/>
+  <text x="546" y="150" font-size="26" font-weight="700">11</text>
+  <text x="590" y="150" font-size="11">days</text>
+  <text x="546" y="192" font-size="26" font-weight="700">806</text>
+  <text x="606" y="192" font-size="11">tests</text>
+  <text x="546" y="234" font-size="26" font-weight="700">214</text>
+  <text x="606" y="234" font-size="11">generated cases</text>
+  <text x="546" y="276" font-size="26" font-weight="700">100 %</text>
+  <text x="636" y="276" font-size="11">per sheet · no build</text>
+  <text x="650" y="312" text-anchor="middle" font-size="11" fill="#f59e0b">requirements from outside</text>
+
+  <!-- CENTER: the core -->
+  <rect x="300" y="120" width="200" height="150" fill="none" stroke="#4CAF50" stroke-width="2"/>
+  <text x="400" y="148" text-anchor="middle" fill="#4CAF50" font-weight="700">the same core</text>
+  <text x="400" y="180" text-anchor="middle">structure</text>
+  <text x="400" y="202" text-anchor="middle">order of steps</text>
+  <text x="400" y="224" text-anchor="middle">gates</text>
+  <text x="400" y="246" text-anchor="middle">retained knowledge</text>
+  <line x1="270" y1="195" x2="298" y2="195" stroke="#4CAF50" stroke-width="1.5"/>
+  <line x1="502" y1="195" x2="530" y2="195" stroke="#4CAF50" stroke-width="1.5"/>
+
+  <text x="400" y="368" text-anchor="middle" font-size="12">the agent writes the code; the core decides whether you can trust it</text>
+</svg>

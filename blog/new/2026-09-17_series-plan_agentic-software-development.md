@@ -40,6 +40,8 @@ as a standalone reference post linked from part 6.
 
 ## Part 1 — The agent writes the code. Everything around it decides whether you can trust it.
 
+**Status:** published 2026-09-22 as `/blog/2026/09/22/agentic-development-overview` (PRD `prds/2026-09-22_blog-agentic-development-overview.md`).
+
 **Content:** Why speed is the uninteresting part. The two settings with their numbers (SaaS platform:
 74 repositories, ~14,000 commits, ~1,240 completed plans, 327 lessons; service: 11 days, 806 tests,
 214 generated cases). The ten sentences from "The short version" as a teaser table of contents for the
@@ -80,6 +82,8 @@ series.
 
 ## Part 2 — Fewer skills, shorter rules
 
+**Status:** scheduled 2026-09-29 as `/blog/2026/09/29/agent-toolbox-and-instruction-file`, registered 2026-09-22 (PRD `prds/2026-09-29_blog-agent-toolbox-and-instruction-file.md`).
+
 **Content:** Superpowers as a starting point, adapted per project. Project-specific skills. Playwright
 MCP and one browser per parallel session. The token diet: 14 skills unused in 91 sessions → archived.
 The instruction file: 170 lines, one sentence per rule, long versions in path-bound rule files.
@@ -116,6 +120,8 @@ Cost: weekly limit after three days, orchestrator at 30 %, model assignment, max
 ---
 
 ## Part 3 — One root, many repositories
+
+**Status:** scheduled 2026-10-06 as `/blog/2026/10/06/directory-layout-requirements-lifecycle`, registered 2026-09-22 (PRD `prds/2026-10-06_blog-directory-layout-requirements-lifecycle.md`).
 
 **Content:** The root directory is a repository (4,284 commits of plans, rules and decisions). Layout for a
 multi-product SaaS with shared modules versus an event-driven microservice landscape (requirements per
@@ -159,6 +165,8 @@ blockers leave the plan.
 
 ## Part 4 — What the next session knows
 
+**Status:** scheduled 2026-10-13 as `/blog/2026/10/13/knowledge-base-and-lesson-memory`, registered 2026-09-22 (PRD `prds/2026-10-13_blog-knowledge-base-and-lesson-memory.md`).
+
 **Content:** Two stores for two questions. The knowledge base (own repository, raw → compiled wiki, one
 concept per file, dated, lint; topics development, test, deployment, production; target environment;
 MCP access). The lesson memory (327 entries, one lesson per file, mechanism not incident, ~20 failure
@@ -195,6 +203,8 @@ classes). The fourth attempt: a lesson solved locally comes back. Memories go st
 ---
 
 ## Part 5 — A table cannot stay silent
+
+**Status:** scheduled 2026-10-20 as `/blog/2026/10/20/requirements-into-decision-tables`, registered 2026-09-22 (PRD `prds/2026-10-20_blog-requirements-into-decision-tables.md`).
 
 **Content:** Project work versus open product work. In a project: analyse the specification, translate it
 into equivalence-class tables with the Nanook skill. Decision table versus matrix table. Why tables find what
@@ -237,6 +247,8 @@ columns demanded by cells, ignore versus error). The three table rules from the 
 
 ## Part 6 — Tests first, then "implement all plans"
 
+**Status:** scheduled 2026-10-27 as `/blog/2026/10/27/tests-first-red-chain`, registered 2026-09-22 (PRD `prds/2026-10-27_blog-tests-first-red-chain.md`).
+
 **Content:** Service design independent of transport (ports, thin adapters); why this matters more with an
 agent (it can verify itself after every step). Five stages with a prohibition each. The red chain: contract
 with one "not implemented" constant, oracle, all tests red with the identical message (245). "Implement the
@@ -274,6 +286,8 @@ reason. Counter-probes with counted results.
 ---
 
 ## Part 7 — Working through 1,200 plans
+
+**Status:** scheduled 2026-11-03 as `/blog/2026/11/03/plan-pipeline-and-release-cascades`, registered 2026-09-22 (PRD `prds/2026-11-03_blog-plan-pipeline-and-release-cascades.md`).
 
 **Content:** The plan pipeline: audit against the code, implement per step via sub-agents, release, move to
 done. The ledger: status vocabulary, immediate writes, write-ahead `IN FLIGHT`, size in bytes, head-only resume.
@@ -313,6 +327,8 @@ checkout: foreign commits, `git add -A`, stash, silent agents; push ban, worktre
 ---
 
 ## Part 8 — The agent that pleases
+
+**Status:** scheduled 2026-11-10 as `/blog/2026/11/10/where-agentic-development-breaks`, registered 2026-09-22 (PRD `prds/2026-11-10_blog-where-agentic-development-breaks.md`).
 
 **Content:** Four failure classes with real incidents. (1) The accommodating agent: removed test case, known
 defect encoded as green, "known defects are always red", nobody re-reads a red test. (2) Absences: four features
@@ -357,6 +373,8 @@ without its wording.
 ---
 
 ## Part 9 — Rules need exit codes, and green is not useful
+
+**Status:** scheduled 2026-11-17 as `/blog/2026/11/17/rules-need-exit-codes`, registered 2026-09-22 (PRD `prds/2026-11-17_blog-rules-need-exit-codes.md`).
 
 **Content:** `--no-verify` five times despite explicit prohibitions; prohibitions must name the effect; the
 PreToolUse hook that denies bypasses. Eight red CI runs unnoticed; the push gate. "Red is the finding." Built

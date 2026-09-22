@@ -35,7 +35,20 @@
 - [3.x API reference — Logger](https://nanook.xhub.io/docs/api/v3/logger): LoggerInterface, LoggerMemory
 - [3.x API reference source](https://github.com/xhubio/nanook-table/tree/master/docs/api): the Markdown these five pages are generated from
 
+## Articles
+- [Articles](https://nanook.xhub.io/articles): Long-form field reports
+- [Agentic Software Development](https://nanook.xhub.io/articles/agentic-software-development): The full report behind the nine-part series: nine months of building software with an AI coding agent, two settings with measured numbers, setup, process, tables, tests, failure modes
+
 ## Blog
+- [The Agent Writes the Code. Everything Around It Decides Whether You Can Trust It.](https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview): Part 1 of a nine-part series on agentic software development, with the measured numbers of two settings
+- [Rules Need Exit Codes, and Green Is Not Useful: What Still Went Wrong](https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes): Part 9 of the series on agentic software development (2026-11-17)
+- [The Agent That Pleases: Absences, Lying Instruments, and Invented Evidence](https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks): Part 8 of the series on agentic software development (2026-11-10)
+- [Working Through 1,200 Plans: A Pipeline, a Ledger, and Many Repositories](https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades): Part 7 of the series on agentic software development (2026-11-03)
+- [Tests First, Then "Implement All Plans": Designing Services an Agent Can Verify](https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain): Part 6 of the series on agentic software development (2026-10-27)
+- [A Table Cannot Stay Silent: Finding Contradictions in Requirements Before Any Code Exists](https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables): Part 5 of the series on agentic software development (2026-10-20)
+- [What the Next Session Knows: A Knowledge Base and a Memory of Lessons](https://nanook.xhub.io/blog/2026/10/13/knowledge-base-and-lesson-memory): Part 4 of the series on agentic software development (2026-10-13)
+- [One Root, Many Repositories: A Directory Layout and a Requirements Lifecycle for Agent Work](https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle): Part 3 of the series on agentic software development (2026-10-06)
+- [Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions](https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file): Part 2 of the series on agentic software development (2026-09-29)
 - [How We Test a SaaS Application with Nanook](https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook): Field report — decision tables as the single source of a Playwright suite
 - [AI-Assisted Equivalence Class Tables with Claude Code](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables): The Claude Code skill and slash command shipped with the repository
 

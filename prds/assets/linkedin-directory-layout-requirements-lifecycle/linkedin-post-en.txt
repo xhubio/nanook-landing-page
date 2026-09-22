@@ -1,0 +1,21 @@
+Where do plans live when an AI agent does the implementation?
+
+In our case: in a Git repository of their own. The root directory above all code repositories holds the agent's rules, the architecture docs, and every analysis, design and plan. It has more commits than most of the code repositories — because I want to see WHEN a rule appeared and WHICH INCIDENT caused it.
+
+The lifecycle is simple and strict:
+
+1️⃣ ANALYSIS when I know nothing yet
+2️⃣ DESIGN — for a new service, first an OUTLINE of the designs we will need. The outline sets the order.
+3️⃣ A REVIEW after every design
+4️⃣ PLANS once all designs exist
+5️⃣ done/ — the design when its plans exist, the plan when it is implemented
+
+The part nobody tells you: writing the plans changes the designs. Almost every time. A column nobody modelled, an interface two designs assume differently. Those changes ripple forward — and backward.
+
+And one rule that sounds like bookkeeping but is not: a finished plan left in plan/ gets implemented again.
+
+Part 3: directory layout and requirements lifecycle, for a multi-product SaaS and for event-driven microservices.
+
+👉 https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle
+
+#softwarearchitecture #aiagents #requirementsengineering #devops

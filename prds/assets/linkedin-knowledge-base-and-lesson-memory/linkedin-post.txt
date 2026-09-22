@@ -1,0 +1,19 @@
+Eine KI-Agenten-Sitzung beginnt leer. Jedes einzelne Mal.
+
+Die wichtigste Frage in der agentischen Entwicklung ist deshalb nicht „Wie gut ist das Modell?“, sondern: „WAS WEISS DIE NÄCHSTE SITZUNG?“
+
+Wir führen zwei Speicher, weil sie zwei verschiedene Fragen beantworten:
+
+📚 EINE WISSENSBASIS — Wie funktioniert unser System? Ein eigenes Repository. Ich füttere Rohmaterial hinein, das Modell kompiliert es zu kurzen, datierten Artikeln: Entwicklung, Test, Deployment, Produktion. Jeder abgeschlossene Plan trägt bei.
+
+🧠 EIN GEDÄCHTNIS FÜR LEKTIONEN — Was ist schiefgegangen, und wie vermeiden wir es? Inzwischen 327 Einträge, eine Lektion pro Datei, jede mit „was passiert ist“, „warum“ und „wie anzuwenden“.
+
+Die nützlichste Entdeckung: Nach ein paar hundert Lektionen bündeln sich die Vorfälle in etwa zwanzig Fehlerklassen. „Das Messinstrument lügt.“ „Stiller Datenverlust.“ „Gebaut, aber nicht erreichbar.“
+
+Und die demütigendste: Derselbe Fehler war dreimal behoben worden — jedes Mal mit einem Kommentar in der betroffenen Datei. Ein Kommentar schützt die Datei, in der er steht. Erst als daraus eine Regel wurde, hörte es auf.
+
+Teil 4 der Serie (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/10/13/knowledge-base-and-lesson-memory
+
+#knowledgemanagement #aiagents #llm #softwareengineering

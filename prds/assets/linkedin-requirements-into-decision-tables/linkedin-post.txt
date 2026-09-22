@@ -1,0 +1,23 @@
+Ein KI-Agent kann eine 40-seitige Spezifikation lesen und sie perfekt zusammenfassen.
+
+Er wird dir nicht sagen, dass Seite 12 und Seite 31 sich in einem Fall widersprechen, den niemand ausformuliert hat.
+
+Das Erste, was ich mit einer neuen Spezifikation tue, ist deshalb: Der Agent übersetzt sie in ENTSCHEIDUNGSTABELLEN. Eine Tabelle verlangt drei Dinge, die Prosa nicht verlangt: Jedes Feld braucht Klassen, jede Kombination braucht eine Zeile, jede Zeile braucht ein Ergebnis.
+
+Für einen ereignisgetriebenen Dienst, mit zwölf guten Designs bereits geschrieben, fand das Bauen der Tabellen — vor einer einzigen Zeile Code:
+
+• einen Widerspruch zwischen zwei unserer eigenen Dokumente
+• sieben Filter ohne Wirkung, trotz Tests gegen eine echte Datenbank
+• 50 Zeilen pro Seite in der UI, `LIMIT 20` im Datenbankdesign
+• ein Ereignis, dessen Name eine ausgehende Nachricht erzeugt hätte, die es nicht geben darf
+• zwei Datenbankspalten, die kein Design verlangt hatte
+
+Prosa lügt nicht. Sie schweigt — genau dort, wo die Arbeit ist.
+
+Eine Tabelle kann nicht schweigen.
+
+Teil 5 der Serie über agentische Softwareentwicklung (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables
+
+#softwaretesting #requirementsengineering #testdesign #aiagents #nanook

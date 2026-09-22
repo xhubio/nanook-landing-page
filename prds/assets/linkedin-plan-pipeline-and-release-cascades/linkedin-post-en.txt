@@ -1,0 +1,21 @@
+What happens when an AI agent session dies in the middle of implementing plan 37 of 60?
+
+In our setup: almost nothing is lost. Because every status change goes into a LEDGER on disk immediately — and before every sub-agent starts or every push runs, a line goes into an "in flight" table. A non-empty "in flight" table at startup always means: a turn died here. Check Git. Git is the truth.
+
+That ledger is how an autonomous pipeline has worked through ~1,240 plans across 74 repositories.
+
+The harder lessons were about PARALLEL SESSIONS:
+
+⚠️ Two sessions, one checkout. Twenty minutes after a clean check, five foreign unpushed commits. One push would have released someone else's unfinished work as an npm package.
+
+⚠️ git add -A in a shared tree commits everything — including the other session's files.
+
+⚠️ A sub-agent says "I'll wait for the background task" and never wakes up. The work lies finished in the tree. No error, no report.
+
+What helped: push bans for implementation agents, explicit paths only, worktrees, and measuring liveness on the process — not on the last message.
+
+Part 7:
+
+👉 https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades
+
+#aiagents #devops #git #monorepo #softwareengineering

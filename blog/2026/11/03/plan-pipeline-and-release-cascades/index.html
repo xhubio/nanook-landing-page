@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Working Through 1,200 Plans · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="How an autonomous agent pipeline worked through 1,240 plans across 74 repositories: a crash-safe ledger, release cascades, parallel sessions in one checkout." />
+  <meta property="og:title" content="Working Through 1,200 Plans · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades" />
+  <meta property="og:description"
+    content="How an autonomous agent pipeline worked through 1,240 plans across 74 repositories: a crash-safe ledger, release cascades, parallel sessions in one checkout." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Working Through 1,200 Plans: A Pipeline, a Ledger, and Many Repositories",
+  "datePublished": "2026-11-03",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "How an autonomous agent pipeline worked through 1,240 plans across 74 repositories: a crash-safe ledger, release cascades, parallel sessions in one checkout.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">Working Through 1,200 Plans: A Pipeline, a Ledger, and Many Repositories</a></h1>
+                <p class="post-meta">November 3, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p class="series-nav"><em>Part 7 of 9 in the series on agentic software development. <a href="/blog/2026/09/22/agentic-development-overview">Part 1, The Agent Writes the Code</a> has the two settings, the numbers, and the ten sentences the series works through.</em></p>
+
+                  <p>The SaaS platform in this series spans 74 repositories and, at the last count, about 1,240
+                    completed plans. At that volume, working through plans one at a time with a person in the loop
+                    for every step stops being a process and becomes the bottleneck. So an autonomous pipeline works through
+                    them on its own: a Claude Code skill called <code>plan-pipeline</code>, and a loop command that
+                    keeps it going. Most of what makes that work is bookkeeping, and most of the bookkeeping exists
+                    because a run died at the wrong moment at least once.</p>
+
+                  <h2>Audit, implement, release, move</h2>
+
+                  <p>For a given <code>REQUIREMENTS/&lt;PRODUCT&gt;</code> folder, the pipeline does four things in
+                    order.</p>
+
+                  <ol>
+                    <li><strong>Audit</strong> every open plan against the code. What is already there, and what is
+                      really still open? Plans routinely turn out to be partially done, or claim to be done and are
+                      not. The audit is the step that turns a folder of intentions into a list of work; skipping
+                      it means implementing what already exists.</li>
+                    <li><strong>Implement</strong> the open increments, one sub-agent per step: implement, build,
+                      test, commit.</li>
+                    <li><strong>Release</strong>: push, wait for CI, cascade versions into the dependent
+                      repositories.</li>
+                    <li><strong>Move</strong> finished plans to <code>done/</code>, and extract the blocked
+                      remainders so that a plan that is nine tenths done does not sit in the open folder looking
+                      untouched.</li>
+                  </ol>
+
+                  <p>Nothing in that list is unusual. What lets it run unattended is what the pipeline remembers
+                    between runs.</p>
+
+                  <h2>The ledger: the pipeline&rsquo;s memory</h2>
+
+                  <p>The heart of the pipeline is a ledger file: a Markdown table with one row per plan and a fixed
+                    status vocabulary: <code>open</code>, <code>verified-open</code>, <code>in-work</code>,
+                    <code>blocked</code>, <code>extern</code> (another session owns it; do not touch), and
+                    <code>done</code>. The vocabulary is small on purpose. A status that needs a sentence to explain
+                    is a status the next run will misread. <code>extern</code> is the one that makes parallel sessions
+                    possible at all: a plan another session owns is not audited, not implemented and not moved by
+                    this one. It is the ledger&rsquo;s one concession to not being the only writer in the tree.</p>
+
+                  <p>Every status change is written to disk immediately. A run that dies, whether from a server
+                    error, a killed process or an exhausted context, loses at most the current increment. The next
+                    run reads the ledger and resumes where the last one stopped. Immediate writes sound obvious and
+                    are not what an agent does by default; left to itself, it keeps the state in its context and
+                    writes a summary at the end, which is precisely the moment a dying run never reaches. Two
+                    refinements came from real crashes.</p>
+
+                  <ul>
+                    <li><strong>Write-ahead.</strong> A ledger that is written <em>after</em> the sub-agent reports
+                      is empty exactly where it hurts: the row for the increment that was in progress when the run
+                      died. So before every agent spawn and before every push, a row goes into an <code>IN
+                      FLIGHT</code> table at the top of the file. A non-empty <code>IN FLIGHT</code> table at
+                      startup always means a turn died here. The next run does not trust the row; it checks Git,
+                      which is the truth, and reconciles the ledger against it.</li>
+                    <li><strong>Size measured in bytes.</strong> Resume reads only the head of the ledger,
+                      <code>head -c 40000</code>, about 10k tokens. When the file passes 150&nbsp;KB, the old part
+                      is archived. A single row may not exceed 800 characters; detailed findings belong in the
+                      agent report, not in the ledger. The limits are in bytes rather than rows because bytes are
+                      what a resume costs: a ledger that grows without a bound eventually eats the context it was
+                      meant to protect.</li>
+                  </ul>
+
+                  <h2>Which model does what, and when not to delegate</h2>
+
+                  <p>Not every job needs the most expensive model, and not every job tolerates a cheap one. The
+                    assignment in the pipeline:</p>
+
+                  <table>
+                    <tr><th>Role</th><th>Model</th><th>Why</th></tr>
+                    <tr><td>Orchestrator</td><td>strong model</td><td>judgement: audits, blocked/done decisions, what to believe</td></tr>
+                    <tr><td>Implementation, browser QA, code review</td><td>strong model</td><td>real implementation scope, hundreds of tool calls</td></tr>
+                    <tr><td>Dependency cascades, scaffolding, drift checks</td><td>faster model</td><td>diligent, well-specified routine work</td></tr>
+                  </table>
+
+                  <p>The orchestrator is on the strong model not because it does the most work but because it does
+                    the deciding: which audit finding to believe, whether a plan is blocked or done, what the
+                    sub-agent&rsquo;s summary leaves out. The routine jobs go to the faster model because they are
+                    fully specified; a version bump has no judgement in it. Browser QA sits on the strong model for the
+                    same reason as implementation: hundreds of tool calls, and a page that does not do what the
+                    plan says needs someone who notices.</p>
+
+                  <p>And a delegation threshold: up to about five Git commands, a build that takes seconds, or a
+                    one-line fix, the orchestrator does the work itself. Spawning an agent has overhead of its own
+                    kind. The sub-agent knows only what is in its brief, and the orchestrator sees only its summary;
+                    for small work, that loss of context on both sides costs more than the tokens it saves.</p>
+
+                  <h2>A decision is the go</h2>
+
+                  <p>One simple rule removed a surprising amount of friction: when a decision has been made, that is
+                    also the go for implementation. Before the rule, the pipeline had parked eleven plans as
+                    &ldquo;decision made, go missing&rdquo;. Each of them had been discussed and settled; none was
+                    moving. From the outside it looked as if nothing was happening. From the pipeline&rsquo;s side
+                    everything was in order: it was waiting for a step that nobody knew was a step. A process that
+                    asks for the same thing twice under two names will get it once.</p>
+
+                  <h2>One change, many repositories</h2>
+
+                  <p>The e-invoicing API, the trades software and the PDF API share the same plugins and backends.
+                    A change to a shared backend package or a frontend plugin therefore has to be checked against
+                    all apps, and the same bug in several apps is fixed in all of them at the same time. That rule
+                    stands in the instruction file, marked critical, because an agent that fixes a bug in the app
+                    it happens to be looking at considers the job done. It is not wrong about the app; it is wrong
+                    about the scope.</p>
+
+                  <p>Then the change has to travel: the shared package is released, the next layer bumps and
+                    releases, the apps bump and release. With 74 repositories the order matters, and it is a
+                    topological one. A command, <code>/update-cascade</code>, computes that order and drives the
+                    bumps, with up to nine sub-agents in parallel on a fast model and a pin file that holds
+                    versions back where a bump is deliberately not wanted yet.</p>
+
+                  <p>Between commit and release stands the push gate.</p>
+
+                  <ul>
+                    <li><strong>Before every push, the full test chain</strong> runs in the affected repository:
+                      format, lint, type check, dead code, build, tests with coverage. A global <code>pre-push</code>
+                      hook enforces it, not a sentence in the instruction file; the hook is global, so no repository opts out by lacking one.</li>
+                    <li><strong>After the push, the CI run counts</strong>, not the push. The pipeline watches the
+                      run until it reports <code>completed/success</code>, and sweeps all touched repositories at
+                      the end of a run, because a push that nobody watched is a push whose result nobody
+                      knows.</li>
+                    <li><strong>A green CI run without a release publishes nothing.</strong> semantic-release
+                      silently skips the release when the branch is behind the remote, for example because the
+                      next commit was pushed while the CI job was still running. Green, and nothing shipped, and
+                      no error to say so. So backend waves are bundled and pushed once.</li>
+                  </ul>
+
+                  <p>Why so strict? Because a rule in prose was not enough. The hooks that were bypassed and the red
+                    CI runs nobody noticed are the subject of part 9.</p>
+
+                  <h2>Parallel sessions in one checkout</h2>
+
+                  <p>Running several agent sessions in parallel is where the throughput comes from. It is also
+                    where the nastiest incidents came from, because Git and everything built on it assume one
+                    person per working tree. Five of them:</p>
+
+                  <ul>
+                    <li><strong>A push that would have published someone else&rsquo;s unfinished work.</strong>
+                      While one session worked through plans in two repositories, a second session worked on a
+                      tax-authority integration in the same repositories. At the pre-check both were clean. Twenty
+                      minutes later there were five unpushed foreign commits and twelve modified files. A push by
+                      the first session&rsquo;s implementer would have published those commits and triggered a
+                      semantic-release of unfinished work, and a published npm package cannot be rolled back.</li>
+                    <li><strong><code>git add -A</code> grabs everything.</strong> There is no such thing as
+                      &ldquo;my lane&rsquo;s local commits&rdquo; in a shared checkout: one working tree, one
+                      history, one branch. A commit contained only its own six files only because the other session
+                      had committed its work 18 minutes earlier. A push took the other session&rsquo;s finished
+                      commit along without its release. And another session saw an identical commit message in the
+                      log, took the commit for its own, and derived a coordination violation that never
+                      happened.</li>
+                    <li><strong><code>git stash pop</code> restored a stash from a different session.</strong> The
+                      stash belongs to the working tree, not to whoever made it.</li>
+                    <li><strong>Two test suites on the same repository</strong>, two pushes and two pre-push hooks,
+                      competed for resources and produced shifting red results that were neither session&rsquo;s
+                      fault.</li>
+                    <li><strong>Agents that go silent.</strong> A sub-agent on a fast model starts the test suite in
+                      the background, ends its turn with &ldquo;I&rsquo;ll wait for the background task&rdquo;, and
+                      never wakes up. The work lies finished in the working tree; no error, no report. An explicit
+                      prohibition in the brief did not help once the step took longer than the tool timeout. The
+                      prohibition was in the brief, the timeout was in the tool, and the tool won.</li>
+                  </ul>
+
+                  <p>What helped, in six rules:</p>
+
+                  <ol>
+                    <li><strong>Implementation agents in shared repositories get a push ban.</strong> Committing is
+                      fine, with explicit paths only: never <code>git add -A</code>, never <code>git add
+                      &lt;directory&gt;</code>. The orchestrator coordinates the push.</li>
+                    <li><strong>Re-check the working tree before every increment</strong>, not once at the start of
+                      the run. Twenty minutes is enough for the state to change.</li>
+                    <li><strong>Long-running or delicate work goes into its own <code>git worktree</code>.</strong>
+                      Two sessions in two trees have nothing to grab from each other.</li>
+                    <li><strong>Foreign red tests are not your regression.</strong> Do not fix them; separate them in
+                      the report.</li>
+                    <li><strong>Liveness is measured on the process, not on the last message.</strong> If no test
+                      runner and no push is running and the tree contains the work, the agent is dead, and the
+                      orchestrator finishes inline.</li>
+                    <li><strong>At most three sub-agents at a time</strong> across all types, for cost and for
+                      contention.</li>
+                  </ol>
+
+                  <p>The rules this part comes down to: the ledger is written before the work, not after it, and
+                    when ledger and Git disagree, Git is the truth. A decision is the go. A change to something
+                    shared is a change to every app that uses it, and along the way the CI run counts rather than
+                    the push, and the release counts rather than the CI run. And in a shared checkout, the
+                    implementing agent commits by explicit path and never pushes; whether it is still alive is a
+                    question for the process list, not for its last message.</p>
+
+                  <p class="series-nav"><em>Previous: <a href="/blog/2026/10/27/tests-first-red-chain">Part 6, Tests First, Then Implement All Plans</a>. Next: <a href="/blog/2026/11/10/where-agentic-development-breaks">Part 8, The Agent That Pleases</a>.</em></p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+Was passiert, wenn eine KI-Agenten-Sitzung mitten in der Umsetzung von Plan 37 von 60 stirbt?
+
+In unserem Setup: Fast nichts geht verloren. Denn jede Statusänderung landet sofort in einem LEDGER auf der Platte — und bevor ein Sub-Agent startet oder ein Push läuft, kommt eine Zeile in eine „In-Flight“-Tabelle. Eine nicht leere „In-Flight“-Tabelle beim Start heißt immer: Hier ist ein Zug gestorben. Git prüfen. Git ist die Wahrheit.
+
+Dieses Ledger ist der Grund, warum eine autonome Pipeline ~1.240 Pläne über 74 Repositories abgearbeitet hat.
+
+Die härteren Lektionen betrafen PARALLELE SITZUNGEN:
+
+⚠️ Zwei Sitzungen, ein Checkout. Zwanzig Minuten nach einer sauberen Prüfung fünf fremde, nicht gepushte Commits. Ein Push hätte die unfertige Arbeit eines anderen als npm-Paket veröffentlicht.
+
+⚠️ git add -A in einem geteilten Arbeitsverzeichnis committet alles — auch die Dateien der anderen Sitzung.
+
+⚠️ Ein Sub-Agent sagt „Ich warte auf die Hintergrundaufgabe“ und wacht nie wieder auf. Die Arbeit liegt fertig im Verzeichnis. Kein Fehler, kein Bericht.
+
+Was geholfen hat: Push-Verbot für Implementierungs-Agenten, nur explizite Pfade, Worktrees, und Lebendigkeit am Prozess messen — nicht an der letzten Nachricht.
+
+Teil 7 (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/11/03/plan-pipeline-and-release-cascades
+
+#aiagents #devops #git #monorepo #softwareengineering

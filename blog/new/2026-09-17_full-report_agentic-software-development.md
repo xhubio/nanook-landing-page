@@ -645,7 +645,7 @@ The sequence in the event-driven service was:
    green ones tested the oracle itself), then 245 red — **all with the same message.**
 
 Why the identical message matters: it is the only moment you can **prove** the tests assert
-something. If all 245 fail with "not implemented", the suite tests nothing but itself yet. A test
+something. If all 245 fail with "not implemented", the suite does not yet test anything but itself. A test
 that fails for any other reason is a broken test — and found now, it costs minutes. Check the message
 by machine, not by eye; the test runner can emit it as structured data.
 
@@ -737,14 +737,14 @@ Not every job needs the most expensive model, and not every job tolerates a chea
 | Implementation, browser QA, code review | strong model | real implementation scope, hundreds of tool calls |
 | Dependency cascades, scaffolding, drift checks | faster model | diligent, well-specified routine work |
 
-And a delegation threshold: up to about five Git commands, second-long builds, or one-line fixes,
+And a delegation threshold: up to about five Git commands, builds that take seconds, or one-line fixes,
 the orchestrator does the work itself. Spawning an agent has overhead — it knows only what is in its
 brief, and the orchestrator sees only its summary.
 
 ### 12.4 Decisions unblock work
 
 One simple rule removed a surprising amount of friction: **when a decision has been made, that is
-also the go for implementation.** The pipeline had parked eleven plans as "decision made, go
+also the go-ahead for implementation.** The pipeline had parked eleven plans as "decision made, go
 missing" — from the outside, it looked like nothing was happening.
 
 ---
@@ -793,7 +793,7 @@ The same tendency shows up in quieter forms:
 
 - **Removing a case the application cannot handle.** Four statuses in the schema, three filter
   switches in the UI — the agent removed the test case for the fourth status and noted nothing. Only
-  my follow-up question ("you did record that as an issue, right?") saved it. Rule since: a removed
+  my follow-up question ("you did record that as an issue, right?") saved it. The rule since then: a removed
   case becomes a finding in the same step. The test question: *why doesn't it work?* — "because the
   app can't" is a finding; "because it makes no sense" is a comment in the table, so the next person
   doesn't add it back.
@@ -804,7 +804,7 @@ The same tendency shows up in quieter forms:
   and what would make it green.
 
   And the flip side, measured two days later: *nobody re-reads a red test.* Three hand-written test
-  stands carried a 🔴 in their title for an object that no longer existed. A red test is only useful
+  fixtures carried a 🔴 in their title for an object that no longer existed. A red test is only useful
   if something tracks it.
 
 > The purpose of a test suite is not to be green. It is to say what is.
@@ -829,7 +829,7 @@ The sharpest evidence: for the collective invoice, the green suite explicitly ch
 translation keys exist** — just not that anyone ever **displays** them.
 
 The type checker sees nothing. The tests see nothing. The build sees nothing. The dead-code check
-sees nothing. The only instance that notices an absence is a human in a browser — the most expensive
+sees nothing. The only thing that notices an absence is a human in a browser — the most expensive
 path. And because everything is green, everyone believes it is done.
 
 Two variations:
@@ -866,12 +866,12 @@ in the worst possible way: they report success.
   render loop, the agent counted via the browser's `PerformanceObserver`. Result: `0` requests. The
   resource-timing buffer is capped at **250 entries**, and in dev mode it was full of module loads
   before the first API call ran. Not "no requests" — a blind instrument that looks exactly like a
-  passed gate. The real defect was around **150 request batches per second**. Rule since: **prove the
+  passed gate. The real defect was around **150 request batches per second**. The rule since then: **prove the
   counter first** — show it returns `>0` on a real page change. A `0` is only a result after that.
 - **A guard whose success message described its intent, not its result.** A dependency-pin guard
   compared versions only when the installed package existed — and otherwise did nothing. The success
   message still said "package.json, overrides, lock file and **node_modules** match". A neighbouring
-  session spent **an hour** investigating a state that was not actually installed. Rule since: every
+  session spent **an hour** investigating a state that was not actually installed. The rule since then: every
   guard reports two numbers — how many cases *should* be checked and how many were *actually
   compared*. A case that cannot be checked is a finding, never a silent `continue`.
 - **A test mock that swallowed bulk inserts.** The mock database spread an array into *one* bogus
@@ -901,7 +901,7 @@ Agents produce text that looks like evidence. Precise-looking evidence is truste
 - **An invented line reference.** A plan supported a claim with `PIPELINE-LEDGER.md:1543-1546`. The
   file had **1,016 lines**. The quoted phrases appeared in none of the seven ledger files. A second
   plan copied the claim. The conclusion happened to be right — its foundation was made up. Rule:
-  check a line reference against the file length before taking it over (`wc -l` is cheaper than any
+  check a line reference against the file length before adopting it (`wc -l` is cheaper than any
   discussion), and grep the quoted phrase instead of trusting the number.
 - **Invented timestamps.** The orchestrator wrote times into the ledger from gut feeling — and was
   consistently in the **future**. Measured twice in one run: 11:xx and 12:xx in the ledger while the
@@ -934,7 +934,7 @@ Same reflex, different spelling.
 
 Two lessons:
 
-- **A prohibition must name the effect, not the spelling.** "No move that bypasses a hook — neither
+- **A prohibition must name the effect, not the spelling.** "No action that bypasses a hook — neither
   `--no-verify` nor `SKIP_TESTS` nor `core.hooksPath`, and not at commit time either." Whoever names
   only one flag gets the next one.
 - **What must hold has to be a gate, not a sentence.** A `PreToolUse` hook now inspects every shell

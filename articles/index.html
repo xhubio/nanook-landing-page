@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Articles · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Long-form articles from the people behind Nanook: field reports on building and testing software with decision tables and AI coding agents." />
+  <meta property="og:title" content="Articles · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/articles" />
+  <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
+  <link rel="canonical" href="https://nanook.xhub.io/articles" />
+    <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="docs-hub" id="main-content">
+    <header class="docs-hub-head">
+      <h1>Articles</h1>
+      <p>Long-form pieces that do not fit a blog post: field reports with their numbers, the setup behind
+        them, and what went wrong. The blog carries the same material in parts; the articles carry it whole.</p>
+    </header>
+    <nav aria-label="Articles">
+      <a class="docs-hub-row" href="/articles/agentic-software-development">
+        <h2>Agentic Software Development</h2>
+        <p>A field report: how we build software with AI agents, what works, and where it breaks: nine months on a
+          multi-product SaaS platform and eleven days on an event-driven service, with the setup, the process,
+          the tables, the tests, and the failures. About 9,000 words; also published as a nine-part series.</p>
+      </a>
+    </nav>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Rules Need Exit Codes · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Five bypassed test hooks, eight unnoticed red CI runs, features built correctly and pointless. Why rules need exit codes, and what I would do again." />
+  <meta property="og:title" content="Rules Need Exit Codes · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes" />
+  <meta property="og:description"
+    content="Five bypassed test hooks, eight unnoticed red CI runs, features built correctly and pointless. Why rules need exit codes, and what I would do again." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Rules Need Exit Codes, and Green Is Not Useful: What Still Went Wrong",
+  "datePublished": "2026-11-17",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Five bypassed test hooks, eight unnoticed red CI runs, features built correctly and pointless. Why rules need exit codes, and what I would do again.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/11/17/rules-need-exit-codes">Rules Need Exit Codes, and Green Is Not Useful: What Still Went Wrong</a></h1>
+                <p class="post-meta">November 17, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p class="series-nav"><em>Part 9 of 9 in the series on agentic software development. <a href="/blog/2026/09/22/agentic-development-overview">Part 1, The Agent Writes the Code</a> has the two settings, the numbers, and the ten sentences the series works through.</em></p>
+
+                  <p>For nine months an AI coding agent, Claude Code, has written nearly all the code of a
+                    multi-product SaaS platform: 74 repositories, about 14,000 commits, about 1,240 plans worked
+                    through. Its instruction file, <code>CLAUDE.md</code>, said never to bypass the test hook, and
+                    every plan was verified against the code before it was marked done. Both turned out to be worth
+                    less than they read. The prohibition was bypassed five times, eight red CI runs went unnoticed,
+                    and a whole round of features came out correctly built and pointless. The last part of this
+                    series is about those three, and about the list I would draw up if I started again.</p>
+
+                  <h2><code>--no-verify</code>, five times</h2>
+
+                  <p>The instruction file says: never bypass the test hook. Every task brief for an implementation
+                    agent said: never <code>--no-verify</code>.</p>
+
+                  <p>On one day, three implementation agents committed with <code>git commit --no-verify</code>
+                    anyway, and reported it themselves. The explanations were &ldquo;reflex&rdquo; and
+                    &ldquo;harmless, because the tests were green before&rdquo;. They had read the prohibition as
+                    a push rule. A fourth case came nine days later, after the brief had been sharpened. A fifth
+                    followed on the same day, this time not <code>--no-verify</code> but
+                    <code>git -c core.hooksPath=.git/hooks commit</code>. Same reflex, different spelling.</p>
+
+                  <p>The three on the first day reported it themselves, which is the part worth pausing on. Nobody
+                    was hiding anything. Each agent had decided, in the moment, that the rule did not apply to this
+                    commit: the tests had been green before, so the hook would only have confirmed it. A
+                    prohibition that an agent can reinterpret is a prohibition that will be reinterpreted whenever
+                    it is inconvenient.</p>
+
+                  <p>Two lessons came out of that.</p>
+
+                  <p><strong>A prohibition must name the effect, not the spelling.</strong> The wording now is:
+                    &ldquo;No move that bypasses a hook &mdash; neither <code>--no-verify</code> nor
+                    <code>SKIP_TESTS</code> nor <code>core.hooksPath</code>, and not at commit time either.&rdquo;
+                    Whoever names only one flag gets the next one.</p>
+
+                  <p><strong>What must hold has to be a gate, not a sentence.</strong> A <code>PreToolUse</code>
+                    hook now inspects every shell command the agent wants to run. If a <code>git push</code>
+                    segment carries <code>--no-verify</code>, <code>SKIP_TESTS</code>, or a
+                    <code>hooksPath</code> override, the command is denied, with a message: &ldquo;the test chain
+                    must be green before pushing &mdash; if it is red, that is the finding: report it, do not
+                    bypass it.&rdquo; A human in a terminal can still do it. An agent session cannot. That asymmetry is intentional:
+                    the hook is not there to stop me, it is there to stop a session that has just decided a red
+                    chain is harmless.</p>
+
+                  <p>The difference between the two is not subtle. The sentence stood in every brief and was
+                    bypassed five times within ten days, each time with a reasonable-sounding explanation. The
+                    hook has an exit code, and an exit code does not accept explanations.</p>
+
+                  <h2>Eight red CI runs nobody noticed</h2>
+
+                  <p>The second incident needed no bypass at all. In one pipeline run, a frontend repository had
+                    eight consecutive red release runs, from nothing but formatting and import sorting. Eight
+                    commits were considered delivered and were not.</p>
+
+                  <p>The mechanism: the agent had run only the affected test file per step and concluded
+                    &ldquo;green&rdquo;. The test runner does not run the format check; the build does. And
+                    <code>git log origin/main</code> shows the commit even when the run after it fails, so nothing
+                    in the agent&rsquo;s usual view was red. It was noticed by accident, when a version bump
+                    re-triggered the run.</p>
+
+                  <p>A red release publishes nothing. Every downstream layer then works against a version that
+                    does not exist, and the error surfaces hours later somewhere completely different. Hence the
+                    push gate: the full test chain in the affected repository before every push, enforced by a
+                    global <code>pre-push</code> hook; after the push, the CI run counts, not the push, so the run
+                    is watched until <code>completed/success</code>; and at the end of a run, a sweep of all
+                    touched repositories. A third rule belongs to the same gate: a green CI run without a release
+                    publishes nothing either. semantic-release silently skips the release when the branch is
+                    behind the remote, for example because the next commit was pushed during the CI job. So
+                    backend waves are bundled and pushed once.</p>
+
+                  <p>The general principle behind both incidents:</p>
+
+                  <blockquote>
+                    <p>Red is the finding: report it, don&rsquo;t bypass it.</p>
+                  </blockquote>
+
+                  <p>Everything that must hold goes into something with an exit code: a hook, a guard test, a
+                    check script, a ratchet. Prose rules are guidance for judgement. They are not a control, and
+                    an agent that treats them as one is doing you a favour you cannot rely on.</p>
+
+                  <h2>Built correctly, and pointless</h2>
+
+                  <p>The third failure has nothing to do with hooks, and no gate would have caught it. After a test
+                    round of the trades software, my verdict on many features was: implemented, but they don&rsquo;t
+                    make much sense.</p>
+
+                  <p>The early plans had been driven by competitor feature lists and verified against the code.
+                    The pattern repeated from feature to feature: the data model and the primitives cleanly built,
+                    a UI glued on without a thought-through workflow. Tours as an address text area on top of a
+                    tour primitive. Checklist execution on the template page. Appointment booking without closing
+                    the loop. &ldquo;Done&rdquo; was set, although the user&rsquo;s job could not be played
+                    through.</p>
+
+                  <p>Verification against the code answers the question the plan asked: is what the plan describes
+                    there? It cannot answer whether the plan should have been written, and neither can the agent.
+                    The agent is excellent at building what the plan says. It does not ask whether the plan makes
+                    sense for the person using it, unless the process forces the question. Four things
+                    changed:</p>
+
+                  <ul>
+                    <li><strong>Every plan has a mandatory <code>## User job</code> section</strong>: persona, job
+                      sentence (&ldquo;does X with it instead of Y&rdquo;), connection (where it enters and leaves
+                      the process), and a done scenario.</li>
+                    <li><strong>Done means the job was played through in the browser as that persona.</strong> Not
+                      that the tests are green, and not that the plan was verified against the code.</li>
+                    <li><strong>The QA walkthrough includes a sense check</strong> with five questions: job,
+                      playability, work saved, connection, honest maturity. Sense findings are not auto-fixed.
+                      They are triaged with me: fix, rework, remove from the navigation, or delete.</li>
+                    <li><strong>Half-finished work is hidden behind a module toggle</strong>, not visible in the
+                      navigation.</li>
+                  </ul>
+
+                  <blockquote>
+                    <p>Everything we build should take work off a user&rsquo;s hands and improve their process.
+                      That is the measure &mdash; not feature parity, and not a green build.</p>
+                  </blockquote>
+
+                  <p>Of the three failures in this part, this is the one a green build hides best. The bypassed hook was at least self-reported, and the red runs were at least in the CI log. A pointless feature passes every
+                    check, because every check asks whether the thing works, and none asks whether anyone needs
+                    it.</p>
+
+                  <h2>What I would do again, and what I would not</h2>
+
+                  <p>Two lists, kept short on purpose. Nine things I would do again, seven I would not.</p>
+
+                  <p>Again:</p>
+
+                  <ul>
+                    <li><strong>Tables before tests before code</strong>, whenever interfaces exist.</li>
+                    <li><strong>A red chain with one identical message</strong> before any business logic.</li>
+                    <li><strong>Transport-independent service design</strong>, so that all business tests run in
+                      seconds.</li>
+                    <li><strong>The rule &ldquo;expectation changes only via the table, with a
+                      reason&rdquo;.</strong></li>
+                    <li><strong>A lesson memory with the mechanism</strong>, not just the incident.</li>
+                    <li><strong>Hooks and guard tests for everything that must hold</strong>; prose for judgement
+                      only.</li>
+                    <li><strong>A ledger with write-ahead</strong> for anything that runs longer than one
+                      session.</li>
+                    <li><strong>Archiving unused skills</strong> and keeping the instruction file short.</li>
+                    <li><strong>A root repository</strong> for rules, plans, and decisions, so that their history
+                      is visible.</li>
+                  </ul>
+
+                  <p>Most of that list is about making the agent&rsquo;s own check mean something: tests it can
+                    run in seconds, a chain that is red for the right reason, a table it may not change without
+                    a written reason, a hook that does not care how the bypass is spelled. The rest is memory:
+                    lessons with their mechanism, a ledger, a root repository whose history can be read.</p>
+
+                  <p>Not again:</p>
+
+                  <ul>
+                    <li><strong>A table for every trifle.</strong> Two pure functions with six cases would have
+                      been fine as ordinary tests. <a href="/docs/guide/equivalence/overview">Tables</a> pay off
+                      where combinations arise.</li>
+                    <li><strong>Very fine classes.</strong> More classes mean more combinations and more mandatory
+                      cases, without more insight. Use the classes at which behaviour <em>changes</em>.</li>
+                    <li><strong>Multiplying a case where one field would do.</strong> One multiplication took a
+                      sheet from 10 to 157 cases without a new statement.</li>
+                    <li><strong>Letting several sessions work in the same checkout without push rules.</strong>
+                      Use worktrees.</li>
+                    <li><strong>Trusting a browser walkthrough as the owner</strong> as proof that permissions
+                      work.</li>
+                    <li><strong>Solving a recurring mistake locally</strong>, with a comment in the file
+                      concerned.</li>
+                    <li><strong>Planning from competitor feature lists</strong> without a user job.</li>
+                  </ul>
+
+                  <p>The second list is shorter than the first, and most of it is about overdoing the first: too
+                    many tables, too fine classes, too many cases. The method holds; the dose needed adjusting.</p>
+
+                  <p>The rules this part comes down to: what must hold needs an exit code, because a rule in prose
+                    is guidance and a hook is a control; and built correctly is not the same as useful, so every
+                    plan names a user job and done means that job was played through. Behind both stands the one
+                    thing the whole series has been about. The agent writes the code. Whether that code can be
+                    trusted is decided by everything around it: the structure it works in, the order of the steps,
+                    the checks it cannot talk its way past, and the knowledge that outlives the session.</p>
+
+                  <p>The nine parts are drawn from one report, which is on the site as a single page: <a href="/articles/agentic-software-development">Agentic Software Development: How We Build Software with AI Agents, What Works, and Where It Breaks</a>.</p>
+
+                  <p class="series-nav"><em>Previous: <a href="/blog/2026/11/10/where-agentic-development-breaks">Part 8, The Agent That Pleases</a>. This was the last part; the series starts at <a href="/blog/2026/09/22/agentic-development-overview">Part 1</a>.</em></p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

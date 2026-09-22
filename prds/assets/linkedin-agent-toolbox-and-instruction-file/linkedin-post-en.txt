@@ -1,0 +1,17 @@
+Every skill you install for your coding agent costs tokens on EVERY SINGLE REQUEST — whether you use it or not.
+
+We measured it: 14 skills had not been invoked once in 91 sessions over a month. Five of them were process skills I actually like. They went into an archive folder with a note on how to bring them back.
+
+Same problem with the instruction file. Every incident adds a paragraph, until nobody — including the agent — reads it properly.
+
+Ours is now 170 lines. Each hard rule is ONE SENTENCE: the sentence on which the rule holds or fails. The long version, with rationale and precedents, lives in a separate file that loads ONLY when the agent touches a matching path. The testing rule loads near tests. The migration rule near migrations.
+
+And one number that changed how we assign models: our orchestrator on the most expensive model used 30 % of the weekly budget by itself.
+
+The cheapest token is the one that never enters the context.
+
+Part 2 of the series on agentic software development:
+
+👉 https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file
+
+#aiagents #claudecode #developerproductivity #llm #softwareengineering

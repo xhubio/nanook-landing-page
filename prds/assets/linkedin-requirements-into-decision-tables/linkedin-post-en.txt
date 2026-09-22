@@ -1,0 +1,23 @@
+An AI agent can read a 40-page specification and summarise it perfectly.
+
+It will not tell you that page 12 and page 31 contradict each other in a case nobody spelled out.
+
+So the first thing I do with a new specification is have the agent translate it into DECISION TABLES. A table demands three things prose does not: every field needs classes, every combination needs a row, every row needs a result.
+
+For an event-driven service, with twelve good designs already written, building the tables found — before a single line of code:
+
+• a contradiction between two of our own documents
+• seven filters with no effect, despite tests against a real database
+• 50 rows per page in the UI, `LIMIT 20` in the database design
+• an event whose name would have produced an outbound message that must not exist
+• two database columns that no design had asked for
+
+Prose does not lie. It stays silent — exactly where the work is.
+
+A table cannot stay silent.
+
+Part 5 of the series on agentic software development:
+
+👉 https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables
+
+#softwaretesting #requirementsengineering #testdesign #aiagents #nanook

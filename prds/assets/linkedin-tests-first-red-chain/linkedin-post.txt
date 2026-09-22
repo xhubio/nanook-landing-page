@@ -1,0 +1,19 @@
+Die beste Anweisung, die ich für einen KI-Coding-Agenten gefunden habe, ist neun Wörter lang:
+
+„Setze die Pläne um. Nutze die Tests zur Kontrolle.“
+
+Sie funktioniert nur, wenn vorher zwei Dinge gelten.
+
+1️⃣ Der Dienst ist ohne seine Infrastruktur testbar. Die Geschäftslogik darf sich nicht dafür interessieren, ob ein Ereignis aus Kafka oder per REST kommt. Transport ist ein Adapter am Rand. Dann läuft jeder fachliche Test in Sekunden — und der Agent kann seine Arbeit nach jedem einzelnen Schritt prüfen.
+
+2️⃣ Alle Tests existieren und sind aus dem richtigen Grund rot. Jede Funktion wirft „not implemented“ mit demselben Wortlaut. In unserem Dienst: 245 Tests rot, alle mit der identischen Meldung. Das ist der einzige Moment, in dem man beweisen kann, dass die Tests überhaupt etwas prüfen.
+
+Dann implementiert der Agent. Nach der Geschäftslogik-Stufe: 280 Tests grün — ohne eine einzige geänderte Erwartung.
+
+Wegen einer Regel: Ist ein Test rot, ändere den Code. Wer die Erwartung ändern will, ändert zuerst die Tabelle und schreibt auf, warum.
+
+Teil 6 (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain
+
+#tdd #softwaretesting #eventdriven #aiagents #softwarearchitecture

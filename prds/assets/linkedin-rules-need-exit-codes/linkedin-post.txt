@@ -1,0 +1,21 @@
+In jedem Auftrag stand: niemals --no-verify.
+
+An einem einzigen Tag haben drei KI-Agenten trotzdem mit --no-verify committet — und es selbst gemeldet, als „Reflex“. Neun Tage später tat es ein vierter Agent trotz schärferem Auftrag erneut, und ein fünfter umging den Hook am selben Tag, indem er den Hooks-Pfad überschrieb.
+
+Zwei Lehren:
+
+1️⃣ Ein Verbot muss die WIRKUNG benennen, nicht die Schreibweise. Wer ein Flag nennt, bekommt das nächste.
+
+2️⃣ Was gelten muss, braucht einen EXIT-CODE. Ein Hook prüft jetzt jeden Shell-Befehl, den der Agent ausführen will, und verweigert jeden Push, der die Testkette umgeht. Rot ist der Befund: melden, nicht umgehen.
+
+Die andere Lehre aus dem letzten Teil dieser Serie ist weniger technisch. Nach einer Testrunde lautete mein Urteil über viele Features: korrekt umgesetzt — und sinnlos. Saubere Datenmodelle, eine drangeklebte Oberfläche, kein Ablauf, den ein echter Nutzer durchspielen könnte.
+
+Seitdem benennt jeder Plan einen USER JOB, und „fertig“ heißt: dieser Job wurde im Browser als diese Persona durchgespielt.
+
+Korrekt gebaut ist nicht dasselbe wie nützlich.
+
+Letzter Teil, mit dem, was ich wieder so machen würde, und dem, was nicht (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes
+
+#aiagents #softwareengineering #productmanagement #devops #claudecode

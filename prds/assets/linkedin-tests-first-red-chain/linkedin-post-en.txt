@@ -1,0 +1,19 @@
+The best instruction I have found for an AI coding agent is ten words long:
+
+"Implement the plans. Use the tests to check the result."
+
+It only works if two things are true before you say it.
+
+1️⃣ The service is testable without its infrastructure. The business logic must not care whether an event comes from Kafka or REST. Transport is an adapter at the edge. Then every business test runs in seconds — and the agent can check its work after every single step.
+
+2️⃣ All tests exist and are red for the right reason. Every function throws "not implemented" with the same wording. In our service: 245 tests red, all with the identical message. That is the only moment you can prove your tests assert something.
+
+Then the agent implements. After the business-logic stage: 280 tests green — without a single expectation changed.
+
+Because of one rule: when a test is red, change the code. If you want to change the expectation, change the table first, and write down why.
+
+Part 6:
+
+👉 https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain
+
+#tdd #softwaretesting #eventdriven #aiagents #softwarearchitecture

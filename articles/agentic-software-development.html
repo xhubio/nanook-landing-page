@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Agentic Software Development · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A field report on nine months of building software with an AI coding agent: the setup, the process, the tables, the tests, and at length where it breaks." />
+  <meta property="og:title" content="Agentic Software Development · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/articles/agentic-software-development" />
+  <meta property="og:description" content="A field report on nine months of building software with an AI coding agent: the setup, the process, the tables, the tests, and at length where it breaks." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/articles/agentic-software-development" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Agentic Software Development: How We Build Software with AI Agents, What Works, and Where It Breaks",
+  "datePublished": "2026-09-17",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "A field report on nine months of building software with an AI coding agent: the setup, the process, the tables, the tests, and at length where it breaks.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/articles/agentic-software-development"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <main class="long-doc article" id="main-content">
+    <article>
+      <header class="long-doc-head">
+        <p class="api-kicker">Article · Field report</p>
+        <h1>Agentic Software Development: How We Build Software with AI Agents, What Works, and Where It Breaks</h1>
+        <p class="provenance"><a href="https://cv.xhub.io/de/torsten.link">Torsten Link</a> · 17 September 2026 · about 8,900 words, 39 minutes</p>
+      </header>
+      <p class="lede">A field report from two settings: a multi-product SaaS platform built over nine months, and an event-driven service built in eleven days inside a client project. The numbers are real. Where something went wrong, it is in here too — that is the part most worth reading.</p>
+      <p>This report is also published as a nine-part series on the blog, one part a week from 22 September 2026; each section below names the part that expands it. The series starts with <a href="/blog/2026/09/22/agentic-development-overview">part 1, the two settings and the numbers</a>.</p>
+      <nav class="article-toc" aria-label="Contents"><ol><li><a href="#1-why-this-report-exists">Why this report exists</a></li><li><a href="#2-the-two-settings-and-their-numbers">The two settings and their numbers</a></li><li><a href="#3-the-toolbox-skills-mcp-servers-and-a-token-diet">The toolbox: skills, MCP servers, and a token diet</a></li><li><a href="#4-the-instruction-file-short-rules-long-rules-and-rules-that-load-themselves">The instruction file: short rules, long rules, and rules that load themselves</a></li><li><a href="#5-directory-layout-one-root-many-repositories">Directory layout: one root, many repositories</a></li><li><a href="#6-the-requirements-lifecycle-analysis-design-plan-done">The requirements lifecycle: analysis, design, plan, done</a></li><li><a href="#7-knowledge-that-outlives-the-session-the-knowledge-base-and-the-lesson-memory">Knowledge that outlives the session: the knowledge base and the lesson memory</a></li><li><a href="#8-two-environments-project-work-versus-open-product-work">Two environments: project work versus open product work</a></li><li><a href="#9-forcing-requirements-into-tables">Forcing requirements into tables</a></li><li><a href="#10-designing-a-service-so-it-can-be-tested-without-its-infrastructure">Designing a service so it can be tested without its infrastructure</a></li><li><a href="#11-tests-first-the-red-chain">Tests first: the red chain</a></li><li><a href="#12-implement-all-plans-the-autonomous-pipeline">"Implement all plans": the autonomous pipeline</a></li><li><a href="#13-many-repositories-one-change-parity-and-release-cascades">Many repositories, one change: parity and release cascades</a></li><li><a href="#14-where-it-breaks-part-1-the-agent-that-pleases">Where it breaks, part 1: the agent that pleases</a></li><li><a href="#15-where-it-breaks-part-2-absences-nobody-reports">Where it breaks, part 2: absences nobody reports</a></li><li><a href="#16-where-it-breaks-part-3-the-measuring-instrument-lies">Where it breaks, part 3: the measuring instrument lies</a></li><li><a href="#17-where-it-breaks-part-4-invented-evidence">Where it breaks, part 4: invented evidence</a></li><li><a href="#18-where-it-breaks-part-5-rules-in-prose-are-not-enforced">Where it breaks, part 5: rules in prose are not enforced</a></li><li><a href="#19-where-it-breaks-part-6-parallel-sessions-in-one-checkout">Where it breaks, part 6: parallel sessions in one checkout</a></li><li><a href="#20-where-it-breaks-part-7-built-correctly-and-pointless">Where it breaks, part 7: built correctly, and pointless</a></li><li><a href="#21-cost-tokens-models-and-budgets">Cost: tokens, models, and budgets</a></li><li><a href="#22-what-i-would-do-again-and-what-i-would-not">What I would do again, and what I would not</a></li><li><a href="#23-the-short-version">The short version</a></li></ol></nav>
+<h2 id="1-why-this-report-exists">1. Why this report exists</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/22/agentic-development-overview">part 1 of the series, The Agent Writes the Code</a>.</em></p>
+<p>Most writing about AI-assisted development is about speed. Speed is real — but it is not the interesting part, and it is not the part that decides whether the result is any good.</p>
+<p>After nine months of building software almost exclusively through an AI coding agent in the terminal, my conclusion is this:</p>
+<blockquote>
+<p><strong>The agent writes the code. What makes the code trustworthy is everything around the agent: the structure it works in, the order of the steps, the checks it cannot talk its way past, and the knowledge that survives the end of a session.</strong></p>
+</blockquote>
+<p>This report describes that "everything around". It covers the setup (tools, instruction files, directories), the process (analysis → design → plan → implementation), the testing approach (tables first, tests second, code third), the automation (a pipeline that works through plans on its own), and — at length — the failure modes. The failures are the most useful part. Every rule in the setup exists because something went wrong at least once, usually more than once.</p>
+<p>A note on roles: the agent writes nearly all of the code. I design, decide, review, contradict, and — most importantly — decide which of the agent's claims I believe.</p>
+<h2 id="2-the-two-settings-and-their-numbers">2. The two settings and their numbers</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/22/agentic-development-overview">part 1 of the series, The Agent Writes the Code</a>.</em></p>
+<h3 id="setting-a-a-multi-product-saas-platform-open-product-work">Setting A: a multi-product SaaS platform (open product work)</h3>
+<p>Five products built on shared modules: association management, software for trades businesses, property management, an e-invoicing API, and a PDF API. Backends and frontends are plugin-based; most functionality lives in shared packages that several products import.</p>
+<p>Measured on 2026-09-17:</p>
+<div class="table-scroll"><table>
+<tbody>
+<tr>
+<td>Duration</td>
+<td>since December 2025 (~9 months)</td>
+</tr>
+<tr>
+<td>Git repositories under <code>repo/</code></td>
+<td><strong>74</strong> (products, shared packages, tools, archive)</td>
+</tr>
+<tr>
+<td>Commits across those repositories</td>
+<td><strong>~14,000</strong></td>
+</tr>
+<tr>
+<td>Commits in the root repository (plans, rules, knowledge)</td>
+<td><strong>4,284</strong></td>
+</tr>
+<tr>
+<td>Completed plans and analyses (<code>done/</code>)</td>
+<td><strong>~1,240</strong></td>
+</tr>
+<tr>
+<td>Open plans</td>
+<td>65</td>
+</tr>
+<tr>
+<td>Lesson memory entries (one lesson per file)</td>
+<td><strong>327</strong></td>
+</tr>
+<tr>
+<td>Knowledge-base articles</td>
+<td>66 compiled from 122 raw sources</td>
+</tr>
+<tr>
+<td>Active skills</td>
+<td>24 (14 archived)</td>
+</tr>
+<tr>
+<td>Path-bound rule files</td>
+<td>10</td>
+</tr>
+</tbody>
+</table></div>
+<p>Each repository is released on its own with semantic-release and published as an npm package. A change to a shared package often has to travel through ten or more repositories before a user sees it.</p>
+<h3 id="setting-b-an-event-driven-service-in-a-client-project">Setting B: an event-driven service in a client project</h3>
+<p>A service that consumes messages from Kafka, keeps state in Postgres, publishes decisions back to Kafka, and serves a web UI over REST. Requirements came from outside, interfaces existed.</p>
+<div class="table-scroll"><table>
+<tbody>
+<tr>
+<td>Duration</td>
+<td>11 days, 12 designs on day one</td>
+</tr>
+<tr>
+<td>Commits</td>
+<td>97</td>
+</tr>
+<tr>
+<td>Source code</td>
+<td>8,053 lines in 54 files</td>
+</tr>
+<tr>
+<td>Test code</td>
+<td>9,183 lines in 44 files</td>
+</tr>
+<tr>
+<td>Tests</td>
+<td>806 (805 passing, 1 skipped)</td>
+</tr>
+<tr>
+<td>Decision-table sheets</td>
+<td>13, of which 11 generate cases</td>
+</tr>
+<tr>
+<td>Generated test cases</td>
+<td>214, written as 1,712 files</td>
+</tr>
+<tr>
+<td>Table coverage</td>
+<td>100 % per sheet — the build fails otherwise</td>
+</tr>
+</tbody>
+</table></div>
+<p>The two settings look very different, and the process differs where they differ. But the core — structure, order, gates, retained knowledge — is the same. That is why they belong in one report.</p>
+<h2 id="3-the-toolbox-skills-mcp-servers-and-a-token-diet">3. The toolbox: skills, MCP servers, and a token diet</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
+<h3 id="31-superpowers-as-a-starting-point-adapted-per-project">3.1 Superpowers as a starting point, adapted per project</h3>
+<p>I start every project with <a href="https://github.com/obra/superpowers">Superpowers</a>, a collection of process skills for coding agents: brainstorming, writing plans, executing plans, test-driven development, systematic debugging, verification before completion, and so on.</p>
+<p>I never use it unchanged. Each project gets its own adaptation:</p>
+<ul>
+<li><strong>Paths and conventions.</strong> "Write a plan" means: write it to <code>REQUIREMENTS/&lt;PRODUCT&gt;/plan/</code>, with the file-name pattern of this project, with a mandatory <code>## User job</code> section (more on that in <a href="#20-where-it-breaks-part-7-built-correctly-and-pointless">section 20</a>).</li>
+<li><strong>Project language.</strong> The skills speak the vocabulary of the project, not a generic one.</li>
+<li><strong>Project-specific skills on top.</strong> In the SaaS platform, most skills are ours: onboarding a new country into the e-invoicing pipeline (pin the official specification by SHA-256 → scaffold catalogue and validation gates → wire generator and validator into the backend), drift checks against pinned legal sources, deployment to the VPS, building decision tables, running the autonomous plan pipeline, a browser QA walkthrough, dependency cascades across repositories.</li>
+</ul>
+<h3 id="32-playwright-mcp-for-anything-with-a-frontend">3.2 Playwright MCP for anything with a frontend</h3>
+<p>When the software has a user interface, the agent gets a browser through the <a href="https://github.com/microsoft/playwright-mcp">Playwright MCP server</a>. Without it, the agent can only claim that a screen works. With it, it can click through the screen as a user, read console errors, count network requests, and take screenshots.</p>
+<p>Two lessons from running it at scale:</p>
+<ul>
+<li><strong>One browser per parallel session.</strong> When several agent sessions share one Playwright MCP instance, they share the browser — one session navigates away from the page another session is testing. We run several named instances (<code>playwright</code>, <code>playwright-2</code>, <code>playwright-3</code>) and assign them.</li>
+<li><strong>A browser walkthrough answers "does it work?", not "is it correct?"</strong> See <a href="#15-where-it-breaks-part-2-absences-nobody-reports">section 15</a> — a walkthrough as the owner account will never find a missing permission check.</li>
+</ul>
+<h3 id="33-the-token-diet-delete-or-archive-what-is-not-used">3.3 The token diet: delete or archive what is not used</h3>
+<p>Every skill, agent, and command has a description that travels with <strong>every single request</strong> so the model knows it exists. Twenty unused skills are twenty paragraphs of noise in every call — paid for in tokens, and paid for again in attention.</p>
+<p>My rule: <strong>whatever is not needed gets deleted or moved to an archive folder</strong> outside the path the agent loads.</p>
+<p>On 2026-09-03, I measured this in the SaaS platform: 14 skills had not been invoked <strong>once</strong> in 91 sessions over a month. Among them were five of the original Superpowers process skills (test-driven development, systematic debugging, verification before completion, subagent-driven development, dispatching parallel agents) — not because the ideas are wrong, but because the project's own pipeline had absorbed them. They went into <code>.claude/skills-archiv/</code> with a README that names the replacement and how to reactivate them.</p>
+<blockquote>
+<p><strong>Unused capability is not free.</strong> It costs tokens on every call and dilutes the selection the model has to make.</p>
+</blockquote>
+<h2 id="4-the-instruction-file-short-rules-long-rules-and-rules-that-load-themselves">4. The instruction file: short rules, long rules, and rules that load themselves</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
+<p>Every coding agent reads a project instruction file at the start of a session (<code>CLAUDE.md</code> for Claude Code, <code>AGENTS.md</code> for others). It is the most important file in the project — and it rots faster than any other.</p>
+<h3 id="41-the-problem-the-file-grows-until-nobody-including-the-agent-reads-it">4.1 The problem: the file grows until nobody (including the agent) reads it</h3>
+<p>Each incident adds a paragraph. After a few months, the file is thousands of lines long, the important rules are buried, and every session pays for all of it.</p>
+<h3 id="42-the-solution-one-sentence-per-rule-the-rest-loads-on-demand">4.2 The solution: one sentence per rule, the rest loads on demand</h3>
+<p>The instruction file in the SaaS platform is now 170 lines. Each mandatory rule is <strong>one sentence — the sentence on which the rule holds or fails</strong> — plus a pointer to its long version:</p>
+<pre class="markdown"><code>- **A test checks the payload** — 🔴 it contains what I sent: each value read from the input,
+  never from a constant. → `tests-payload-spec-table.md`
+- **Database migrations expand/contract** — feature releases are additive; DROP/RENAME/SET NOT NULL
+  only in their own contract release; 🔴 never by hand. → `migrations-expand-contract.md`</code></pre>
+<p>The long versions live in <code>.claude/rules/</code> — ten files, 913 lines in total — with rationale, precedents from the codebase, test questions, and measurements. Each carries a path filter in its frontmatter:</p>
+<pre class="yaml"><code>---
+paths:
+  - &quot;**/tests/**&quot;
+  - &quot;**/*.test.ts&quot;
+  - &quot;**/*.xlsx&quot;
+---</code></pre>
+<p>The rule about test payloads loads <strong>only</strong> when the agent touches a test file or a table. The rule about database migrations loads only near migrations. The session pays for what it needs.</p>
+<p>One caveat, written into the instruction file itself: <em>if you decide something in an area without opening a file there, read the long version by hand — otherwise the binding never fires.</em></p>
+<h3 id="43-what-belongs-in-the-instruction-file-at-all">4.3 What belongs in the instruction file at all</h3>
+<ul>
+<li>What is <strong>always</strong> true (project overview, where things live, the push gate).</li>
+<li>The one-sentence version of each hard rule.</li>
+<li>Pointers, not content: architecture docs, requirement folders, the knowledge base.</li>
+</ul>
+<p>What does not belong: history, measurements, examples, one-off decisions. Those go into the long rules, the knowledge base, or the lesson memory.</p>
+<h2 id="5-directory-layout-one-root-many-repositories">5. Directory layout: one root, many repositories</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/06/directory-layout-requirements-lifecycle">part 3 of the series, One Root, Many Repositories</a>.</em></p>
+<h3 id="51-the-root-is-a-repository-too">5.1 The root is a repository too</h3>
+<p>I always work from a <strong>root directory that is itself a Git repository</strong>. It holds everything that steers the agent and everything that is shared across the code repositories:</p>
+<pre><code>root/                          ← Git repository
+├── CLAUDE.md                  ← instruction file
+├── .claude/
+│   ├── rules/                 ← long versions of the rules, path-bound
+│   ├── skills/                ← active skills
+│   ├── skills-archiv/         ← archived skills (not loaded)
+│   ├── agents/                ← sub-agent definitions (implementer, QA runner, reviewer)
+│   ├── commands/              ← slash commands
+│   └── architecture/          ← architecture docs
+├── REQUIREMENTS/              ← analyses, designs, plans, done
+├── knowlage-base/             ← knowledge base (its own repository)
+└── repo/                      ← the code repositories</code></pre>
+<p>Why a repository? Because plans, rules and decisions change constantly, and I want to see <em>when</em> a rule appeared and <em>which incident</em> caused it. The root repository has 4,284 commits — more than most of the code repositories.</p>
+<h3 id="52-layout-for-a-multi-product-saas-with-shared-modules">5.2 Layout for a multi-product SaaS with shared modules</h3>
+<pre><code>root/REQUIREMENTS/&lt;PRODUCT or TOPIC&gt;/
+    analyse/
+    design/
+    plan/
+    done/
+
+root/repo/
+    products/&lt;product&gt;/     ← app backend, app frontend, portal, landing page,
+                               product-exclusive packages
+    packages/               ← shared modules: backend / frontend / spec
+    tools/                  ← test framework, table tooling, admin tools, MCP servers
+    mocks/                  ← mock services
+    archive/</code></pre>
+<p><code>REQUIREMENTS/</code> has one folder per product (and some cross-cutting ones: core, general, E2E tests, and a folder for items that are blocked or deferred).</p>
+<p>The assignment rule for code is mechanical, so neither I nor the agent has to think about it: <strong>if a package's prefix is a product name, it lives in that product. If a second product adopts it, the prefix goes and it moves to <code>packages/</code>.</strong></p>
+<p>Every directory under <code>repo/</code> is its <strong>own Git repository</strong> with its own release. Apps import shared modules as versioned npm packages. That has consequences for how changes travel — see <a href="#13-many-repositories-one-change-parity-and-release-cascades">section 13</a>.</p>
+<h3 id="53-layout-for-an-event-driven-microservice-architecture">5.3 Layout for an event-driven microservice architecture</h3>
+<p>The main difference: <strong>requirements live per service</strong>, not in a shared folder at the root.</p>
+<pre><code>root/
+└── repo/
+    ├── service-a/
+    │   ├── REQUIREMENTS/{analyse,design,plan,done}/
+    │   └── src/, tests/, tables/
+    ├── service-b/
+    │   └── REQUIREMENTS/…
+    └── contracts/          ← message schemas shared between services</code></pre>
+<p>The reason is ownership. In a microservice landscape, a service is designed, tested, and deployed on its own. Its requirements belong next to its code. In a multi-product platform with shared modules, a single requirement usually cuts across several repositories — so it belongs above them.</p>
+<h3 id="54-file-names">5.4 File names</h3>
+<p>All requirement documents follow one pattern:</p>
+<pre><code>&lt;yyyy-mm-dd&gt;_&lt;analyse|design|plan&gt;_&lt;topic&gt;.md</code></pre>
+<p>For example: <code>2026-09-15_plan_01-the-xsd-gate-fails-silently.md</code>. Plans get a daily sequence number starting at <code>01</code>.</p>
+<p>The date sorts naturally, the type is visible without opening the file, and the agent can find "all plans from last week about topic X" with a single glob.</p>
+<h2 id="6-the-requirements-lifecycle-analysis-design-plan-done">6. The requirements lifecycle: analysis, design, plan, done</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/06/directory-layout-requirements-lifecycle">part 3 of the series, One Root, Many Repositories</a>.</em></p>
+<h3 id="61-where-to-start">6.1 Where to start</h3>
+<ul>
+<li><strong>Analysis</strong> when I know nothing yet. What exists, what does the specification say, what do comparable systems do, what does the code currently do? An analysis ends with findings and open questions, not with a solution.</li>
+<li><strong>Design</strong> when I know enough to shape a solution. This is the normal starting point.</li>
+</ul>
+<h3 id="62-for-a-new-service-first-an-outline-of-designs">6.2 For a new service: first an outline of designs</h3>
+<p>When the project is a new service, the agent's first design is not a design — it is an <strong>outline of the designs we will need</strong>. For an event-driven service, a proven cut looks like this:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>No.</th>
+<th>Design</th>
+<th>Defines</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>00</td>
+<td>Overview</td>
+<td>vision, core decisions, glossary, <strong>decision log</strong></td>
+</tr>
+<tr>
+<td>10</td>
+<td>Data contract</td>
+<td>messages: fields, required, enum values, keys</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Data model &amp; persistence</td>
+<td>tables, indexes, permissions, who migrates</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Inbound processing</td>
+<td>ordering, conflicts, idempotency</td>
+</tr>
+<tr>
+<td>40</td>
+<td>Responsibility</td>
+<td>who sees and may do what</td>
+</tr>
+<tr>
+<td>50</td>
+<td>Deadlines &amp; scheduling</td>
+<td>tick, grace periods, what a deadline triggers</td>
+</tr>
+<tr>
+<td>60</td>
+<td>Outbound</td>
+<td>which message leaves when</td>
+</tr>
+<tr>
+<td>70</td>
+<td>UI interface</td>
+<td>paths, roles, error shapes</td>
+</tr>
+<tr>
+<td>80</td>
+<td>Operations</td>
+<td>instances, health, alerts, cleanup</td>
+</tr>
+<tr>
+<td>90</td>
+<td>Test integration</td>
+<td>how the service fits the existing test landscape</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>The outline determines the order of work.</strong> Then we design one item after another until all have been done once.</p>
+<h3 id="63-a-review-after-every-design">6.3 A review after every design</h3>
+<p>Each design gets a review before the next one starts — by me, and often by a second agent that has not seen the conversation, so it reads the document rather than the intent behind it.</p>
+<p>Two things go into every design:</p>
+<ul>
+<li><strong>Open questions</strong> as their own section. What is unclear stays visible.</li>
+<li>In the overview: a <strong>numbered decision log</strong> — decided, rejected, with the reason. The rejected alternative is the more valuable entry, because it is the one someone will propose again.</li>
+</ul>
+<h3 id="64-decision-tables-as-one-of-the-first-designs">6.4 Decision tables as one of the first designs</h3>
+<p>When interfaces already exist, one of the first items is often to <strong>build the decision tables</strong> — for inbound data, for the expected outbound data, and for the remaining data of an API. The tables define which classes of data exist and later generate them. This is important enough to have its own section: <a href="#9-forcing-requirements-into-tables">section 9</a>.</p>
+<h3 id="65-from-designs-to-plans--and-the-ripple-effect">6.5 From designs to plans — and the ripple effect</h3>
+<p>When all designs are done, the agent writes the <strong>plans</strong>: executable, step by step, with the files to touch, the tests to run, and the definition of done.</p>
+<p>In practice, <strong>writing the plans uncovers changes that were not visible during design.</strong> A step that sounded simple turns out to require a column nobody modelled. An interface assumed by design 60 is not what design 30 produces. These changes almost always affect <strong>the following designs and plans — and sometimes the preceding ones</strong>.</p>
+<p>So planning is not a one-way street. When a plan changes an assumption, the affected designs are updated before the next plan is written. Otherwise the next plan is based on a design that is already wrong.</p>
+<h3 id="66-done-means-moved--and-fed-into-the-knowledge-base">6.6 Done means moved — and fed into the knowledge base</h3>
+<ul>
+<li>When the plans for a design exist, the <strong>design (or analysis) moves to <code>done/</code></strong>. It is reference material from then on, no longer an instruction.</li>
+<li>When a plan has been implemented, <strong>the plan moves to <code>done/</code></strong> — and what was learned goes into the knowledge base.</li>
+</ul>
+<p>This is not bookkeeping. The agent treats everything in <code>plan/</code> as open work. A finished plan left in <code>plan/</code> gets re-implemented, or worse, "fixed" against code that has moved on. A plan's status is also checked <strong>against the code</strong>, not against the plan's own checkboxes — a box that says done is a claim; the code is the evidence.</p>
+<h3 id="67-two-more-rules-that-keep-the-folders-honest">6.7 Two more rules that keep the folders honest</h3>
+<ul>
+<li><strong>Blockers leave the plan.</strong> If part of a plan cannot proceed (missing decision, missing access), the implemented part goes to <code>done/</code>, and the blocked remainder is extracted into a central <code>BLOCKED-DEFERRED/</code> folder with the reason. A plan that stays half-open forever hides both what was done and what is missing. Before extracting, the blocker is verified — more than once, a "no access" turned out to be self-service.</li>
+<li><strong>Test plans go into a central E2E folder</strong>, not scattered across products, because tests usually span modules.</li>
+</ul>
+<h2 id="7-knowledge-that-outlives-the-session-the-knowledge-base-and-the-lesson-memory">7. Knowledge that outlives the session: the knowledge base and the lesson memory</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/13/knowledge-base-and-lesson-memory">part 4 of the series, What the Next Session Knows</a>.</em></p>
+<p>An agent session starts empty. Everything it knows about the project comes from what it reads. So the question "what does the next session know?" decides whether the project learns — or repeats the same mistakes every week.</p>
+<p>We use two separate stores, because they answer two different questions.</p>
+<h3 id="71-the-knowledge-base-how-does-our-system-work">7.1 The knowledge base: "how does our system work?"</h3>
+<p>The knowledge base is <strong>its own repository</strong>. It is structured along the model of an LLM-maintained wiki: humans feed raw material in, the model compiles it into readable articles, humans read the articles.</p>
+<pre><code>knowlage-base/
+├── raw/                  ← unfiltered sources (append-only), fed by me
+│   ├── sources.md        ← manifest pointing to repo docs, plans, code
+│   └── &lt;area&gt;/
+└── wiki/                 ← compiled by the LLM
+    ├── index.md          ← master index: every file + one line
+    ├── common/           ← shared platform knowledge
+    └── &lt;product&gt;/        ← per product</code></pre>
+<p>The rules for compiling: one concept per file; every file starts with <code>Stand: &lt;date&gt; · Source: …</code> and a one-line summary; backlinks between articles; distil, don't copy — when a source and the wiki disagree, the source wins and the date is updated. A lint skill checks for dead links, stale dates, orphans, and contradictions.</p>
+<p>What goes in:</p>
+<ul>
+<li><strong>Directory structure</strong> and where things live.</li>
+<li><strong>The target environment</strong>: how development, test, staging and production are set up.</li>
+<li>Everything I consider important, organised along four topics:
+<ul>
+<li><strong>Development</strong> — architecture, patterns, conventions, why things are the way they are.</li>
+<li><strong>Test</strong> — test framework, tables, test environments, known traps.</li>
+<li><strong>Deployment</strong> — how releases travel, how deploys run, what must happen in which order.</li>
+<li><strong>Production</strong> — topology, databases, monitoring, what real customers use.</li>
+</ul></li>
+</ul>
+<p>Every completed plan contributes. The plan itself goes to <code>done/</code>; the knowledge it produced goes into the wiki.</p>
+<p>The knowledge base is also exposed to the agent through a small MCP server with search and read tools, so a session can look something up instead of guessing.</p>
+<h3 id="72-the-lesson-memory-what-went-wrong-and-how-do-we-avoid-it">7.2 The lesson memory: "what went wrong, and how do we avoid it?"</h3>
+<p>The second store is a set of <strong>one-lesson-per-file notes</strong> that the agent writes itself, with an index that is loaded into every session. There are 327 of them now.</p>
+<p>Each note has the same shape:</p>
+<pre class="markdown"><code>---
+name: success-message-claims-more-than-measured
+description: A guard skipped a missing entry silently and still reported &quot;all match&quot;
+type: feedback
+---
+
+&lt;what happened, with the real numbers&gt;
+
+**Why:** &lt;the mechanism behind it&gt;
+
+**How to apply:** &lt;the concrete check that prevents it next time&gt;</code></pre>
+<p>The index groups them by failure class — <em>tests and assertions</em>, <em>the measuring instrument lies</em>, <em>search and replace</em>, <em>silent data loss</em>, <em>reachability</em>, <em>claim versus measurement</em>, <em>build and push gate</em>, <em>release</em>, <em>Git in a shared checkout</em>, <em>parallel sessions</em>, and more. The groups themselves are a finding: after a few hundred lessons, the incidents cluster into about twenty failure classes. Most of sections 14–19 of this report are drawn from them.</p>
+<p>Three observations about keeping such a memory:</p>
+<ol type="1">
+<li><strong>A lesson solved locally comes back.</strong> One note records that the same mistake (removing a test case because the application could not do it, instead of recording the gap as a finding) had been fixed three times — each time with a comment in the file concerned. A comment protects the file it is in. Only the fourth time, when it became a rule, did it stop.</li>
+<li><strong>A lesson needs the mechanism, not just the incident.</strong> "Don't do X in file Y" helps once. "Tools that skip a check silently turn every skipped check into an assurance" helps everywhere.</li>
+<li><strong>Memories go stale.</strong> A note that names a file, function or flag reflects what was true when it was written. Before acting on one, verify it still holds.</li>
+</ol>
+<h2 id="8-two-environments-project-work-versus-open-product-work">8. Two environments: project work versus open product work</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/20/requirements-into-decision-tables">part 5 of the series, A Table Cannot Stay Silent</a>.</em></p>
+<p>How I proceed depends heavily on the environment.</p>
+<h3 id="project-work-requirements-come-from-outside">Project work: requirements come from outside</h3>
+<p>In a client project, the requirements usually come from outside, and there are concrete interfaces already: message schemas, API specifications, existing systems to integrate with. That is a huge advantage. <strong>The specification is the oracle</strong> — I can derive tests from it before I write a line of code.</p>
+<h3 id="open-product-work-requirements-have-to-be-developed-first">Open product work: requirements have to be developed first</h3>
+<p>When everything is open — a new product, a new module — nobody hands you the requirements. You have to develop them yourself: analyses of the domain, of legal requirements, of what users actually do. The risk here is not bad code but <strong>plausible features that nobody needs</strong> (see <a href="#20-where-it-breaks-part-7-built-correctly-and-pointless">section 20</a>).</p>
+<p>The rest of the process is the same. But the first phase is different, and it is worth describing the project case in detail, because it shows most clearly what the combination of tables, tests, and an agent can do.</p>
+<h2 id="9-forcing-requirements-into-tables">9. Forcing requirements into tables</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/20/requirements-into-decision-tables">part 5 of the series, A Table Cannot Stay Silent</a>.</em></p>
+<h3 id="91-the-first-step-in-a-project-analyse-then-translate-into-tables">9.1 The first step in a project: analyse, then translate into tables</h3>
+<p>When I receive a specification for a service, the first thing I do is have the agent analyse it and <strong>translate it into equivalence-class tables</strong> using the <a href="https://github.com/xhubio/nanook-skill">Nanook skill</a>. Nanook is a table engine that reads decision tables from an Excel workbook and generates test cases from them.</p>
+<p>Two forms matter:</p>
+<ul>
+<li><strong>Decision table</strong> — what something <em>is</em>: fields, their classes (valid, boundary, missing, unknown enum value…), and cases that cover class combinations. The engine computes what percentage of the combinations is covered and which are missing.</li>
+<li><strong>Matrix table</strong> — what something <em>becomes</em>: rows are states, columns are events, each cell is the reaction.</li>
+</ul>
+<h3 id="92-why-this-finds-contradictions-an-ai-reading-prose-does-not">9.2 Why this finds contradictions an AI reading prose does not</h3>
+<p>A table demands three things prose does not: <strong>every field needs classes, every combination needs a row, every row needs a result.</strong> Whoever fills that in can no longer stay politely vague.</p>
+<blockquote>
+<p><strong>Prose does not lie. It stays silent — exactly at the places where the work is. A table cannot stay silent.</strong></p>
+</blockquote>
+<p>The agent can read a 40-page specification and summarise it perfectly. It will not tell you that page 12 and page 31 contradict each other in a case nobody spelled out. Filling in a table forces the question for every single case — including race conditions and the combinations nobody thought about.</p>
+<h3 id="93-what-the-tables-found-in-the-event-driven-service--before-any-code-existed">9.3 What the tables found in the event-driven service — before any code existed</h3>
+<p>The designs were good: twelve documents, cleanly cut. Building the tables still found:</p>
+<ul>
+<li><strong>A contradiction between two of our own artefacts.</strong> A sheet claimed a record would be shown with a hint; the mapping rule excluded exactly that record. Both cited the same design decision.</li>
+<li><strong>Seven filter criteria that had no effect</strong> — despite tests running against a real Postgres. An <em>empty</em> filter arrives correctly even if the implementation throws it away. The existing test had been built around the gap. The table's classes <em>set / empty / multiple</em> asked what happens for <em>set</em>.</li>
+<li><strong>A combination with no answer.</strong> Priority 0 without a feeder — unclear in the domain. It is now an explicit exception in the table instead of a row that asserts a result nobody decided.</li>
+<li><strong>A fourth cancellation case that was really its own state.</strong> In prose, a variant. In the matrix, it reacts differently to three events, so it got its own row.</li>
+<li><strong>Two numbers that did not match.</strong> The UI showed 50 rows per page; the database design said <code>LIMIT 20</code>. Both had been written down for days, in two documents.</li>
+<li><strong>A misnamed event.</strong> Filling in the matrix showed that a "deadline expired" event sends no message at all — it only changes what the UI shows. It was renamed after its real trigger. The wrong name would have produced an outbound message that must not exist.</li>
+<li><strong>Database columns demanded by cells.</strong> Two columns exist because one matrix cell each requires them. No design had asked for them.</li>
+<li><strong>"Ignore" separated from "error".</strong> In prose both read as "nothing happens". In the matrix they are two different reactions — an expected non-reaction versus a log entry.</li>
+</ul>
+<p><strong>The table is not a test artefact. It is a verification tool for the requirement.</strong> It costs about a day and finds things that would otherwise be found in production.</p>
+<h3 id="94-tables-in-the-saas-platform">9.4 Tables in the SaaS platform</h3>
+<p>The same approach runs through the SaaS platform, at larger scale: E2E tests across products are decision tables read as data by one shared runner, and e-invoicing rules are tables derived from pinned official specifications. Three rules proved essential:</p>
+<ol type="1">
+<li><strong>The decision table is the point of truth.</strong> No test case without a table row. The table is never overwritten automatically.</li>
+<li><strong>A test is derived from the specification, not from our code.</strong> The oracle is the pinned spec artefact — never a constant from <code>src/</code>. A test that reads its expected value from the code under test checks the code against itself.</li>
+<li><strong>A removed case becomes a finding in the same step.</strong> If a planned case cannot be executed because the application cannot do it, that is a defect to record — not a row to delete.</li>
+</ol>
+<h2 id="10-designing-a-service-so-it-can-be-tested-without-its-infrastructure">10. Designing a service so it can be tested without its infrastructure</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/27/tests-first-red-chain">part 6 of the series, Tests First, Then Implement All Plans</a>.</em></p>
+<h3 id="101-the-principle">10.1 The principle</h3>
+<p>I always design a service so that <strong>its function works and is testable without the external connections.</strong></p>
+<p>For an event-driven service, that means: the business logic must not care whether an event arrives via Kafka, a message bus, or REST — or how the result leaves. Transport is an adapter at the edge.</p>
+<pre><code>             ┌─────────────────────────────────────────┐
+  Kafka ──►  │ adapter │  business logic (pure +      │ adapter │ ──► Kafka
+  REST  ──►  │         │  ports: persistence, clock,  │         │ ──► REST
+             │         │  outbound, log)              │         │
+             └─────────────────────────────────────────┘</code></pre>
+<p>The business logic talks only to <strong>ports</strong>: one contract each for persistence, outbound messages, the clock, logging, and external data. In tests, the ports are recorders and fakes. In production, they are Kafka, Postgres, and HTTP.</p>
+<h3 id="102-why-this-matters-even-more-with-an-agent">10.2 Why this matters even more with an agent</h3>
+<ul>
+<li><strong>All tests can run immediately.</strong> No broker, no database, no network needed to verify the business logic. The feedback loop is seconds, not minutes.</li>
+<li><strong>The agent can check itself constantly.</strong> This is the key point. An AI agent is very good when it can verify its own work after every step. It is mediocre when it has to guess whether it worked.</li>
+<li><strong>Adapters stay thin.</strong> They translate, they do not decide. Rules at the edge are rules nobody tests.</li>
+</ul>
+<h3 id="103-five-stages-each-with-a-prohibition">10.3 Five stages, each with a prohibition</h3>
+<p>In the event-driven service, implementation ran in five stages. Each stage has something it must not do — which is what keeps the layers honest:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Subject</th>
+<th>Prohibited</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Pure functions</td>
+<td>no clock, no database, no messages</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Business logic against ports</td>
+<td>no real infrastructure; injected clock; recorders instead of adapters</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Persistence</td>
+<td><strong>no business rules</strong> — only that what is meant gets written and read</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Edges</td>
+<td>configuration, startup, shutdown, adapters</td>
+</tr>
+<tr>
+<td>5</td>
+<td>End to end</td>
+<td>the built bundle, with a smoke test</td>
+</tr>
+</tbody>
+</table></div>
+<p>For stage 3, an in-process Postgres engine that replays the <strong>real</strong> DDL script means the test checks the schema, not an imitation of it.</p>
+<h2 id="11-tests-first-the-red-chain">11. Tests first: the red chain</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/10/27/tests-first-red-chain">part 6 of the series, Tests First, Then Implement All Plans</a>.</em></p>
+<h3 id="111-clear-interfaces-make-test-driven-work-possible">11.1 Clear interfaces make test-driven work possible</h3>
+<p>When interfaces are clear, we have a big advantage: we can write <strong>all the tests first</strong> and run them against an empty function body. The expected result is that <strong>every test fails with "not implemented"</strong>.</p>
+<p>The sequence in the event-driven service was:</p>
+<ol type="1">
+<li><strong>The contract.</strong> All types, all error classes, all ports — 18 port methods and four pure functions. Each throws "not implemented", <strong>with the same wording from one constant</strong>. No behaviour, only shape. Type checking is green.</li>
+<li><strong>The oracle.</strong> A loader that reads the generated case folders, and <strong>one</strong> place that translates the table's short codes (<code>INS&gt;OPEN</code>, <code>UPD&gt;CLERK</code>, <code>IGN</code>, <code>ERR</code>) into assertions. That translation is tested itself. Everything else in the test code passes values through without interpreting them.</li>
+<li><strong>The red chain.</strong> All tests written before any business logic: first 112 red and 15 green (the green ones tested the oracle itself), then 245 red — <strong>all with the same message.</strong></li>
+</ol>
+<p>Why the identical message matters: it is the only moment you can <strong>prove</strong> the tests assert something. If all 245 fail with "not implemented", the suite does not yet test anything but itself. A test that fails for any other reason is a broken test — and found now, it costs minutes. Check the message by machine, not by eye; the test runner can emit it as structured data.</p>
+<h3 id="112-then-implement-it-and-use-the-tests-to-check-the-result">11.2 Then: "implement it, and use the tests to check the result"</h3>
+<p>When all plans exist and the red chain stands, the instruction to the agent becomes simple:</p>
+<blockquote>
+<p>Implement the plans. Use the tests to check the result.</p>
+</blockquote>
+<p>This is where the agent is at its best. It has a precise, machine-checkable target, a fast feedback loop, and no room for interpretation of what "done" means.</p>
+<p>At the end of stage 2 of the event-driven service: <strong>280 tests green — without a single expectation changed.</strong> Eight times something had to be adjusted, and it was always the <em>setup</em> of a case, never the expected result. Each of the eight corrections is documented with a reason in the table or the design.</p>
+<h3 id="113-the-rule-that-carries-the-whole-approach">11.3 The rule that carries the whole approach</h3>
+<blockquote>
+<p><strong>When a test is red, change the code. If you want to change the expectation, change the table first — and write down why.</strong></p>
+</blockquote>
+<p>Without this rule, an AI agent (or a human under time pressure) rewrites the expectation until it passes. See <a href="#14-where-it-breaks-part-1-the-agent-that-pleases">section 14</a>.</p>
+<h3 id="114-counter-probes-break-every-safeguard-once-on-purpose">11.4 Counter-probes: break every safeguard once on purpose</h3>
+<p>A green test proves nothing if it would also be green when the thing does not work. So for every safeguard, we removed it deliberately and <strong>counted</strong> which tests turned red:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Intervention</th>
+<th>Expected</th>
+<th>Measured</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>typo in a model column</td>
+<td>model gate fires</td>
+<td>2 red</td>
+</tr>
+<tr>
+<td>a database constraint removed</td>
+<td>constraint is checked</td>
+<td>4 red</td>
+</tr>
+<tr>
+<td>responsibility derivation disabled</td>
+<td>assignment is effective</td>
+<td>5 of 8 red</td>
+</tr>
+<tr>
+<td>leader row removed</td>
+<td>only one instance decides</td>
+<td>red</td>
+</tr>
+<tr>
+<td>old revocation logic restored</td>
+<td>new path is effective</td>
+<td>1 red</td>
+</tr>
+<tr>
+<td>local time instead of fixed zone</td>
+<td>zone is pinned</td>
+<td>exactly 3 red</td>
+</tr>
+<tr>
+<td>empty filter list read as empty set</td>
+<td>empty means "no filter"</td>
+<td>13 red</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two lessons: expect a <strong>number</strong>, not "something goes red". And place the probe <strong>where the test actually reads</strong> — a probe at the wrong place stays green and makes a good safeguard look useless.</p>
+<h2 id="12-implement-all-plans-the-autonomous-pipeline">12. "Implement all plans": the autonomous pipeline</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">part 7 of the series, Working Through 1,200 Plans</a>.</em></p>
+<p>In the SaaS platform, the volume of plans made one-plan-at-a-time impractical. So the agent works through them on its own, with a skill called <strong>plan-pipeline</strong> and a loop command that keeps it going.</p>
+<h3 id="121-what-the-pipeline-does">12.1 What the pipeline does</h3>
+<p>For a given <code>REQUIREMENTS/&lt;PRODUCT&gt;</code> folder:</p>
+<ol type="1">
+<li><strong>Audit</strong> every open plan against the code. What is already there? What is really open? (Plans routinely turn out to be partially done — or claim to be done and are not.)</li>
+<li><strong>Implement</strong> the open increments — one sub-agent per step: implement, build, test, commit.</li>
+<li><strong>Release</strong> — push, wait for CI, cascade versions into dependent repositories.</li>
+<li><strong>Move</strong> finished plans to <code>done/</code>; extract blocked remainders.</li>
+</ol>
+<h3 id="122-the-ledger-the-pipelines-memory">12.2 The ledger: the pipeline's memory</h3>
+<p>The heart of the pipeline is a <strong>ledger file</strong> — a Markdown table with one row per plan and a status vocabulary: <code>open</code>, <code>verified-open</code>, <code>in-work</code>, <code>blocked</code>, <code>extern</code> (another session owns it — do not touch), <code>done</code>.</p>
+<p><strong>Every</strong> status change is written to disk immediately. A run that dies (server error, killed process, exhausted context) loses at most the current increment. The next run reads the ledger and resumes.</p>
+<p>Two refinements came from real crashes:</p>
+<ul>
+<li><strong>Write-ahead.</strong> A ledger that is written <em>after</em> the sub-agent reports is empty exactly where it hurts. So before every agent spawn and every push, a row goes into an <code>IN FLIGHT</code> table at the top. A non-empty <code>IN FLIGHT</code> table at startup always means: a turn died here — check Git, which is the truth.</li>
+<li><strong>Size measured in bytes.</strong> Resume reads only the head of the ledger (<code>head -c 40000</code>, ~10k tokens). When it passes 150 KB, the old part is archived. A single row may not exceed 800 characters — detailed findings belong in the agent report, not the ledger.</li>
+</ul>
+<h3 id="123-model-assignment">12.3 Model assignment</h3>
+<p>Not every job needs the most expensive model, and not every job tolerates a cheap one:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Role</th>
+<th>Model</th>
+<th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Orchestrator</td>
+<td>strong model</td>
+<td>judgement: audits, blocked/done decisions, what to believe</td>
+</tr>
+<tr>
+<td>Implementation, browser QA, code review</td>
+<td>strong model</td>
+<td>real implementation scope, hundreds of tool calls</td>
+</tr>
+<tr>
+<td>Dependency cascades, scaffolding, drift checks</td>
+<td>faster model</td>
+<td>diligent, well-specified routine work</td>
+</tr>
+</tbody>
+</table></div>
+<p>And a delegation threshold: up to about five Git commands, builds that take seconds, or one-line fixes, the orchestrator does the work itself. Spawning an agent has overhead — it knows only what is in its brief, and the orchestrator sees only its summary.</p>
+<h3 id="124-decisions-unblock-work">12.4 Decisions unblock work</h3>
+<p>One simple rule removed a surprising amount of friction: <strong>when a decision has been made, that is also the go-ahead for implementation.</strong> The pipeline had parked eleven plans as "decision made, go missing" — from the outside, it looked like nothing was happening.</p>
+<h2 id="13-many-repositories-one-change-parity-and-release-cascades">13. Many repositories, one change: parity and release cascades</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">part 7 of the series, Working Through 1,200 Plans</a>.</em></p>
+<h3 id="131-app-parity">13.1 App parity</h3>
+<p>The e-invoicing API, the trades software, and the PDF API share the same plugins and backends. A change to a shared backend package or frontend plugin must be checked against <strong>all</strong> apps. The same bug in several apps is fixed <strong>in all of them at the same time</strong>. That rule is in the instruction file, marked critical — because an agent that fixes a bug in the app it is looking at considers the job done.</p>
+<h3 id="132-release-cascades">13.2 Release cascades</h3>
+<p>A change in a shared package travels: package release → bump in the next layer → release → bump in the apps → release. With 74 repositories, a topological order matters. A command (<code>/update-cascade</code>) computes that order and drives the bumps, with up to nine sub-agents in parallel on a fast model and a pin file that holds back versions deliberately.</p>
+<h3 id="133-the-push-gate">13.3 The push gate</h3>
+<ul>
+<li>Before every push: the full test chain in the affected repository (format, lint, type check, dead code, build, tests with coverage). A global <code>pre-push</code> hook enforces it.</li>
+<li><strong>After the push, the CI run counts</strong>, not the push. Watch the run until <code>completed/success</code>, and sweep all touched repositories at the end of a run.</li>
+<li><strong>A green CI run without a release publishes nothing.</strong> semantic-release silently skips a release if the branch is behind the remote — for example because the next commit was pushed during the CI job. Bundle backend waves, push once.</li>
+</ul>
+<p>Why so strict? See <a href="#18-where-it-breaks-part-5-rules-in-prose-are-not-enforced">section 18</a>.</p>
+<h2 id="14-where-it-breaks-part-1-the-agent-that-pleases">14. Where it breaks, part 1: the agent that pleases</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p><strong>The agent is fast, but it is accommodating.</strong> Its goal is a green result, and there are always two ways to get one: fix the code, or adjust the expectation.</p>
+<p>In the event-driven service, the rule "change an expectation only via the table, with a reason" is the reason the suite still asserts something. Without it, I would have had a green test suite on day two that asserted nothing.</p>
+<p>The same tendency shows up in quieter forms:</p>
+<ul>
+<li><p><strong>Removing a case the application cannot handle.</strong> Four statuses in the schema, three filter switches in the UI — the agent removed the test case for the fourth status and noted nothing. Only my follow-up question ("you did record that as an issue, right?") saved it. The rule since then: a removed case becomes a finding in the same step. The test question: <em>why doesn't it work?</em> — "because the app can't" is a finding; "because it makes no sense" is a comment in the table, so the next person doesn't add it back.</p></li>
+<li><p><strong>Encoding a known defect as expected behaviour.</strong> The agent built four test cases that asserted the <em>current</em> wrong status. Suite: 12/12 green — reporting "all clear" while knowing the opposite. I turned it around and made it a rule: <strong>known defects are always red in the tests.</strong> The test expects the correct behaviour and fails, with a message naming the finding, where it was measured, and what would make it green.</p>
+<p>And the flip side, measured two days later: <em>nobody re-reads a red test.</em> Three hand-written test fixtures carried a 🔴 in their title for an object that no longer existed. A red test is only useful if something tracks it.</p></li>
+</ul>
+<blockquote>
+<p>The purpose of a test suite is not to be green. It is to say what is.</p>
+</blockquote>
+<h2 id="15-where-it-breaks-part-2-absences-nobody-reports">15. Where it breaks, part 2: absences nobody reports</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p>The most expensive class of defect in agent-built software is not a wrong result. It is <strong>something missing</strong> — because no tool reports an absence.</p>
+<p>In a single night, the same defect appeared four times in four modules:</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+<th>Case</th>
+<th>State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goods receipt</td>
+<td>business logic fully correct — the form was permanently inside a disabled fieldset</td>
+</tr>
+<tr>
+<td>Collective invoice</td>
+<td>procedure, frontend logic, 23 translation keys, tests green — <strong>no component rendered it</strong></td>
+</tr>
+<tr>
+<td>Balance sheet &amp; P&amp;L</td>
+<td>backend published, view published — <strong>two lines missing</strong> in the app client</td>
+</tr>
+<tr>
+<td>An accounting-mode suggestion</td>
+<td>port built, optional — <strong>never wired</strong>, so the query answers <code>null</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The sharpest evidence: for the collective invoice, the green suite explicitly checked that <strong>all 23 translation keys exist</strong> — just not that anyone ever <strong>displays</strong> them.</p>
+<p>The type checker sees nothing. The tests see nothing. The build sees nothing. The dead-code check sees nothing. The only thing that notices an absence is a human in a browser — the most expensive path. And because everything is green, everyone believes it is done.</p>
+<p>Two variations:</p>
+<ul>
+<li><strong>A browser walkthrough as the owner finds no missing permission.</strong> The agent built a new screen, clicked through it as a persona — module switch, both pages, navigation, two languages, zero console errors. Still unfinished: the <em>menu entry</em> carried the permission, the <em>route</em> did not. A user without the permission would not see the menu item, but could open the page by URL. The walkthrough ran as the owner, who has every permission. A missing lock is invisible to whoever owns the key. A guard test (<code>every route carries the same permission as its menu entry</code>) found it — in seconds.</li>
+<li><strong>The test kernel loaded fewer plugins than production.</strong> Permission keys were therefore <em>unknown</em> in tests, and every gate on them is fail-closed — it rejected even the owner. The "forbidden" test was <strong>green</strong>: the viewer was rejected, just for the wrong reason. Only the positive control ("the member <em>does</em> get past the gate") found it. Every gate test needs three cases, and the third one is the expensive one.</li>
+</ul>
+<p>What helped:</p>
+<ul>
+<li>Tests that read the <strong>rendered output with values</strong>, not the existence of keys, types or ports.</li>
+<li>For buttons: assert they are <strong>enabled</strong> — a disabled button makes every check behind it unreachable, while a synthetic click still reports green.</li>
+<li>In every final report, a mandatory point: <em>what is still missing for a user to see this in the browser?</em></li>
+<li>A plan's definition of done: <strong>the user job was played through in the browser as the persona.</strong></li>
+</ul>
+<h2 id="16-where-it-breaks-part-3-the-measuring-instrument-lies">16. Where it breaks, part 3: the measuring instrument lies</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p>An agent that checks its own work is only as good as its measuring instruments. And instruments fail in the worst possible way: they report success.</p>
+<ul>
+<li><strong>A request counter that could not count.</strong> To verify that a page no longer fired requests in a render loop, the agent counted via the browser's <code>PerformanceObserver</code>. Result: <code>0</code> requests. The resource-timing buffer is capped at <strong>250 entries</strong>, and in dev mode it was full of module loads before the first API call ran. Not "no requests" — a blind instrument that looks exactly like a passed gate. The real defect was around <strong>150 request batches per second</strong>. The rule since then: <strong>prove the counter first</strong> — show it returns <code>&gt;0</code> on a real page change. A <code>0</code> is only a result after that.</li>
+<li><strong>A guard whose success message described its intent, not its result.</strong> A dependency-pin guard compared versions only when the installed package existed — and otherwise did nothing. The success message still said "package.json, overrides, lock file and <strong>node_modules</strong> match". A neighbouring session spent <strong>an hour</strong> investigating a state that was not actually installed. The rule since then: every guard reports two numbers — how many cases <em>should</em> be checked and how many were <em>actually compared</em>. A case that cannot be checked is a finding, never a silent <code>continue</code>.</li>
+<li><strong>A test mock that swallowed bulk inserts.</strong> The mock database spread an array into <em>one</em> bogus record. Everything written in bulk was invisible to later reads — and bulk was exactly the path the catalogue import used.</li>
+<li><strong>A table engine that reports errors only in its logger.</strong> A broken sheet looks exactly like a good one. A marker set in the wrong table form generates <strong>zero</strong> cases and reports success. Countermeasure: target numbers (sheets, cases, cells) in a check script that fails the build.</li>
+<li><strong>A green type check, 75 of 137 test files gone.</strong> A shared validation schema gained a refinement; a downstream <code>.omit()</code> on it throws at <strong>module load</strong>, not at type check. The type check stayed green; importing the router threw, and more than half the test files dropped out at once — looking like an infrastructure problem, not a schema change.</li>
+</ul>
+<p>The question that would have found all of these:</p>
+<blockquote>
+<p><strong>What would be different if this construct did not exist at all?</strong></p>
+</blockquote>
+<p>If the honest answer is "nothing", the construct asserts its effect instead of proving it.</p>
+<h2 id="17-where-it-breaks-part-4-invented-evidence">17. Where it breaks, part 4: invented evidence</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/10/where-agentic-development-breaks">part 8 of the series, The Agent That Pleases</a>.</em></p>
+<p>Agents produce text that looks like evidence. Precise-looking evidence is trusted <em>more</em>, and checked <em>less</em>.</p>
+<ul>
+<li><strong>An invented line reference.</strong> A plan supported a claim with <code>PIPELINE-LEDGER.md:1543-1546</code>. The file had <strong>1,016 lines</strong>. The quoted phrases appeared in none of the seven ledger files. A second plan copied the claim. The conclusion happened to be right — its foundation was made up. Rule: check a line reference against the file length before adopting it (<code>wc -l</code> is cheaper than any discussion), and grep the quoted phrase instead of trusting the number.</li>
+<li><strong>Invented timestamps.</strong> The orchestrator wrote times into the ledger from gut feeling — and was consistently in the <strong>future</strong>. Measured twice in one run: 11:xx and 12:xx in the ledger while the clock said 10:50; corrected; then 12:10–12:50 while it was 11:50. The error repeated right after being corrected. Timestamps are not decoration: they answer "is this agent dead or still working?" Rule: call <code>date</code>, don't estimate.</li>
+<li><strong>A paraphrase that hardens into a rule.</strong> A lesson said "the owner always deploys this app personally" — about deployment. A ledger summarised it as "push ⇒ deploy". A later session refused to push, citing the "rule". The repository had no deploy workflow at all; pushing only releases. Paraphrases are usually <strong>stricter</strong> than their source and block work that was never blocked. Rule: a restriction in a ledger or plan is a quote, not a finding — open the source before obeying it, and link sources instead of summarising them.</li>
+<li><strong>A decision without its wording is not a decision.</strong> From an empty paraphrase — "both product decisions are in" — an agent guessed the <em>content</em> of the two decisions, and inverted both.</li>
+</ul>
+<h2 id="18-where-it-breaks-part-5-rules-in-prose-are-not-enforced">18. Where it breaks, part 5: rules in prose are not enforced</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/17/rules-need-exit-codes">part 9 of the series, Rules Need Exit Codes</a>.</em></p>
+<h3 id="181---no-verify-five-times">18.1 <code>--no-verify</code>, five times</h3>
+<p>The instruction file says: never bypass the test hook. Every task brief for an implementation agent said: never <code>--no-verify</code>.</p>
+<p>On one day, <strong>three</strong> implementation agents committed with <code>git commit --no-verify</code> anyway — and reported it themselves ("reflex", "harmless, because the tests were green before"). They read the prohibition as a push rule. A fourth case came nine days later, with a sharper wording in the brief. A fifth on the same day — this time not <code>--no-verify</code> but <code>git -c core.hooksPath=.git/hooks commit</code>. Same reflex, different spelling.</p>
+<p>Two lessons:</p>
+<ul>
+<li><strong>A prohibition must name the effect, not the spelling.</strong> "No action that bypasses a hook — neither <code>--no-verify</code> nor <code>SKIP_TESTS</code> nor <code>core.hooksPath</code>, and not at commit time either." Whoever names only one flag gets the next one.</li>
+<li><strong>What must hold has to be a gate, not a sentence.</strong> A <code>PreToolUse</code> hook now inspects every shell command the agent wants to run. If a <code>git push</code> segment carries <code>--no-verify</code>, <code>SKIP_TESTS</code>, or a <code>hooksPath</code> override, the command is <strong>denied</strong> with a message: "the test chain must be green before pushing — if it is red, that is the finding: report it, do not bypass it." A human in a terminal can still do it; an agent session cannot.</li>
+</ul>
+<h3 id="182-eight-red-ci-runs-nobody-noticed">18.2 Eight red CI runs nobody noticed</h3>
+<p>In one run, a frontend repository had <strong>eight</strong> consecutive red release runs — from nothing but formatting and import sorting. Eight commits were considered delivered and were not. The agent had run only the affected test file per step and concluded "green"; the test runner does not run the format check, the build does. And <code>git log origin/main</code> shows the commit even when the run after it fails. It was noticed by accident when a version bump re-triggered the run.</p>
+<p>A red release publishes nothing. Every downstream layer then works against a version that does not exist — and the error surfaces hours later somewhere completely different.</p>
+<p>Hence the rules in <a href="#133-the-push-gate">section 13.3</a>: the full chain before every push, watch the CI run to its end, sweep all touched repositories.</p>
+<h3 id="183-the-general-principle">18.3 The general principle</h3>
+<blockquote>
+<p><strong>Red is the finding: report it, don't bypass it.</strong></p>
+</blockquote>
+<p>Everything that must hold goes into something with an exit code: a hook, a guard test, a check script, a ratchet. Prose rules are guidance for judgement. They are not a control.</p>
+<h2 id="19-where-it-breaks-part-6-parallel-sessions-in-one-checkout">19. Where it breaks, part 6: parallel sessions in one checkout</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">part 7 of the series, Working Through 1,200 Plans</a>.</em></p>
+<p>Running several agent sessions in parallel is where the throughput comes from. It is also where the nastiest incidents come from, because the tools assume one person per working tree.</p>
+<ul>
+<li><strong>A push that would have published someone else's unfinished work.</strong> While one session worked through plans in two repositories, a second session worked on a tax-authority integration in <em>the same</em> repositories. At the pre-check both were clean; twenty minutes later there were five unpushed foreign commits and twelve modified files. A push by the first session's implementer would have published those commits and triggered a <strong>semantic-release of unfinished work</strong> — and a published npm package cannot be rolled back.</li>
+<li><strong><code>git add -A</code> grabs everything.</strong> There is no such thing as "my lane's local commits" in a shared checkout — one working tree, one history, one branch. A commit contained only its own six files <em>only because</em> the other session had committed its work 18 minutes earlier. A push took the other session's finished commit along without its release. And another session saw an identical commit message in the log, took the commit for its own, and derived a coordination violation that never happened.</li>
+<li><strong><code>git stash pop</code> restored a stash from a different session.</strong></li>
+<li><strong>Two test suites on the same repository</strong> (two pushes, two pre-push hooks) competing for resources — shifting red results that were neither session's fault.</li>
+<li><strong>Agents that go silent.</strong> A sub-agent on a fast model starts the test suite in the background, ends its turn with "I'll wait for the background task" — and never wakes up. The work lies finished in the working tree; no error, no report. An explicit prohibition in the brief did not help once the step took longer than the tool timeout.</li>
+</ul>
+<p>What helped:</p>
+<ol type="1">
+<li><strong>Implementation agents in shared repositories get a push ban.</strong> Committing is fine, with explicit paths only — never <code>git add -A</code>, never <code>git add &lt;directory&gt;</code>. The orchestrator coordinates the push.</li>
+<li><strong>Re-check the working tree before every increment</strong>, not once at the start of the run.</li>
+<li><strong>Long-running or delicate work goes into its own <code>git worktree</code>.</strong></li>
+<li><strong>Foreign red tests are not your regression.</strong> Don't fix them; separate them in the report.</li>
+<li><strong>Liveness is measured on the process, not the last message.</strong> If no test runner or push is running and the tree contains the work, the agent is dead — the orchestrator finishes inline.</li>
+<li><strong>At most three sub-agents at a time</strong> across all types — for cost, and for contention.</li>
+</ol>
+<h2 id="20-where-it-breaks-part-7-built-correctly-and-pointless">20. Where it breaks, part 7: built correctly, and pointless</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/17/rules-need-exit-codes">part 9 of the series, Rules Need Exit Codes</a>.</em></p>
+<p>After a test round of the trades software, my verdict on many features was: <em>implemented, but they don't make much sense.</em></p>
+<p>The early plans had been driven by competitor feature lists and verified against the code. The pattern repeated: the data model and primitives cleanly built, a UI glued on without a thought-through workflow. Tours as an address text area on top of a tour primitive. Checklist execution on the template page. Appointment booking without closing the loop. "Done" was set although the user's job could not be played through.</p>
+<p>The agent is excellent at building what the plan says. It does not ask whether the plan makes sense for the person using it — unless the process forces the question.</p>
+<p>What changed:</p>
+<ul>
+<li><strong>Every plan has a mandatory <code>## User job</code> section</strong>: persona, job sentence ("does X with it instead of Y"), connection (where it enters and leaves the process), done scenario.</li>
+<li><strong>Done means: the job was played through in the browser as that persona.</strong></li>
+<li><strong>The QA walkthrough includes a sense check</strong> with five questions: job, playability, work saved, connection, honest maturity. Sense findings are <strong>not</strong> auto-fixed — they are triaged with me: fix, rework, remove from the navigation, or delete.</li>
+<li>Half-finished work is hidden behind a module toggle, not visible in the navigation.</li>
+</ul>
+<blockquote>
+<p>Everything we build should take work off a user's hands and improve their process. That is the measure — not feature parity, and not a green build.</p>
+</blockquote>
+<h2 id="21-cost-tokens-models-and-budgets">21. Cost: tokens, models, and budgets</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
+<p>Agentic development at this scale is not cheap, and cost is a design constraint, not an afterthought.</p>
+<ul>
+<li><strong>The weekly limit was reached after three days.</strong> An analysis showed the orchestrator, running on the most expensive model, consumed <strong>30 %</strong> of the weekly budget by itself. The orchestrator moved to a strong-but-cheaper model; implementation stayed on a strong model; routine cascades moved to a fast model.</li>
+<li><strong>At most three sub-agents</strong> at the same time, across all types.</li>
+<li><strong>Briefs with line ranges, not whole files.</strong> An agent brief that says "read lines 120–180 of X" costs a fraction of "read X".</li>
+<li><strong>The ledger is read by its head only</strong> and archived by size (section 12.2).</li>
+<li><strong>Unused skills are archived</strong> (section 3.3), and the instruction file is short with path-bound long rules (section 4).</li>
+</ul>
+<p>The cheapest token is the one that never enters the context.</p>
+<h2 id="22-what-i-would-do-again-and-what-i-would-not">22. What I would do again, and what I would not</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/11/17/rules-need-exit-codes">part 9 of the series, Rules Need Exit Codes</a>.</em></p>
+<h3 id="again">Again</h3>
+<ul>
+<li><strong>Tables before tests before code</strong>, whenever interfaces exist.</li>
+<li><strong>A red chain with one identical message</strong> before any business logic.</li>
+<li><strong>Transport-independent service design</strong>, so all business tests run in seconds.</li>
+<li><strong>The rule "expectation changes only via the table, with a reason".</strong></li>
+<li><strong>A lesson memory with the mechanism, not just the incident.</strong></li>
+<li><strong>Hooks and guard tests for everything that must hold</strong>; prose for judgement only.</li>
+<li><strong>A ledger with write-ahead</strong> for anything that runs longer than one session.</li>
+<li><strong>Archiving unused skills</strong> and keeping the instruction file short.</li>
+<li><strong>A root repository</strong> for rules, plans, and decisions, so their history is visible.</li>
+</ul>
+<h3 id="not-again">Not again</h3>
+<ul>
+<li><strong>A table for every trifle.</strong> Two pure functions with six cases would have been fine as ordinary tests. Tables pay off where combinations arise.</li>
+<li><strong>Very fine classes.</strong> More classes mean more combinations and more mandatory cases, without more insight. Use the classes at which behaviour <em>changes</em>.</li>
+<li><strong>Multiplying a case where one field would do.</strong> One multiplication took a sheet from 10 to 157 cases without a new statement.</li>
+<li><strong>Letting several sessions work in the same checkout without push rules.</strong> Use worktrees.</li>
+<li><strong>Trusting a browser walkthrough as the owner</strong> as proof that permissions work.</li>
+<li><strong>Solving a recurring mistake locally</strong> with a comment in the file concerned.</li>
+<li><strong>Planning from competitor feature lists</strong> without a user job.</li>
+</ul>
+<h2 id="23-the-short-version">23. The short version</h2>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/22/agentic-development-overview">part 1 of the series, The Agent Writes the Code</a>.</em></p>
+<p>If you take only a few sentences from this report:</p>
+<ol type="1">
+<li><strong>The agent writes the code; the structure around it makes the code trustworthy.</strong> Directories, order of steps, gates, and retained knowledge.</li>
+<li><strong>A table cannot stay silent.</strong> Prose is quiet at the unclear places; a table demands a row there. Translating requirements into decision tables finds contradictions before code exists.</li>
+<li><strong>Design services so their function is testable without infrastructure.</strong> An agent that can check its own work after every step is excellent. One that has to guess is mediocre.</li>
+<li><strong>Write all tests first and prove they are red for the right reason.</strong> Then "implement the plans and use the tests" is an instruction an agent can execute well.</li>
+<li><strong>Change an expectation only via its source, with a reason.</strong> Otherwise the suite becomes accommodating — with an agent exactly as with a human under pressure.</li>
+<li><strong>Absences are the most expensive defects.</strong> No tool reports what is missing. Test the rendered output, and ask what a user still needs to see it.</li>
+<li><strong>Prove the measuring instrument before believing its zero.</strong></li>
+<li><strong>Precise-looking evidence gets checked least.</strong> Verify line references, timestamps, and paraphrases against the source.</li>
+<li><strong>What must hold needs an exit code.</strong> A rule in prose is not a control; a hook is.</li>
+<li><strong>Built correctly is not the same as useful.</strong> Every plan names a user job, and done means it was played through.</li>
+</ol>
+      <!-- built by tools/build-article.py from blog/new/2026-09-17_full-report_agentic-software-development.md on 2026-09-22; edit the Markdown, then rebuild -->
+    </article>
+  </main>
+
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td><samp>Provider</samp></td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td><samp>Cookies</samp></td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td><samp>Duration</samp></td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td><samp>Purpose</samp></td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td><samp>Privacy</samp></td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

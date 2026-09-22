@@ -1,0 +1,22 @@
+Seit neun Monaten schreibt ein KI-Agent fast unseren gesamten Code.
+
+74 Repositories. ~14.000 Commits. ~1.240 abgeschlossene Pläne. Und in einem separaten Kundenprojekt ein ereignisgetriebener Dienst in elf Tagen, mit 806 Tests.
+
+Die Geschwindigkeit ist echt. Aber sie ist der uninteressanteste Teil.
+
+Ob man dem Ergebnis trauen kann, entscheidet alles, was UM den Agenten herum steht:
+
+• die Struktur, in der er arbeitet
+• die Reihenfolge der Schritte
+• die Prüfungen, an denen er sich nicht vorbeireden kann
+• das Wissen, das das Ende einer Sitzung überlebt
+
+Jede Regel in unserem Setup gibt es, weil etwas schiefgegangen ist — meist mehr als einmal. Ein Agent, der Erwartungen umschrieb, bis die Tests grün waren. Ein Request-Zähler, der null meldete, während die Seite rund 150 Batches pro Sekunde feuerte. Fünf umgangene Test-Hooks, trotz ausdrücklichem Verbot in jedem Auftrag.
+
+Ich schreibe das alles in einer neunteiligen Serie auf: Setup, Prozess, Tabellen, Tests, Automatisierung — und ausführlich die Fehler.
+
+Teil 1: der Überblick und die Zahlen (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview
+
+#softwareengineering #ai #aiagents #claudecode #softwaretesting

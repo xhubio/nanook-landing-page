@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Tests First, Then Implement All Plans · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Design a service an AI agent can verify without Kafka or Postgres, write all tests first, prove 245 are red for the same reason, then let the agent implement." />
+  <meta property="og:title" content="Tests First, Then Implement All Plans · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain" />
+  <meta property="og:description"
+    content="Design a service an AI agent can verify without Kafka or Postgres, write all tests first, prove 245 are red for the same reason, then let the agent implement." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tests First, Then \"Implement All Plans\": Designing Services an Agent Can Verify",
+  "datePublished": "2026-10-27",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Design a service an AI agent can verify without Kafka or Postgres, write all tests first, prove 245 are red for the same reason, then let the agent implement.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/10/27/tests-first-red-chain"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/10/27/tests-first-red-chain">Tests First, Then &ldquo;Implement All Plans&rdquo;: Designing Services an Agent Can Verify</a></h1>
+                <p class="post-meta">October 27, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p class="series-nav"><em>Part 6 of 9 in the series on agentic software development. <a href="/blog/2026/09/22/agentic-development-overview">Part 1, The Agent Writes the Code</a> has the two settings, the numbers, and the ten sentences the series works through.</em></p>
+
+                  <p>In the event-driven service this series draws on, the requirements came from outside and the
+                    decision tables existed before any code did. That gives you an oracle. It does not yet give you
+                    a service an agent can verify. For that, the business logic has to run in a test without
+                    Kafka, without Postgres and without the network, and the tests have to exist before the
+                    implementation, red for a reason you can prove. Both are design decisions, and both are made
+                    before the first line of business logic.</p>
+
+                  <h2>Transport is an adapter at the edge</h2>
+
+                  <p>I always design a service so that its function works and is testable without the external
+                    connections. For an event-driven service that means: the business logic must not care whether
+                    an event arrives via Kafka, a message bus or REST, nor how the result leaves. Transport is an
+                    adapter at the edge.</p>
+
+                  <pre><code class="hljs">             ┌─────────────────────────────────────────┐
+  Kafka ──►  │ adapter │  business logic (pure +      │ adapter │ ──► Kafka
+  REST  ──►  │         │  ports: persistence, clock,  │         │ ──► REST
+             │         │  outbound, log)              │         │
+             └─────────────────────────────────────────┘
+</code></pre>
+
+                  <p>The business logic talks only to ports: one contract each for persistence, outbound messages,
+                    the clock, logging and external data. In tests, the ports are recorders and fakes; in
+                    production they are Kafka, Postgres and HTTP. The logic in the middle cannot tell the
+                    difference, and that is the whole point.</p>
+
+                  <p>A recorder is an implementation of a port that keeps what it was given, so that a test can
+                    assert on it: which outbound messages were published, in which order, with which payload. A
+                    fake clock returns whatever time the case says it is. Neither knows anything about a broker.
+                    Persistence is a port like the others, and until the stage that checks the real database, it
+                    is satisfied by something in memory.</p>
+
+                  <h2>Why this matters more with an agent</h2>
+
+                  <p>With a human developer, the argument for this design, ports and adapters, test-driven development, is the familiar one: fast tests, clean
+                    boundaries. With an agent, three things weigh more.</p>
+
+                  <ul>
+                    <li><strong>All tests can run immediately.</strong> No broker, no database, no network is needed
+                      to verify the business logic. The feedback loop is seconds, not minutes, and it is available
+                      in every session from the first day. An agent that has to wait for infrastructure runs the
+                      suite less often, and an agent that runs the suite less often reasons more and checks
+                      less.</li>
+                    <li><strong>The agent can check itself constantly.</strong> This is the key point. An agent is
+                      very good when it can verify its own work after every step. It is mediocre when it has to
+                      guess whether something worked. A design in which every business rule can be exercised in a
+                      unit test turns most of the agent&rsquo;s work into the first kind.</li>
+                    <li><strong>Adapters stay thin.</strong> They translate, they do not decide. Rules at the edge
+                      are rules nobody tests; if the adapters have no room for decisions, untested rules have
+                      nowhere to live.</li>
+                  </ul>
+
+                  <h2>Five stages, each with a prohibition</h2>
+
+                  <p>Implementation of the event-driven service ran in five stages. What keeps the layers honest is
+                    not what each stage does but what it must not do:</p>
+
+                  <table>
+                    <tr><th>Stage</th><th>Subject</th><th>Prohibited</th></tr>
+                    <tr><td>1</td><td>Pure functions</td><td>no clock, no database, no messages</td></tr>
+                    <tr><td>2</td><td>Business logic against ports</td><td>no real infrastructure; injected clock; recorders instead of adapters</td></tr>
+                    <tr><td>3</td><td>Persistence</td><td><strong>no business rules</strong>; only that what is meant gets written and read</td></tr>
+                    <tr><td>4</td><td>Edges</td><td>configuration, startup, shutdown, adapters</td></tr>
+                    <tr><td>5</td><td>End to end</td><td>the built bundle, with a smoke test</td></tr>
+                  </table>
+
+                  <p>The order is also the order of trust. Nothing in stage 2 rests on anything that was not
+                    proven in stage 1, and the adapters of stage 4 are written when the logic they wrap already
+                    passes every business test. Stage 5 runs the built bundle, not the source: a smoke test against
+                    the artefact that would actually be deployed, because a suite that is green against the
+                    sources says nothing about what the build step did to them.</p>
+
+                  <p>Stage 3 deserves a word of its own. Persistence tests are the ones most likely to test an
+                    imitation: a mock that answers what the test wants to hear. Here an in-process Postgres engine
+                    replays the real DDL script, so the test checks the schema the service will run against, not a
+                    stand-in for it. And the prohibition on business rules in that stage keeps the rules where the
+                    tables can reach them.</p>
+
+                  <h2>The red chain</h2>
+
+                  <p>Clear interfaces bring a big advantage: you can write all the tests first and run them against
+                    an empty function body. The expected result is that every test fails with &ldquo;not
+                    implemented&rdquo;. In the service, the sequence was this.</p>
+
+                  <ol>
+                    <li><strong>The contract.</strong> All types, all error classes, all ports: 18 port methods and
+                      four pure functions. Each throws &ldquo;not implemented&rdquo;, with the same wording from one
+                      constant. No behaviour, only shape. Type checking is green. One constant rather than 22
+                      strings typed by hand, because the message is what everything downstream filters on; a second
+                      wording would look like a real failure among the expected ones.</li>
+                    <li><strong>The oracle.</strong> A loader that reads the generated case folders, and one place
+                      that translates the <a href="/docs/guide/equivalence/overview">decision table</a>&rsquo;s short
+                      codes (<code>INS&gt;OPEN</code>, <code>UPD&gt;CLERK</code>, <code>IGN</code>, <code>ERR</code>)
+                      into assertions. That translation is tested itself. Everything else in the test code passes
+                      values through without interpreting them. The alternative, each test reading the codes on its
+                      own, would be hundreds of places to be wrong and not one of them tested.</li>
+                    <li><strong>The red chain.</strong> All tests written before any business logic. First 112 red
+                      and 15 green, the green ones being the tests of the oracle itself; then 245 red, all with the
+                      same message.</li>
+                  </ol>
+
+                  <p>Why the identical message matters: it is the only moment you can prove the tests assert
+                    something. If all 245 fail with &ldquo;not implemented&rdquo;, the suite so far tests nothing
+                    but itself, which is exactly what it should do at this point. A test that fails for any other
+                    reason, a missing fixture, a wrong import, a code the oracle does not know, is a broken test,
+                    and found now it costs minutes. Found later, it hides among real failures. Check the message by
+                    machine, not by eye; the test runner can emit its results as structured data, and 245 lines are
+                    more than anyone reads carefully.</p>
+
+                  <h2>&ldquo;Implement the plans. Use the tests to check the result.&rdquo;</h2>
+
+                  <p>When all plans exist and the red chain stands, the instruction to the agent becomes
+                    simple:</p>
+
+                  <blockquote>
+                    <p>Implement the plans. Use the tests to check the result.</p>
+                  </blockquote>
+
+                  <p>This is where the agent is at its best. It has a precise, machine-checkable target, a fast
+                    feedback loop, and no room for interpretation of what &ldquo;done&rdquo; means. Its loop is
+                    short: run, read the red list, implement, run again. Every step either turns tests green or it
+                    does not; there is nothing to argue about and nothing to summarise optimistically. The plans exist because the designs exist, and the tests exist because
+                    the tables exist; the agent adds the third layer to two that are already fixed.</p>
+
+                  <p>At the end of stage 2 of the event-driven service: 280 tests green, without a single
+                    expectation changed. Eight times something had to be adjusted, and every time it was the setup
+                    of a case, never the expected result. Each of the eight corrections is documented with a
+                    reason, in the table or in the design.</p>
+
+                  <p>Zero changed expectations is not luck. It rests on one rule, and the rule carries the whole
+                    approach:</p>
+
+                  <blockquote>
+                    <p>When a test is red, change the code. If you want to change the expectation, change the table
+                      first &mdash; and write down why.</p>
+                  </blockquote>
+
+                  <p>Without this rule, an agent rewrites the expectation until the test passes, and so does a human
+                    under time pressure. The rule does not forbid changing expectations; tables are wrong sometimes.
+                    It forbids changing them in the test. The table is the source, the test is derived from it, and
+                    a change with a written reason in the source is visible to the next reader. A change in the
+                    test is visible to nobody. The eight setup corrections are the rule in practice: each is a
+                    change in a place someone reads, with the reason next to it. Part 8 has the incidents that made
+                    the rule necessary.</p>
+
+                  <h2>Counter-probes: break every safeguard once on purpose</h2>
+
+                  <p>A green test proves nothing if it would also be green when the thing does not work. So for
+                    every safeguard, we removed it deliberately and counted which tests turned red. A probe is cheap:
+                    take one thing out, run the suite, count, put it back. What it buys is the difference between
+                    a suite that is green and a suite that is known to be able to go red.</p>
+
+                  <table>
+                    <tr><th>Intervention</th><th>Expected</th><th>Measured</th></tr>
+                    <tr><td>typo in a model column</td><td>model gate fires</td><td>2 red</td></tr>
+                    <tr><td>a database constraint removed</td><td>constraint is checked</td><td>4 red</td></tr>
+                    <tr><td>responsibility derivation disabled</td><td>assignment is effective</td><td>5 of 8 red</td></tr>
+                    <tr><td>leader row removed</td><td>only one instance decides</td><td>red</td></tr>
+                    <tr><td>old revocation logic restored</td><td>new path is effective</td><td>1 red</td></tr>
+                    <tr><td>local time instead of fixed zone</td><td>zone is pinned</td><td>exactly 3 red</td></tr>
+                    <tr><td>empty filter list read as empty set</td><td>empty means &ldquo;no filter&rdquo;</td><td>13 red</td></tr>
+                  </table>
+
+                  <p>Two lessons came out of this. First, expect a number, not &ldquo;something goes red&rdquo;.
+                    &ldquo;Some tests fail&rdquo; is true of almost any intervention and therefore worth almost
+                    nothing; &ldquo;exactly 3 red&rdquo; is a claim that can be wrong, in both directions. Fewer red
+                    than expected means the probe missed or the safeguard does not reach as far as the design says;
+                    more red than expected means a dependency the design does not mention. Second, place the probe
+                    where the test actually reads. A probe at the wrong place stays green and makes a good
+                    safeguard look useless; you then spend time on a safeguard that was fine and none on the probe
+                    that was not.</p>
+
+                  <p>This part comes down to three rules. Design the service so its function runs without its
+                    infrastructure; transport is an adapter, and adapters do not decide. Write all tests first and
+                    prove they are red for the right reason, with one message from one constant. And when a test
+                    is red, change the code; an expectation changes only through its source, with the reason
+                    written down. With those three in place, &ldquo;implement the plans, use the tests&rdquo; is an
+                    instruction an agent can execute well, and one whose result you can check.</p>
+
+                  <p class="series-nav"><em>Previous: <a href="/blog/2026/10/20/requirements-into-decision-tables">Part 5, A Table Cannot Stay Silent</a>. Next: <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">Part 7, Working Through 1,200 Plans</a>.</em></p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

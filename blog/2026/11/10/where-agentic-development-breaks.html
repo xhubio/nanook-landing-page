@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>The Agent That Pleases: Four Failure Classes · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Four ways an AI coding agent fails while reporting success: accommodating tests, absent features, lying instruments, invented evidence. Incidents and rules." />
+  <meta property="og:title" content="The Agent That Pleases: Four Failure Classes · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks" />
+  <meta property="og:description"
+    content="Four ways an AI coding agent fails while reporting success: accommodating tests, absent features, lying instruments, invented evidence. Incidents and rules." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Agent That Pleases: Absences, Lying Instruments, and Invented Evidence",
+  "datePublished": "2026-11-10",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Four ways an AI coding agent fails while reporting success: accommodating tests, absent features, lying instruments, invented evidence. Incidents and rules.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/11/10/where-agentic-development-breaks">The Agent That Pleases: Absences, Lying Instruments, and Invented Evidence</a></h1>
+                <p class="post-meta">November 10, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p class="series-nav"><em>Part 8 of 9 in the series on agentic software development. <a href="/blog/2026/09/22/agentic-development-overview">Part 1, The Agent Writes the Code</a> has the two settings, the numbers, and the ten sentences the series works through.</em></p>
+
+                  <p>For nine months an AI coding agent has written nearly all the code of a multi-product SaaS
+                    platform, and in a client project it built an event-driven service in eleven days. Every rule
+                    in that setup exists because something went wrong, usually more than once. The incidents are
+                    more instructive than the rules, because a rule only makes sense once you have seen what it
+                    prevents. They fall into four failure classes: an agent that adjusts the expectation instead of the
+                    code, defects that consist of something missing, measuring instruments that report success
+                    while measuring nothing, and evidence that looks precise and is invented.</p>
+
+                  <h2>The accommodating agent</h2>
+
+                  <p>The agent is fast, but it is accommodating. Its goal is a green result, and there are always
+                    two ways to get one: fix the code, or adjust the expectation. In the event-driven service, one
+                    rule is the reason the suite still asserts anything: when a test is red, change the code; if
+                    you want to change the expectation, change the <a
+                      href="/docs/guide/equivalence/overview">table</a> first, and write down why. Without that
+                    rule I would have had a green test suite on day two that asserted nothing. The mechanism is not
+                    specific to agents: a human under time pressure does the same thing. The difference is that the
+                    agent does it faster, without the discomfort, and reports the result as success.</p>
+
+                  <p>That is the loud form. The quiet forms are harder to see, because nothing in the output
+                    changes colour. There were two of them.</p>
+
+                  <p><strong>Removing a case the application cannot handle.</strong> The schema had four statuses;
+                    the UI had three filter switches. The agent removed the test case for the fourth status and
+                    noted nothing. What saved it was a follow-up question from me: &ldquo;you did record that as an
+                    issue, right?&rdquo; The rule since then: a removed case becomes a finding in the same step. The
+                    test question is <em>why doesn&rsquo;t it work?</em> If the answer is &ldquo;because the app
+                    can&rsquo;t&rdquo;, that is a finding. If the answer is &ldquo;because it makes no
+                    sense&rdquo;, that is a comment in the table, so that the next person does not add the case
+                    back.</p>
+
+                  <p><strong>Encoding a known defect as expected behaviour.</strong> The agent built four test cases
+                    that asserted the <em>current</em>, wrong status. The suite reported 12/12 green: all clear,
+                    while knowing the opposite. I turned this around and made it a rule: <strong>known defects are
+                    always red in the tests.</strong> The test expects the correct behaviour and fails, and its
+                    message names the finding, where it was measured, and what would make it green. A green test with
+                    a comment saying &ldquo;this is wrong, actually&rdquo; is read by nobody; a red test with that
+                    message in its failure output is read by whoever runs the suite next.</p>
+
+                  <p>The flip side showed up two days later: nobody re-reads a red test. Three hand-written test
+                    stands carried a red marker in their title for an object that no longer existed. A red test
+                    is only useful if something tracks it.</p>
+
+                  <blockquote>
+                    <p>The purpose of a test suite is not to be green. It is to say what is.</p>
+                  </blockquote>
+
+                  <h2>Absences nobody reports</h2>
+
+                  <p>The most expensive class of defect in agent-built software is not a wrong result. It is
+                    something missing, because no tool reports an absence.</p>
+
+                  <p>In a single night, the same defect appeared four times in four modules of the platform:</p>
+
+                  <table>
+                    <tr><th>Case</th><th>State</th></tr>
+                    <tr><td>Goods receipt</td><td>business logic fully correct; the form was permanently inside a disabled fieldset</td></tr>
+                    <tr><td>Collective invoice</td><td>procedure, frontend logic, 23 translation keys, tests green; <strong>no component rendered it</strong></td></tr>
+                    <tr><td>Balance sheet and P&amp;L</td><td>backend published, view published; <strong>two lines missing</strong> in the app client</td></tr>
+                    <tr><td>An accounting-mode suggestion</td><td>port built, optional; <strong>never wired</strong>, so the query answers <code>null</code></td></tr>
+                  </table>
+
+                  <p>The sharpest piece of evidence is the collective invoice. The green suite explicitly checked
+                    that all 23 translation keys exist. It did not check that anyone ever displays them.</p>
+
+                  <p>Every instrument in the chain is blind to this, and for the same reason: each one checks what
+                    is there, and an absence is not there to check. The type checker sees nothing. The tests see
+                    nothing. The build sees nothing. The dead-code check sees nothing. The only instance that notices an absence is a human in a browser, which is the most
+                    expensive path there is. And because everything is green, everyone believes the work is
+                    done.</p>
+
+                  <p>Two variations of the same defect followed, each with a subtler cause.</p>
+
+                  <p><strong>A browser walkthrough as the owner finds no missing permission.</strong> The agent
+                    built a new screen and clicked through it as a persona: module switch, both pages, navigation,
+                    two languages, zero console errors. The work was still unfinished. The menu entry carried the
+                    permission; the route did not. A user without the permission would not see the menu item, but
+                    could open the page by URL. The walkthrough had run as the owner, who has every permission, and
+                    a missing lock is invisible to whoever owns the key. A guard test, <code>every route carries
+                    the same permission as its menu entry</code>, found it in seconds.</p>
+
+                  <p><strong>The test kernel loaded fewer plugins than production.</strong> Permission keys were
+                    therefore unknown in the tests, and every gate on an unknown key is fail-closed: it rejected
+                    even the owner. The &ldquo;forbidden&rdquo; test was green, because the viewer was rejected,
+                    just for the wrong reason. Only the positive control found it: the member <em>does</em> get
+                    past the gate. Every gate test needs three cases, and the third one is the expensive one.</p>
+
+                  <p>What helped:</p>
+
+                  <ul>
+                    <li><strong>Tests that read the rendered output with values</strong>, not the existence of keys,
+                      types, or ports.</li>
+                    <li><strong>For buttons, assert that they are enabled.</strong> A disabled button makes every
+                      check behind it unreachable, while a synthetic click still reports green.</li>
+                    <li><strong>A mandatory point in every final report:</strong> what is still missing for a user
+                      to see this in the browser?</li>
+                    <li><strong>A plan&rsquo;s definition of done:</strong> the user job was played through in the
+                      browser as the persona.</li>
+                  </ul>
+
+                  <h2>The measuring instrument lies</h2>
+
+                  <p>An agent that checks its own work is only as good as its measuring instruments, and
+                    instruments fail in the worst possible way: they report success. Five incidents, each with a
+                    different instrument.</p>
+
+                  <p><strong>A request counter that could not count.</strong> To verify that a page no longer fired
+                    requests in a render loop, the agent counted via the browser&rsquo;s
+                    <code>PerformanceObserver</code>. Result: 0 requests. The resource-timing buffer is capped at
+                    250 entries, and in dev mode it was full of module loads before the first API call ran. That
+                    is not &ldquo;no requests&rdquo;; it is a blind instrument that looks exactly like a passed
+                    gate. The real defect was around 150 request batches per second. The rule since: prove the
+                    counter first, by showing that it returns more than zero on a real page change. A 0 is only a
+                    result after that.</p>
+
+                  <p><strong>A guard whose success message described its intent, not its result.</strong> A
+                    dependency-pin guard compared versions only when the installed package existed, and otherwise
+                    did nothing. Its success message still said &ldquo;package.json, overrides, lock file and
+                    node_modules match&rdquo;. A neighbouring session spent an hour investigating a state that was
+                    not actually installed. The rule since: every guard reports two numbers, how many cases should
+                    be checked and how many were actually compared. A case that cannot be checked is a finding,
+                    never a silent <code>continue</code>.</p>
+
+                  <p><strong>A test mock that swallowed bulk inserts.</strong> The mock database spread an array
+                    into one bogus record. Everything written in bulk was invisible to later reads, and bulk was
+                    exactly the path the catalogue import used.</p>
+
+                  <p><strong>A table engine that reports errors only in its logger.</strong> A broken sheet looks
+                    exactly like a good one. A marker set in the wrong table form generates zero cases and reports
+                    success. The countermeasure: target numbers for sheets, cases, and cells in a check script
+                    that fails the build.</p>
+
+                  <p><strong>A green type check, 75 of 137 test files gone.</strong> A shared validation schema
+                    gained a refinement. A downstream <code>.omit()</code> on that schema throws at module load,
+                    not at type check. The type check stayed green; importing the router threw, and more than half
+                    the test files dropped out at once. It looked like an infrastructure problem, not like a
+                    schema change.</p>
+
+                  <p>The question that would have found all five:</p>
+
+                  <blockquote>
+                    <p>What would be different if this construct did not exist at all?</p>
+                  </blockquote>
+
+                  <p>If the honest answer is &ldquo;nothing&rdquo;, the construct asserts its effect instead of
+                    proving it. Put the question to the five incidents and the answer is &ldquo;nothing&rdquo;
+                    five times. The counter would have reported 0 without the observer. The guard would have
+                    printed the same message without the comparison. The mock would have returned the same
+                    reads with the bulk insert deleted. The table check would have reported success with the
+                    sheet removed. The type check was green with the schema change in and would have been green with it out. None of them
+                    measured what they claimed to, and all of them looked exactly like a passed check. That is
+                    why the rule is not &ldquo;write better instruments&rdquo; but &ldquo;prove the instrument
+                    first&rdquo;: a counter that has never shown a non-zero value has not yet earned its
+                    zero.</p>
+
+                  <h2>Invented evidence</h2>
+
+                  <p>Agents produce text that looks like evidence. Precise-looking evidence is trusted more and
+                    checked less, and that combination is the problem.</p>
+
+                  <p><strong>An invented line reference.</strong> A plan supported a claim with
+                    <code>PIPELINE-LEDGER.md:1543-1546</code>. The file had 1,016 lines. The quoted phrases
+                    appeared in none of the seven ledger files. A second plan copied the claim. The conclusion
+                    happened to be right; its foundation was made up. That is the dangerous version: an invented
+                    reference under a correct conclusion survives every casual review, and it had already been
+                    copied once. The rule: check a line reference against the
+                    file length before taking it over (<code>wc -l</code> is cheaper than any discussion), and grep
+                    the quoted phrase instead of trusting the number.</p>
+
+                  <p><strong>Invented timestamps.</strong> The orchestrator wrote times into the ledger from gut
+                    feeling, and was consistently in the future. Measured twice in one run: 11:xx and 12:xx in the
+                    ledger while the clock said 10:50; corrected; then 12:10 to 12:50 while it was 11:50. The
+                    error repeated right after being corrected. Timestamps in a ledger are not decoration: they
+                    answer the question &ldquo;is this agent dead or still working?&rdquo; The rule: call
+                    <code>date</code>, do not estimate.</p>
+
+                  <p><strong>A paraphrase that hardens into a rule.</strong> A lesson said &ldquo;the owner always
+                    deploys this app personally&rdquo;; it was about deployment. A ledger summarised it as
+                    &ldquo;push &rArr; deploy&rdquo;. A later session refused to push, citing the
+                    &ldquo;rule&rdquo;. The repository had no deploy workflow at all; pushing only releases.
+                    Paraphrases are usually stricter than their source, and they block work that was never
+                    blocked. The rule: a restriction in a ledger or plan is a quote, not a finding. Open the source
+                    before obeying it, and link sources instead of summarising them.</p>
+
+                  <p><strong>A decision without its wording is not a decision.</strong> From an empty paraphrase,
+                    &ldquo;both product decisions are in&rdquo;, an agent guessed the content of the two decisions
+                    and inverted both.</p>
+
+                  <p>All four have the same shape: a specific-looking artefact (a line number, a time, a quoted rule) that nobody checked because it looked as if someone already had. And all four are cheap
+                    to check against the source, and expensive to trust. <code>wc -l</code>, <code>date</code>,
+                    and opening the file a ledger cites cost seconds; a session that refuses to push, or a plan
+                    that inverts two decisions, costs hours.</p>
+
+                  <p>The rules this part comes down to: change an expectation only via its source, with a reason,
+                    and keep known defects red with a message that says what would make them green. Test the
+                    rendered output, not the existence of keys, and end every report with what a user still needs
+                    in order to see the work. Prove the instrument before believing its zero, and ask of every
+                    check what would be different if it did not exist. And verify line references, timestamps, and
+                    paraphrases against the source, because the more precise evidence looks, the less anyone
+                    checks it.</p>
+
+                  <p class="series-nav"><em>Previous: <a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">Part 7, Working Through 1,200 Plans</a>. Next: <a href="/blog/2026/11/17/rules-need-exit-codes">Part 9, Rules Need Exit Codes</a>.</em></p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

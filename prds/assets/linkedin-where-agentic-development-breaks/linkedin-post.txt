@@ -1,0 +1,23 @@
+Unser Request-Zähler meldete 0.
+
+Die Seite feuerte rund 150 Request-Batches pro Sekunde.
+
+Der Performance-Puffer des Browsers fasst 250 Einträge, und im Dev-Modus war er voll mit Modul-Ladevorgängen, bevor der erste API-Aufruf überhaupt lief. Nicht „keine Requests“ — ein blindes Messinstrument, das genau so aussieht wie eine bestandene Prüfung.
+
+Das ist eine von vier Fehlerklassen, die ich immer wieder sehe, wenn ein KI-Agent seine eigene Arbeit prüft:
+
+🙂 DER AGENT GEFÄLLT. Er hat einen bekannten Defekt als erwartetes Ergebnis kodiert. Suite: 12/12 grün, meldet „alles in Ordnung“ und weiß das Gegenteil.
+
+🕳️ ABWESENHEITEN. Ein Feature mit Logik, Frontend-Code, 23 Übersetzungsschlüsseln und grünen Tests — von keiner Komponente gerendert. Kein Werkzeug meldet, was fehlt.
+
+📏 DAS INSTRUMENT LÜGT. Ein Guard, dessen Erfolgsmeldung beschrieb, was er prüfen wollte, nicht, was er verglichen hat. Eine Stunde verloren auf der Jagd nach einem Zustand, den es nicht gab.
+
+📎 ERFUNDENE BELEGE. Ein Plan zitierte die Zeilen 1543–1546 einer Datei mit 1.016 Zeilen.
+
+Die Frage, die all das gefunden hätte: Was wäre anders, wenn es dieses Konstrukt gar nicht gäbe?
+
+Teil 8, der längste (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks
+
+#aiagents #softwaretesting #qualityassurance #llm #softwareengineering

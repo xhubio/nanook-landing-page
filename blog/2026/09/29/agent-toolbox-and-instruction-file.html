@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Fewer Skills, Shorter Rules · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Skills, MCP servers and an instruction file for a coding agent: 14 unused skills archived, 170 lines of rules that load themselves, and what the budget taught." />
+  <meta property="og:title" content="Fewer Skills, Shorter Rules · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file" />
+  <meta property="og:description"
+    content="Skills, MCP servers and an instruction file for a coding agent: 14 unused skills archived, 170 lines of rules that load themselves, and what the budget taught." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions",
+  "datePublished": "2026-09-29",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Skills, MCP servers and an instruction file for a coding agent: 14 unused skills archived, 170 lines of rules that load themselves, and what the budget taught.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions</a></h1>
+                <p class="post-meta">September 29, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p class="series-nav"><em>Part 2 of 9 in the series on agentic software development. <a href="/blog/2026/09/22/agentic-development-overview">Part 1, The Agent Writes the Code</a> has the two settings, the numbers, and the ten sentences the series works through.</em></p>
+
+                  <p>For nine months an AI coding agent has written nearly all the code of a multi-product SaaS
+                    platform, and in a client project it built an event-driven service in eleven days. The agent
+                    writes the code; what makes the code trustworthy is the structure around it. The innermost layer
+                    of that structure is the toolbox the agent gets and the file that tells it how to behave. Both
+                    have the same failure mode: they grow until they cost more than they give, and every session pays
+                    for the growth.</p>
+
+                  <h2>Start with Superpowers, then adapt it</h2>
+
+                  <p>I start every project with <a href="https://github.com/obra/superpowers">Superpowers</a>, a
+                    collection of process skills for coding agents: brainstorming, writing plans, executing plans,
+                    test-driven development, systematic debugging, verification before completion, and so on. It is
+                    a good starting point, and I have never used it unchanged. Each project gets its own adaptation
+                    along three lines.</p>
+
+                  <ul>
+                    <li><strong>Paths and conventions.</strong> &ldquo;Write a plan&rdquo; has to mean something
+                      concrete: write it to <code>REQUIREMENTS/&lt;PRODUCT&gt;/plan/</code>, with the file-name
+                      pattern of this project, with a mandatory <code>## User job</code> section. A generic skill
+                      does not know where plans live or what a plan must contain here; the adapted one does.</li>
+                    <li><strong>Project language.</strong> The skills speak the vocabulary of the project, not a
+                      generic one.</li>
+                    <li><strong>Project-specific skills on top.</strong> In the SaaS platform, most skills are ours:
+                      onboarding a new country into the e-invoicing pipeline (pin the official specification by
+                      SHA-256, scaffold catalogue and validation gates, wire generator and validator into the
+                      backend), drift checks against pinned legal sources, deployment to the VPS, <a
+                        href="/docs/quickstart/claude-code">building decision tables</a>, running the autonomous plan pipeline, a browser QA walkthrough, dependency cascades
+                      across repositories.</li>
+                  </ul>
+
+                  <p>The process skills are the smaller part of the toolbox. The larger part encodes what this
+                    particular project does over and over, in the order it has to happen, with the checks that
+                    belong at each step. That part cannot be downloaded, and it is the part the agent uses most.</p>
+
+                  <h2>A browser for anything with a frontend</h2>
+
+                  <p>When the software has a user interface, the agent gets a browser through the <a
+                      href="https://github.com/microsoft/playwright-mcp">Playwright MCP server</a>. The difference is
+                    between claiming and checking. Without a browser, the agent can only claim that a screen works.
+                    With one, it can click through the screen as a user would, read console errors, count network
+                    requests, and take screenshots.</p>
+
+                  <p>Counting network requests turned out to matter, because what a page reports about itself is
+                    not evidence; that story belongs to part 8. Two lessons from running the browser at scale:</p>
+
+                  <ul>
+                    <li><strong>One browser per parallel session.</strong> When several agent sessions share one
+                      Playwright MCP instance, they share the browser, and one session navigates away from the page
+                      another session is testing. We run several named instances (<code>playwright</code>,
+                      <code>playwright-2</code>, <code>playwright-3</code>) and assign them to sessions.</li>
+                    <li><strong>A walkthrough answers &ldquo;does it work?&rdquo;, not &ldquo;is it
+                        correct?&rdquo;</strong> A walkthrough as the owner account will never find a missing
+                      permission check, because the owner is allowed to do everything. That class of defect, the
+                      absence nobody reports, gets its own part later in the series.</li>
+                  </ul>
+
+                  <h2>The token diet</h2>
+
+                  <p>Every skill, agent, and command has a description that travels with every single request, so
+                    that the model knows the capability exists. Twenty unused skills are twenty paragraphs of noise
+                    in every call: paid for in tokens, and paid for again in attention, because the model has to pick
+                    from a longer list each time.</p>
+
+                  <p>My rule: whatever is not needed gets deleted or moved to an archive folder outside the path the
+                    agent loads.</p>
+
+                  <p>On 3 September 2026 I measured this in the SaaS platform. 14 skills had not been invoked once
+                    in 91 sessions over a month. Five of them were original Superpowers process skills: test-driven
+                    development, systematic debugging, verification before completion, subagent-driven development,
+                    dispatching parallel agents. Not because the ideas are wrong; the project&rsquo;s own pipeline had
+                    absorbed them. They went into <code>.claude/skills-archiv/</code> with a README that names the
+                    replacement for each and how to reactivate it. As of 17 September 2026, the platform runs 24 active skills with 14 archived.</p>
+
+                  <blockquote>
+                    <p>Unused capability is not free. It costs tokens on every call and dilutes the selection the
+                      model has to make.</p>
+                  </blockquote>
+
+                  <h2>An instruction file of 170 lines</h2>
+
+                  <p>Every coding agent reads a project instruction file at the start of a session:
+                    <code>CLAUDE.md</code> for Claude Code, <code>AGENTS.md</code> for others. It is the most
+                    important file in the project, and it rots faster than any other.</p>
+
+                  <p>The mechanism of the rot is simple. Each incident adds a paragraph. After a few months the file
+                    is thousands of lines long, the important rules are buried among the merely useful ones, and
+                    every session pays for all of it, whether or not it touches the area a paragraph is about.</p>
+
+                  <p>The instruction file in the SaaS platform is now 170 lines. Each mandatory rule is one
+                    sentence, the sentence on which the rule holds or fails, plus a pointer to its long version:</p>
+
+                  <pre><code class="hljs">- **A test checks the payload** — 🔴 it contains what I sent: each value read from the input,
+  never from a constant. → `tests-payload-spec-table.md`
+- **Database migrations expand/contract** — feature releases are additive; DROP/RENAME/SET NOT NULL
+  only in their own contract release; 🔴 never by hand. → `migrations-expand-contract.md`</code></pre>
+
+                  <p>The shape is the same for every rule: the bold phrase names it, the clause after the marker is
+                    the test that decides whether it was followed, and the arrow points to the file that explains
+                    why. Nothing else is allowed on the line. If a rule cannot be reduced to that sentence, it is not
+                    yet a rule; it is a discussion, and it does not go into the file.</p>
+
+                  <p>The long versions live in <code>.claude/rules/</code>: ten files, 913 lines in total, with the
+                    rationale, precedents from the codebase, test questions, and measurements. That is more than
+                    five times the length of the instruction file, and none of it is loaded by default. Each file
+                    carries a path filter in its frontmatter:</p>
+
+                  <pre><code class="hljs">---
+paths:
+  - "**/tests/**"
+  - "**/*.test.ts"
+  - "**/*.xlsx"
+---</code></pre>
+
+                  <p>The rule about test payloads loads only when the agent touches a test file or a table. The rule
+                    about database migrations loads only near migrations. The session pays for what it needs.</p>
+
+                  <p>One caveat, written into the instruction file itself: <em>if you decide something in an area
+                      without opening a file there, read the long version by hand &mdash; otherwise the binding never
+                      fires.</em> A path filter is a trigger, and a trigger that is never pulled does nothing; the
+                    file has to say so, because the agent cannot notice a rule it never loaded.</p>
+
+                  <h2>What belongs in the instruction file at all</h2>
+
+                  <p>Three kinds of content, and only these:</p>
+
+                  <ul>
+                    <li><strong>What is always true.</strong> The project overview, where things live, the push
+                      gate.</li>
+                    <li><strong>The one-sentence version of each hard rule.</strong> The sentence, the marker that it
+                      is binding, the pointer.</li>
+                    <li><strong>Pointers, not content.</strong> Where the architecture docs are, where the
+                      requirement folders are, where the knowledge base is.</li>
+                  </ul>
+
+                  <p>What does not belong: history, measurements, examples, one-off decisions. Those go into the long
+                    rules, the knowledge base, or the lesson memory. The question for every new paragraph is whether
+                    it holds for every session. If it does not, it is a long rule with a path filter, or a knowledge
+                    article, and the instruction file gets one line pointing at it.</p>
+
+                  <h2>Cost is a design constraint</h2>
+
+                  <p>Agentic development at this scale is not cheap, and cost turned out to be a design constraint
+                    rather than an afterthought. Most of the measures above were introduced for attention: a shorter
+                    list to select from, a shorter file to read. They turned out to be budget measures as well, and
+                    the budget added a few of its own. Five decisions came out of it, and the first came out of a
+                    surprise.</p>
+
+                  <ul>
+                    <li><strong>The weekly limit was reached after three days.</strong> An analysis showed that the
+                      orchestrator, running on the most expensive model, consumed 30&nbsp;% of the weekly budget by
+                      itself. The orchestrator moved to a strong but cheaper model; implementation stayed on a strong
+                      model; routine cascades moved to a fast model.</li>
+                    <li><strong>At most three sub-agents at the same time</strong>, across all types.</li>
+                    <li><strong>Briefs with line ranges, not whole files.</strong> An agent brief that says
+                      &ldquo;read lines 120&ndash;180 of X&rdquo; costs a fraction of &ldquo;read X&rdquo;.</li>
+                    <li><strong>The ledger is read by its head only.</strong> The plan pipeline keeps a ledger of
+                      every plan and its status; a resuming run reads the head of it, and the old part is archived
+                      by size. The pipeline is part 7.</li>
+                    <li><strong>Unused skills are archived, and the instruction file is short</strong> with
+                      path-bound long rules. Attention and budget are the same measure seen from two sides.</li>
+                  </ul>
+
+                  <p>None of these numbers is a recommendation for another project. The three sub-agents, the
+                    30&nbsp;%, the day on which the limit was hit: they are what this setup measured, on this budget,
+                    with this mix of plans. What carries over is the habit of measuring where the tokens go before
+                    deciding where the work goes.</p>
+
+                  <p>The cheapest token is the one that never enters the context.</p>
+
+                  <p>The rules this part comes down to are three. Whatever the agent does not use leaves the path
+                    it loads from; measure that, do not guess it. Every hard rule is one sentence in the instruction
+                    file, and everything behind that sentence lives in a file that loads only where it applies. And
+                    every brief, every ledger read, and every model assignment is chosen with the budget in view,
+                    because the budget will otherwise choose for you, on day three.</p>
+
+                  <p class="series-nav"><em>Previous: <a href="/blog/2026/09/22/agentic-development-overview">Part 1, The Agent Writes the Code</a>. Next: <a href="/blog/2026/10/06/directory-layout-requirements-lifecycle">Part 3, One Root, Many Repositories</a>.</em></p>
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

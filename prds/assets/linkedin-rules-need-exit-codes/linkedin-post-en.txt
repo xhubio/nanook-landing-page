@@ -1,0 +1,21 @@
+Every task brief said: never use --no-verify.
+
+On one day, three AI agents committed with --no-verify anyway — and reported it themselves as a "reflex". Nine days later a fourth agent did it again despite a sharper brief, and a fifth bypassed the hook the same day by overriding the hooks path.
+
+Two lessons:
+
+1️⃣ A prohibition must name the EFFECT, not the spelling. Name one flag and you get the next one.
+
+2️⃣ What must hold needs an EXIT CODE. A hook now inspects every shell command the agent wants to run and denies any push that bypasses the test chain. Red is the finding: report it, don't bypass it.
+
+The other lesson from the last part of this series is less technical. After one test round, my verdict on many features was: implemented correctly — and pointless. Clean data models, a UI glued on, no workflow a real user could play through.
+
+Since then, every plan names a USER JOB, and "done" means that job was played through in the browser as that persona.
+
+Built correctly is not the same as useful.
+
+Final part, with what I would do again and what I would not:
+
+👉 https://nanook.xhub.io/blog/2026/11/17/rules-need-exit-codes
+
+#aiagents #softwareengineering #productmanagement #devops #claudecode

@@ -1,0 +1,21 @@
+Wo leben die Pläne, wenn ein KI-Agent die Implementierung übernimmt?
+
+Bei uns: in einem eigenen Git-Repository. Das Wurzelverzeichnis über allen Code-Repositories enthält die Regeln für den Agenten, die Architektur-Dokumente und jede Analyse, jedes Design und jeden Plan. Es hat mehr Commits als die meisten Code-Repositories — weil ich sehen will, WANN eine Regel entstanden ist und WELCHER VORFALL sie ausgelöst hat.
+
+Der Lebenszyklus ist einfach und streng:
+
+1️⃣ ANALYSE, wenn ich noch nichts weiß
+2️⃣ DESIGN — bei einem neuen Dienst zuerst eine GLIEDERUNG der Designs, die wir brauchen werden. Die Gliederung legt die Reihenfolge fest.
+3️⃣ Ein REVIEW nach jedem Design
+4️⃣ PLÄNE, sobald alle Designs vorliegen
+5️⃣ done/ — das Design, sobald seine Pläne existieren; der Plan, sobald er umgesetzt ist
+
+Der Teil, den einem niemand sagt: Die Pläne zu schreiben verändert die Designs. Fast jedes Mal. Eine Spalte, die niemand modelliert hat; eine Schnittstelle, die zwei Designs unterschiedlich annehmen. Diese Änderungen wirken nach vorn — und nach hinten.
+
+Und eine Regel, die nach Buchhaltung klingt, aber keine ist: Ein fertiger Plan, der in plan/ liegen bleibt, wird noch einmal umgesetzt.
+
+Teil 3: Verzeichnisstruktur und Anforderungs-Lebenszyklus, für eine Multi-Produkt-SaaS und für ereignisgetriebene Microservices (auf Englisch):
+
+👉 https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle
+
+#softwarearchitecture #aiagents #requirementsengineering #devops

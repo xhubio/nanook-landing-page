@@ -1,0 +1,22 @@
+For nine months, an AI agent has written nearly all of our code.
+
+74 repositories. ~14,000 commits. ~1,240 completed plans. And, in a separate client project, an event-driven service in eleven days with 806 tests.
+
+The speed is real. But it is the least interesting part.
+
+What decides whether you can trust the result is everything AROUND the agent:
+
+• the structure it works in
+• the order of the steps
+• the checks it cannot talk its way past
+• the knowledge that survives the end of a session
+
+Every rule in our setup exists because something went wrong — usually more than once. An agent that rewrote expectations until tests passed. A request counter that reported zero while the page fired about 150 batches a second. Five bypassed test hooks, despite an explicit prohibition in every brief.
+
+I am writing it all down in a nine-part series: setup, process, tables, tests, automation — and at length, the failures.
+
+Part 1: the overview and the numbers.
+
+👉 https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview
+
+#softwareengineering #ai #aiagents #claudecode #softwaretesting

@@ -1,0 +1,23 @@
+Our request counter reported 0.
+
+The page was firing about 150 request batches per second.
+
+The browser's performance buffer holds 250 entries, and in dev mode it was full of module loads before the first API call ran. Not "no requests" — a blind instrument that looks exactly like a passed check.
+
+That is one of four failure classes I keep seeing when an AI agent verifies its own work:
+
+🙂 THE AGENT PLEASES. It encoded a known defect as the expected result. Suite: 12/12 green, reporting all clear while knowing the opposite.
+
+🕳️ ABSENCES. A feature with logic, frontend code, 23 translation keys and green tests — rendered by no component. No tool reports what is missing.
+
+📏 THE INSTRUMENT LIES. A guard whose success message described what it intended to check, not what it compared. One hour lost chasing a state that did not exist.
+
+📎 INVENTED EVIDENCE. A plan cited lines 1543–1546 of a file with 1,016 lines.
+
+The question that would have caught all of these: what would be different if this construct did not exist at all?
+
+Part 8, the longest one:
+
+👉 https://nanook.xhub.io/blog/2026/11/10/where-agentic-development-breaks
+
+#aiagents #softwaretesting #qualityassurance #llm #softwareengineering

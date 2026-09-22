@@ -10,7 +10,7 @@
 ## The one thing to understand first
 
 **This is Docusaurus v1 *output* with no Docusaurus.** There is no `package.json`, no
-`docusaurus.config.js`, no `website/` — verified: none of them exist. 178 HTML files are
+`docusaurus.config.js`, no `website/` — verified: none of them exist. 221 HTML files are
 committed and served directly by GitHub Pages.
 
 That means every consequence of a static-site generator is present, and none of its
@@ -19,7 +19,7 @@ conveniences:
 | | Measured |
 |---|---|
 | Chrome (nav, header, footer) per page | ~40 % of each file |
-| Files carrying the blog sidebar | **12** |
+| Files carrying the blog sidebar | **38** (2026-09-22) |
 | Files carrying the docs sidebar | **150** |
 | `.html` + `/index.html` twin pairs | **86** |
 
@@ -69,7 +69,7 @@ Missing one is the normal failure mode here — the last publish missed two.
 |---|---|---|
 | 1 | `blog/YYYY/MM/DD/<slug>.html` | the post itself |
 | 2 | `blog/YYYY/MM/DD/<slug>/index.html` | **byte-identical twin** for the clean URL |
-| 3 | sidebar `<li class="navListItem">` in **12** files | the sidebar is baked into every blog page, including old ones |
+| 3 | sidebar `<li class="navListItem">` in **38** files | the sidebar is baked into every blog page, including old ones |
 | 4 | `blog/index.html` teaser | prepend a `div.post` block with an excerpt |
 | 5 | `blog/feed.xml` + `blog/atom.xml` | see below — these are effectively dead |
 | 6 | `sitemap.xml` | one `<url>` entry |
@@ -129,6 +129,15 @@ is derived, never drawn twice.
   dark-first rule, same CSS invert — it applies to `img` inside `.blog-diagram` either way.
 - Palette: `#0A0A0A` background · `#E61919` invalid · `#4CAF50` valid · `#f59e0b` caution
   · `#ffffff` text · `roughness: 0` · `fontFamily: 3` (monospace).
+
+### `articles/` — long-form pieces
+
+`/articles` is a hub (docs-hub markup, one `docs-hub-row` per article); `/articles/<slug>` is a
+Long Document built by `tools/build-article.py` from a Markdown source in `blog/new/` (pandoc,
+about.html shell, TOC from the H2s, a series pointer after each numbered H2, twin included).
+Edit the Markdown and rebuild; do not edit the generated HTML. The header nav entry "Articles"
+and the footer link are baked into all pages (219 files on 2026-09-22) — a new nav item is a
+site-wide scripted edit.
 
 ### `llms.txt`
 

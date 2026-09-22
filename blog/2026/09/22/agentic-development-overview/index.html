@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>The Agent Writes the Code · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Agentic software development, measured: nine months, 74 repositories, an agent writing nearly all the code. Part 1 of a series on what makes it trustworthy." />
+  <meta property="og:title" content="The Agent Writes the Code · Nanook" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview" />
+  <meta property="og:description"
+    content="Agentic software development, measured: nine months, 74 repositories, an agent writing nearly all the code. Part 1 of a series on what makes it trustworthy." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/social-card.png" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Agent Writes the Code. Everything Around It Decides Whether You Can Trust It.",
+  "datePublished": "2026-09-22",
+  "author": {
+    "@type": "Person",
+    "name": "Torsten Link",
+    "url": "https://cv.xhub.io/de/torsten.link"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Nanook",
+    "url": "https://nanook.xhub.io"
+  },
+  "description": "Agentic software development, measured: nine months, 74 repositories, an agent writing nearly all the code. Part 1 of a series on what makes it trustworthy.",
+  "image": "https://nanook.xhub.io/img/social-card.png",
+  "url": "https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview"
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+          </ul>
+        </nav>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Recent Posts</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle">Recent Posts</h3>
+                  <ul class="">
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/17/rules-need-exit-codes"><samp class="nav-date">2026-11</samp> Rules Need Exit Codes</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/10/where-agentic-development-breaks"><samp class="nav-date">2026-11</samp> The Agent That Pleases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/11/03/plan-pipeline-and-release-cascades"><samp class="nav-date">2026-11</samp> Working Through 1,200 Plans</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/27/tests-first-red-chain"><samp class="nav-date">2026-10</samp> Tests First, Then Implement</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/20/requirements-into-decision-tables"><samp class="nav-date">2026-10</samp> A Table Cannot Stay Silent</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/13/knowledge-base-and-lesson-memory"><samp class="nav-date">2026-10</samp> What the Next Session Knows</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/10/06/directory-layout-requirements-lifecycle"><samp class="nav-date">2026-10</samp> One Root, Many Repos</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/09/29/agent-toolbox-and-instruction-file"><samp class="nav-date">2026-09</samp> Fewer Skills, Shorter Rules</a></li>
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/blog/2026/09/22/agentic-development-overview"><samp class="nav-date">2026-09</samp> Agentic Development</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/29/e-invoicing-decision-tables"><samp class="nav-date">2026-08</samp>
+                        E-Invoices: 40 Dialects</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/08/22/login-example-ai-generated-table"><samp class="nav-date">2026-08</samp>
+                        One Login, Eight Cases</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/08/21/testing-a-saas-with-nanook"><samp
+                          class="nav-date">2026-08</samp> Testing a SaaS</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/29/ai-assisted-equivalence-class-tables"><samp
+                          class="nav-date">2026-03</samp> AI-Assisted Tables</a></li>
+                    <li class="navListItem"><a class="navItem"
+                        href="/blog/2026/03/20/test-data-manual-vs-automated"><samp class="nav-date">2026-03</samp>
+                        Manual vs. Automated</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/03/01/equivalence-class-testing"><samp
+                          class="nav-date">2026-03</samp> Equivalence Class Testing</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2026/02/25/reactivation"><samp
+                          class="nav-date">2026-02</samp> Nanook Is Back</a></li>
+                    <li class="navListItem"><a class="navItem" href="/blog/2019/06/01/introducing"><samp
+                          class="nav-date">2019-06</samp> Introducing Nanook</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+        </nav>
+      </div>
+      <div class="container mainContainer postContainer blogContainer">
+        <div class="wrapper">
+          <div class="lonePost">
+            <div class="post">
+              <header class="postHeader">
+                <h1 class="postHeaderTitle"><a href="/blog/2026/09/22/agentic-development-overview">The Agent Writes the Code. Everything Around It Decides Whether You Can Trust It.</a></h1>
+                <p class="post-meta">September 22, 2026</p>
+                <div class="authorBlock">
+                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                      rel="noreferrer noopener">Torsten Link</a></p>
+                </div>
+              </header>
+              <div><span>
+
+                  <p>Most writing about AI-assisted development is about speed. Speed is real. It is also the least
+                    interesting part, and it is not what decides whether the result is any good. After nine months of
+                    building software almost exclusively through an AI coding agent in the terminal, my conclusion is this:</p>
+
+                  <blockquote>
+                    <p>The agent writes the code. What makes the code trustworthy is everything around the agent: the
+                      structure it works in, the order of the steps, the checks it cannot talk its way past, and the
+                      knowledge that survives the end of a session.</p>
+                  </blockquote>
+
+                  <p>This is the first of nine posts on agentic software development, about that &ldquo;everything around&rdquo;. The agent in both settings is Claude Code; the setup would carry over to any coding agent that reads an instruction file and runs commands. A note on roles,
+                    because it matters for reading what follows: the agent writes nearly all of the code. I design,
+                    decide, review, contradict, and, most importantly, decide which of the agent&rsquo;s claims I
+                    believe.</p>
+
+                  <h2>Two settings, one core</h2>
+
+                  <p>The material comes from two settings that look very different. Both were measured on
+                    17 September 2026; the numbers will drift, the date stays.</p>
+
+                  <p><img class="blog-diagram" src="/img/blog/two-settings-one-core.svg"
+                      alt="Two settings, one core, measured 17 September 2026. Left, the SaaS platform, five products since December 2025: 74 repositories, about 14,000 commits, about 1,240 plans done, 327 lessons kept, open product work. Right, the event-driven service, a client project on Kafka, Postgres and REST: 11 days, 806 tests, 214 generated cases, 100 percent per sheet or no build, requirements from outside. In the middle, the same core: structure, order of steps, gates, retained knowledge. Caption: the agent writes the code; the core decides whether you can trust it"
+                      width="800" loading="lazy" /></p>
+
+                  <p><strong>Setting A is a multi-product SaaS platform</strong>: five products on shared modules: association management, software for trades businesses, property management, an e-invoicing
+                    API and a PDF API. Backends and frontends are plugin-based; most functionality lives in shared
+                    packages that several products import. This is open product work: nobody hands you the requirements; you develop them.</p>
+
+                  <table>
+                    <tr><th>SaaS platform</th><th>Measured</th></tr>
+                    <tr><td>Duration</td><td>since December 2025, about nine months</td></tr>
+                    <tr><td>Git repositories (products, shared packages, tools, archive)</td><td>74</td></tr>
+                    <tr><td>Commits across those repositories</td><td>~14,000</td></tr>
+                    <tr><td>Commits in the root repository (plans, rules, knowledge)</td><td>4,284</td></tr>
+                    <tr><td>Completed plans and analyses</td><td>~1,240</td></tr>
+                    <tr><td>Open plans</td><td>65</td></tr>
+                    <tr><td>Lesson memory entries, one lesson per file</td><td>327</td></tr>
+                    <tr><td>Knowledge-base articles</td><td>66, compiled from 122 raw sources</td></tr>
+                    <tr><td>Active skills</td><td>24, with 14 archived</td></tr>
+                    <tr><td>Path-bound rule files</td><td>10</td></tr>
+                  </table>
+
+                  <p>Each repository is released on its own and published as an npm package. A change to a shared
+                    package often travels through ten or more repositories before a user sees it.</p>
+
+                  <p><strong>Setting B is an event-driven service inside a client project</strong>: it consumes
+                    messages from Kafka, keeps state in Postgres, publishes decisions back to Kafka, and serves a web
+                    UI over REST. The requirements came from outside, and the interfaces already existed. That is
+                    the opposite situation: the specification is the oracle, and tests can be derived from it before
+                    a line of code exists.</p>
+
+                  <table>
+                    <tr><th>Event-driven service</th><th>Measured</th></tr>
+                    <tr><td>Duration</td><td>11 days, with 12 designs written on day one</td></tr>
+                    <tr><td>Commits</td><td>97</td></tr>
+                    <tr><td>Source code</td><td>8,053 lines in 54 files</td></tr>
+                    <tr><td>Test code</td><td>9,183 lines in 44 files</td></tr>
+                    <tr><td>Tests</td><td>806, of which 805 passing and 1 skipped</td></tr>
+                    <tr><td>Decision-table sheets</td><td>13, of which 11 generate cases</td></tr>
+                    <tr><td>Generated test cases</td><td>214, written as 1,712 files</td></tr>
+                    <tr><td>Table coverage</td><td>100 % per sheet; the build fails otherwise</td></tr>
+                  </table>
+
+                  <p>The process differs where the settings differ: the first phase of a client project is analysis of a specification; the first phase of product work is developing the requirements at all. But
+                    the core is the same in both: a structure the agent works in, a fixed order of steps, gates it
+                    cannot argue with, and knowledge that outlives the session. That is why they belong in one
+                    series.</p>
+
+                  <h2>What this series will and will not tell you</h2>
+
+                  <p>It will not tell you that an agent is fast; you know that. It is not a tool review either, and
+                    it will not compare models. It describes the setup (tools, instruction files, directories), the
+                    process (analysis, design, plan, implementation), the testing approach (tables first, tests
+                    second, code third), the automation (a pipeline that works through plans on its own), and, at
+                    length, the failure modes.</p>
+
+                  <p>The failures are the most useful part. Every rule in the setup exists because something went
+                    wrong at least once, usually more than once: an agent that rewrote expectations until the tests
+                    passed, a request counter that reported zero while the page fired about 150 request batches a
+                    second, five bypassed test hooks despite an explicit prohibition in every brief. Each of those
+                    gets its own part, with the incident, the mechanism behind it, and the rule that followed.</p>
+
+                  <h2>The short version, in ten sentences</h2>
+
+                  <p>If you take only a few sentences from the whole series, take these. The part in brackets is
+                    where each one is worked out.</p>
+
+                  <ol>
+                    <li><strong>The agent writes the code; the structure around it makes the code trustworthy.</strong>
+                      Directories, order of steps, gates, and retained knowledge. (Parts 2 and 3)</li>
+                    <li><strong>A table cannot stay silent.</strong> Prose is quiet at the unclear places; a table
+                      demands a row there. Translating requirements into <a
+                        href="/docs/guide/equivalence/overview">decision tables</a> finds contradictions before code
+                      exists. (Part 5)</li>
+                    <li><strong>Design services so their function is testable without infrastructure.</strong> An
+                      agent that can check its own work after every step is excellent. One that has to guess is
+                      mediocre. (Part 6)</li>
+                    <li><strong>Write all tests first and prove they are red for the right reason.</strong> Then
+                      &ldquo;implement the plans and use the tests&rdquo; is an instruction an agent can execute
+                      well. (Parts 6 and 7)</li>
+                    <li><strong>Change an expectation only via its source, with a reason.</strong> Otherwise the
+                      suite becomes accommodating, with an agent exactly as with a human under pressure. (Part 8)</li>
+                    <li><strong>Absences are the most expensive defects.</strong> No tool reports what is missing.
+                      Test the rendered output, and ask what a user still needs to see it. (Part 8)</li>
+                    <li><strong>Prove the measuring instrument before believing its zero.</strong> (Part 8)</li>
+                    <li><strong>Precise-looking evidence gets checked least.</strong> Verify line references,
+                      timestamps, and paraphrases against the source. (Part 8)</li>
+                    <li><strong>What must hold needs an exit code.</strong> A rule in prose is not a control; a hook
+                      is. (Part 9)</li>
+                    <li><strong>Built correctly is not the same as useful.</strong> Every plan names a user job, and
+                      done means it was played through. (Part 9)</li>
+                  </ol>
+
+                  <p>Part 4, what the next session knows, is the one without a sentence of its own: it is the
+                    mechanism behind sentence 1, the knowledge that survives.</p>
+
+                  <h2>The series</h2>
+
+                  <p>One part a week, from 29 September to 17 November 2026. The whole report is also on the site as one page: <a href="/articles/agentic-software-development">Agentic Software Development</a>, about 9,000 words.</p>
+
+                  <table>
+                    <tr><th>#</th><th>Part</th><th>What it covers</th></tr>
+                    <tr><td>1</td><td>The agent writes the code. Everything around it decides whether you can trust it.</td><td>This post: the two settings, the numbers, the ten sentences.</td></tr>
+                    <tr><td>2</td><td><a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">Fewer skills, shorter rules</a></td><td>Skills and MCP servers, the token diet, an instruction file of 170 lines with rules that load themselves, cost and model assignment.</td></tr>
+                    <tr><td>3</td><td><a href="/blog/2026/10/06/directory-layout-requirements-lifecycle">One root, many repositories</a></td><td>A directory layout for a multi-product SaaS and for microservices; the requirements lifecycle from analysis to done.</td></tr>
+                    <tr><td>4</td><td><a href="/blog/2026/10/13/knowledge-base-and-lesson-memory">What the next session knows</a></td><td>A knowledge base and a memory of lessons: two stores for two questions.</td></tr>
+                    <tr><td>5</td><td><a href="/blog/2026/10/20/requirements-into-decision-tables">A table cannot stay silent</a></td><td>Forcing requirements into decision tables, and the eight things it found in one service before any code existed.</td></tr>
+                    <tr><td>6</td><td><a href="/blog/2026/10/27/tests-first-red-chain">Tests first, then &ldquo;implement all plans&rdquo;</a></td><td>Transport-independent service design, the red chain, counter-probes with counted results.</td></tr>
+                    <tr><td>7</td><td><a href="/blog/2026/11/03/plan-pipeline-and-release-cascades">Working through 1,200 plans</a></td><td>An autonomous pipeline, its ledger, release cascades across 74 repositories, parallel sessions in one checkout.</td></tr>
+                    <tr><td>8</td><td><a href="/blog/2026/11/10/where-agentic-development-breaks">The agent that pleases</a></td><td>Four failure classes with real incidents: the accommodating agent, absences, lying instruments, invented evidence.</td></tr>
+                    <tr><td>9</td><td><a href="/blog/2026/11/17/rules-need-exit-codes">Rules need exit codes, and green is not useful</a></td><td>Bypassed hooks, unnoticed red CI runs, features built correctly and pointless; what I would do again and what not.</td></tr>
+                  </table>
+
+                  <p>The tables in both settings are Nanook decision tables. If you want to see what they look like
+                    at scale before the series gets there, the field report <a
+                      href="/blog/2026/08/21/testing-a-saas-with-nanook">How We Test a SaaS Application with
+                      Nanook</a> covers the test suite of two of the platform&rsquo;s products, and <a
+                      href="/blog/2026/08/29/e-invoicing-decision-tables">Testing E-Invoices for 40 Country/Format
+                      Combinations</a> the e-invoicing rules. To build one yourself, start with the <a
+                      href="/docs/quickstart/quickstart">Quickstart</a>.</p>
+
+
+                </span></div>
+            </div>
+            <div class="blogSocialSection"></div>
+          </div>
+          <div class="blog-recent"><a class="button" href="/blog/">Recent Posts</a></div>
+        </div>
+      </div>
+      <nav class="onPageNav"></nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
+      <div class="footer-col">
+        <samp class="footer-heading">Docs</samp>
+        <a href="/docs/tutorials/overview">Tutorials</a>
+        <a href="/docs/guide/equivalence/overview">Guide</a>
+      </div>
+      <div class="footer-col">
+        <samp class="footer-heading">More</samp>
+        <a href="/about">About</a>
+        <a href="/articles">Articles</a>
+        <a href="/imprint">Imprint</a>
+        <a href="/privacyPolicy">Privacy Policy</a>
+        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
+        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
+      </div>
+    </div>
+    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+  </footer>
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <samp class="cookie-title">Cookie preferences</samp>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script></script>
+  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

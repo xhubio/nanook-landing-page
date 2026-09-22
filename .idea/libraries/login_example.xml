@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="login-example">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/prds/assets/login-example.zip!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
