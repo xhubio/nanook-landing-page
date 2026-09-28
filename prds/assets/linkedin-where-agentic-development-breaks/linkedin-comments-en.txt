@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+A flip side that is not in the post. After the incident with the 12/12 green tests came the rule: known defects are always red, with a message. Two days later, three test stands had a red marker for an object that no longer existed. Even a good rule needs someone who checks that its subject still exists.
+
+And about absences: a walkthrough with the owner account never finds a missing permission check. The menu entry had it, the route did not. A guard test found it in seconds.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+One of the five cases of "the measuring instrument lies" is about us: the table engine that reports errors only in its logger is Nanook. A broken sheet then looks like a good one. Torsten did not leave this out, and that is right. The countermeasure from the post works for every tool, ours too: put target numbers (sheets, cases, cells) into a check script that fails the build.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+A blind measuring instrument looks exactly like a passed check. Part 8 of Torsten's series is the longest and the most honest one: four failure classes when an AI agent checks its own work, with the real incidents and the rules that came from them.

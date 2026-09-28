@@ -1,0 +1,15 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Zwei Dinge, die im Post keinen Platz hatten.
+
+Erstens: Die meisten Skills in unserem Setup kommen aus keiner Sammlung, wir haben sie selbst geschrieben. Einer nimmt ein neues Land in die E-Rechnungs-Pipeline auf: offizielle Spezifikation mit SHA-256 pinnen, Katalog und Prüftore anlegen, Generator und Validator im Backend verdrahten. Was dabei herauskommt, kann man ausprobieren: https://invoice-api.xhub.io
+
+Zweitens: Auch der Auftrag an einen Sub-Agenten kostet Kontext. „Lies die Zeilen 120–180 von X“ statt „lies X“ ist die billigste Optimierung, die ich kenne.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Was ich an dem Teil mag: Aufräumen wird hier gemessen, nicht gefühlt. 14 Skills, 91 Sitzungen, kein einziger Aufruf – das ist keine Meinung, das ist eine Zählung. Und die Instruktionsdatei folgt derselben Idee: Eine Regel ist der eine Satz, an dem sie hält oder scheitert. Alles andere lädt erst, wenn es gebraucht wird. So bauen wir auch Nanook-Tabellen: eine Zeile, ein Fall, prüfbar.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Jeder Skill kostet Tokens, auch der, den niemand aufruft. Torsten hat gezählt, was in einem Monat nie benutzt wurde, und es archiviert. Teil 2 der Serie: Werkzeugkasten, Instruktionsdatei und Budget eines Coding-Agenten.

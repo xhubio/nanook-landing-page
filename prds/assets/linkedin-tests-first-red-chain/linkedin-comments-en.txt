@@ -1,0 +1,11 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+The step most people skip: counter-probes. A green test proves nothing if it would also be green when the thing does not work. We broke seven safeguards on purpose and counted which tests turned red. Two lessons: expect a number, not "something turns red" (the time zone probe: exactly 3 red). And place the probe where the test reads. On the first try it was in the wrong place, the test stayed green, and the safeguard looked useless. It was not.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+The rule that carries the whole approach: if you want to change an expectation, change the table first and write down why. Without this rule, the agent would have had a green suite on day two that checked nothing. That is exactly why the table is the point of truth: it is the place where a person sees a change and has to give a reason. Start here: https://nanook.xhub.io/docs/quickstart/claude-code
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+"Implement the plans. Use the tests to check the result." Torsten shows what must be true first, so that this instruction to an AI agent is safe: 245 tests red for the right reason, then 280 green, without one changed expectation. Part 6 of the series.

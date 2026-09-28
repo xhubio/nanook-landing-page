@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Was im Post fehlt: warum eine Änderung so oft zehn und mehr Repositories berührt. Die E-Rechnungs-API (https://invoice-api.xhub.io), die Handwerkersoftware (https://dashandwerk.xhub.io) und die PDF-API teilen dieselben Plugins und Backends. Ein Bug in einem geteilten Paket ist ein Bug in allen Apps, also wird er in allen gleichzeitig behoben. Diese Regel steht als kritisch markiert in der Instruktionsdatei. Denn ein Agent, der den Bug in der App vor sich behoben hat, hält die Arbeit für erledigt.
+
+Und eine Falle, die man erst einmal erleben muss: Ein grüner CI-Lauf ohne Release veröffentlicht nichts. Liegt der Branch hinter dem Remote, überspringt semantic-release still.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Die Regel, die ich am liebsten jedem Team mitgeben würde: Eine Entscheidung ist das Go. Die Pipeline hatte elf Pläne geparkt mit „Entscheidung getroffen, Go fehlt“. Das ist keine Vorsicht, das ist Stillstand mit gutem Gewissen. Wer entscheidet, gibt frei.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+~1.240 Pläne, 74 Repositories, eine Pipeline ohne Mensch in der Schleife. Torsten zeigt, was sie sicher macht: ein Ledger, das vor der Arbeit geschrieben wird, und Regeln für parallele Sitzungen, die aus echten Vorfällen kommen. Teil 7 der Serie.

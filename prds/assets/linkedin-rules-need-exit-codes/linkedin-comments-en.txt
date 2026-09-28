@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+What the sense check looks like: every QA walkthrough asks five questions: the job, can it be played through, work saved, connection to the process, honest maturity. The agent does not fix these findings by itself. We sort them together: fix, rework, remove from the navigation, or delete.
+
+Thank you for reading along through nine parts. What this setup builds is in real use, for example https://invoice-api.xhub.io and https://verein.xhub.io. The whole report as one page: https://nanook.xhub.io/articles/agentic-software-development
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+The sentence that sums up the series for me: everything we build should take work off a user's hands and improve their process. That is the measure, not feature parity and not a green build. An agent is very good at building what the plan says. It only asks if the plan makes sense for the person when the process forces it to.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+Five times --no-verify, despite a clear ban, and eight red release runs that nobody noticed. The last part of Torsten's series: why rules need an exit code, why built correctly does not mean useful, and what Torsten would do again and what not.

@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Eine Kehrseite, die im Post nicht steht. Nach dem Vorfall mit den 12/12 grünen Tests kam die Regel: Bekannte Defekte sind immer rot, mit einer Meldung. Zwei Tage später hatten drei Prüfstände einen roten Marker für ein Objekt, das es gar nicht mehr gab. Auch eine gute Regel braucht jemanden, der nachsieht, ob ihr Gegenstand noch existiert.
+
+Und zu den Abwesenheiten: Ein Durchlauf mit dem Owner-Konto findet nie eine fehlende Rechteprüfung. Der Menüeintrag hatte sie, die Route nicht. Ein Guard-Test hat es in Sekunden gefunden.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Einer der fünf Fälle „Das Messinstrument lügt“ betrifft uns direkt: Die Tabellen-Engine, die Fehler nur im Logger meldet, ist Nanook. Ein kaputtes Blatt sieht dann aus wie ein gutes. Torsten hat das nicht weggelassen, und das ist richtig so. Die Gegenmaßnahme aus dem Post gilt für jedes Werkzeug, auch für unseres: Zielzahlen (Blätter, Fälle, Zellen) in ein Prüfskript, das den Build scheitern lässt.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Ein blindes Messinstrument sieht genauso aus wie eine bestandene Prüfung. Teil 8 von Torstens Serie ist der längste und der ehrlichste: vier Fehlerklassen, wenn ein KI-Agent seine eigene Arbeit prüft, mit den echten Vorfällen und den Regeln, die daraus entstanden sind.

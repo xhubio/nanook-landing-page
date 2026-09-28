@@ -1,0 +1,15 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+Two things that did not fit into the post.
+
+First: most skills in our setup do not come from a collection. We wrote them ourselves. One of them adds a new country to the e-invoicing pipeline: pin the official specification with SHA-256, create the catalogue and the validation gates, connect generator and validator in the backend. You can try the result here: https://invoice-api.xhub.io
+
+Second: a brief to a sub-agent also costs context. "Read lines 120–180 of X" instead of "read X" is the cheapest optimisation I know.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+What I like about this part: the clean-up is measured, not felt. 14 skills, 91 sessions, not one call. That is not an opinion, it is a count. The instruction file follows the same idea: a rule is the one sentence on which it holds or fails. Everything else loads only when it is needed. We build Nanook tables the same way: one row, one case, checkable.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+Every skill costs tokens, also the one nobody calls. Torsten counted what was never used in a month and archived it. Part 2 of the series: the toolbox, the instruction file and the budget of a coding agent.

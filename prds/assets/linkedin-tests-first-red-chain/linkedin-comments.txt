@@ -1,0 +1,11 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Der Schritt, den die meisten weglassen: Gegenproben. Ein grüner Test beweist nichts, wenn er auch grün wäre, wenn die Sache nicht funktioniert. Wir haben sieben Sicherungen absichtlich kaputt gemacht und gezählt, welche Tests rot werden. Zwei Lehren daraus: Erwarte eine Zahl, nicht „irgendwas wird rot“ (die Zeitzone: genau 3 rot). Und setze die Probe dort, wo der Test liest. Beim ersten Versuch lag sie an der falschen Stelle, der Test blieb grün, und die Sicherung sah nutzlos aus. Sie war es nicht.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Die Regel, die den ganzen Ansatz trägt: Wer eine Erwartung ändern will, ändert zuerst die Tabelle und schreibt auf, warum. Ohne diese Regel hätte der Agent am zweiten Tag eine grüne Suite gehabt, die nichts mehr prüft. Genau dafür ist die Tabelle der Ort der Wahrheit: Sie ist die Stelle, an der ein Mensch eine Änderung sieht und begründen muss. Einstieg: https://nanook.xhub.io/docs/quickstart/claude-code
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+„Setze die Pläne um. Nutze die Tests zur Kontrolle.“ Torsten zeigt, was vorher gelten muss, damit dieser Auftrag an einen KI-Agenten sicher ist: 245 Tests rot aus dem richtigen Grund, dann 280 grün, ohne eine einzige geänderte Erwartung. Teil 6 der Serie.

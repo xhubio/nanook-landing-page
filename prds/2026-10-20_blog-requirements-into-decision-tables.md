@@ -109,7 +109,11 @@ from the SaaS platform.
 
 Files: `prds/assets/linkedin-requirements-into-decision-tables/linkedin-post.txt` (German, primary) and `prds/assets/linkedin-requirements-into-decision-tables/linkedin-post-en.txt` (English, verbatim from
 the series plan with the real URL). To be moved to `prds/assets/linkedin-requirements-into-decision-tables/`
-as `linkedin-post.txt` and `linkedin-post-en.txt` at publication. No image.
+as `linkedin-post.txt` and `linkedin-post-en.txt` at publication.
+
+Image: `linkedin-single.svg` / `linkedin-single.png` (1200×1200, dark, monospace, same template as part 1; generated 2026-09-28). Re-render with `qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
+
+Comments and repost (Torsten first comment, Patrick company comment within the first hour, Patrick repost the next day): `linkedin-comments.txt` (German, primary) and `linkedin-comments-en.txt`.
 
 ## Notes
 - Nanook first appears in the second H2 (the Nanook skill and the table engine), not in the lede

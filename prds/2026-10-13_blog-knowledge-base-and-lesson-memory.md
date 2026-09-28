@@ -98,7 +98,11 @@ Nanook is not mentioned (the report section does not mention it).
 
 Files: `prds/assets/linkedin-knowledge-base-and-lesson-memory/linkedin-post.txt` (German, primary) and `prds/assets/linkedin-knowledge-base-and-lesson-memory/linkedin-post-en.txt` (English, verbatim from
 the series plan with the real URL). To be moved to `prds/assets/linkedin-knowledge-base-and-lesson-memory/`
-as `linkedin-post.txt` and `linkedin-post-en.txt` at publication. No image.
+as `linkedin-post.txt` and `linkedin-post-en.txt` at publication.
+
+Image: `linkedin-single.svg` / `linkedin-single.png` (1200×1200, dark, monospace, same template as part 1; generated 2026-09-28). Re-render with `qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
+
+Comments and repost (Torsten first comment, Patrick company comment within the first hour, Patrick repost the next day): `linkedin-comments.txt` (German, primary) and `linkedin-comments-en.txt`.
 
 ## Notes
 - The directory name in the tree is `knowlage-base/`, spelled as in the report (twice, §5.1 and §7.1);

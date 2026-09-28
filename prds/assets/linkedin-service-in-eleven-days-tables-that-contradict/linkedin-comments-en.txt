@@ -1,0 +1,15 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+The most important gate in this project was not code coverage. It was table coverage: every sheet must cover 100 % of its class combinations, or the build stops. Code coverage says which lines ran. Table coverage says which cases were considered.
+
+And the line in the gate table that gets the most laughs really happened: build green, types green, 391 tests green, and the bundle did not start. Since then, a smoke test of the built artefact is part of the chain.
+
+If you missed part 5 yesterday: it explains the eight findings one by one: https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+The number I remember: 98. The test for the state matrix has exactly 98 tests, one per filled cell. It loops over the cases; it does not copy them. When a cell is added, a test is added, and nobody touches test code. 13 sheets, 214 cases, kept by hand in one Excel workbook. If you want to try this on your own project: https://nanook.xhub.io/docs/quickstart/claude-code
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+Eleven days, one AI agent, 806 tests. And the order was not negotiable: first the tables, then the tests, then the service. Torsten's full field report, with the red chain, the counter-probes and the ten gates.

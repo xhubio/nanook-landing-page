@@ -108,7 +108,11 @@ checkout and the six rules that followed.
 
 Files: `prds/assets/linkedin-plan-pipeline-and-release-cascades/linkedin-post.txt` (German, primary) and `prds/assets/linkedin-plan-pipeline-and-release-cascades/linkedin-post-en.txt` (English, verbatim from
 the series plan with the real URL; bold "ledger" and "parallel sessions" rendered as capitals). To be
-moved to `prds/assets/linkedin-plan-pipeline-and-release-cascades/` at registration. No image.
+moved to `prds/assets/linkedin-plan-pipeline-and-release-cascades/` at registration.
+
+Image: `linkedin-single.svg` / `linkedin-single.png` (1200×1200, dark, monospace, same template as part 1; generated 2026-09-28). Re-render with `qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
+
+Comments and repost (Torsten first comment, Patrick company comment within the first hour, Patrick repost the next day): `linkedin-comments.txt` (German, primary) and `linkedin-comments-en.txt`.
 
 ## Notes
 - Nanook is not named in the body; there is no table topic in §12, §13 or §19 where the report names

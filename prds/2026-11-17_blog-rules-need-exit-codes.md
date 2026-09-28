@@ -99,7 +99,11 @@ without repeating the ten sentences of part 1.
 ## LinkedIn companion
 
 Files: `prds/assets/linkedin-rules-need-exit-codes/linkedin-post.txt` (German, primary) and `prds/assets/linkedin-rules-need-exit-codes/linkedin-post-en.txt` (English, from the series
-plan, with the real URL). No image.
+plan, with the real URL).
+
+Image: `linkedin-single.svg` / `linkedin-single.png` (1200×1200, dark, monospace, same template as part 1; generated 2026-09-28). Re-render with `qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
+
+Comments and repost (Torsten first comment, Patrick company comment within the first hour, Patrick repost the next day): `linkedin-comments.txt` (German, primary) and `linkedin-comments-en.txt`.
 
 ## Notes
 - Claude Code is named once, in the lede, where the instruction file `CLAUDE.md` and the

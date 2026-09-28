@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+People always ask: what is actually built in these repositories? The multi-product SaaS in the post is a set of real products on shared modules, for example the e-invoicing API (https://invoice-api.xhub.io), the software for clubs and associations (https://verein.xhub.io) and the software for trades businesses (https://dashandwerk.xhub.io). That is why requirements live per product: the unit that is designed and released together decides the folder.
+
+And one rule that saved a lot of time: a blocker leaves the plan and gets a folder of its own. But check it first. Once, "no access" was in fact a self-service step that nobody had tried.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+My favourite sentence from this part: a box that says "done" is a claim. The code is the evidence. And one detail that is easy to miss: the decision tables come early, with the first designs, as soon as interfaces exist. Not later, when there is code to test. Part 5 shows why this matters so much.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+A finished plan left in the plan/ folder gets implemented again. With an AI agent, this is not theory. Part 3 of Torsten's series: directory layout and the life of a requirement, ready to copy in one afternoon.

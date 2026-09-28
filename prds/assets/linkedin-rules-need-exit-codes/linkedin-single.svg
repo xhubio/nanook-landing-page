@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img"
+     aria-label="5 hook bypasses, despite the ban. 8 red release runs nobody noticed. 1 user job in every plan. Rules need exit codes. Green is not useful. What still went wrong, and what followed: name the effect, not the spelling of the flag; a hook denies every push that skips the tests; red is the finding: report it, never bypass it; done: the user job played through in a browser; Part 9 of 9: bypassed hooks, red runs, pointless features.">
+  <!-- LinkedIn single image, 1:1, companion to /blog/2026/11/17/rules-need-exit-codes.
+       Colours follow the Nanook dark theme; same template as linkedin-agentic-development-overview;
+       re-render with qlmanage -t -s 1200. -->
+  <defs>
+    <style>
+      .mono { font-family: "SFMono-Regular","JetBrains Mono",Menlo,Consolas,monospace; }
+      .kick { font-size: 24px; fill: #E61919; font-weight: 700; letter-spacing: 4px; }
+      .n    { font-size: 108px; font-weight: 700; letter-spacing: -4px; }
+      .lbl  { font-size: 22px; fill: #8a8a8a; }
+      .head { font-size: 50px; font-weight: 700; fill: #ffffff; letter-spacing: -1px; }
+      .sub  { font-size: 29px; fill: #d4d4d4; }
+      .row  { font-size: 30px; fill: #ffffff; }
+      .num  { font-size: 30px; fill: #4CAF50; font-weight: 700; }
+      .foot { font-size: 21px; fill: #8a8a8a; letter-spacing: 2px; }
+    </style>
+  </defs>
+  <rect width="1200" height="1200" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#E61919"/>
+
+  <text class="mono kick" x="90" y="120">NANOOK · AGENTIC SOFTWARE DEVELOPMENT</text>
+
+  <text class="mono n" x="90" y="290" fill="#8a8a8a">5</text>
+  <text class="mono lbl" x="90" y="335">hook bypasses,</text>
+  <text class="mono lbl" x="90" y="363">despite the ban</text>
+  <text class="mono n" x="336" y="290" fill="#8a8a8a">8</text>
+  <text class="mono lbl" x="336" y="335">red release runs</text>
+  <text class="mono lbl" x="336" y="363">nobody noticed</text>
+  <text class="mono n" x="595" y="290" fill="#ffffff">1</text>
+  <text class="mono lbl" x="595" y="335">user job</text>
+  <text class="mono lbl" x="595" y="363">in every plan</text>
+
+  <line x1="90" y1="400" x2="1110" y2="400" stroke="#333333" stroke-width="2"/>
+
+  <text class="mono head" x="90" y="488">Rules need exit codes.</text>
+  <text class="mono head" x="90" y="558">Green is not useful.</text>
+  <text class="mono sub" x="90" y="615">What still went wrong, and what followed:</text>
+
+  <rect x="90" y="660" width="1020" height="300" fill="#121212"/>
+  <rect x="90" y="660" width="10" height="300" fill="#4CAF50"/>
+  <text class="mono num" x="140" y="720">1</text>
+  <text class="mono row" x="200" y="720">name the effect, not the spelling of the flag</text>
+  <text class="mono num" x="140" y="780">2</text>
+  <text class="mono row" x="200" y="780">a hook denies every push that skips the tests</text>
+  <text class="mono num" x="140" y="840">3</text>
+  <text class="mono row" x="200" y="840">red is the finding: report it, never bypass it</text>
+  <text class="mono num" x="140" y="900">4</text>
+  <text class="mono row" x="200" y="900">done: the user job played through in a browser</text>
+
+  <text class="mono foot" x="90" y="1090">PART 9 OF 9 · BYPASSED HOOKS, RED RUNS, POINTLESS FEATURES</text>
+  <text class="mono foot" x="90" y="1125">nanook.xhub.io/blog</text>
+</svg>

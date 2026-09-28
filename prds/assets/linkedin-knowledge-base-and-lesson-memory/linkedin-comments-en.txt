@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+What I learned from keeping this memory: a lesson needs the mechanism, not only the incident. "Don't do X in file Y" helps once. "A tool that skips a check silently turns every skipped check into an assurance" helps everywhere.
+
+And: memories go stale. A note that names a file, a function or a flag describes the state at the time it was written. Before the agent acts on it, it checks that the thing still exists. Both stores are claims about the past that the present has to confirm.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+The story of the three comments hits a nerve. The mistake was to delete a test case because the application could not do it, instead of recording the gap as a finding. Fixed locally three times, back three times. A rule that lives in one file protects only that file. That is why we believe in rules in one place that everybody reads. In Nanook, that place is the table.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+An AI session always starts empty. Torsten describes the two stores that decide what the next session knows: a knowledge base for "how does our system work?" and a memory of 327 lessons for "what went wrong?". Part 4 of the series.

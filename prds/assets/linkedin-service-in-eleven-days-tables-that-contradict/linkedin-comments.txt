@@ -1,0 +1,15 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Das wichtigste Gate in diesem Projekt war nicht die Code-Abdeckung, sondern die Abdeckung der Tabelle: Jedes Blatt muss 100 % seiner Klassenkombinationen abdecken, sonst bricht der Build ab. Code-Abdeckung sagt, welche Zeilen gelaufen sind. Tabellen-Abdeckung sagt, welche Fälle bedacht wurden.
+
+Und die Zeile aus der Gate-Tabelle, die am meisten Lacher bekommt, ist echt passiert: Build grün, Typen grün, 391 Tests grün – und das Bundle startete nicht. Seitdem gehört ein Smoke-Test des gebauten Artefakts in die Kette.
+
+Wer gestern Teil 5 verpasst hat: Dort stehen die acht Funde einzeln erklärt: https://nanook.xhub.io/blog/2026/10/20/requirements-into-decision-tables
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Die Zahl, die ich mir merke: 98. Der Test für die Zustandsmatrix enthält genau 98 Tests, einen je belegter Zelle. Er iteriert über die Fälle, er kopiert sie nicht. Kommt eine Zelle dazu, kommt ein Test dazu, ohne dass jemand Testcode anfasst. 13 Blätter, 214 Fälle, gepflegt von Hand in einer Excel-Mappe. Wer das am eigenen Projekt ausprobieren will: https://nanook.xhub.io/docs/quickstart/claude-code
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Elf Tage, ein KI-Agent, 806 Tests – und die Reihenfolge war nicht verhandelbar: erst die Tabellen, dann die Tests, dann der Dienst. Torstens ganzer Feldbericht, mit der roten Kette, den Gegenproben und den zehn Gates.

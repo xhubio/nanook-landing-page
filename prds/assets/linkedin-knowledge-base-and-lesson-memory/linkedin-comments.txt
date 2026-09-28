@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Was ich beim Führen dieses Gedächtnisses gelernt habe: Eine Lektion braucht den Mechanismus, nicht nur den Vorfall. „Mach X nicht in Datei Y“ hilft einmal. „Ein Werkzeug, das eine Prüfung still überspringt, macht aus jeder übersprungenen Prüfung eine Zusicherung“ hilft überall.
+
+Und: Erinnerungen veralten. Eine Notiz, die eine Datei, eine Funktion oder ein Flag nennt, beschreibt den Stand von damals. Bevor der Agent danach handelt, prüft er, ob es das noch gibt. Beide Speicher sind Behauptungen über die Vergangenheit, die die Gegenwart bestätigen muss.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Die Geschichte mit den drei Kommentaren trifft einen Nerv. Der Fehler war, einen Testfall zu löschen, weil die Anwendung ihn nicht konnte – statt die Lücke als Befund festzuhalten. Dreimal lokal behoben, dreimal wiedergekommen. Eine Regel, die nur in einer Datei steht, schützt genau diese Datei. Deshalb glauben wir an Regeln an einem Ort, den jeder liest: Bei Nanook ist das die Tabelle.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Eine KI-Sitzung beginnt immer leer. Torsten beschreibt die zwei Speicher, die entscheiden, was die nächste Sitzung weiß: eine Wissensbasis für „Wie funktioniert unser System?“ und ein Gedächtnis mit 327 Lektionen für „Was ist schiefgegangen?“. Teil 4 der Serie.

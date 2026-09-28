@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+We use the same approach at a larger scale on our SaaS platform. There, the e-invoicing rules are tables derived from pinned official specifications, country by country. What these tables look like is in the field report: https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables – and the result runs here: https://invoice-api.xhub.io
+
+For the tables of the service in the post, I needed about one day. Every cell I could not fill was a question for the authors of the specification. Tomorrow, the full field report on this service comes out.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+For me, this is the core of Nanook: the table is not mainly a test artefact. It is a tool to check the requirement. Four of the eight findings came from the matrix table, from the question "which state meets which event?". And the table can be read by someone who does not write code. Start with the method here: https://nanook.xhub.io/docs/guide/equivalence/overview
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+Prose does not lie. It stays silent, exactly where the work is. Torsten shows what decision tables found in a specification before a single line of code existed. Eight findings, among them seven filters with no effect. Part 5 of the series.

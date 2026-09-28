@@ -1,0 +1,13 @@
+=== Comment 1 — Torsten Link (author; first comment under the post, within the first hour) ===
+
+What the post leaves out: why one change so often touches ten or more repositories. The e-invoicing API (https://invoice-api.xhub.io), the software for trades businesses (https://dashandwerk.xhub.io) and the PDF API share the same plugins and backends. A bug in a shared package is a bug in all apps, so it is fixed in all of them at the same time. This rule is marked critical in the instruction file. An agent that fixed the bug in the app in front of it thinks the job is done.
+
+And a trap you have to live through once: a green CI run without a release publishes nothing. If the branch is behind the remote, semantic-release skips silently.
+
+=== Comment 2 — Patrick Jerominek (BeeBack UG, the company behind Nanook) ===
+
+The rule I would give to every team: a decision is the go. The pipeline had parked eleven plans as "decision made, go missing". That is not caution. It is standstill with a good conscience. Whoever decides also gives the go.
+
+=== Repost — Patrick Jerominek resharing Torsten's post (the next day) ===
+
+~1,240 plans, 74 repositories, a pipeline with no person in the loop. Torsten shows what keeps it safe: a ledger written before the work, and rules for parallel sessions that come from real incidents. Part 7 of the series.

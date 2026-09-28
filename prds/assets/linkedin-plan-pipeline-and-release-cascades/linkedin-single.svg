@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1200" viewBox="0 0 1200 1200" role="img"
+     aria-label="~1,240 plans done. 74 repositories. 5 foreign commits, 20 minutes later. Git is the truth. The ledger says where to look. What keeps an autonomous pipeline safe: a ledger written before the work, not after; a decision is the go; a shared change reaches every app at once; commit by explicit path; agents never push; Part 7 of 9: plan pipeline, release cascades, parallel sessions.">
+  <!-- LinkedIn single image, 1:1, companion to /blog/2026/11/03/plan-pipeline-and-release-cascades.
+       Colours follow the Nanook dark theme; same template as linkedin-agentic-development-overview;
+       re-render with qlmanage -t -s 1200. -->
+  <defs>
+    <style>
+      .mono { font-family: "SFMono-Regular","JetBrains Mono",Menlo,Consolas,monospace; }
+      .kick { font-size: 24px; fill: #E61919; font-weight: 700; letter-spacing: 4px; }
+      .n    { font-size: 108px; font-weight: 700; letter-spacing: -4px; }
+      .lbl  { font-size: 22px; fill: #8a8a8a; }
+      .head { font-size: 50px; font-weight: 700; fill: #ffffff; letter-spacing: -1px; }
+      .sub  { font-size: 29px; fill: #d4d4d4; }
+      .row  { font-size: 30px; fill: #ffffff; }
+      .num  { font-size: 30px; fill: #4CAF50; font-weight: 700; }
+      .foot { font-size: 21px; fill: #8a8a8a; letter-spacing: 2px; }
+    </style>
+  </defs>
+  <rect width="1200" height="1200" fill="#0A0A0A"/>
+  <rect x="0" y="0" width="1200" height="8" fill="#E61919"/>
+
+  <text class="mono kick" x="90" y="120">NANOOK · AGENTIC SOFTWARE DEVELOPMENT</text>
+
+  <text class="mono n" x="90" y="290" fill="#8a8a8a">~1,240</text>
+  <text class="mono lbl" x="90" y="335">plans done</text>
+  <text class="mono n" x="503" y="290" fill="#8a8a8a">74</text>
+  <text class="mono lbl" x="503" y="335">repositories</text>
+  <text class="mono n" x="709" y="290" fill="#ffffff">5</text>
+  <text class="mono lbl" x="709" y="335">foreign commits,</text>
+  <text class="mono lbl" x="709" y="363">20 minutes later</text>
+
+  <line x1="90" y1="400" x2="1110" y2="400" stroke="#333333" stroke-width="2"/>
+
+  <text class="mono head" x="90" y="488">Git is the truth.</text>
+  <text class="mono head" x="90" y="558">The ledger says where to look.</text>
+  <text class="mono sub" x="90" y="615">What keeps an autonomous pipeline safe:</text>
+
+  <rect x="90" y="660" width="1020" height="300" fill="#121212"/>
+  <rect x="90" y="660" width="10" height="300" fill="#4CAF50"/>
+  <text class="mono num" x="140" y="720">1</text>
+  <text class="mono row" x="200" y="720">a ledger written before the work, not after</text>
+  <text class="mono num" x="140" y="780">2</text>
+  <text class="mono row" x="200" y="780">a decision is the go</text>
+  <text class="mono num" x="140" y="840">3</text>
+  <text class="mono row" x="200" y="840">a shared change reaches every app at once</text>
+  <text class="mono num" x="140" y="900">4</text>
+  <text class="mono row" x="200" y="900">commit by explicit path; agents never push</text>
+
+  <text class="mono foot" x="90" y="1090">PART 7 OF 9 · PLAN PIPELINE, RELEASE CASCADES, PARALLEL SESSIONS</text>
+  <text class="mono foot" x="90" y="1125">nanook.xhub.io/blog</text>
+</svg>

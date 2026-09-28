@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Die Frage kommt immer: Was entsteht eigentlich in diesen Repositories? Die Multi-Produkt-SaaS aus dem Beitrag sind echte Produkte auf gemeinsamen Modulen, zum Beispiel die E-Rechnungs-API (https://invoice-api.xhub.io), die Vereinsverwaltung (https://verein.xhub.io) und die Software für Handwerksbetriebe (https://dashandwerk.xhub.io). Deshalb liegen die Anforderungen nach Produkt: Die Einheit, die zusammen entworfen und veröffentlicht wird, bestimmt den Ordner.
+
+Und eine Regel, die viel Zeit gespart hat: Ein Blocker verlässt den Plan und bekommt einen eigenen Ordner. Aber vorher prüfen. Einmal war „kein Zugang“ in Wahrheit ein Self-Service, den niemand ausprobiert hatte.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Mein Lieblingssatz aus dem Teil: Ein Kästchen, auf dem „fertig“ steht, ist eine Behauptung. Der Code ist der Beleg. Und ein Detail, das man leicht überliest: Die Entscheidungstabellen kommen früh, zu den ersten Designs, sobald es Schnittstellen gibt – nicht erst, wenn Code zum Testen da ist. Warum das so viel bringt, zeigt Teil 5.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Ein fertiger Plan, der im Ordner plan/ liegen bleibt, wird noch einmal umgesetzt. Mit einem KI-Agenten ist das keine Theorie. Teil 3 von Torstens Serie: Verzeichnisstruktur und Lebenszyklus einer Anforderung, zum Nachbauen am selben Nachmittag.

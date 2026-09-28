@@ -59,3 +59,7 @@ Twin; sidebar in all 40 blog pages (between part 6 and part 5 by date); teaser i
 
 ## LinkedIn companion
 `prds/assets/linkedin-service-in-eleven-days-tables-that-contradict/linkedin-post.txt` (German, primary) and `linkedin-post-en.txt`.
+
+Image: `linkedin-single.svg` / `linkedin-single.png` (1200×1200, dark, monospace, same template as part 1; generated 2026-09-28). Re-render with `qlmanage -t -s 1200 -o . linkedin-single.svg`, then drop the `.svg` from the file name.
+
+Comments and repost (Torsten first comment, Patrick company comment within the first hour, Patrick repost the next day): `linkedin-comments.txt` (German, primary) and `linkedin-comments-en.txt`.

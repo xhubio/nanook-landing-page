@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Derselbe Ansatz läuft auf unserer SaaS-Plattform im Großen. Dort sind die Regeln der E-Rechnung Tabellen, abgeleitet aus gepinnten offiziellen Spezifikationen, Land für Land. Wie diese Tabellen aussehen, steht im Feldbericht: https://nanook.xhub.io/blog/2026/08/29/e-invoicing-decision-tables – und was daraus geworden ist, läuft hier: https://invoice-api.xhub.io
+
+Für die Tabellen des Dienstes aus dem Post habe ich etwa einen Tag gebraucht. Jede Zelle, die ich nicht füllen konnte, war eine Frage an die Autoren der Spezifikation. Morgen erscheint der ganze Feldbericht zu diesem Dienst.
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Das ist für mich der Kern von Nanook: Die Tabelle ist nicht in erster Linie ein Test-Artefakt, sondern ein Werkzeug, um die Anforderung zu prüfen. Vier der acht Funde kamen aus der Matrix-Tabelle, also aus der Frage „welcher Zustand trifft auf welches Ereignis?“. Und die Tabelle kann jemand lesen, der keinen Code schreibt. Einstieg in die Methode: https://nanook.xhub.io/docs/guide/equivalence/overview
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Prosa lügt nicht, sie schweigt – genau dort, wo die Arbeit ist. Torsten zeigt, was Entscheidungstabellen in einer Spezifikation gefunden haben, bevor eine Zeile Code existierte. Acht Funde, darunter sieben Filter ohne Wirkung. Teil 5 der Serie.

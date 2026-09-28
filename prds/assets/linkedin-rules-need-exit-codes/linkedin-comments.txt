@@ -1,0 +1,13 @@
+=== Kommentar 1 — Torsten Link (Autor; erster Kommentar unter dem Post, innerhalb der ersten Stunde) ===
+
+Wie die Sinnprüfung konkret aussieht: Jeder QA-Durchlauf stellt fünf Fragen – Job, Durchspielbarkeit, gesparte Arbeit, Anschluss an den Prozess, ehrlicher Reifegrad. Diese Befunde repariert der Agent nicht selbst. Wir sortieren sie gemeinsam: reparieren, umbauen, aus der Navigation nehmen oder löschen.
+
+Danke fürs Mitlesen über neun Teile. Was mit diesem Setup entsteht, ist im Einsatz, zum Beispiel https://invoice-api.xhub.io und https://verein.xhub.io. Der ganze Bericht als eine Seite (auf Englisch): https://nanook.xhub.io/articles/agentic-software-development
+
+=== Kommentar 2 — Patrick Jerominek (BeeBack UG, die Firma hinter Nanook) ===
+
+Der Satz, der für mich die Serie zusammenfasst: Alles, was wir bauen, soll einem Nutzer Arbeit abnehmen und seinen Ablauf verbessern. Das ist der Maßstab – nicht Feature-Parität und nicht ein grüner Build. Ein Agent baut sehr gut, was im Plan steht. Ob der Plan für den Menschen Sinn ergibt, fragt er nur, wenn der Prozess ihn dazu zwingt.
+
+=== Repost — Patrick Jerominek teilt Torstens Beitrag (am Folgetag) ===
+
+Fünfmal --no-verify, trotz ausdrücklichem Verbot, und acht rote Release-Läufe, die niemand bemerkt hat. Der letzte Teil von Torstens Serie: warum Regeln einen Exit-Code brauchen, warum korrekt gebaut nicht nützlich heißt – und was Torsten wieder so machen würde und was nicht.
