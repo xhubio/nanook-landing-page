@@ -2,12 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nanook.xhub.io/blog</id>
     <title>Nanook Blog</title>
-    <updated>2026-09-22T06:00:00.000Z</updated>
+    <updated>2026-09-29T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nanook.xhub.io/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Nanook news and events.</subtitle>
     <logo>https://nanook.xhub.io/img/logo.svg</logo>
     <rights>Copyright  2022 nanook.xhub.io</rights>
+    <entry>
+        <title type="html"><![CDATA[Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions]]></title>
+        <id>https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file</id>
+        <link href="https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file"/>
+        <updated>2026-09-29T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>Skills, MCP servers and an instruction file for a coding agent: 14 unused skills archived, 170 lines of rules that load themselves, and what the budget taught.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[The Agent Writes the Code. Everything Around It Decides Whether You Can Trust It.]]></title>
         <id>https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview</id>

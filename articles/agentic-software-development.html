@@ -181,7 +181,7 @@
 </table></div>
 <p>The two settings look very different, and the process differs where they differ. But the core — structure, order, gates, retained knowledge — is the same. That is why they belong in one report.</p>
 <h2 id="3-the-toolbox-skills-mcp-servers-and-a-token-diet">3. The toolbox: skills, MCP servers, and a token diet</h2>
-<p class="provenance"><em>Expanded in part 2 of the series, Fewer Skills, Shorter Rules, on the blog from 29 September 2026.</em></p>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
 <h3 id="31-superpowers-as-a-starting-point-adapted-per-project">3.1 Superpowers as a starting point, adapted per project</h3>
 <p>I start every project with <a href="https://github.com/obra/superpowers">Superpowers</a>, a collection of process skills for coding agents: brainstorming, writing plans, executing plans, test-driven development, systematic debugging, verification before completion, and so on.</p>
 <p>I never use it unchanged. Each project gets its own adaptation:</p>
@@ -205,7 +205,7 @@
 <p><strong>Unused capability is not free.</strong> It costs tokens on every call and dilutes the selection the model has to make.</p>
 </blockquote>
 <h2 id="4-the-instruction-file-short-rules-long-rules-and-rules-that-load-themselves">4. The instruction file: short rules, long rules, and rules that load themselves</h2>
-<p class="provenance"><em>Expanded in part 2 of the series, Fewer Skills, Shorter Rules, on the blog from 29 September 2026.</em></p>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
 <p>Every coding agent reads a project instruction file at the start of a session (<code>CLAUDE.md</code> for Claude Code, <code>AGENTS.md</code> for others). It is the most important file in the project — and it rots faster than any other.</p>
 <h3 id="41-the-problem-the-file-grows-until-nobody-including-the-agent-reads-it">4.1 The problem: the file grows until nobody (including the agent) reads it</h3>
 <p>Each incident adds a paragraph. After a few months, the file is thousands of lines long, the important rules are buried, and every session pays for all of it.</p>
@@ -795,7 +795,7 @@ type: feedback
 <p>Everything we build should take work off a user's hands and improve their process. That is the measure — not feature parity, and not a green build.</p>
 </blockquote>
 <h2 id="21-cost-tokens-models-and-budgets">21. Cost: tokens, models, and budgets</h2>
-<p class="provenance"><em>Expanded in part 2 of the series, Fewer Skills, Shorter Rules, on the blog from 29 September 2026.</em></p>
+<p class="provenance"><em>Expanded in <a href="/blog/2026/09/29/agent-toolbox-and-instruction-file">part 2 of the series, Fewer Skills, Shorter Rules</a>.</em></p>
 <p>Agentic development at this scale is not cheap, and cost is a design constraint, not an afterthought.</p>
 <ul>
 <li><strong>The weekly limit was reached after three days.</strong> An analysis showed the orchestrator, running on the most expensive model, consumed <strong>30 %</strong> of the weekly budget by itself. The orchestrator moved to a strong-but-cheaper model; implementation stayed on a strong model; routine cascades moved to a fast model.</li>
@@ -844,7 +844,7 @@ type: feedback
 <li><strong>What must hold needs an exit code.</strong> A rule in prose is not a control; a hook is.</li>
 <li><strong>Built correctly is not the same as useful.</strong> Every plan names a user job, and done means it was played through.</li>
 </ol>
-      <!-- built by tools/build-article.py from blog/new/2026-09-17_full-report_agentic-software-development.md on 2026-09-22; edit the Markdown, then rebuild -->
+      <!-- built by tools/build-article.py from blog/new/2026-09-17_full-report_agentic-software-development.md on 2026-09-29; edit the Markdown, then rebuild -->
     </article>
   </main>
 

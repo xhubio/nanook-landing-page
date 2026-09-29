@@ -20,7 +20,7 @@ parts 8 and 9 can be swapped.
 | # | Title (working) | Slug | Report sections | Length | Date | Status (2026-09-22) |
 |---|---|---|---|---|---|---|
 | 1 | The agent writes the code. Everything around it decides whether you can trust it. | `agentic-development-overview` | 1, 2, 23 | ~1,300 w | 2026-09-22 | published |
-| 2 | Fewer skills, shorter rules: setting up a coding agent that does not drown in its own instructions | `agent-toolbox-and-instruction-file` | 3, 4, 21 | ~1,600 w | 2026-09-29 | scheduled, unpublished draft |
+| 2 | Fewer skills, shorter rules: setting up a coding agent that does not drown in its own instructions | `agent-toolbox-and-instruction-file` | 3, 4, 21 | ~1,600 w | 2026-09-29 | published |
 | 3 | One root, many repositories: a directory layout and a requirements lifecycle for agent work | `directory-layout-requirements-lifecycle` | 5, 6 | ~1,700 w | 2026-10-06 | scheduled, unpublished draft |
 | 4 | What the next session knows: a knowledge base and a memory of lessons | `knowledge-base-and-lesson-memory` | 7 | ~1,100 w | 2026-10-13 | scheduled, unpublished draft |
 | 5 | A table cannot stay silent: finding contradictions in requirements before any code exists | `requirements-into-decision-tables` | 8, 9 | ~1,600 w | 2026-10-20 | scheduled, unpublished draft |
@@ -87,7 +87,7 @@ series.
 
 ## Part 2 — Fewer skills, shorter rules
 
-**Status:** scheduled 2026-09-29 as `/blog/2026/09/29/agent-toolbox-and-instruction-file`, unpublished draft; publish with `tools/publish-part.py agent-toolbox-and-instruction-file` (PRD `prds/2026-09-29_blog-agent-toolbox-and-instruction-file.md`).
+**Status:** published 2026-09-29 as `/blog/2026/09/29/agent-toolbox-and-instruction-file` (PRD `prds/2026-09-29_blog-agent-toolbox-and-instruction-file.md`).
 
 **Content:** Superpowers as a starting point, adapted per project. Project-specific skills. Playwright
 MCP and one browser per parallel session. The token diet: 14 skills unused in 91 sessions → archived.
@@ -497,6 +497,6 @@ Fri 2026-09-25 if it has not been posted yet.
 6. **Open with the author:** part 7 keeps both figures from the report, "up to nine sub-agents in
    parallel" for the cascade (§13.2) and "at most three sub-agents at a time across all types" (§19).
    Confirm which holds, or whether the cascade is exempt, and adjust one sentence.
-7. **Scheduling.** Parts 2–9 and 5b are unpublished `noindex` drafts at their final paths (decision
-   2026-09-22, revised the same day); `tools/publish-part.py <slug>` registers a part on its date.
-   Only part 1, the full report and the guide are live.
+7. **Scheduling.** Parts are released one a week with `tools/publish-part.py <slug>`; until its date a
+   part is an unpublished `noindex` draft at its final path. Which parts are live is recorded in
+   `blog/new/series-state.json` and in the overview table above (decision 2026-09-22).

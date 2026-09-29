@@ -305,8 +305,12 @@ def plan_status(p):
     write(PLAN, s)
 
 
-def rebuild_articles():
+def rebuild_articles(p=None):
     subprocess.run(["python3", "tools/build-article.py"], check=True, capture_output=True)
+    if p is not None and p["published"]:  # the report's pointers changed, so its lastmod moves with the part
+        s = read("sitemap.xml")
+        s = re.sub(r"(<loc>https://nanook\.xhub\.io/articles/agentic-software-development</loc><lastmod>)[^<]+", lambda m: m.group(1) + p["date"], s, count=1)
+        write("sitemap.xml", s)
 
 
 def apply(state, p):
@@ -324,7 +328,7 @@ def apply(state, p):
     if p["prev"]: set_nav(state, by_key(state, p["prev"]))
     if p["key"] == "5b" or p["key"] == "5": set_backlink_5b(state)
     plan_status(p)
-    rebuild_articles()
+    rebuild_articles(p)
     set_twin(p)
     sync_twins()
 
