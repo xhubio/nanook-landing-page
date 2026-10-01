@@ -295,7 +295,8 @@ body[data-theme] .blog-recent a,
 body[data-theme] .toc a,
 body[data-theme] .navBreadcrumb a,
 body[data-theme] .hash-link,
-body[data-theme] .gh-link {
+body[data-theme] .gh-link,
+body[data-theme] .header-cta {
   text-decoration: none;
 }
 
@@ -312,6 +313,7 @@ body[data-theme] :focus-visible {
 body[data-theme] .btn:focus-visible,
 body[data-theme] .theme-toggle:focus-visible,
 body[data-theme] .gh-link:focus-visible,
+body[data-theme] .header-cta:focus-visible,
 body[data-theme] .nav-toggle:focus-visible,
 body[data-theme] .tab:focus-visible,
 body[data-theme] .cookie-btn:focus-visible {
@@ -321,6 +323,7 @@ body[data-theme] .cookie-btn:focus-visible {
 body[data-theme] .btn:active,
 body[data-theme] .theme-toggle:active,
 body[data-theme] .gh-link:active,
+body[data-theme] .header-cta:active,
 body[data-theme] .nav-toggle:active,
 body[data-theme] .cookie-btn:active,
 body[data-theme] .cookie-expand:active,
@@ -583,6 +586,47 @@ body[data-theme] .gh-link:hover {
 
 .gh-star {
   flex: none;
+}
+
+/* ============================================================
+   HEADER CTA — "Book a call" (Cal.com), outline only, and only from
+   1200px: below that the bar is full and the docs stay quiet; the
+   "Support" link carries the way there. Same height as the GitHub link.
+   tools/booking-link.sh sets the URL here and on /support.
+   ============================================================ */
+body[data-theme] .header-cta {
+  display: none;
+  justify-self: end;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--space-xs);
+  border: 1px solid var(--border-bright);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fg-primary);
+  white-space: nowrap;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .header-cta:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--fg-dim);
+  color: var(--fg-primary);
+}
+
+@media (min-width: 75rem) {
+  /* logo · nav · call · GitHub · theme toggle · burger */
+  .header-inner {
+    grid-template-columns: auto 1fr auto auto auto auto;
+  }
+
+  body[data-theme] .header-cta {
+    display: inline-flex;
+  }
 }
 
 /* ============================================================

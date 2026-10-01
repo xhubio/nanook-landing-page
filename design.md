@@ -152,6 +152,12 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
   baked markup (`.header-right { display: contents }`); below 640px the
   compact bar + JS drawer from `js/theme.js` (hamburger injected — no HTML
   edits). (2026-10-01: GitHub moved out of the text links into the pill.)
+  **Header CTA** (2026-10-01): one outline link "Book a call" (Cal.com) in
+  front of the GitHub link — hairline `--border-bright`, ink text, 32px like
+  the pill, never filled. Visible **only from 1200px**: below that the bar is
+  full and the docs pages stay quiet; the "Support" link carries the way.
+  Between 641px and 960px the GitHub label and the toggle labels drop and the
+  links sit closer, so the bar fits.
 - **Footer: Ft1 mast-headed** (2026-10-01, replaces the Ft3 index columns).
   Left: wordmark (logo + "Nanook" + brand square, same treatment as the bar)
   and one factual line — "Open-source test data toolkit. / MIT licensed ·
