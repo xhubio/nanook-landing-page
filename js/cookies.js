@@ -41,7 +41,8 @@ function savePreferences() {
 }
 
 function resetCookieConsent() {
-  var wasAnalytics = true;
+  // consent is opt-in: without a stored choice the analytics box starts unticked
+  var wasAnalytics = false;
   try {
     var prev = JSON.parse(localStorage.getItem('nanook-cookies'));
     if (prev) wasAnalytics = prev.analytics !== false;
@@ -51,6 +52,21 @@ function resetCookieConsent() {
   var cb = document.getElementById('cookie-analytics');
   if (cb) cb.checked = wasAnalytics;
 }
+
+/* The "+" buttons toggle a class via their inline handler (which runs
+   first); mirror that state into aria-expanded. */
+(function () {
+  var buttons = document.querySelectorAll('.cookie-expand');
+  Array.prototype.forEach.call(buttons, function (btn) {
+    var category = btn.closest('.cookie-category');
+    if (!category) return;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', function () {
+      btn.setAttribute('aria-expanded',
+        category.classList.contains('open') ? 'true' : 'false');
+    });
+  });
+})();
 
 (function () {
   try {

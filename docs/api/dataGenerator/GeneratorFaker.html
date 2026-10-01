@@ -27,7 +27,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="/css/nanook.css?v=f5833799" />
+  <link rel="stylesheet" href="/css/nanook.css?v=c205c590" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -80,9 +80,13 @@
             <li><a href="/docs/api">API</a></li>
             <li><a href="/blog">Blog</a></li>
             <li><a href="/articles">Articles</a></li>
-            <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
           </ul>
         </nav>
+        <a class="gh-link" href="https://github.com/xhubio/nanook-table/" aria-label="nanook-table on GitHub, 19 stars">
+          <svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+          <span class="gh-label">GitHub</span>
+          <span class="gh-stars"><svg class="gh-star" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg><span data-gh-stars>19</span></span>
+        </a>
         <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
           <span class="theme-toggle-label-dark">Dark</span>
           <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
@@ -492,28 +496,31 @@
     <div class="footer-inner">
       <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
       <div class="footer-col">
-        <samp class="footer-heading">Docs</samp>
+        <span class="footer-heading">Docs</span>
+        <a href="/docs/quickstart/quickstart">Quickstart</a>
         <a href="/docs/tutorials/overview">Tutorials</a>
         <a href="/docs/guide/equivalence/overview">Guide</a>
+        <a href="/docs/api">API</a>
       </div>
       <div class="footer-col">
-        <samp class="footer-heading">More</samp>
+        <span class="footer-heading">More</span>
         <a href="/about">About</a>
         <a href="/articles">Articles</a>
+        <a href="/blog">Blog</a>
         <a href="/imprint">Imprint</a>
         <a href="/privacyPolicy">Privacy Policy</a>
         <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
         <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
       </div>
     </div>
-    <div class="footer-copyright"><samp>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
-          href="https://xhub.io">BeeBack UG</a>.</samp></div>
+    <div class="footer-copyright"><span>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
+          href="https://xhub.io">BeeBack UG</a>.</span></div>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
     <div class="cookie-inner">
       <div class="cookie-main">
-        <samp class="cookie-title">Cookie preferences</samp>
+        <span class="cookie-title">Cookie preferences</span>
         <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
           cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
         <div class="cookie-actions">
@@ -527,7 +534,7 @@
           <div class="cookie-cat-header">
             <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
                 class="cookie-slider cookie-slider-locked"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">Essential</samp><span
+            <div class="cookie-cat-info"><span class="cookie-cat-name">Essential</span><span
                 class="cookie-cat-badge">Always active</span></div>
             <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
               aria-label="Toggle details">+</button>
@@ -535,19 +542,19 @@
           <div class="cookie-cat-details">
             <table class="cookie-table">
               <tr>
-                <td><samp>Provider</samp></td>
+                <td>Provider</td>
                 <td>nanook.xhub.io (First Party)</td>
               </tr>
               <tr>
-                <td><samp>Cookies</samp></td>
+                <td>Cookies</td>
                 <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
               </tr>
               <tr>
-                <td><samp>Duration</samp></td>
+                <td>Duration</td>
                 <td>Persistent (localStorage)</td>
               </tr>
               <tr>
-                <td><samp>Purpose</samp></td>
+                <td>Purpose</td>
                 <td>Remember your display preferences across visits</td>
               </tr>
             </table>
@@ -555,33 +562,33 @@
         </div>
         <div class="cookie-category">
           <div class="cookie-cat-header">
-            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" checked /><span
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" /><span
                 class="cookie-slider"></span></label>
-            <div class="cookie-cat-info"><samp class="cookie-cat-name">Analytics</samp></div>
+            <div class="cookie-cat-info"><span class="cookie-cat-name">Analytics</span></div>
             <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
               aria-label="Toggle details">+</button>
           </div>
           <div class="cookie-cat-details">
             <table class="cookie-table">
               <tr>
-                <td><samp>Provider</samp></td>
+                <td>Provider</td>
                 <td>Google LLC (Google Analytics 4)</td>
               </tr>
               <tr>
-                <td><samp>Cookies</samp></td>
+                <td>Cookies</td>
                 <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
               </tr>
               <tr>
-                <td><samp>Duration</samp></td>
+                <td>Duration</td>
                 <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
               </tr>
               <tr>
-                <td><samp>Purpose</samp></td>
+                <td>Purpose</td>
                 <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
                   anonymized.</td>
               </tr>
               <tr>
-                <td><samp>Privacy</samp></td>
+                <td>Privacy</td>
                 <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
                     Policy</a></td>
               </tr>
@@ -593,7 +600,7 @@
   </div>
   <script>
   </script>
-  <script src="/js/theme.js?v=8e8762bc"></script>
+  <script src="/js/theme.js?v=2328d2ad"></script>
   <script src="/js/cookies.js"></script>
 </body>
 

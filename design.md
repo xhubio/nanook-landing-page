@@ -142,11 +142,16 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
 ## Chrome (fixed — not per-page rotatable)
 
 - **Nav: N1b-register bar** — fixed height 56px, always solid, hairline below.
-  Wordmark (logo + "Nanook" + brand-red square) left, the five links next to it
-  (Docs · API · Blog · Articles · GitHub), theme toggle right. Built by CSS over the
+  Wordmark (logo + "Nanook" + brand-red square) left, the four links next to it
+  (Docs · API · Blog · Articles), then the **GitHub link** (`.gh-link`: mark +
+  "GitHub" + star count, hairline outline, never accent-filled) and the theme
+  toggle right. The star count is **baked into every page** and refreshed by
+  `tools/github-stars.sh` — no visitor request goes to GitHub, nothing shifts
+  on load. Below 640px the label drops (mark + count), below 375px the count
+  drops too (mark only; the `aria-label` keeps the count). Built by CSS over the
   baked markup (`.header-right { display: contents }`); below 640px the
   compact bar + JS drawer from `js/theme.js` (hamburger injected — no HTML
-  edits).
+  edits). (2026-10-01: GitHub moved out of the text links into the pill.)
 - **Footer**: logo + two link columns + copyright line, as baked into every
   page — restyled as a quiet index (sentence-case column heads, hairline
   above, generous padding). Ft3 is allowed because every page of this site is

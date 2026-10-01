@@ -294,7 +294,8 @@ body[data-theme] .docs-prevnext a,
 body[data-theme] .blog-recent a,
 body[data-theme] .toc a,
 body[data-theme] .navBreadcrumb a,
-body[data-theme] .hash-link {
+body[data-theme] .hash-link,
+body[data-theme] .gh-link {
   text-decoration: none;
 }
 
@@ -310,6 +311,7 @@ body[data-theme] :focus-visible {
 
 body[data-theme] .btn:focus-visible,
 body[data-theme] .theme-toggle:focus-visible,
+body[data-theme] .gh-link:focus-visible,
 body[data-theme] .nav-toggle:focus-visible,
 body[data-theme] .tab:focus-visible,
 body[data-theme] .cookie-btn:focus-visible {
@@ -318,6 +320,7 @@ body[data-theme] .cookie-btn:focus-visible {
 
 body[data-theme] .btn:active,
 body[data-theme] .theme-toggle:active,
+body[data-theme] .gh-link:active,
 body[data-theme] .nav-toggle:active,
 body[data-theme] .cookie-btn:active,
 body[data-theme] .cookie-expand:active,
@@ -435,7 +438,8 @@ body[data-theme] .btn[data-state="success"] {
   padding: 0 var(--gutter);
   height: var(--header-h);
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  /* logo · nav · GitHub · theme toggle · burger (injected below 640px) */
+  grid-template-columns: auto 1fr auto auto auto;
   align-items: center;
   column-gap: var(--space-md);
   position: relative;
@@ -523,6 +527,61 @@ body[data-theme] .site-nav a[aria-current="page"] {
   color: var(--fg-primary);
   box-shadow: inset 0 -2px 0 var(--link-accent);
   border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+/* ============================================================
+   GITHUB — the repository link with its star count, in front of the
+   theme toggle. The count is baked into every page and refreshed by
+   tools/github-stars.sh: no visitor request reaches GitHub, nothing
+   shifts on load.
+   ============================================================ */
+body[data-theme] .gh-link {
+  justify-self: end;
+  display: inline-flex;
+  align-items: stretch;
+  min-height: 32px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fg-secondary);
+  white-space: nowrap;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .gh-link:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-bright);
+  color: var(--fg-primary);
+}
+
+.gh-link .gh-mark {
+  align-self: center;
+  margin-left: var(--space-xs);
+  flex: none;
+}
+
+.gh-label {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-xs) 0 var(--space-2xs);
+}
+
+.gh-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3xs);
+  padding: 0 var(--space-xs);
+  border-left: 1px solid var(--border-color);
+  font-variant-numeric: tabular-nums;
+}
+
+.gh-star {
+  flex: none;
 }
 
 /* ============================================================
@@ -738,13 +797,6 @@ body[data-theme] .skip-link {
   align-items: flex-start;
   gap: var(--space-md);
   min-width: 0;
-}
-
-.hero-eyebrow {
-  margin: 0;
-  font-size: var(--text-base);
-  font-weight: 500;
-  color: var(--fg-dim);
 }
 
 .hero-title {
@@ -1121,6 +1173,40 @@ body[data-theme] .step-links a:hover::after {
   border-style: dashed;
 }
 
+/* the one use case with measured numbers anchors the grid: full row on
+   two columns, a 2x2 block on three (2x2 + 8 cards fill a clean 3x4) */
+.use-case-card--lead {
+  gap: var(--space-sm);
+}
+
+.uc-figures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-lg);
+  margin: var(--space-2xs) 0 0;
+}
+
+.uc-figures div {
+  display: flex;
+  flex-direction: column;
+}
+
+.uc-figures dd {
+  order: -1;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: var(--text-lg);
+  font-weight: 500;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-primary);
+}
+
+.uc-figures dt {
+  font-size: var(--text-xs);
+  color: var(--fg-dim);
+}
+
 /* ============================================================
    FAQ — quiet details rows
    ============================================================ */
@@ -1191,13 +1277,21 @@ body[data-theme] .step-links a:hover::after {
   padding: 0 var(--gutter) var(--space-2xl);
 }
 
+/* two groups: outside users, then xhub.io's own products — a proof bar
+   must not let self-use read as a customer reference */
 .trust-inner {
   border-top: 1px solid var(--border-color);
   padding-top: var(--space-md);
   display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.trust-group {
+  display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-md) var(--space-xl);
+  gap: var(--space-2xs) var(--space-xl);
 }
 
 .trust-label {
@@ -1210,7 +1304,8 @@ body[data-theme] .step-links a:hover::after {
 .trust-logos {
   display: flex;
   align-items: center;
-  gap: var(--space-xl);
+  /* tight between wrapped rows, wide between neighbours */
+  gap: var(--space-2xs) var(--space-xl);
   flex-wrap: wrap;
 }
 
@@ -1222,7 +1317,7 @@ body[data-theme] .step-links a:hover::after {
   transition: opacity var(--dur-short) var(--ease-out);
 }
 
-.trust-logos img[alt="invoice-api.xhub.io"] {
+.trust-logos .trust-logo-invoice {
   height: 40px;
   filter: var(--trust-filter-alt);
 }
@@ -1239,17 +1334,18 @@ body[data-theme] .step-links a:hover::after {
   opacity: 0.9;
 }
 
-.trust-logo-with-label samp {
+/* muted by colour, not opacity: ink at 55 % opacity measured ~4.0:1 on
+   light paper, under the 4.5:1 floor; --fg-dim holds 5.8:1 in both themes */
+.trust-logo-with-label span {
   font-family: var(--font-body);
   font-size: var(--text-sm);
   font-weight: 500;
-  color: var(--fg-primary);
-  opacity: 0.55;
-  transition: opacity var(--dur-short) var(--ease-out);
+  color: var(--fg-dim);
+  transition: color var(--dur-short) var(--ease-out);
 }
 
-.trust-logo-with-label:hover samp {
-  opacity: 0.9;
+.trust-logo-with-label:hover span {
+  color: var(--fg-primary);
 }
 
 /* ============================================================
@@ -1319,7 +1415,7 @@ body[data-theme] .footer-col a:hover {
   padding: var(--space-md) var(--gutter) var(--space-lg);
 }
 
-.footer-copyright samp {
+.footer-copyright > span {
   font-family: var(--font-body);
   font-size: var(--text-xs);
   color: var(--fg-dim);
@@ -2743,6 +2839,10 @@ body[data-theme] .notfound-links a {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .use-case-card--lead {
+    grid-column: 1 / -1;
+  }
+
   .docs-hub > nav,
   .docs-hub > div {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2757,6 +2857,15 @@ body[data-theme] .notfound-links a {
 @media (min-width: 60rem) {
   .use-cases-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .use-case-card--lead {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+
+  .use-case-card--lead .uc-figures {
+    margin-top: auto;
   }
 }
 
@@ -2817,6 +2926,16 @@ body[data-theme] .notfound-links a {
     height: 24px;
   }
 
+  /* compact bar: the mark and the count carry the link; the accessible
+     name stays in aria-label */
+  .gh-label {
+    display: none;
+  }
+
+  .gh-link .gh-mark {
+    margin-right: var(--space-2xs);
+  }
+
   .nav-toggle {
     display: flex;
   }
@@ -2828,6 +2947,9 @@ body[data-theme] .notfound-links a {
   .site-header.nav-open .site-nav {
     display: block;
     position: absolute;
+    /* an absolutely positioned grid item still obeys justify-self; the
+       desktop `start` shrank the drawer to its content (112px) */
+    justify-self: stretch;
     top: 100%;
     left: 0;
     right: 0;
@@ -2963,6 +3085,19 @@ body[data-theme] .notfound-links a {
   .docs-hub,
   .long-doc {
     padding-block: var(--space-xl) var(--space-2xl);
+  }
+}
+
+/* below 375px logo, pill, toggle and burger crowd each other (~308px
+   needed at 320): the count goes, the mark stays (the aria-label still
+   names the stars) */
+@media (max-width: 374px) {
+  .gh-stars {
+    display: none;
+  }
+
+  .gh-link .gh-mark {
+    margin-inline: var(--space-xs);
   }
 }
 
@@ -3138,7 +3273,7 @@ body[data-theme] .api-nav a[aria-current="page"] {
 .cookie-table code,
 .sample-source,
 .arch-figure figcaption,
-.footer-copyright samp,
+.footer-copyright > span,
 .step-links .step-kind,
 body[data-theme] .navGroupSubcategoryTitle,
 body[data-theme] .nav-date {

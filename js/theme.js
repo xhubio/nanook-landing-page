@@ -17,7 +17,20 @@ function toggleTheme() {
   var next = current === 'dark' ? 'light' : 'dark';
   document.body.setAttribute('data-theme', next);
   localStorage.setItem('nanook-theme', next);
+  syncThemeToggle();
 }
+
+/* The baked button says "Toggle theme" and nothing about its state; a
+   pressed state named "Dark theme" tells a screen reader both. Set here so
+   the pre-rendered pages stay untouched. */
+function syncThemeToggle() {
+  var btn = document.querySelector('.theme-toggle');
+  if (!btn) return;
+  btn.setAttribute('aria-label', 'Dark theme');
+  btn.setAttribute('aria-pressed',
+    document.body.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
+}
+syncThemeToggle();
 
 /* Mobile Nav — injected at runtime so the pre-rendered HTML pages
    stay untouched. theme.js is loaded on every one of them. */

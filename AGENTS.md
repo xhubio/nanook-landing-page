@@ -30,9 +30,6 @@ Docs-Sidebar-Einträge (die 40 Guide-/Tutorial-/Quickstart-/Modul-Seiten samt Tw
 so wie am 2026-09-02 der Eintrag `/docs/quickstart/claude-code`. Die 110 API-Seiten tragen eine
 andere Sidebar und bleiben unberührt.
 
-🔴 **`CLAUDE.md` line 17 claims an `/en/` locale mirror. It does not exist.** Do not
-follow that instruction; it is stale.
-
 ## Publishing a blog post
 
 ### 1 · The PRD is the planning artefact, not a gate
@@ -174,6 +171,10 @@ and it has no generator watching it.
    Prüfen mit `python3 -m http.server` passiert dasselbe mit alten Stylesheets.
 5. **The `.html` and `/index.html` twins must stay identical.** Editing one and not the
    other produces two different pages at two URLs that look like one.
+6. **Die GitHub-Star-Zahl in der Kopfleiste ist eingebacken.** Sie aktualisiert sich nicht
+   von selbst — gelegentlich und vor Releases `tools/github-stars.sh` ausführen (holt die
+   Zahl per `gh api`, Fallback `curl`; schreibt sie in alle Seiten; idempotent). Bewusst
+   kein Live-Abruf: der würde die IP jedes Besuchers an GitHub schicken.
 
 ## When to propose a generator instead
 

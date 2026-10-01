@@ -10,16 +10,7 @@ This is the **Nanook landing page** — a static website hosted on GitHub Pages 
 
 This is a **pre-built Docusaurus v1 site** — there is no build step, package.json, or dev server in this repo. All HTML, CSS, and JS are static assets served directly by GitHub Pages.
 
-- `/index.html` — main landing page
-- 🔴 ~~`/en/` — English locale mirror~~ — **existiert nicht** (geprueft 2026-08-21). Der Eintrag stand hier, ohne dass es den Ordner je gab.
-- `/docs/` — pre-rendered API docs and guides (Docusaurus output)
-- `/blog/` — pre-rendered blog posts
 - `/prds/` — **Quelle**: Beitrags-Spezifikationen (Zielgruppe, Keywords, Gliederung, SEO). Ein neuer Beitrag faengt hier an, nicht im HTML
-- `/css/main.css`, `/css/prism.css` — stylesheets (main.css is minified Docusaurus output)
-- `/js/scrollSpy.js`, `/js/codetabs.js` — small utility scripts
-- `/img/` — logos, icons, and illustrations (SVG and PNG)
-- `/sitemap.xml` — XML sitemap
-- `/CNAME` — custom domain config (`nanook.xhub.io`)
 
 ## Deployment
 
@@ -31,6 +22,5 @@ Pushing to `main` deploys automatically via GitHub Pages. There are no CI pipeli
 
 ## Key Notes
 
-- Pages like `/imprint.html`, `/privacyPolicy.html`, `/help.html`, `/users.html` exist both at the root and under `/en/` with an `index.html` variant for clean URLs.
-- The CSS is minified and large (~28k tokens); prefer targeted edits over full rewrites.
-- External dependencies are loaded via CDN (highlight.js, GitHub buttons).
+- The CSS (`/css/main.css`, minified Docusaurus output) is large (~28k tokens); prefer targeted edits over full rewrites.
+
