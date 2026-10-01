@@ -152,10 +152,17 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
   baked markup (`.header-right { display: contents }`); below 640px the
   compact bar + JS drawer from `js/theme.js` (hamburger injected — no HTML
   edits). (2026-10-01: GitHub moved out of the text links into the pill.)
-- **Footer**: logo + two link columns + copyright line, as baked into every
-  page — restyled as a quiet index (sentence-case column heads, hairline
-  above, generous padding). Ft3 is allowed because every page of this site is
-  a docs root or hub.
+- **Footer: Ft1 mast-headed** (2026-10-01, replaces the Ft3 index columns).
+  Left: wordmark (logo + "Nanook" + brand square, same treatment as the bar)
+  and one factual line — "Open-source test data toolkit. / MIT licensed ·
+  Node.js 22+". Right: two quiet inline link rows, product (Docs · API · Blog
+  · Articles · GitHub) and legal (About · Imprint · Privacy · Manage cookies),
+  middot separators. Copyright beneath in `--text-xs` muted. Hairline above,
+  generous top padding. "Manage cookies" is a `<button>` (it opens the
+  consent banner — an action, and the consent must stay revocable from every
+  page). Below 640px: one column, links left-aligned at 44px touch height,
+  separators replaced by space (a wrapped middot would start a line). A
+  closing band, not a sitemap — the bar carries the sections.
 - Theme toggle labels read **Light / Dark**; cookie banner sentence case;
   skip link (injected) is an ink block; `aria-current="page"` on the active
   nav link (ink + blue underline).

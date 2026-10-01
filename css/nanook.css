@@ -2,7 +2,7 @@
  * macrostructure: Ecosystem Index (landing) · Index-First (blog index) ·
  *   Long Document (posts, root pages) · Ecosystem Index, miniature (hubs)
  * H2 hero knobs: ratio=6/6, right=code sample (tabs), divider=negative-space
- * nav: N1b bar (CSS over the baked markup) · footer: Ft3 (docs root, baked)
+ * nav: N1b bar (CSS over the baked markup) · footer: Ft1 mast-headed (baked)
  * theme: studied-DNA (source: https://platform.claude.com/docs/en/home)
  *   paper oklch(98.8% 0.003 28) · accent oklch(43.3% 0.128 257) blue, interaction only
  *   brand oklch(58.8% 0.20 28) — a mark, two slots (wordmark square, 404 figure)
@@ -14,7 +14,7 @@
  * enrichment: none (a real code sample from the tutorials + the existing
  *   architecture figure) · motion: cut — no reveals, tab crossfade only
  * pre-emit critique: P4 H4 E4 S4 R5 V4
- * slop test 2026-09-02: contrast: pass (40–41) · nav: N1b · footer: Ft3 ·
+ * slop test 2026-09-02: contrast: pass (40–41) · nav: N1b · footer: Ft1 ·
  *   slop: pass (42–45; 42 by studied DNA, links left-clustered, no CTA) ·
  *   honest: pass (46) · chrome: pass (47) · tokens: pass (48) ·
  *   responsive: pass (49) · icons: pass (30) · mobile: pass (34, 49, 50–57)
@@ -283,8 +283,8 @@ body[data-theme] a:hover {
 /* chrome links (bar, footer, cards, buttons) are not underlined prose links */
 body[data-theme] .site-logo,
 body[data-theme] .site-nav a,
-body[data-theme] .footer-col a,
-body[data-theme] .footer-logo a,
+body[data-theme] .footer-wordmark,
+body[data-theme] .footer-links a,
 body[data-theme] .btn,
 body[data-theme] .card-link,
 body[data-theme] .docs-hub-row,
@@ -327,7 +327,8 @@ body[data-theme] .cookie-expand:active,
 body[data-theme] .tab:active,
 body[data-theme] .site-nav a:active,
 body[data-theme] .step-links a:active,
-body[data-theme] .footer-col a:active,
+body[data-theme] .footer-links a:active,
+body[data-theme] .footer-cookies:active,
 body[data-theme] .card:active {
   transform: translateY(1px);
 }
@@ -1349,7 +1350,10 @@ body[data-theme] .step-links a:hover::after {
 }
 
 /* ============================================================
-   FOOTER — the baked two-column index, restyled
+   FOOTER — Ft1 mast-headed: wordmark + one factual line left, the
+   links as two quiet inline rows right (product · legal), copyright
+   beneath. A closing band, not a sitemap: the bar already carries the
+   sections, the footer only repeats the ways out.
    ============================================================ */
 .site-footer {
   border-top: 1px solid var(--border-color);
@@ -1360,62 +1364,106 @@ body[data-theme] .step-links a:hover::after {
 .footer-inner {
   max-width: var(--shell-max);
   margin: 0 auto;
-  padding: clamp(2.5rem, 2rem + 2vw, 4rem) var(--gutter) var(--space-lg);
+  padding: clamp(2.5rem, 2rem + 2vw, 4rem) var(--gutter) var(--space-md);
   display: grid;
-  grid-template-columns: auto 1fr 1fr;
-  gap: var(--space-xl);
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-lg) var(--space-xl);
 }
 
-.footer-logo a {
-  display: inline-block;
-}
-
-.footer-logo img {
-  width: 40px;
-  height: auto;
-  opacity: 0.8;
-  filter: var(--logo-filter);
-  transition: opacity var(--dur-short) var(--ease-out);
-}
-
-.footer-logo img:hover {
-  opacity: 1;
-}
-
-.footer-col {
+.footer-mast {
   display: flex;
   flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+
+body[data-theme] .footer-wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  align-self: flex-start;
+  min-height: 44px;
+}
+
+.footer-wordmark img {
+  height: 26px;
+  width: auto;
+  filter: var(--logo-filter);
+  transition: filter var(--dur-long) var(--ease-out);
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.55;
+  color: var(--fg-dim);
+}
+
+/* two rows, right-aligned on the wide bar; each link a single line */
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   gap: var(--space-3xs);
 }
 
-.footer-heading {
-  font-family: var(--font-body);
-  font-size: var(--text-sm);
-  font-weight: 500;
-  color: var(--fg-dim);
-  margin-bottom: var(--space-2xs);
+.footer-links ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
 }
 
-body[data-theme] .footer-col a {
+.footer-links li {
+  margin: 0 !important;
+  display: inline-flex;
+  align-items: center;
+}
+
+/* the separator is decoration: empty alt text keeps it out of the
+   accessibility tree */
+.footer-links li + li::before {
+  content: '·' / '';
+  padding-inline: var(--space-2xs);
+  color: var(--fg-dim);
+}
+
+body[data-theme] .footer-links a,
+.footer-cookies {
   display: inline-flex;
   align-items: center;
   min-height: 32px;
+  font-family: var(--font-body);
   font-size: var(--text-sm);
+  font-weight: 400;
+  line-height: 1;
   color: var(--fg-secondary);
   white-space: nowrap;
+  transition: color var(--dur-short) var(--ease-out);
 }
 
-body[data-theme] .footer-col a:hover {
+/* "Manage cookies" opens the consent banner — an action, so a button,
+   dressed as its link neighbours */
+.footer-cookies {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+body[data-theme] .footer-links a:hover,
+.footer-cookies:hover {
   color: var(--fg-primary);
 }
 
 .footer-copyright {
   max-width: var(--shell-max);
   margin: 0 auto;
-  padding: var(--space-md) var(--gutter) var(--space-lg);
-}
-
-.footer-copyright > span {
+  padding: 0 var(--gutter) var(--space-lg);
   font-family: var(--font-body);
   font-size: var(--text-xs);
   color: var(--fg-dim);
@@ -3015,12 +3063,31 @@ body[data-theme] .notfound-links a {
     align-items: stretch;
   }
 
+  /* one column: mast first, then the link rows left-aligned; links get
+     full touch height */
   .footer-inner {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--space-lg);
   }
 
-  body[data-theme] .footer-col a {
+  .footer-links,
+  .footer-links ul {
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  /* rows wrap on a phone, and a middot would start the new line: the
+     separator gives way to plain space */
+  .footer-links ul {
+    column-gap: var(--space-md);
+  }
+
+  .footer-links li + li::before {
+    content: none;
+  }
+
+  body[data-theme] .footer-links a,
+  .footer-cookies {
     min-height: 44px;
   }
 
@@ -3273,7 +3340,7 @@ body[data-theme] .api-nav a[aria-current="page"] {
 .cookie-table code,
 .sample-source,
 .arch-figure figcaption,
-.footer-copyright > span,
+.footer-copyright,
 .step-links .step-kind,
 body[data-theme] .navGroupSubcategoryTitle,
 body[data-theme] .nav-date {

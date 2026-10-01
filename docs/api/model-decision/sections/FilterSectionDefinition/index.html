@@ -27,7 +27,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="/css/nanook.css?v=c205c590" />
+  <link rel="stylesheet" href="/css/nanook.css?v=d96188c6" />
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -495,27 +495,27 @@
   </div>
   <footer class="site-footer">
     <div class="footer-inner">
-      <div class="footer-logo"><a href="/"><img src="/img/logo.svg" alt="Nanook" width="66" height="58" /></a></div>
-      <div class="footer-col">
-        <span class="footer-heading">Docs</span>
-        <a href="/docs/quickstart/quickstart">Quickstart</a>
-        <a href="/docs/tutorials/overview">Tutorials</a>
-        <a href="/docs/guide/equivalence/overview">Guide</a>
-        <a href="/docs/api">API</a>
+      <div class="footer-mast">
+        <a class="footer-wordmark" href="/"><img src="/img/logo.svg" alt="" width="66" height="58" /><span class="site-name">Nanook</span></a>
+        <p class="footer-tagline">Open-source test data toolkit.<br />MIT licensed &middot; Node.js 22+</p>
       </div>
-      <div class="footer-col">
-        <span class="footer-heading">More</span>
-        <a href="/about">About</a>
-        <a href="/articles">Articles</a>
-        <a href="/blog">Blog</a>
-        <a href="/imprint">Imprint</a>
-        <a href="/privacyPolicy">Privacy Policy</a>
-        <a href="https://github.com/xhubio/nanook-table/">GitHub</a>
-        <a href="#" onclick="resetCookieConsent();return false;">Manage Cookies</a>
-      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <ul>
+          <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+          <li><a href="/docs/api">API</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+        </ul>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/imprint">Imprint</a></li>
+          <li><a href="/privacyPolicy">Privacy</a></li>
+          <li><button type="button" class="footer-cookies" onclick="resetCookieConsent()">Manage cookies</button></li>
+        </ul>
+      </nav>
     </div>
-    <div class="footer-copyright"><span>&copy; 2018-2026 nanook.xhub.io &mdash; An Open Source Project by <a
-          href="https://xhub.io">BeeBack UG</a>.</span></div>
+    <p class="footer-copyright">&copy; 2018&ndash;2026 BeeBack UG (<a href="https://xhub.io">xhub.io</a>)</p>
   </footer>
   <!-- Cookie Consent Banner -->
   <div id="cookie-banner" class="cookie-banner" style="display:none;">
