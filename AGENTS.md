@@ -96,8 +96,9 @@ puts it under every article. The docs carry a shorter line, `p.docs-support`, on
 quickstart and tutorial pages (above prev/next) — guide, module and API pages stay without. In a PRD, note it in the
 CTA field as **Secondary CTA: Support (fixed close)** — the primary CTA stays the post's own.
 
-The booking button on `/support` ships hidden until a calendar link exists:
-`tools/booking-link.sh https://…` sets the URL and shows it (support.html + twin).
+The booking button on `/support` points to `https://cal.com/pa201608/30min` (a 30-minute call with
+Patrick Jerominek). `tools/booking-link.sh https://…` changes the URL (support.html + twin). If the
+booking provider changes, update the "Booking a Call" section in `privacyPolicy.html` too.
 
 ### 5 · 🔴 Lektorat is mandatory — always, before pushing
 

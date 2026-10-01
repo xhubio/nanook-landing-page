@@ -1,7 +1,8 @@
 #!/bin/sh
-# Booking link: sets the URL of the "Book a 30-minute call" button on /support
-# (support.html + twin) and makes the button visible. Until this runs, the
-# button ships with `hidden`. Idempotent; run again to change the URL.
+# Booking link: sets or changes the URL of the "Book a 30-minute call" button
+# on /support (support.html + twin); also removes a leftover `hidden`.
+# Idempotent. If the provider changes, update the "Booking a Call" section in
+# privacyPolicy.html too.
 #   tools/booking-link.sh https://cal.com/…
 set -e
 cd "$(dirname "$0")/.."
