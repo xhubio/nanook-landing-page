@@ -85,6 +85,20 @@ Do not treat these as regressions you introduced:
 Nobody notices, because nothing fails. If you publish a post, fixing the feed for that
 post is cheap; a full feed rebuild is a separate decision.
 
+### 4b · The support close is mandatory
+
+Every published post ends with the `p.post-support` paragraph (xhub.io, `/support`,
+nanook@xhub.io) as the last paragraph of the body, after any series navigation. Do not
+write it by hand: `python3 tools/support-close.py` adds it to every published post
+(idempotent, re-copies the twins); `tools/publish-part.py` adds it when a series part
+goes live (and `tools/unpublish-parts.py` takes it out again); `tools/build-article.py`
+puts it under every article. The docs carry a shorter line, `p.docs-support`, only on the
+quickstart and tutorial pages (above prev/next) — guide, module and API pages stay without. In a PRD, note it in the
+CTA field as **Secondary CTA: Support (fixed close)** — the primary CTA stays the post's own.
+
+The booking button on `/support` ships hidden until a calendar link exists:
+`tools/booking-link.sh https://…` sets the URL and shows it (support.html + twin).
+
 ### 5 · 🔴 Lektorat is mandatory — always, before pushing
 
 After writing **or editing** a post, run the **`lektor` agent** (`.claude/agents/lektor.md`)
@@ -98,7 +112,7 @@ only gate between a draft and the live site.
 
 - **Language is English.** All posts and docs. (`CLAUDE.md` and `REDESIGN.md` are German
   — those are internal.)
-- **Author block** links `https://cv.xhub.io/de/torsten.link`.
+- **Author block** links `https://www.linkedin.com/in/torsten-link-40a492149`.
 - **Tone**: technical and specific. The existing posts state numbers and admit limits.
   Keep the product out of the first half; introduce Nanook where it actually answers the
   problem, not in the lede.

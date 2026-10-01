@@ -142,8 +142,8 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
 ## Chrome (fixed — not per-page rotatable)
 
 - **Nav: N1b-register bar** — fixed height 56px, always solid, hairline below.
-  Wordmark (logo + "Nanook" + brand-red square) left, the four links next to it
-  (Docs · API · Blog · Articles), then the **GitHub link** (`.gh-link`: mark +
+  Wordmark (logo + "Nanook" + brand-red square) left, the five links next to it
+  (Docs · API · Blog · Articles · Support), then the **GitHub link** (`.gh-link`: mark +
   "GitHub" + star count, hairline outline, never accent-filled) and the theme
   toggle right. The star count is **baked into every page** and refreshed by
   `tools/github-stars.sh` — no visitor request goes to GitHub, nothing shifts
@@ -156,7 +156,7 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
   Left: wordmark (logo + "Nanook" + brand square, same treatment as the bar)
   and one factual line — "Open-source test data toolkit. / MIT licensed ·
   Node.js 22+". Right: two quiet inline link rows, product (Docs · API · Blog
-  · Articles · GitHub) and legal (About · Imprint · Privacy · Manage cookies),
+  · Articles · Support · GitHub) and legal (About · Imprint · Privacy · Manage cookies),
   middot separators. Copyright beneath in `--text-xs` muted. Hairline above,
   generous top padding. "Manage cookies" is a `<button>` (it opens the
   consent banner — an action, and the consent must stay revocable from every

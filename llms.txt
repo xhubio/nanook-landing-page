@@ -63,3 +63,5 @@
 - Website: https://nanook.xhub.io
 - GitHub: https://github.com/xhubio/nanook-table
 - Organization: xhub.io (https://xhub.io)
+- Support: https://nanook.xhub.io/support (documentation, GitHub issues, and commercial support from xhub.io: table review, integration and development, support contract)
+- Email: nanook@xhub.io

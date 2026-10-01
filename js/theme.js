@@ -108,6 +108,7 @@ syncThemeToggle();
     var section = null;
     if (path.indexOf('/blog') === 0) section = '/blog';
     else if (path.indexOf('/articles') === 0) section = '/articles';
+    else if (path.indexOf('/support') === 0) section = '/support';
     else if (path.indexOf('/docs/api') === 0) section = '/docs/api';
     else if (path.indexOf('/docs') === 0) section = '/docs';
     if (section) {
@@ -119,6 +120,7 @@ syncThemeToggle();
         if (section === '/docs/api' && href.indexOf('/docs/api') === 0) best = links[i];
         else if (section === '/blog' && href.indexOf('/blog') === 0) best = links[i];
         else if (section === '/articles' && href.indexOf('/articles') === 0) best = links[i];
+        else if (section === '/support' && href.indexOf('/support') === 0) best = links[i];
         else if (section === '/docs' && href.indexOf('/docs') === 0 &&
                  href.indexOf('/docs/api') !== 0 && !best) best = links[i];
       }

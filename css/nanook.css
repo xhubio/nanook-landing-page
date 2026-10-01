@@ -750,6 +750,29 @@ body[data-theme] .skip-link {
   padding-top: var(--space-md);
 }
 
+/* the support teaser follows the FAQ closely: one head, two ways out */
+.section.support-teaser {
+  padding-top: var(--space-md);
+}
+
+.support-teaser .section-head {
+  margin-bottom: var(--space-md);
+}
+
+.support-teaser-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs) var(--space-md);
+}
+
+body[data-theme] .support-teaser-actions > a:not(.btn) {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--text-sm);
+}
+
 .section-head {
   display: flex;
   flex-direction: column;
@@ -2228,6 +2251,17 @@ body[data-theme] .post img {
   height: auto;
 }
 
+/* one muted line above prev/next on quickstart + tutorial pages — no box */
+body[data-theme] .docs-support {
+  margin: var(--space-xl) 0 0;
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+body[data-theme] .docs-support + .docs-prevnext {
+  margin-top: var(--space-sm);
+}
+
 /* Prev/Next navigation */
 body[data-theme] .docs-prevnext {
   border-top: 1px solid var(--border-color);
@@ -2820,6 +2854,100 @@ body[data-theme="light"] .row-logo img[data-ink="light"] {
 }
 
 /* ============================================================
+   SUPPORT — /support on the Long Document register: the three
+   places to ask as a numbered hairline list, the three offers as
+   rows with their scope in muted type, the contact as two CTAs.
+   No cards: the page reads, it does not sell.
+   ============================================================ */
+.long-doc .support-tiers {
+  list-style: none;
+  counter-reset: tier;
+  margin: 0 0 var(--space-md);
+  padding: 0;
+  border-top: 1px solid var(--border-color);
+}
+
+.long-doc .support-tiers > li {
+  counter-increment: tier;
+  display: grid;
+  grid-template-columns: var(--space-lg) minmax(0, 1fr);
+  margin: 0;
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-color);
+  max-width: none;
+}
+
+.long-doc .support-tiers > li::before {
+  content: counter(tier);
+  grid-row: 1 / span 2;
+  padding-top: 0.15em;
+  font-size: var(--text-sm);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-dim);
+}
+
+.long-doc .support-tiers h3 {
+  margin: 0 0 var(--space-3xs);
+}
+
+.long-doc .support-tiers p {
+  margin: 0;
+}
+
+.support-offers {
+  border-top: 1px solid var(--border-color);
+}
+
+.support-offer {
+  padding: var(--space-sm) 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.long-doc .support-offer h3 {
+  margin: 0;
+}
+
+.long-doc .support-offer-scope {
+  margin: 0 0 var(--space-2xs);
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+.long-doc .support-offer p:last-child {
+  margin-bottom: 0;
+}
+
+.long-doc .support-note {
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+.support-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-top: var(--space-md);
+}
+
+/* the closing line of every published post and article: a signoff, set
+   apart by a hairline, quieter than the prose above it */
+body[data-theme] p.post-support {
+  margin-top: var(--space-xl);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--border-color);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: var(--fg-dim);
+}
+
+/* the call button ships hidden until tools/booking-link.sh sets its URL */
+.support-actions [hidden] {
+  display: none;
+}
+
+/* ============================================================
    404 — status line, serif figure in the brand red (slot 2 of 2)
    ============================================================ */
 .notfound {
@@ -2961,6 +3089,31 @@ body[data-theme] .notfound-links a {
 }
 
 /* --- Phones: compact bar + drawer, single columns, tap targets ---------- */
+/* --- Bar between the compact phone bar and the full desktop bar ---------
+   Logo, five links, the GitHub link and the theme toggle need ~810px with
+   their labels; from 641px to 960px the labels go (the GitHub mark + count
+   and the toggle track carry them, aria-labels keep the names) and the
+   links sit closer. Without this the toggle ran off the right edge. */
+@media (max-width: 60rem) {
+  .header-inner {
+    column-gap: var(--space-sm);
+  }
+
+  body[data-theme] .site-nav a {
+    padding-inline: var(--space-2xs);
+  }
+
+  .gh-label,
+  .theme-toggle-label-dark,
+  .theme-toggle-label-light {
+    display: none;
+  }
+
+  .gh-link .gh-mark {
+    margin-right: var(--space-2xs);
+  }
+}
+
 @media (max-width: 640px) {
   :root {
     --header-h: 52px;

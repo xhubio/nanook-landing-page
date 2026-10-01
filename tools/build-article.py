@@ -19,7 +19,7 @@ ARTICLES = [{
     "title": "Agentic Software Development: How We Build Software with AI Agents, What Works, and Where It Breaks",
     "meta_title": "Agentic Software Development",
     "kicker": "Article · Field report",
-    "author": "Torsten Link", "author_url": "https://cv.xhub.io/de/torsten.link",
+    "author": "Torsten Link", "author_url": "https://www.linkedin.com/in/torsten-link-40a492149",
     "date": "2026-09-17", "date_human": "17 September 2026",
     "description": "A field report on nine months of building software with an AI coding agent: the setup, the process, the tables, the tests, and at length where it breaks.",
     # report section number -> series part
@@ -41,7 +41,7 @@ ARTICLES = [{
     "title": "Guide: Building an Event-Driven Service with Tables and an AI Agent",
     "meta_title": "Guide: An Event-Driven Service with Tables and an Agent",
     "kicker": "Article · Guide",
-    "author": "Torsten Link", "author_url": "https://cv.xhub.io/de/torsten.link",
+    "author": "Torsten Link", "author_url": "https://www.linkedin.com/in/torsten-link-40a492149",
     "date": "2026-09-16", "date_human": "16 September 2026",
     "description": "A step-by-step guide to an event-driven service with decision tables and an AI coding agent: fifteen steps, the traps that cost time, what was not worth it.",
     "parts": {}, "series": {},
@@ -161,6 +161,7 @@ def main():
       {series_intro}
       {toc(fragment)}
 {fragment}
+      <p class="post-support">Nanook is built and supported by <a href="https://xhub.io">xhub.io</a>. For a review of your tables, help with an integration or a support contract, see <a href="/support">Support</a> or write to <a href="mailto:nanook@xhub.io">nanook@xhub.io</a>.</p>
       <!-- built by tools/build-article.py from {a['source']} on {today}; edit the Markdown, then rebuild -->
     </article>
   </main>"""

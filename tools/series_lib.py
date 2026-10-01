@@ -95,7 +95,7 @@ def teaser_html(p):
                 <h2 class="postHeaderTitle"><a href="{url(p)}">{p['title']}</a></h2>
                 <p class="post-meta">{human(p)}</p>
                 <div class="authorBlock">
-                  <p class="post-authorName"><a href="https://cv.xhub.io/de/torsten.link" target="_blank"
+                  <p class="post-authorName"><a href="https://www.linkedin.com/in/torsten-link-40a492149" target="_blank"
                       rel="noreferrer noopener">Torsten Link</a></p>
                 </div>
               </header>
@@ -271,6 +271,37 @@ def set_backlink_5b(state):
     write(f, s)
 
 
+# ---------- support close (last paragraph of every published post) ----------
+SUPPORT_CLOSE = ('<p class="post-support">Nanook is built and supported by <a href="https://xhub.io">xhub.io</a>. '
+                 'For a review of your tables, help with an integration or a support contract, see '
+                 '<a href="/support">Support</a> or write to <a href="mailto:nanook@xhub.io">nanook@xhub.io</a>.</p>')
+BODY_END_RE = re.compile(r'\n([ \t]*)</span></div>\n')
+
+
+def support_close(s):
+    """Append SUPPORT_CLOSE as the last paragraph of the post body; idempotent."""
+    if 'class="post-support"' in s:
+        return s
+    m = BODY_END_RE.search(s)
+    if not m:
+        return s
+    indent = m.group(1) + "  "
+    return s[:m.start()] + "\n" + indent + SUPPORT_CLOSE + "\n" + s[m.start():]
+
+
+def set_support(p):
+    """Published parts end with the support close; unpublished drafts do not."""
+    f = path(p)
+    if not os.path.exists(f):
+        return
+    s = read(f)
+    if p["published"]:
+        s = support_close(s)
+    else:
+        s = re.sub(r'\n[ \t]*<p class="post-support">.*?</p>\n', "", s, count=1, flags=re.S)  # exact inverse of support_close
+    write(f, s)
+
+
 def set_robots(p):
     f = path(p); s = read(f)
     s = re.sub(r'<meta name="robots" content="[^"]*" />', '<meta name="robots" content="' + ("index, follow" if p["published"] else "noindex, nofollow") + '" />', s, count=1)
@@ -327,6 +358,7 @@ def apply(state, p):
     set_nav(state, p)
     if p["prev"]: set_nav(state, by_key(state, p["prev"]))
     if p["key"] == "5b" or p["key"] == "5": set_backlink_5b(state)
+    set_support(p)
     plan_status(p)
     rebuild_articles(p)
     set_twin(p)
