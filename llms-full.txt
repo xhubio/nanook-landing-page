@@ -1,0 +1,3586 @@
+# Nanook
+
+> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.0.1 (2026-08-29).
+
+The docs pages below (Documentation except the hub, Tutorials, and the 3.x API reference; not the 1.x API pages) are also available as Markdown: append `.md` to the URL (for example https://nanook.xhub.io/docs/quickstart/quickstart.md). The whole documentation in one file: https://nanook.xhub.io/llms-full.txt. The npm package ships the 3.x docs as Markdown in node_modules/@xhubio/nanook-table/docs/.
+
+This file is the whole documentation of https://nanook.xhub.io in one Markdown file, generated from the docs pages by tools/build-llms.py. The index is https://nanook.xhub.io/llms.txt.
+
+# The 5 minute Quickstart
+
+Source: https://nanook.xhub.io/docs/quickstart/quickstart
+
+This is a tutorial on Nanook – test case generator. It will take you through a basic overview and examples including simple test data generator setup. You’ll find detailed description of the tool in our full tutorial and user manual.
+
+Prefer to have the first table drafted for you? The [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code) lets Claude Code write the decision table from a one-line description; the data is then generated with the same script as below.
+
+## Equivalence Class Table
+
+Test cases are defined in an ECT - Equivalence Class Table, which refers to the concept of classes with equivalent behavior within a single application. For example, the "Not Empty Field" class behavior is the same regardless of type and number of characters provided. The ECT can be created with any spreadsheet application that saves XLSX files — Excel, LibreOffice Calc, or Google Sheets via download.
+
+In this Quickstart we’ll look at the example of a simple log-in dialogue. The ECT representing a login dialogue is shown below.
+
+![equivalence class table quickstart](https://nanook.xhub.io/img/quickstart/equivalence-class-table-quickstart.png)
+
+In the log-in dialogue the user provides username and password and each may have three groups of possible values corresponding to the following ECT classes:
+
+For the user-id field the classes are:
+
+- empty
+- userId not existent
+- valid user id
+
+Classes related to the password field:
+
+- empty
+- wrong
+- valid password
+
+These classes will result in a maximum of 3*3=9 test cases. In this example we would like to generate test data for all of these test cases.
+
+The test case definitions are provided in columns "F" to "J" in the above spreadsheet. If we take a closer look at test case 1 (column F), we see that the equivalence class "empty" for "userId" is marked with an "x". An "x" means: "choose exactly this equivalence class for this field". The three equivalence classes for the password field are marked with an "e". "e" means: "randomly choose any of the equivalence classes for this field". In the summary section, you can see the expected result for this test case. The test case should make sure that no matter what you enter into the password field, the error "The userId must not be empty" appears, as long as the userId is empty.
+
+Columns G to J define the other test cases we would like to cover.
+
+## Generating test data
+
+Finally, let's generate the test data on the basis of the table we just created. Install the package into a Node.js project (Node.js 22 or newer):
+
+```
+npm install @xhubio/nanook-table
+```
+
+Save the table as `resources/login.xlsx`, save the script below as `generate.mts` and run it with `node generate.mts` (Node.js 22.18 or newer runs `.mts` files directly; older 22.x needs `--experimental-strip-types`). It uses the same calls as the example that produced the data on the start page. The tables are handed to the processor keyed by name; that is what lets `ref:` directives find another sheet of the workbook:
+
+```
+import {
+  LoggerMemory, FileProcessor, ImporterXlsx,
+  ParserDecision, DataGeneratorRegistry, GeneratorFaker,
+  TestcaseProcessor, type InterfaceWriter
+} from '@xhubio/nanook-table'
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+const fileProcessor = new FileProcessor({ logger })
+fileProcessor.registerImporter(
+  'xlsx',
+  new ImporterXlsx()
+)
+fileProcessor.registerParser(
+  '<DECISION_TABLE>',
+  new ParserDecision({ logger })
+)
+await fileProcessor.load(['resources/login.xlsx'])
+
+const registry = new DataGeneratorRegistry()
+registry.registerGenerator(
+  'faker',
+  new GeneratorFaker({ logger })
+)
+
+const collected: unknown[] = []
+const writer: InterfaceWriter = {
+  logger,
+  async before() {},
+  async write(tc) {
+    collected.push(JSON.parse(JSON.stringify(tc)))
+  },
+  async after() {},
+}
+
+const tables = Object.fromEntries(
+  fileProcessor.tables.map((t) => [t.tableName, t])
+)
+
+const processor = new TestcaseProcessor({
+  logger,
+  tables,
+  generatorRegistry: registry,
+  writer: [writer],
+})
+await processor.process()
+
+console.log(JSON.stringify(collected[0], null, 2))
+```
+
+The pictured table calls a generator named `generatorPerson` in the class "userId not existent". Either register a generator under that name or change that cell to `gen::faker:internet.email`, which the script registers. Parsing and generation errors are printed, because the logger writes to the console.
+
+The original example repository `quickstart-source` from 2019 is archived (last change November 2020) and targets Nanook 1.x; its `yarn install` and `node src/quickstart.js` steps no longer apply.
+
+The script collects one record per test case — the five test cases defined in columns F to J, out of the nine possible combinations. Nanook's default writer would instead store each one as `tdg/<name>/testcaseData.json` ("tdg" for Test Data Generation). Which data a record holds follows the "Generator Function" column of the ECT: static data, as for the class "valid user id", or generated data through a generator directive, as for the class "userId not existent". The script registers the built-in Faker generator under the name `faker`; a custom generator like the GeneratorPerson of the original example is a TypeScript class that extends `DataGeneratorBase`.
+
+Ready to learn more? Check out the [full tutorials](https://nanook.xhub.io/docs/tutorials/overview) or read the [Nanook Table overview](https://nanook.xhub.io/docs/guide/generalOverview).
+
+
+# Quickstart with Claude Code
+
+Source: https://nanook.xhub.io/docs/quickstart/claude-code
+
+Claude Code drafts the decision table, Nanook generates the data. One form, one script, real test data at the end. Every step on this page was run as written on 2 September 2026 with `@xhubio/nanook-table` 3.0.1, skill version 0.1.0 and Claude Code 2.1.258; the numbers are from that run.
+
+## What you need
+
+- Node.js 22 or newer.
+- [Claude Code](https://claude.ai/claude-code), installed and signed in.
+- A project directory. You do not need a clone of the nanook-table repository.
+
+## 1 · Install Nanook and the skill
+
+The skill and the slash command have shipped inside the npm package since version 2.1.0. Claude Code reads skills from your project’s `.claude` folder (or from `~/.claude/skills` for all your projects), not from `node_modules`, so copy them over after the install:
+
+```
+npm init -y
+npm pkg set type=module
+npm install @xhubio/nanook-table
+npm install -D exceljs
+mkdir -p .claude/skills .claude/commands
+cp -r node_modules/@xhubio/nanook-table/.claude/skills/create-equivalence-class-table \
+  .claude/skills/
+cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTable.md \
+  .claude/commands/
+```
+
+`exceljs` is what the generated script uses to write a formatted workbook with fills and formulas. It is not a dependency of Nanook itself, so install it once. Two things to know before you start: the skill text is written in German. Claude reads it either way, but in the run behind this page the table’s comments and expected results came out German although the prompt was English; ask for English explicitly if you want it. And the skill assumes a `scripts/` and a `resources/` folder; if you want the files elsewhere, say so in the prompt.
+
+## 2 · Ask for a table
+
+Start Claude Code in the project and run the command with a name or a one-line description of what you want to test. The command is a thin wrapper around the skill, which can also be invoked directly as `/create-equivalence-class-table`; the run behind this page used the command.
+
+```
+claude
+/createEquivalenceClassTable Login Form
+```
+
+The skill then works through its steps: analyse the test object, group its fields into one or more tables, define equivalence classes per field, plan one test case per invalid class plus one happy path so that the coverage lands on 100 % (the CASCADE pattern), then write and run a TypeScript script that produces the workbook with `exceljs`, and verify the result through Nanook’s `ImporterXlsx`. The mechanics are described in [AI-Assisted Equivalence Class Tables with Claude Code](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables).
+
+In the run behind this page, `/createEquivalenceClassTable Login Form` with no further input took 17.5 minutes and 56 turns and produced four files. `resources/login-form-tests.xlsx` is the workbook. `scripts/create-login-form-table.ts` builds it with `exceljs` and refuses to write a sheet whose coverage is not 100 %. `scripts/check-login-form-table.ts` reads the markers back out of the file and recounts, independently of the builder. And `scripts/generate-login-form-fixtures.ts` runs Nanook over the workbook and writes one JSON fixture per test case.
+
+The workbook has two sheets, following the skill’s split into a data table and a test-case table. `User` (Execute = F) holds the field email with five classes (valid, empty, whitespace only, invalid format, too long) and password with three (valid, empty, too long); 5 × 3 gives the 15 combinations. `Login` (Execute = T) defines no classes for the form fields itself; it names the base state (logged out, an existing user, a verified address) and the input, and pulls the email and password classes in from `User` by reference. The four invalid emails arrive as one range reference, `ref::User:email:[email_invalid_1-4]`.
+
+| Sheet | Columns | Combinations | Coverage |
+|---|---|---|---|
+| User | 7 | 15 | 100 % |
+| Login | 7 | 48 | 100 % |
+
+One decision Claude took on its own and reported: the empty, whitespace-only and too-long classes use a small generator Claude wrote itself (`gen::text:empty`, `gen::text:spaces:3`, `gen::text:email:250`, `gen::text:alpha:200`) instead of empty cells or Faker, because the importer trims cells, a reference to a class without a generator never resolves, and the built-in Faker generator takes no arguments. The generator is about twenty lines in the fixture script. And one thing it did not report: the comments and expected results are German, because the skill is.
+
+The more you say, the less Claude guesses. A bare “Login Form” got Claude’s idea of a login form, with the assumptions listed at the end of its report: 254 characters for the email, 128 for the password, one `INVALID_CREDENTIALS` for an unknown address and a wrong password alike. Name your fields, limits and error codes in the prompt and those assumptions become yours. Open the workbook in a spreadsheet before you go on: the fills mark the sections, the formulas count the markers per field, and the summary row shows the coverage. The full table from a comparable run, column by column, is in [the login example](https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table).
+
+## 3 · Generate the test data
+
+Claude wrote its own generation script, and it registers whatever generators the table uses. Run that first:
+
+```
+node scripts/generate-login-form-fixtures.ts
+```
+
+In the run behind this page it wrote 11 fixtures to `fixtures/login-form/`: the seven columns of `Login`, with the two range references expanded into four and two cases. Node.js 22.18 or newer runs `.ts` files directly; older 22.x needs `--experimental-strip-types`, and `npx tsx` works everywhere.
+
+If you would rather have one script for every table, the one from the [5 minute Quickstart](https://nanook.xhub.io/docs/quickstart/quickstart) works too. Save it as `generate.mts`, point it at the workbook, and register the generators the table calls for; this workbook needs `text` next to `faker`. The tables are handed to the processor keyed by name, which is what lets a reference find the other sheet:
+
+```
+import {
+  LoggerMemory, FileProcessor, ImporterXlsx,
+  ParserDecision, DataGeneratorRegistry, GeneratorFaker,
+  TestcaseProcessor, type InterfaceWriter
+} from '@xhubio/nanook-table'
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+const fileProcessor = new FileProcessor({ logger })
+fileProcessor.registerImporter(
+  'xlsx',
+  new ImporterXlsx()
+)
+fileProcessor.registerParser(
+  '<DECISION_TABLE>',
+  new ParserDecision({ logger })
+)
+await fileProcessor.load(['resources/login-form-tests.xlsx'])
+
+const registry = new DataGeneratorRegistry()
+registry.registerGenerator(
+  'faker',
+  new GeneratorFaker({ logger })
+)
+// plus the 'text' generator from
+// scripts/generate-login-form-fixtures.ts
+const collected: unknown[] = []
+const writer: InterfaceWriter = {
+  logger,
+  async before() {},
+  async write(tc) {
+    collected.push(JSON.parse(JSON.stringify(tc)))
+  },
+  async after() {},
+}
+
+const tables = Object.fromEntries(
+  fileProcessor.tables.map((t) => [t.tableName, t])
+)
+
+const processor = new TestcaseProcessor({
+  logger,
+  tables,
+  generatorRegistry: registry,
+  writer: [writer],
+})
+await processor.process()
+
+console.log(collected.length, 'test cases')
+console.log(JSON.stringify(collected[0], null, 2))
+```
+
+With the Faker generator alone, this script reported 5 test cases on the run’s workbook and two errors, `There was no generator registered with the name 'text'`. With Claude’s `text` generator registered as well, it reported 11, with no errors and no warnings.
+
+**Check the number.** The table has one column per test case, and a range reference adds one case per extra element: 7 columns and two ranges make 11 here. The script must report exactly that number. Fewer means a generator failed on the way: Nanook logs the error and keeps going, and the missing case is easy to overlook. The login example shows the most common cause and [the ten-line fix](https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table#when-faker-is-not-enough).
+
+## What can go wrong
+
+- **Fewer cases than columns.** A Faker directive with an argument, such as `gen:1:faker:string.alpha:255`, fails because the built-in generator takes a Faker path and nothing else. Write a small generator that extends `DataGeneratorBase` and register it under its own name; see [Create data generator](https://nanook.xhub.io/docs/tutorials/createGenerator).
+- **`Cannot find module 'exceljs'`.** The generated script needs it in your project: `npm install -D exceljs`.
+- **Files land in `scripts/` and `resources/`.** That is the skill’s default. Name the folders you want in the prompt, or move the files and change the path in `generate.mts`.
+- **`Method not implemented` from the default writer.** In 3.0.1 the writer returned by `createDefaultWriter` throws in `before()`. Use an inline writer as above, or your own class.
+- **`The targetTable 'User' does not exists`.** You handed `fileProcessor.tables`, an array in 3.0.1, to `TestcaseProcessor`. Every `ref:` then fails with this message and fewer cases come out, 7 instead of 11 in the run. Pass the tables keyed by name, as the script above does.
+
+## No terminal?
+
+According to the Claude Code documentation, the desktop app and [claude.ai/code](https://claude.ai/code) read project skills from the same `.claude` folder, so a tester could ask for the table there and hand the workbook to whoever runs the generation. We have not run this page’s steps there, and generating the data still needs Node.js.
+
+## Where to go next
+
+- [The login example](https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table): the full table, the generated data, and what the skill got wrong.
+- [AI-Assisted Equivalence Class Tables](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables): how the skill works and what CASCADE coverage is.
+- [Create an equivalence class table from scratch](https://nanook.xhub.io/docs/tutorials/createEquivalenceClassTable): the markers by hand, for when you edit what Claude drafted.
+- [Equivalence class tables](https://nanook.xhub.io/docs/guide/equivalence/overview) in the guide, and the [directives reference](https://github.com/xhubio/nanook-table/blob/master/docs/guide/directives.md) in the repository for `gen:` and `ref:`.
+- [Testing a SaaS with Nanook](https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook): what this looks like at 117 tables.
+
+*Run record: 2 September 2026, Node.js 24.16.0, @xhubio/nanook-table 3.0.1 with skill version 0.1.0, Claude Code 2.1.258 in headless mode, 56 turns, 17.5 minutes. The workbook, the three scripts and a fixture are kept with the site’s sources.*
+
+
+# Use Nanook with AI agents
+
+Source: https://nanook.xhub.io/docs/guide/use-with-ai
+
+A coding agent can draft a Nanook table and the script that turns it into test data. It does that well when it has three things: a skill that knows how a decision table is built, a few rules that keep the generation script correct, and the documentation as plain text. This page lists all three for Claude Code and for other agents. None of it replaces checking what the agent produced; the last section says how.
+
+## 1 · Claude Code: the skill
+
+The skill `create-equivalence-class-table` and the slash command `/createEquivalenceClassTable` ship inside the npm package. Claude Code reads skills from your project’s `.claude` folder, so copy them there once. In a new project, start with `npm init -y` and `npm pkg set type=module`:
+
+```
+npm install @xhubio/nanook-table
+npm install -D exceljs
+mkdir -p .claude/skills .claude/commands
+cp -r node_modules/@xhubio/nanook-table/.claude/skills/create-equivalence-class-table \
+  .claude/skills/
+cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTable.md \
+  .claude/commands/
+```
+
+Then run `/createEquivalenceClassTable Login Form` in Claude Code. What that produces, how long it took and what to watch for is on [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code), every step from a recorded run. The skill text is German; ask for English output if you want it.
+
+## 2 · Other agents
+
+The skill is a plain folder with a `SKILL.md` in the [Agent Skills](https://agentskills.io) format. Agents that read that format can use the same folder; where each one looks for skills is in its own documentation. We have run the skill in Claude Code only, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
+
+## 3 · A rules block for AGENTS.md
+
+[`AGENTS.md`](https://agents.md) is the instruction file that Codex, Cursor, GitHub Copilot and other agents read from the project root. Paste this block into it. The markers let you replace the block later without touching the rest of the file:
+
+```
+<!-- BEGIN:nanook-agent-rules -->
+## Nanook: test cases and test data
+
+Test cases are defined in XLSX workbooks and turned into test data with
+@xhubio/nanook-table (Node.js 22 or newer, ESM).
+
+- Before writing a table or a generation script, read the docs for the
+  installed version: node_modules/@xhubio/nanook-table/docs/
+  (guide/decision-tables.md, guide/directives.md, api/processor.md).
+  Website index: https://nanook.xhub.io/llms.txt
+- Every generator a table calls (gen:<instanceId>:<generator>:<parameter>)
+  must be registered in the DataGeneratorRegistry. The built-in
+  GeneratorFaker takes a Faker path and no arguments; anything else
+  needs its own generator.
+- Pass the tables to TestcaseProcessor keyed by table name, not as the
+  array from FileProcessor, or every ref: fails.
+- In 3.0.1 the default writer throws in before(); use an inline
+  InterfaceWriter.
+- After generating, compare the number of test cases with the number of
+  test-case columns (plus one per extra element of a range reference).
+  Fewer means a generator failed: Nanook logs the error and goes on.
+<!-- END:nanook-agent-rules -->
+```
+
+Claude Code reads `CLAUDE.md`. Put the line `@AGENTS.md` into it and Claude Code imports the same rules, so both files never drift apart.
+
+The block points the agent to the Markdown documentation inside the package. Unlike the pages on this site, it always matches the installed version: the guide and tutorials here describe the table concepts, and the 3.x API reference is under [API](https://nanook.xhub.io/docs/api). Rules two to four are mistakes that cost a run its test cases on 3.0.1; the last one is how you notice. The quickstart describes them under [Generate the test data](https://nanook.xhub.io/docs/quickstart/claude-code#generate-the-test-data) and [What can go wrong](https://nanook.xhub.io/docs/quickstart/claude-code#what-can-go-wrong).
+
+## 4 · The docs as plain text
+
+For a chat window, or an agent that fetches URLs:
+
+- [`/llms.txt`](https://nanook.xhub.io/llms.txt) is the index: every docs page with one line on what it covers, in the [llms.txt](https://llmstxt.org) format.
+- [`/llms-full.txt`](https://nanook.xhub.io/llms-full.txt) is the whole documentation in one Markdown file, to paste or attach.
+- Every quickstart, guide, tutorial and module page and the 3.x API reference has a Markdown version: add `.md` to its address, for example [`/docs/quickstart/quickstart.md`](https://nanook.xhub.io/docs/quickstart/quickstart.md). The *Copy as Markdown* button at the top of those pages puts it on the clipboard. The 1.x API pages have none.
+- Inside a project, the package itself carries the 3.x documentation as Markdown in `node_modules/@xhubio/nanook-table/docs/`, matching the installed version.
+
+## 5 · Check what the agent produced
+
+An agent that writes a table and a script will report success. Two checks catch most of what goes wrong. First, open the workbook: if the skill built it, its summary row shows the coverage per sheet. Second, count: the script must report one test case per test-case column, plus one for every extra element of a range reference. Fewer means a generator failed on the way, and Nanook logs that and keeps going. The quickstart explains the count under [Generate the test data](https://nanook.xhub.io/docs/quickstart/claude-code#generate-the-test-data).
+
+## Not yet
+
+There is no Nanook MCP server and no Claude Code plugin yet. An agent with a terminal does not need either: it runs the generation script itself. When the skill ships as a plugin, section 1 gets two commands instead of the copy.
+
+## Where to go next
+
+- [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code): from an empty directory to generated test data, as recorded.
+- [The login example](https://nanook.xhub.io/blog/2026/08/22/login-example-ai-generated-table): a table Claude drafted, column by column, and what it got wrong.
+- [Equivalence class tables](https://nanook.xhub.io/docs/guide/equivalence/overview): the concepts, for when you edit what the agent drafted.
+
+
+# Overview of Nanook Table
+
+Source: https://nanook.xhub.io/docs/guide/generalOverview
+
+![nanookTableDataCreation](https://nanook.xhub.io/img/nanookTableDataCreation.svg)
+
+What is Nanook Table?
+
+It's a processor that reads spreadsheets to define test cases and test data. It processes the spreadsheets and generates test cases and test data. This way you can recreate the test cases and test data while you're working on the specification of test cases in the spreadsheet files.
+
+The spreadsheets enable to keep track of the test cases and the test coverage. But it complicated when you need to modify the tests and update all the test data of you test cases. This is where Nanook Table comes in.
+
+Overview of Nanook Table Components
+
+![nanookTableOverview](https://nanook.xhub.io/img/nanookTableOverview.svg)
+
+## File Reader
+
+A file reader takes care of reading spreadsheet files and providing a generic interface for a parser. There is an importer for XLSX files (.xlsx and .xls); other formats need a custom importer.
+
+## Importer Map
+
+The file readers are registered in a map by the file extension they handle. For example: The Excel file reader is registered with the extensions 'xls' and 'xlsx'. So the same reader may be registered multiple times.
+
+## Table Parser
+
+The table parser is responsible for reading a table format. There is a parser to read the equivalence class table and another one to read the matrix table format.
+
+## Parser Map
+
+Each parser is registered in a map by the table it understands. For example the equivalence class table reader is registered with the key '<DECISION_TABLE>'. This key must be in the first cell of the table. The same parser may be registered under different keys.
+
+## File Processor
+
+The file processor takes a file name as input. Then it extracts the extension and checks if an importer is registered for this extension. If that's the case, the file is read. One file (a workbook) may contain multiple tables. The file processor reads the first cell of each table and checks if a parser is registered for this table type. Tables for which no parser is registered are ignored.
+
+If a parser is registered for this kind of table, the file processor gives over the table to the parser. The result of parsing is a table model.
+
+All the table models are stored in an array.
+
+## Generator
+
+A generator is responsible for generating data. The generator returns a value or may directly change or insert data to the given 'testcaseData' object.
+
+## Service Registry
+
+All the generators are registered in a 'ServiceRegistry'. The name under which the generator is registered is the same name that is used in the table to call the generator. Also, each generator has access to the service registry and can call other generators this way.
+
+## Writer
+
+A writer is responsible for creating the output data in the format needed for the test. All the generated data is stored internally in a JSON structure. This object may be exported to multiplie files of varying format and content. This is the domain of the writer.
+
+## Writer Array
+
+All the writers are stored in an array. For each test case all the writers are called in the order in which they are stored in the array.
+
+## Filter
+
+A filter can be applied to created test cases. If you tag your tests with a priority, for example, you can later on filter for priorities.
+
+## Filter Map
+
+All the filter are stored in a map by the filter name.
+
+## Processor
+
+The processor keeps it all together. It gets the tables from the 'File Processor' and then it executes all the tables with the help of the generators and writers.
+
+
+# Decision Table Overview
+
+Source: https://nanook.xhub.io/docs/guide/equivalence/overview
+
+![Example table](https://nanook.xhub.io/img/model-decision/table.jpg)
+
+This figure shows an example of an equivalence class table. The column order is important. The first five columns are fixed. The test cases start with the 6th column. The parser finds the end of the test case by parsing the first row and searching for the first empty cell. So if you add an empty column in your table, the parser will stop there.
+
+The table is divided into two sections: the right and the left of the red line.
+
+![Test case side](https://nanook.xhub.io/img/model-decision/table_testcases.jpg)
+
+The right side shows the test cases. Each column on the right side is one test case. The column header of a test case is the name of this test case. In this example the name is just number. In column ''F'' we have the first test case - with the name ''1''.
+
+The left side of the table deals with the fields, their descriptions and the expected result.
+
+On the left, the ''Field Section'' is the primary data section. The primary data is the data that is directly manipulated in the test. But this is just a name. You can have as many 'FieldSection' elements as you like. A field section consists of one to multiple 'FieldSubSection' elements.
+
+The field section describes the variety of data needed by the test. And therefore the number of tests to be created.
+
+![Field sub section](https://nanook.xhub.io/img/model-decision/table_field_sub_section.jpg)
+
+A subsection in this case is one field and all the equivalence classes for this field. An equivalence class defines the different kinds of field values with an equivalent behaviour.
+
+For example: Let's say we have a field with a maximum length of 10 characters. Then all values entered with more than 10 chars will lead to an equivalent behaviour of the application. So it is not necessary to test with 11, 12, 13, …​ characters. The equivalence class is 'more than 10 chars'.
+
+One fieldSection may have many fieldSubSections. The FieldSection groups fields together. Having one or multiple fieldSections has no impact on the table itself. All the fieldSubSections have to be combined.
+
+![Multi row section](https://nanook.xhub.io/img/model-decision/table_multi_row_section.jpg)
+
+The multiple row sections can be used to describe the expected results or error messages. It is up to the user how many of these sections are in the table. It can also contain actions on the UI or other information needed.
+
+
+# Matrix Table Overview
+
+Source: https://nanook.xhub.io/docs/guide/matrix/overview
+
+The Predecessor Successor Matrix Table (short: matrix table) is used to defined changes on an existing state of an application. For example, if there is a decision table for creating an account, then this table may use the created account to add transaction to that account.
+
+The table has a 'source' section and an 'actions' section. The 'source' section covers a current state. The 'action' section covers which state change should be applied.
+
+The matrix itself defines which actions are to be applied on which source state.
+
+## Table Layout
+
+![The matrix table](https://nanook.xhub.io/img/model-matrix/table.jpg)
+
+This is an example for a matrix table. This is more to give you an idea of what the table looks like - the values shown here aren't important.
+
+![The header parts](https://nanook.xhub.io/img/model-matrix/header.jpg)
+
+The red box covers the header definitions. The same header is used for both the columns and the rows.
+
+![The source part of the table](https://nanook.xhub.io/img/model-matrix/source.jpg)
+
+It is up to the user which side to use for the 'source'. Here, the 'source' is on the left.
+
+![The action part of the table](https://nanook.xhub.io/img/model-matrix/actions.jpg)
+
+On the right, we have the 'action' section. But this is up to you. The generator of the table needs to handle the order in which the generators are executed.
+
+
+# Generator Commands
+
+Source: https://nanook.xhub.io/docs/guide/generatrorCommand/generator
+
+The 'generator' section is where the user defines how to generate the data for a field.
+
+![example from a decision table](https://nanook.xhub.io/img/processor/generator.png)
+
+## Generator command
+
+The generator is used to generate new data.
+
+```
+gen:<instanceId>:<generatorName>:<any Parameter>
+```
+
+- instanceId The instance id is an internal id for creating a a instance of a given test case. If no Id is given, a uuid will be taken by the generator. The instance id allows the user to get the same data set from a generator on different fields. For example: Let's say we have a generator that creates personal data. It will generate a 'firstName', 'lastName' and an email address. But the data is needed in three different fields in the table. Each time the generator is called, it normally creates a new set of data. But this is not what is needed in this case. Let's assume the data generator is named ''AdressDataGenerator'' and it has a parameter for the data to be returned.
+
+```
+gen:1:AdressDataGenerator:firstName  
+
+gen:1:AdressDataGenerator:lastName   
+
+gen:1:AdressDataGenerator:email      
+```
+
+- The first call of the generator. This will create a new set of data. The data will be stored under the instanceId ''1'' And the data for the field ''firstName'' will be returned.
+- The second call of the generator. The generator will find data for the instance id ''1'' and will not generate new data. Then, it will return the data for ''lastName''
+- The same as for 2.
+
+The instanceId allows the user to call the same generator multiple times but also to access to the same data if needed.
+
+
+# Static Data
+
+Source: https://nanook.xhub.io/docs/guide/generatrorCommand/static
+
+Static data is the simplest kind of data. All entries not starting with 'gen:' or 'ref:' are interpreted as static data. This data is just copied to the 'testcaseData' object as is.
+
+
+# References
+
+Source: https://nanook.xhub.io/docs/guide/generatrorCommand/reference
+
+A references points to another test case in the same table or a different one. Each time a reference is solved, a new instance of the referenced test case is created. Also a reference can point to a range of test cases. In that case, the calling test case will be doubled for each particular test case within the range.
+
+## Syntax of a Reference
+
+Here are two examples of syntax for a reference.
+
+![referencesSyntax](https://nanook.xhub.io/img/processor/referencesSyntax.svg)
+
+![referencesRangeSyntax](https://nanook.xhub.io/img/processor/referencesRangeSyntax.svg)
+
+The range is enclosed in '[]' brackets. In the example above, the reference points to test cases 'tc2', 'tc3' and 'tc4'.
+
+## Self-Reference
+
+A self-reference references another field in the same test case. A good example for this is for the second password entry in a registration dialog, where the second password entered must be the same as the first one.
+
+**Field password2.**
+
+```
+ref::Person:password:
+```
+
+**Note**
+
+For a self-reference, the test case name and the instanceIdSuffix must be undefined.
+
+**without table name.**
+
+```
+ref:::password:
+```
+
+Also, the table name could be omitted.
+
+## Range Reference
+
+A normal reference does not influence the calling test case. For a range reference, the behaviour is different. To solve a range the processor must create an instance of the calling test case for each test case in the range.
+
+The following illustrates this:
+
+![rangeReferenceSolved](https://nanook.xhub.io/img/processor/rangeReferenceSolved.svg)
+
+The test case 'T1 in the table 'Person' has three references.
+
+- Reference 1 This reference points to the field 'email' of test case 'T2' in the table 'Person' (the same table). The instanceId is set to '1'
+- Reference 2 This reference points to the same location as 'Reference 1', but to a different field. The field here is 'name'. As the instanceId is in both cases '1' no new instance of the target is created for the second reference. So both references point to the same instance of test case data.
+- Reference 3 This reference points to the table 'Range2'. As a target test case, a range of 'T3-4' is given, test case 'T3' and test case 'T4'. To solve this two instances of test case 'Person:T1' are needed. In the figure, these are name a' and a''. For a range reference the instanceId must be empty.
+
+## Reference Default Values
+
+- Table name If the table name is not given, the processor expects the current table.
+- InstanceId If no instanceId is given, each reference creates a new instance of the target test case.
+- FieldName If no field name is given, no data is included.
+- Test case name This is mandatory.
+
+
+# Understanding Instance Ids
+
+Source: https://nanook.xhub.io/docs/guide/advanced/instanceIds
+
+The instance ID mechanism solves a common problem: you need the **same** generated data set to provide values for multiple fields.
+
+Consider a `PersonGenerator` that creates a coherent person record (first name, last name, email). If you have three separate fields in your table — `firstName`, `lastName`, and `email` — you want all three to come from the same generated person, not three different random people.
+
+```
+gen:1:PersonGenerator:firstName
+gen:1:PersonGenerator:lastName
+gen:1:PersonGenerator:email
+```
+
+Here is what happens:
+
+1. The first call (`firstName`) creates a new person instance and stores it under instance ID `1`. The `firstName` value is returned.
+2. The second call (`lastName`) finds that instance ID `1` already exists for `PersonGenerator`. Instead of generating new data, it retrieves the existing instance and returns the `lastName`.
+3. The third call (`email`) works the same way — it returns the `email` from the already-generated instance.
+
+If you use a different instance ID (or no instance ID), a new independent data set is generated:
+
+```
+gen:1:PersonGenerator:firstName    <- Person A
+gen:1:PersonGenerator:lastName     <- Person A (same instance)
+gen:2:PersonGenerator:firstName    <- Person B (different instance)
+gen::PersonGenerator:firstName     <- Person C (auto-generated UUID, always new)
+```
+
+Generator directives also carry an `order` property (default 1000); directives with a lower order run first, which lets one generator's output feed another.
+
+Source: the section "Instance IDs" of [docs/guide/directives.md](https://github.com/xhubio/nanook-table/blob/master/docs/guide/directives.md) in the repository (Nanook 3.x).
+
+
+# Create an equivalence class tables from scratch
+
+Source: https://nanook.xhub.io/docs/tutorials/createEquivalenceClassTable
+
+This tutorial teaches you how to create an equivalence class table from scratch. It does not yet use any test data creation functionality.
+
+If you would rather have a first draft written for you, the [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code) shows how Claude Code produces a table like this one from a one-line description. This tutorial explains the markers you will then be reading.
+
+The goal is to transfer the requirements from a specification into a table. As an example, we would like to test the creation of a userId and password for a virtual application. The user can freely choose the userId and the password.
+
+The next chapter will show the specification for this application dialog. Step by step we will then create the equivalence class table.
+
+## User account creation
+
+The example use case in this tutorial is to create tests for the user id creation. The application is a website where a user can enter their userId, a password, and re-enter the latter for verification.
+
+The following three chapters show the specification for each field of our demo application.
+
+### User ID
+
+- The user is able to choose their own id.
+- The id must have a minimum length of two characters.
+- The user id must not contain spaces.
+- The beginning or at the end will be trimmed.
+- The id must not exceed a length of 30 characters.
+- The id must not already exist.
+- Only ascii characters (a-z|A-Z), numbers, hyphen and underscores are allowed.
+- The user name is case insensitive.
+
+### Password
+
+The password has to meet the following requirements:
+
+- The password must not have leading or trailing spaces.
+- The password is required.
+- It must have a minimum length of 5 characters.
+- It must not exceed a length of 20 characters.
+- All characters are allowed.
+- It must not equal, start, or end with the user id.
+- It must contain at least one number, one upper case letter, one lower case letter, and one special character.
+
+### Second password field
+
+The second password has the same requirements as the first password field, with one additional restriction:
+
+- The password must equal the first password
+
+## Create an initial table
+
+Create an empty spreadsheet and enter all the fields from the specification. When entering the fields, leave some empty rows between each field. The following fields should be entered in the first column:
+
+1. userId
+2. password
+3. password2
+
+The sheet should look similar to this:
+
+![step1](https://nanook.xhub.io/img/tutorials/t1/step1.png)
+
+## Fill the equivalence class data
+
+For each field we need to create the equivalence classes. This is a group of values to which the application behaves equivalent to.
+
+- Example 'too many characters' The application reacts in the same way, no matter if there is one character too many or if there are 20 characters too many.
+
+To get these values you need to read the specification and extract the classes from it. All the classes should be added to the spreadsheet in the second column under the field they belong to. In the third column you have the possibility to enter a description for the class. Let’s start with the user id.
+
+userID equivalence classes
+
+  - empty No values entered at all.
+  - too short The spec says: 'The id must have a minimum length of two characters.'
+  - too long The id must not exceed 30 characters
+  - id with space The spec says: 'The user id must not contain a space', so we need to create an id containing a space.
+  - leading space An id with leading space or spaces. As the id will be trimmed, we also should consider an ID with a leading space that is too short. We expect the application tp check the length after trimming.
+  - too short but with leading space or spaces
+  - trailing space or spaces
+  - too short but with trailing space or spaces
+  - not too long but leading spaces The user id without the spaces matches the max length constraint.
+  - not too long but trailing spaces
+  - invalid chars Spec: 'Only ascii characters are allowed (a-z) and also numbers, hyphen, and underscores'.
+  - existing userId spec: 'The id must not exist.'
+  - existing userId different case spec: 'The user name is case insensitive.'
+  - valid user id Finally, we need a valid user Id.
+
+password equivalence classes Some of the classes can be copied more or less from the user id field.
+
+  - empty
+  - too short
+  - too long
+  - with leading space In this case the application will not trim the spaces since they are not allowed.
+  - with trailing space
+  - starts with the userId
+  - ends with the userId
+  - missing upper case letter
+  - missing lower case letter
+  - missing special character
+  - missing number
+  - valid password
+
+password2 equivalence classes In this case we can copy all the classes from the first password field and add some additional classes.
+
+  - empty
+  - too short
+  - too long
+  - with leading space In this case the application will not trim the spaces since they are not allowed.
+  - with trailing space
+  - starts with the userId
+  - ends with the userId
+  - missing uppercase letter
+  - missing lower case letter
+  - missing special character
+  - missing number
+  - valid password
+  - valid password but different to the first password
+
+Now the table should look like this:
+
+![step2](https://nanook.xhub.io/img/tutorials/t1/step2.png)
+
+Also note the added header row.
+
+## Add calculations and prettify the table
+
+Now that we have all the equivalence classes filled by field, we are able to calculate how many test cases are necessary to test this functionality.
+
+In order to do so, we multiply the number of equivalence classes for each field.
+
+- userid has 16 classes
+- password has 12 classes
+- password2 has 13 classes
+
+So the number of test cases is 16*12*13 = 2496. This is a lot to test. Could this be optimized? If so, how can it be optimized without losing test coverage? Here is where the main benefit of the equivalence class table technique comes through.
+
+First, we will add some formulas to the spreadsheet to do the calculations.
+
+![step3 formula](https://nanook.xhub.io/img/tutorials/t1/step3_formula.png)
+
+The numbers count the number of classes in each field. Do this for each of the fields. Also add a row at the end which shows the result of the multiplication.
+
+![step3 format](https://nanook.xhub.io/img/tutorials/t1/step3_format.png)
+
+As you can see in the figure above, the field rows are highlighted in color. To the right, we added four new columns with the names 1, 2, 3 and 4. These are the test case columns. Each column represents one test case. The formula from column B is copied into each of the new test case columns. As there is no value entered in the column, it shows '0' for all of the columns.
+
+## Start filling the table with decisions
+
+The table is prepared and ready to be used. Let’s start making decisions.
+
+We need to choose one equivalence class per field and combine them.
+
+To make things a little easier, it's a good idea to enter an additional formula in the 'result' row 'C47'. The formula sums up all results in the 'Summary' row '=SUM(D47:W47)'.
+
+### Test case 1
+
+From the field 'userId' we only choose the first row with the class 'empty'. To do this, enter an 'x' in the column 'D'.
+
+We expect that when no userId is given, it doesn’t matter what we will enter in 'password' or 'password2'; the application will react in the same way. So let’s enter this information into the table.
+
+Enter an 'e' in all the classes of field 'password' and 'password2' fields.
+
+**Note**
+
+- 'x' means 'choose exactly this equivalence class for this field.'
+- 'e' means 'choose any of the equivalence classes of this field.'
+
+The result is shown in the last row named 'Summary'. There we can see '156'. So this test case eliminates 156 test cases of the total possible number of '2496'.
+
+Now you can repeat this with the second test case.
+
+### Test case 2
+
+Choose 'too short' for the userId and do the same as for test case '1' for the rest of the fields.
+
+And again we have 156 test cases taken care of.
+
+### Test case 3 to 11
+
+You can do the same pattern for all the cases where a value in 'userId' causes an error. In each of these cases the value entered in the password fields is not relevant.
+
+![step4](https://nanook.xhub.io/img/tutorials/t1/step4.png)
+
+In column 'C' in row '47' we can see that these 11 test cases cover 1716 cases. The goal of the table is to obtain 100%. We need to add more test cases to cover all of them. However, as the table fills up, the amount of test coverage per test case will decrease.
+
+## Add a 'result' section
+
+So far, we have defined how we think the application behaves, but it is not shown in the table. For this, add new rows under the 'Summary' row.
+
+Add the following rows
+
+```
+Result
+    Valid
+    Error   The UserId must not be empty
+    Error   The UserId must have at least two characters
+    Error   The UserId must not exceed the length of 30 characters
+    Error   The UserId must not contain white space characters
+```
+
+![step5 resultRows](https://nanook.xhub.io/img/tutorials/t1/step5_resultRows.png)
+
+The result section is not necessary to fill the equivalence class table, but it is a possibility to define the expected error messages for the application. It has also serves a documentation purpose.
+
+For each test case we can now specify the expected behaviour.
+
+![step5 withResuts](https://nanook.xhub.io/img/tutorials/t1/step5_withResuts.png)
+
+## Cleaning up the table
+
+As the table grows, it will become increasingly difficult to build combinations. So it is very helpful if the table follows a certain pattern (which is not always possible). In our case, we started with the invalid user ids. But in the rows 8,9,14,15 and 19 there are valid cases.
+
+It makes sense to reorder the equivalence classes, so that the fields representing valid cases are at the end of the table.
+
+![step6](https://nanook.xhub.io/img/tutorials/t1/step6.png)
+
+Also more descriptions are added in order to clearify that these are valid cases.
+
+It's now time to combine the first valid user Id with the different possibilities of 'password' and 'password2'.
+
+## Testcase 12
+
+Choose the 'leading spaces' equivalence class of field 'userId' or any other equivalence class as long as it is a valid one. In 'password' choose the 'empty' class. As the 'password' is a mandatory field, we can fill the 'password2' field with 'e'.
+
+Then add a new result row with the expected error messages.
+
+![step6 tc12](https://nanook.xhub.io/img/tutorials/t1/step6_tc12.png)
+
+In the table you can now use the same logic for 'password' as we did before for 'userId' before. So fill up the next test cases for all the error cases of 'password'.
+
+![step6 tc12 22](https://nanook.xhub.io/img/tutorials/t1/step6_tc12-22.png)
+
+## Iterate over the 'password2' field
+
+The following procedure depends on how the application works. Will it first validate that password2 is different form the first password field or does it first do the same checks as for the first password input?
+
+In this example, we do the full iteration of all the classes for password2 as well. Take the valid class of 'password' and create a test case for all the error cases of 'password2'
+
+Now the table should look like this:
+
+![step7](https://nanook.xhub.io/img/tutorials/t1/step7.png)
+
+We also added a new error message for the case in which the passwords are different. When adding new test cases, always remember to update the formula for summarizing the created test cases.
+
+## Reorder the rows for 'password2'
+
+After filling out the cells for password2, we can see that the second to last row is a valid case, but the last row is an invalid case. So these two rows need to be swapped.
+
+Now we have to fill out the valid case. This would be test case 35. After this, we can see that there are 624 test cases missing. This is because of the missing rows in 'userId'. There we have five different kinds of valid cases. One of them we have used for the error cases of 'password' and 'password2'. To complete the equivalence class table we have two possibilities:
+
+1. Copy the columns with the test cases 12-35 and insert them four times. Then change the equivalence class for the 'userId' so that all the cases are covered. This results in 131 test cases.
+
+![step8 2](https://nanook.xhub.io/img/tutorials/t1/step8_2.png)
+
+The picture gives an idea of what this looks like.
+
+To optimize the testing procedure we should consider not to iterate over all of the valid cases to check the errors of 'password' and 'password2'. Instead, we can simply take any valid userId. For this, we fill all the cells of rows 15-19 with the test cases 12-34 with an 'e'. Then we only iterate the valid cases. This results in 39 test cases.
+
+![step8 3](https://nanook.xhub.io/img/tutorials/t1/step8_3.png)
+
+
+# Transform the table into a data generator
+
+Source: https://nanook.xhub.io/docs/tutorials/transform2dataGenerator
+
+**Version note:** the code on this page targets Nanook 1.x (JavaScript, CommonJS). The table concepts are unchanged in 3.x (TypeScript, ESM, Node.js 22 or newer); the current tutorials live in the repository: [docs/tutorials](https://github.com/xhubio/nanook-table/tree/master/docs/tutorials).
+
+In the first tutorial, we created a normal equivalence class table. It showed us that we had to create 39 test cases. And we still had to create the data manually. It didn't create the data for us.
+
+So let's transform this table into a data generation table. To do this, we'll insert a new column between 'Equivalence class' and 'Description' and type in 'generator' as the header. In this column, we will add the commands to call generators that will create the data for us.
+
+## Format the table
+
+In the previous tutorial, we created an equivalence class table without any predefined format rules. However, if we want the table to be parsable for the table processor, we need to follow some formatting rules.
+
+The next sections describe the format required to make the table parseable.
+
+## General Overview
+
+## Layout Equivalence Class Table
+
+![Example table](https://nanook.xhub.io/img/model-decision/table.jpg)
+
+Here is a sample equivalence class table. The column order is important. The first five columns are fixed. The test case start in the 6th column. The parser finds the end of the test case by parsing the first row and searching for the first empty cell. So if you add an empty column in your table, the parser will stop there.
+
+The table is divided into a few sections.
+
+![Test case side](https://nanook.xhub.io/img/model-decision/table_testcases.jpg)
+
+The right side shows the test cases. Each column on the right side represents one test case. The column header of a test case is the name of this test case. In this example the names are just numbers. Column ''F'' is the first test case with the name ''1''.
+
+The left side of the table describes the fields and the expected result.
+
+On the left, the ''field section'' is the primary data section. The primary data is the data which is directly manipulated in the test. But this is just a name. You can have as many 'FieldSection' elements as you like. A field section consists of one to multiple 'FieldSubSection' elements.
+
+The field section describes the variety of data needed by the test - and therefore the number of tests to be created.
+
+![Field sub section](https://nanook.xhub.io/img/model-decision/table_field_sub_section.jpg)
+
+A subsection in this case is one field and all the equivalence classes for this field. An equivalence class defines the different kinds of field values with an equivalent behaviour.
+
+For example: Let's say we have a field with a maximum length of 10 characters. Then all values entered with more than 10 chars will lead to an equivalent behaviour of the application. So it is not necessary to test with 11, 12, 13, …​ characters. The equivalence class is 'more than 10 chars'.
+
+One fieldSection may have many fieldSubSections. The FieldSection groups fields together. Having one or multiple fieldSections has no impact on the table itself. All the fieldSubSections have to be combined.
+
+![Multi row section](https://nanook.xhub.io/img/model-decision/table_multi_row_section.jpg)
+
+The multiple row sections can be used to describe the expected results or error messages. It is up to the user how many of these sections are in the table. It can also contain actions on the UI or other information needed.
+
+## Create the first table for data generation
+
+In this step we will create a simple table with static data generation.
+
+### Create table
+
+Since the current implementation reads Excel spreadsheets, let's create a new Excel file.
+
+- Set the sheet identifier The parser only considers sheets that have the right identifier set in the first cell. So enter '<DECISION_TABLE>' in the first cell.
+- Set the column header Enter the following column headers in the second row.
+
+| Column | Column header |
+|---|---|
+| A | Field Name |
+| B |  |
+| C | Equivalence class |
+| D | Generator Function |
+| E | Comment |
+
+- Create the first section (FieldSection) A 'FieldSection' contains 1..n 'FieldSubSection' elements. Add a new row with the following columns:
+
+| Column | Data | Description |
+|---|---|---|
+| A | Primary Data | A name for this 'FieldSection' |
+| B | FieldSection | The 'FieldSection' Identifier. |
+
+- Create a 'FieldSubSection' For this example we take an email field. Add a new row with the following columns:
+
+| Column | Data | Description |
+|---|---|---|
+| A | email | The name of the data field |
+| B | FieldSubSection | The 'FieldSubSection' Identifier. |
+
+- Create the equivalence class for the email field In this example, we create only one class. Add a new row with the following columns:
+
+| Column | Data | Description |
+|---|---|---|
+| A |  | Leave empty |
+| B |  | Leave empty |
+| C | valid | The name of this class. 'valid' indicates that we create a valid email |
+| D | [foo.bar@gum.com](mailto:foo.bar@gum.com) | The value to be generated |
+| E |  | Leave empty |
+| F | X | The x tells the processor that this equivalence class is chosen. |
+
+Add a name for the test case of column 'F' in the first row. Just add 'TC1' or any other name you like.
+
+- Mark the end row of the table. An identifier needs to be set to tell the processor that it has reached the end of the table. Add a new row with the following columns:
+
+| Column | Data | Description |
+|---|---|---|
+| A | <END> | This identifier marks the last row of the table. All content below is ignored. |
+
+- Last, not least: Add some color to the table.
+
+![step2](https://nanook.xhub.io/img/tutorials/t2/step2.png)
+
+## Create a project for creating the data
+
+### Create an initial npm module
+
+Create a new empty directory. Change into it and run npm init.
+
+```
+mkdir demo-tdg
+cd demo-tdg
+mkdir resources
+mkdir tdg
+mkdir src
+npm init
+npm install --save @xhubio/nanook-table
+```
+
+## Create the script to call the processor
+
+Create a new file 'src/tdg.js' with the following content.
+
+```
+const path = require('path')
+const p = require('@xhubio/nanook-table')
+const { LoggerMemory } = require('@xhubio/nanook-table')
+
+async function doIt() {
+  const logger = new LoggerMemory()               
+  logger.writeConsole = true                      
+
+  const fileProcessor = await p.createDefaultFileProcessor(logger)
+                                                  
+
+  const processor = new p.Processor({             
+    logger,
+    generatorRegistry: p.createDefaultGeneratorRegistry(),
+    writer: p.createDefaultWriter(logger)
+  })
+
+  await fileProcessor.load(path.join('resources', 'demo.xlsx'))
+                                                  
+
+  processor.tables = fileProcessor.tables         
+
+  await processor.process()                       
+}
+
+
+doIt().then(() => {
+  console.log('Finish')
+}).catch(err => {
+  console.log(err)
+})
+```
+
+- Creates a logger. For all tutorials, we will be using the Memory Logger. This logger stores all the log entries. It is a good logger for unit testing.
+- Tells the Memory Logger to also write out the logs to console.
+- Creates a file processor. The file processor is responsible for loading an Excel sheet and transforming it into a table object as it is used by the processor.
+- Creates the processor. The processor needs a registry in which all the available generators are registered. In the current example, the registry is empty. But a registry is required. The writer is responsible for writing the created test data in the desired format. The default writer simply writes the test case data as a JSON file. You can add as many writers as you like.
+- Loads the spreadsheet and creates the table object. You can call the load function multiple times depending on how many spreadsheets you would like to load. Each spreadsheet may have multiple tables. The table names must be unique across all spreadsheets. The path must point to the file you created in the previous step.
+- Gets the loaded table objects and inserts them into the processor.
+- Processes all tables and generates the data.
+
+Create a directory 'resources' and copy the excel file you created into it. The Excel file must be named 'demo.xlsx'.
+
+### Run the script
+
+To run the script, execute:
+
+```
+node src/tdg.js
+```
+
+After doing this, you should find a new file called 'tdg/TC1/testcaseData.json'. This file was written by the default writer.
+
+### Understand the generated data
+
+The content of the file should look like this:
+
+```
+{
+  "tableName": "Sheet1",      
+  "name": "TC1",              
+  "data": {                   
+    "Sheet1": {               
+      "ab0dc423-2338-44eb-a230-bbab1040c8ff": {
+                              
+
+        "email": "foo.bar@gum.com"
+                              
+      }
+    }
+  },
+  "instanceId": "ab0dc423-2338-44eb-a230-bbab1040c8ff",
+                              
+  "callTree": {               
+    "instanceId": "3dd74281-c117-4c51-b8f5-f1262116124a",
+    "tableName": "Sheet1",
+    "testcaseName": "TC1",
+    "children": []
+  }
+}
+```
+
+- The name of the table which creates this test case. (Later on we will learn the details of this.)
+- The name of the test case. This corresponds to the content of the header column in the sheet.
+- The data object containing all the generated data.
+- The name of the sheet again.
+- The instance of the created test case data. (An instanceId belongs to an instance of a given test case and is explained later in detail. For the moment just accept that the id exist and that it makes sense).
+- The generated data.
+- The main instanceId of this test case.
+- The call tree of the tables. (This is for debugging your test data. More on this later.)
+
+Each time we call the script, we generate the same data since we added static data in the table. Only the instanceIds change with each script call. In the next section, we will replace the static data with a generator.
+
+**Note**
+
+The example code is located at: src/t2/step3 In there, simply run: node tdg.js
+
+
+# Create your own data generator
+
+Source: https://nanook.xhub.io/docs/tutorials/createGenerator
+
+**Version note:** the code on this page targets Nanook 1.x (JavaScript, CommonJS). The table concepts are unchanged in 3.x (TypeScript, ESM, Node.js 22 or newer); the current tutorials live in the repository: [docs/tutorials](https://github.com/xhubio/nanook-table/tree/master/docs/tutorials).
+
+First of all, we need to update the Excel sheet to use the new generator.
+
+![step4](https://nanook.xhub.io/img/tutorials/t2/step4.png)
+
+As you can see in the image, we added two new 'FieldSubSection' fields. Also, we added three more test cases are added just to make it more interesting.
+
+We also removed the static email and replaced it with a generator call. We use the same generator three times with different parameters.
+
+Let’s create a generator which creates a person data record. The data to be generated is:
+
+- firstName
+- lastName
+- email
+
+We would like to have an email generated out of the first name and the last name of the person. And the generated emails must be unique.
+
+Create a new file called /src/GeneratorPerson.js. The generator extends the 'DataGeneratorBase' class.
+
+```
+const DataGeneratorBase = require('@xhubio/nanook-table').DataGeneratorBase
+
+class GeneratorPerson extends DataGeneratorBase {
+
+}
+```
+
+Then add a method to create the data we need. The generator should create a person object with a unique email address.
+
+```
+async _doGenerate(instanceId, testcase, todoGenerator) {
+  const firstName = FIRST_NAMES[Math.floor(Math.random() * FIRST_NAMES.length)];
+                               
+
+  const lastName = LAST_NAMES[Math.floor(Math.random() * LAST_NAMES.length)];
+                               
+
+  const domain = FREE_MAILER[Math.floor(Math.random() * FREE_MAILER.length)];
+                               
+
+  const email = this.makeUnique(firstName, lastName, domain)
+                               
+
+  return {                     
+    firstName,
+    lastName,
+    email
+  }
+}
+
+// ensure that the email is unique
+makeUnique(firstName, lastName, domain) {
+  let email = `${firstName}.${lastName}@${domain}`
+  let counter = 1
+  while (this.uniqueSet.has(email)) {
+                              
+    email = `${firstName}.${lastName}-${counter}@${domain}`
+    counter++
+  }
+  return email
+}
+```
+
+- The first name is chosen out of an array with first names
+- The last name is chosen out of an array with last names
+- Choose a random domain
+- Depending on the size of the name and domain arrays the odds of creating duplicate email addresses are high. So we need a way to make the email unique, but the names should still be included.
+- Return the person object.
+- The 'DataGenerator' has an internal SET which is used to store the values which need to be unique. The Generator now returns a person object. However, in our table we want an 'email' or a 'firstName', not an object.
+
+Create another function to return strings for the given parameter.
+
+```
+async generate(instanceId, testcase, todoGenerator) {
+  const param = todoGenerator.config      
+
+  if (instanceId && this.instanceData.has(instanceId)) {
+                                          
+    const valObj = this.instanceData.get(instanceId)
+    return valObj[param]
+  }
+
+  const genData = await this._doGenerate( 
+    instanceId,
+    testcase,
+    todoGenerator
+  )
+  if (genData !== undefined && instanceId) {
+                                          
+    this.instanceData.set(instanceId, genData)
+  }
+  return genData[param]                   
+}
+```
+
+- Get the parameter from the Excel sheet. The parameter tells the generator for which field the data should be created.
+- Here we see the 'instanceId' in action. Each time the generator is called with the same 'instanceId', it will return the same data. In our case, we call the same generator three times with a different parameter. The generator should return fields from the same object.
+- If there is no data for the instanceId, it will create a new one.
+- Store the newly generated data under the current instanceId.
+- Return the new data.
+
+Now, we still need to register the generator in our tdg.js file.
+
+```
+const genPerson = new GeneratorPerson({ logger })
+  processor.generatorRegistry.registerGenerator('generatorPerson', genPerson)
+```
+
+Let’s have a look at the generated result. In the 'tdg' subfolder there are four subdirectories 'TC1' to 'TC4'. One folder has been created for each test case.
+
+![step4.1](https://nanook.xhub.io/img/tutorials/t2/step4.1.png)
+
+Open one of the generated JSON files in one of the folders. The result should look like this.
+
+```
+{
+  "tableName": "Sheet1",
+  "name": "TC1",
+  "data": {
+    "Sheet1": {
+      "a9dad54a-c12e-46d8-914e-926b32e82424": {
+        "first name": "Anastasia",     
+        "last name": "Lukoschek",      
+        "email": "Anastasia.Lukoschek@hotmail.com"
+                                       
+      }
+    }
+  },
+  "instanceId": "a9dad54a-c12e-46d8-914e-926b32e82424",
+  "callTree": {
+    "instanceId": "364c485f-d863-490c-8600-b419f4504ad1",
+    "tableName": "Sheet1",
+    "testcaseName": "TC1",
+    "children": []
+  }
+}
+```
+
+- The generated first name
+- The generated last name
+- The email build out of the first name and the last name
+
+Now, each time the processor is called, it will create new data for the four test cases and the data will always be different. Also, the email will always be unique.
+
+**Note**
+
+The example code is located at: src/t2/step4 Just type there: node tdg.js
+
+
+# Create your own writer
+
+Source: https://nanook.xhub.io/docs/tutorials/createWriter
+
+**Version note:** the code on this page targets Nanook 1.x (JavaScript, CommonJS). The table concepts are unchanged in 3.x (TypeScript, ESM, Node.js 22 or newer); the current tutorials live in the repository: [docs/tutorials](https://github.com/xhubio/nanook-table/tree/master/docs/tutorials).
+
+This chapter will show you how to create your own writer and how to use it. For this tutorial the writer will generate a CSV file of the generated test data. The data is written on a per test case basis. If you need one file containing all the data for all the test cases, it is a good practice to aggregate the file shortly before execution. This way, with the data stored, you can decide later on which test cases to include in the next run, or if you would like to retest only some of the tests. Our recommendation is to split the data on a test cases per test case basis.
+
+## Create the writer
+
+First let’s have a look at the default writer provided by the '@xhubio/nanook-table' module.
+
+```
+const fs = requite('fs')
+const util = requite('util')
+const InterfaceWriter = requite('@xhubio/nanook-table').InterfaceWriter
+const writeFile = util.promisify(fs.writeFile)
+
+class DefaultWriter extends InterfaceWriter {
+  /**
+   * Writes the data
+   */
+  async write(testcaseData) {          
+    const fileName = await this.createFileName(testcaseData)
+                                       
+    return writeFile(fileName, JSON.stringify(testcaseData, null, 2))
+                                       
+  }
+
+  /**
+   * Creates the file name to write the testcaseData object
+   * @param testcaseData {object} The testcaseData object
+   * @return fileName {string} The file name to write the object
+   */
+  async createFileName(testcaseData) {
+    const tcName = testcaseData.name
+    const targetDir = path.join('tdg', tcName)
+    await md(targetDir)
+
+    return path.join(targetDir, 'testcaseData.json')
+  }
+}
+```
+
+- The only function that needs to be overwritten is the 'async write(testcaseData)' function. It is called for each test case with all the created test case data. The 'testcaseData' object contains the data. The default writer will simply write out this object. If you need multiple different files, each writer will extract only the data it needs and write it to a file.
+- Creates a file name.
+- Writes the file.
+
+Now it’s time for your own writer. Create a file called 'csvWriter.js' and add the following content.
+
+```
+const fs = require('fs')
+const util = require('util')
+const path = require('path')
+const InterfaceWriter = require('@xhubio/nanook-table').InterfaceWriter
+
+const writeFile = util.promisify(fs.writeFile)
+const DELIMITER = ','     
+
+class CsvWriter extends InterfaceWriter {
+
+  async write(testcaseData) {
+    const fileName = await this.createFileName(testcaseData)
+                          
+
+    const sheetName = testcaseData.tableName
+    const res = []
+
+    for(const instId of Object.keys(testcaseData.data[sheetName])){
+                          
+      const dat = testcaseData.data[sheetName][instId]
+                          
+      const friend = dat['friend email'] ? dat['friend email'] : ''
+      const row = [dat['first name'], dat['last name'], dat.email, friend]
+                          
+      res.push(row.join(DELIMITER))
+    }
+
+    return writeFile(fileName, res.join('\n'))
+                          
+  }
+
+  /**
+   * Creates the file name to write the testcaseData object
+   * @param testcaseData {object} The testcaseData object
+   * @return fileName {string} The file name to write the object
+   */
+  async createFileName(testcaseData) {
+    const tcName = testcaseData.name
+    const targetDir = path.join('tdg', tcName)
+    return path.join(targetDir, 'person.csv')
+  }
+}
+
+module.exports.CsvWriter = CsvWriter
+```
+
+- Set the delimiter for the CSV file.
+- Create the file name. In this function we do not create the directory if it doesn’t exist (because this is already done in the default writer).
+- Iterate over all the instanceIds of the data object. In this case, we do not distinguish between the main data and the referenced data.
+- Get the data object of the current instanceId.
+- Build the row.
+- Write the file.
+
+The next step is to add the writer to the processor. For this, the 'tdg.js' file needs to be modified.
+
+```
+const path = require('path')
+const p = require('@xhubio/nanook-table')
+const LoggerMemory = require('@xhubio/nanook-table').LoggerMemory
+const GeneratorPerson = require('./GeneratorPerson').GeneratorPerson
+const CsvWriter = require('./CsvWriter').CsvWriter
+                      
+
+
+async function doIt() {
+  const logger = new LoggerMemory()
+  logger.writeConsole = true
+
+  const fileProcessor = await p.createDefaultFileProcessor(logger)
+
+  const csvWriter = new CsvWriter({logger})
+                      
+  const defaultWriter = p.createDefaultWriter(logger)[0]
+                      
+
+  const processor = new p.Processor({
+    logger,
+    generatorRegistry: p.createDefaultGeneratorRegistry(),
+    writer: [defaultWriter, csvWriter]
+                      
+  })
+
+  const genPerson = new GeneratorPerson({logger})
+  processor.generatorRegistry.registerGenerator('generatorPerson', genPerson)
+
+  await fileProcessor.load(path.join('resources', 'demo.xlsx'))
+  processor.tables = fileProcessor.tables
+
+  await processor.process()
+}
+
+
+doIt().then(() => {
+  console.log('Finish')
+}).catch(err => {
+  console.log(err)
+})
+```
+
+- Import the writer class.
+- Create an instance of the csv writer.
+- The 'createDefaultWriter()' function returns an array with one default writer, so we just get the first writer from the array.
+- Create an array with both writers. The writers are executed in the given order, so only the first writer needs to create the output directory.
+
+Now run the execution again. Afterwards, you will find an additional file called 'person.csv' in the result directory.
+
+**Note**
+
+The example code is located at: src/t4/step1 In there, simply run: node tdg.js
+
+
+# Create your own filter processor
+
+Source: https://nanook.xhub.io/docs/tutorials/createFilterProcessor
+
+Todo
+
+
+# Processor
+
+Source: https://nanook.xhub.io/docs/api/v3/processor
+
+API reference · Nanook 3.x
+
+Generated on 2026-09-02 from [docs/api/processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+
+- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
+- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+
+The processor module contains the main orchestrator (`TestcaseProcessor`), the writer interface, filter implementations, and factory functions for quick setup.
+
+```typescript
+import {
+  TestcaseProcessor,
+  InterfaceWriter,
+  FilterProcessorInterface,
+  SimpleArrayFilterProcessor,
+  SimpleArrayIgnoreFilterProcessor,
+  createDefaultGeneratorRegistry,
+  createDefaultWriter,
+  createDefaultFileProcessor
+} from 'nanook-table'
+```
+
+---
+
+## TestcaseProcessor
+
+The central orchestrator that ties together table models, data generators, and writers. It iterates over all tables and their executable test cases, runs generators to produce data, and passes the results to writers.
+
+### Constructor
+
+```typescript
+new TestcaseProcessor(options: {
+  logger: LoggerInterface
+  generatorRegistry: DataGeneratorRegistry
+  writer: InterfaceWriter | InterfaceWriter[]
+})
+```
+
+| Option | Type | Description |
+|---|---|---|
+| `logger` | `LoggerInterface` | Logger instance for diagnostic output |
+| `generatorRegistry` | `DataGeneratorRegistry` | Registry containing all available data generators |
+| `writer` | `InterfaceWriter \| InterfaceWriter[]` | One or more writers that receive generated test case data |
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `tables` | `TableInterface[]` | The table models to process. Set this after creating the processor, typically from `FileProcessor.tables` |
+
+### Methods
+
+#### `async process(): Promise<void>`
+
+Processes all tables and generates test data. This is the main entry point that runs the full generation pipeline.
+
+The processing steps are:
+
+1. Call `loadStore()` on the generator registry (loads all generator stores)
+2. Call `before()` on each writer
+
+For each table in `tables`: a. For each executable test case in the table:
+
+  - Create directives from the test case definition
+  - Execute static directives (write literal values)
+  - Execute reference directives (resolve cross-table references)
+
+Execute generator directives in order:
+
+    - Call `generate()` on the appropriate generator
+    - Retry generators that return `undefined` (dependency not yet available)
+    - Call `createPostProcessDirectives()` after each generator succeeds
+  - Execute all post-process directives (sorted by order)
+  - Apply filters
+  - Call `write()` on each writer with the completed test case data
+4. Call `after()` on each writer
+5. Call `saveStore()` on the generator registry (persists all generator stores)
+
+### Example
+
+```typescript
+import {
+  LoggerMemory,
+  TestcaseProcessor,
+  createDefaultFileProcessor,
+  createDefaultGeneratorRegistry,
+  createDefaultWriter
+} from 'nanook-table'
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+// Set up components
+const fileProcessor = await createDefaultFileProcessor(logger)
+const registry = createDefaultGeneratorRegistry()
+const writer = createDefaultWriter(logger)
+
+// Load and process
+await fileProcessor.load('resources/tests.xlsx')
+
+const processor = new TestcaseProcessor({
+  logger,
+  generatorRegistry: registry,
+  writer
+})
+processor.tables = fileProcessor.tables
+
+await processor.process()
+```
+
+### Registering Filters
+
+Filters can be registered on the processor to include or exclude test cases based on their tags.
+
+```typescript
+const processor = new TestcaseProcessor({ logger, generatorRegistry, writer })
+
+// Only process test cases tagged with 'smoke'
+processor.registerFilter(new SimpleArrayFilterProcessor('include', ','))
+
+// Skip test cases tagged with 'slow'
+processor.registerFilter(new SimpleArrayIgnoreFilterProcessor('exclude', ','))
+```
+
+---
+
+## InterfaceWriter
+
+Abstract base class for writers. A writer receives fully generated test case data and writes it to some output destination (files, database, console, etc.).
+
+### Constructor
+
+```typescript
+new InterfaceWriter({ logger }: { logger: LoggerInterface })
+```
+
+### Methods
+
+#### `async before(): Promise<void>`
+
+Called once before the processor starts generating test cases. Use this for initialization (creating output directories, opening database connections, writing file headers, etc.).
+
+#### `async write(testcaseData: TestcaseData): Promise<void>`
+
+Called once for each generated test case. The `testcaseData` object contains all generated field values, metadata, tags, and filter results.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `testcaseData` | `TestcaseData` | The fully populated test case data object |
+
+#### `async after(): Promise<void>`
+
+Called once after all test cases have been processed. Use this for cleanup (closing files, finalizing output, writing summaries, etc.).
+
+### Custom Writer Example
+
+```typescript
+import { InterfaceWriter } from 'nanook-table'
+import type { TestcaseData } from 'nanook-table'
+
+class ConsoleWriter extends InterfaceWriter {
+  async before(): Promise<void> {
+    console.log('--- Start of test data ---')
+  }
+
+  async write(testcaseData: TestcaseData): Promise<void> {
+    const name = testcaseData.name
+    console.log(`Test case: ${name}`)
+    console.log(JSON.stringify(testcaseData.data, null, 2))
+  }
+
+  async after(): Promise<void> {
+    console.log('--- End of test data ---')
+  }
+}
+```
+
+### Using Multiple Writers
+
+The processor accepts an array of writers. All writers receive every test case.
+
+```typescript
+import { TestcaseProcessor } from 'nanook-table'
+
+const jsonWriter = createDefaultWriter(logger)
+const consoleWriter = [new ConsoleWriter({ logger })]
+
+const processor = new TestcaseProcessor({
+  logger,
+  generatorRegistry: registry,
+  writer: [...jsonWriter, ...consoleWriter]
+})
+```
+
+---
+
+## FilterProcessorInterface
+
+Abstract interface for filter processors. Filters are used to include or exclude test cases from processing based on their tags and a filter expression.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `name` | `string` | The name of this filter processor. Matches the filter name used in the spreadsheet's FilterSection |
+
+### Methods
+
+#### `filter(tags: string[], expression: string): boolean`
+
+Evaluates the filter expression against the test case's tags.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `tags` | `string[]` | All tags defined on the test case |
+| `expression` | `string` | The filter expression from the spreadsheet cell |
+
+**Returns:** `true` if the test case passes the filter (should be processed), `false` if it should be skipped.
+
+---
+
+## SimpleArrayFilterProcessor
+
+An include filter. Splits the expression by a delimiter and checks whether any of the resulting values exist in the test case's tags. If a match is found, the test case is processed.
+
+### Constructor
+
+```typescript
+new SimpleArrayFilterProcessor(name: string, delimiter: string)
+```
+
+| Parameter | Type | Description |
+|---|---|---|
+| `name` | `string` | The filter name, referenced in the spreadsheet |
+| `delimiter` | `string` | Character used to split the expression into individual values |
+
+### Example
+
+```typescript
+import { SimpleArrayFilterProcessor } from 'nanook-table'
+
+const filter = new SimpleArrayFilterProcessor('include', ',')
+
+// Expression "smoke,regression" matches test case with tag "smoke"
+filter.filter(['smoke', 'login'], 'smoke,regression')
+// Returns: true
+
+// No match
+filter.filter(['payment'], 'smoke,regression')
+// Returns: false
+```
+
+---
+
+## SimpleArrayIgnoreFilterProcessor
+
+An exclude filter. The inverse of `SimpleArrayFilterProcessor`. Splits the expression by a delimiter and checks whether any of the resulting values exist in the test case's tags. If a match is found, the test case is skipped.
+
+### Constructor
+
+```typescript
+new SimpleArrayIgnoreFilterProcessor(name: string, delimiter: string)
+```
+
+| Parameter | Type | Description |
+|---|---|---|
+| `name` | `string` | The filter name, referenced in the spreadsheet |
+| `delimiter` | `string` | Character used to split the expression into individual values |
+
+### Example
+
+```typescript
+import { SimpleArrayIgnoreFilterProcessor } from 'nanook-table'
+
+const filter = new SimpleArrayIgnoreFilterProcessor('exclude', ',')
+
+// Expression "slow,flaky" matches test case with tag "slow" -> excluded
+filter.filter(['slow', 'login'], 'slow,flaky')
+// Returns: false (test case is excluded)
+
+// No match -> not excluded
+filter.filter(['smoke', 'login'], 'slow,flaky')
+// Returns: true (test case is processed)
+```
+
+---
+
+## Factory Functions
+
+These convenience functions create pre-configured instances with sensible defaults. Use them for quick setup.
+
+### createDefaultGeneratorRegistry()
+
+Creates a `DataGeneratorRegistry` with `GeneratorFaker` already registered under the name `'GeneratorFaker'`.
+
+```typescript
+import { createDefaultGeneratorRegistry } from 'nanook-table'
+
+const registry = createDefaultGeneratorRegistry()
+// registry.getGenerator('GeneratorFaker') is available
+
+// Add your own generators
+registry.registerGenerator('myGenerator', new MyGenerator({ logger }))
+```
+
+### createDefaultWriter(logger: LoggerInterface): InterfaceWriter[]
+
+Creates an array containing the default JSON file writer. This writer outputs one JSON file per test case into a `tdg/` directory.
+
+```typescript
+import { createDefaultWriter, LoggerMemory } from 'nanook-table'
+
+const logger = new LoggerMemory()
+const writers = createDefaultWriter(logger)
+```
+
+### createDefaultFileProcessor(logger: LoggerInterface): Promise<FileProcessor>
+
+Creates a `FileProcessor` pre-configured with:
+
+- `ImporterXlsx` as the importer
+- `ParserDecision` for `<DECISION_TABLE>` sheets
+- `ParserMatrix` for `<MATRIX_TABLE>` sheets
+- `ParserSpecification` for `<SPECIFICATION>` sheets (the legacy marker `<SPECIFICATION_TABLE>` is also registered so existing workbooks keep loading)
+
+```typescript
+import { createDefaultFileProcessor, LoggerMemory } from 'nanook-table'
+
+const logger = new LoggerMemory()
+const fileProcessor = await createDefaultFileProcessor(logger)
+await fileProcessor.load('resources/tests.xlsx')
+```
+
+
+# Model
+
+Source: https://nanook.xhub.io/docs/api/v3/model
+
+API reference · Nanook 3.x
+
+Generated on 2026-09-02 from [docs/api/model.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+
+- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
+- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+
+The model module defines the core interfaces and classes that represent tables, test case definitions, and directives. Every table type (decision, matrix, specification) implements these interfaces, and every processor operates on them.
+
+```typescript
+import {
+  TableInterface,
+  TestcaseDefinitionInterface,
+  DirectiveBase,
+  StaticDirective,
+  GeneratorDirective,
+  ReferenceDirective,
+  FieldDirective,
+  MetaTable,
+  MetaTestcase,
+  FilterInterface,
+  PREFIX_GENERATOR,
+  PREFIX_REFERENCE
+} from 'nanook-table'
+```
+
+## TableInterface
+
+Common interface implemented by all table models (`TableDecision`, `TableMatrix`). The processor operates on this interface without knowing the concrete table type.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `name` | `string` | The name of this table, typically derived from the sheet name |
+| `tableType` | `string` | The type identifier for this table (e.g., `'decision'`, `'matrix'`) |
+| `meta` | `MetaTable` | Metadata about the table, including the source file name |
+
+### Methods
+
+#### `getTestcaseForName(testcaseName: string): TestcaseDefinitionInterface`
+
+Returns the test case definition with the given name. Throws an error if no test case with that name exists in the table.
+
+```typescript
+const table: TableInterface = // ... loaded table
+const tc = table.getTestcaseForName('tc1')
+console.log(tc.testcaseName, tc.execute)
+```
+
+#### `getTestcasesForExecution(): Generator<TestcaseDefinitionInterface>`
+
+A generator function that yields all test case definitions that should be executed. Test cases marked with `execute = false` or `neverExecute = true` are excluded.
+
+```typescript
+for (const tc of table.getTestcasesForExecution()) {
+  console.log(tc.testcaseName)
+}
+```
+
+#### `processRanges(testcaseName: string): string[]`
+
+Parses a test case name that may contain a range expression and returns an array of individual test case names. For example, `'tc12-14'` expands to `['tc12', 'tc13', 'tc14']`. If the name is not a range, returns a single-element array.
+
+```typescript
+const names = table.processRanges('tc3-5')
+// ['tc3', 'tc4', 'tc5']
+```
+
+---
+
+## TestcaseDefinitionInterface
+
+Interface for a single test case definition within a table. Each column in a decision table or each combination in a matrix table produces one test case definition.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `id` | `string` | Unique identifier (UUID) for this test case |
+| `testcaseName` | `string` | The name of this test case (e.g., `'tc1'`). Used to look up the test case in the table |
+| `data` | `Record<string, Record<string, string>>` | The cell data for this test case, organized by section and row |
+| `execute` | `boolean` | Whether this test case should be executed. `false` means it exists only as a reference target |
+| `neverExecute` | `boolean` | If `true`, this test case is never executed, even when referenced from another test case |
+| `multiplicity` | `number` | How many times this test case should be generated. Default is `1` |
+| `table` | `TableInterface` | Reference back to the table this test case belongs to |
+| `tableType` | `string` | The table type of the parent table |
+| `tableName` | `string` | The name of the parent table |
+| `tableMeta` | `MetaTable` | The metadata of the parent table |
+
+### Methods
+
+#### `createDirectives(): TestcaseDirectivesInterface`
+
+Analyzes the test case data and creates all directives needed to generate this test case. This is the primary method that translates spreadsheet cell values into actionable generation instructions.
+
+```typescript
+const directives = testcase.createDirectives()
+
+for (const sd of directives.static) {
+  console.log(`Static: ${sd.fieldName} = ${sd.value}`)
+}
+
+for (const gd of directives.generator) {
+  console.log(`Generator: ${gd.fieldName} -> ${gd.generatorName}`)
+}
+
+for (const rd of directives.reference) {
+  console.log(`Reference: ${rd.fieldName} -> ${rd.targetTableName}.${rd.targetFieldName}`)
+}
+```
+
+#### `createTags(): string[]`
+
+Returns all tags defined for this test case. Tags come from `TagSection` rows in the table and are used for filtering.
+
+```typescript
+const tags = testcase.createTags()
+// ['smoke', 'regression', 'login']
+```
+
+#### `createFilter(): FilterInterface[]`
+
+Returns all filter definitions for this test case. Each filter has a name and a value expression.
+
+```typescript
+const filters = testcase.createFilter()
+for (const f of filters) {
+  console.log(`Filter: ${f.filterName} = ${f.filterValue}`)
+}
+```
+
+#### `createGeneratorSwitches(): string[]`
+
+Returns a list of generator names that should be switched off (not executed) for this test case.
+
+```typescript
+const switches = testcase.createGeneratorSwitches()
+// ['generatorPassword'] -- this generator will be skipped
+```
+
+---
+
+## TestcaseDirectivesInterface
+
+The return type of `createDirectives()`. Groups all directives by type.
+
+```typescript
+interface TestcaseDirectivesInterface {
+  generator: GeneratorDirective[]
+  static: StaticDirective[]
+  reference: ReferenceDirective[]
+  field: FieldDirective[]
+}
+```
+
+---
+
+## DirectiveBase
+
+Abstract base class for all directive types. Contains the metadata common to every directive.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fieldName` | `string` | The name of the field this directive applies to |
+| `testcaseMeta` | `MetaTestcase` | Metadata about the test case and table this directive originates from |
+
+---
+
+## StaticDirective
+
+Extends `DirectiveBase`. Represents a literal value that should be written directly to the test case output without calling a generator.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fieldName` | `string` | Inherited from `DirectiveBase` |
+| `testcaseMeta` | `MetaTestcase` | Inherited from `DirectiveBase` |
+| `value` | `string` | The static value to write |
+
+In the spreadsheet, any cell value in the generator column that does not start with a recognized prefix (`gen:` or `ref:`) is treated as static data.
+
+---
+
+## GeneratorDirective
+
+Extends `DirectiveBase`. Represents a call to a named data generator. Created when a cell value starts with the `gen:` prefix.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fieldName` | `string` | Inherited from `DirectiveBase` |
+| `testcaseMeta` | `MetaTestcase` | Inherited from `DirectiveBase` |
+| `generatorName` | `string` | The registered name of the generator to call |
+| `config` | `Record<string, unknown>` | Configuration parameters passed to the generator |
+| `instanceIdSuffix` | `string \| undefined` | Optional suffix appended to the instance ID. When two directives share the same suffix, the generator returns the same data |
+| `order` | `number` | Execution order. Directives are sorted by this value before execution. Default is `1000` |
+
+### Spreadsheet Syntax
+
+```
+gen:<generatorName>(<instanceIdSuffix>):<config>
+```
+
+Examples:
+
+- `gen:faker:{"method": "person.firstName"}` -- call GeneratorFaker with the given config
+- `gen:password(pwd):{"minLength": 8}` -- call the password generator; uses instance ID suffix `pwd`
+
+---
+
+## ReferenceDirective
+
+Extends `DirectiveBase`. Represents a reference to data generated by another table and test case. Created when a cell value starts with the `ref:` prefix.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fieldName` | `string` | Inherited from `DirectiveBase` |
+| `testcaseMeta` | `MetaTestcase` | Inherited from `DirectiveBase` |
+| `targetTableName` | `string` | The name of the table being referenced |
+| `targetFieldName` | `string` | The field name in the target table |
+| `targetTestcaseName` | `string` | The test case name in the target table |
+| `instanceIdSuffix` | `string \| undefined` | Optional suffix for the instance ID |
+
+### Spreadsheet Syntax
+
+```
+ref:<targetTableName>:<targetFieldName>:<targetTestcaseName>(<instanceIdSuffix>)
+```
+
+---
+
+## FieldDirective
+
+Extends `DirectiveBase`. Represents a field selection marker. Used internally to track which fields are active in a test case.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fieldName` | `string` | Inherited from `DirectiveBase` |
+| `testcaseMeta` | `MetaTestcase` | Inherited from `DirectiveBase` |
+
+---
+
+## FilterInterface
+
+Defines a filter that can be applied to test cases during processing.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `filterName` | `string` | The name of the filter processor to use |
+| `filterValue` | `string` | The filter expression passed to the filter processor |
+
+---
+
+## MetaTable
+
+Metadata about a table's origin.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fileName` | `string` | The source file path |
+| `tableName` | `string` | The name of the table (sheet name) |
+| `tableType` | `string` | The type of the table |
+
+---
+
+## MetaTestcase
+
+Metadata about a specific test case. Extends the table metadata with test case identification.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `fileName` | `string` | The source file path |
+| `tableName` | `string` | The name of the table |
+| `tableType` | `string` | The type of the table |
+| `testcaseName` | `string` | The name of the test case |
+
+---
+
+## Constants
+
+| Constant | Value | Description |
+|---|---|---|
+| `PREFIX_GENERATOR` | `'gen'` | The prefix that identifies generator commands in cell values |
+| `PREFIX_REFERENCE` | `'ref'` | The prefix that identifies reference commands in cell values |
+
+
+# Data generator
+
+Source: https://nanook.xhub.io/docs/api/v3/data-generator
+
+API reference · Nanook 3.x
+
+Generated on 2026-09-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+
+- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
+- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+
+The data generator module provides the interface and base implementation for all data generators. Generators are responsible for producing test data values. The processor calls generators based on `GeneratorDirective` entries created from the spreadsheet.
+
+```typescript
+import {
+  DataGeneratorInterface,
+  DataGeneratorBase,
+  DataGeneratorRegistry,
+  GeneratorFaker
+} from 'nanook-table'
+```
+
+## Generator Lifecycle
+
+The processor manages generators through a well-defined lifecycle:
+
+```
+1. loadStore()                    -- called once at startup for each registered generator
+2. For each test case:
+   a. generate()                  -- produce data for a GeneratorDirective
+   b. createPostProcessDirectives()  -- optionally return additional directives
+   c. postProcess()               -- called for each post-process directive
+3. saveStore()                    -- called once at shutdown for each registered generator
+```
+
+Between test cases, `clearContext()` may be called to reset per-run state while preserving the store.
+
+---
+
+## DataGeneratorInterface
+
+Abstract interface that all data generators must implement. Defines the contract between the processor and any generator.
+
+### Constructor
+
+```typescript
+new DataGeneratorInterface(options: {
+  logger: LoggerInterface
+  serviceRegistry?: DataGeneratorRegistry
+  unique?: boolean
+  maxUniqueTries?: number
+  varDir?: string
+  useStore?: boolean
+})
+```
+
+| Option | Type | Default | Description |
+|---|---|---|---|
+| `logger` | `LoggerInterface` | required | Logger instance for diagnostic output |
+| `serviceRegistry` | `DataGeneratorRegistry` | `undefined` | Registry providing access to other generators. Allows generators to compose with each other |
+| `unique` | `boolean` | `true` | When `true`, the generator should return unique values. The definition of "unique" is generator-specific |
+| `maxUniqueTries` | `number` | `100` | Maximum attempts to generate a unique value before throwing an error |
+| `varDir` | `string` | `undefined` | Directory path for reading/writing persistent store files |
+| `useStore` | `boolean` | `false` | Whether the generator should persist data between runs |
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `logger` | `LoggerInterface` | The logger instance |
+| `serviceRegistry` | `DataGeneratorRegistry` | The registry of all available generators |
+| `unique` | `boolean` | Whether uniqueness is enforced |
+| `maxUniqueTries` | `number` | Maximum uniqueness retry count |
+| `uniqueSet` | `Set<string>` | Stores previously generated values for uniqueness checks |
+| `instanceData` | `Map<string, unknown>` | Maps instance IDs to previously generated data. Ensures the same instance ID returns the same value |
+| `varDir` | `string` | Store directory path |
+| `useStore` | `boolean` | Whether the store is active |
+| `name` | `string` | The name under which this generator is registered. Set automatically by the registry |
+
+### Methods
+
+#### `async loadStore(): Promise<void>`
+
+Loads previously persisted data from the store file. Called once by the processor before any generation begins. Implementations that do not use a store can leave this as a no-op.
+
+#### `async saveStore(): Promise<void>`
+
+Persists the current store data to a file. Called once by the processor after all generation is complete.
+
+#### `getGenerator(generatorName: string): DataGeneratorInterface`
+
+Retrieves another generator from the service registry by name. Throws an error if the generator is not found. This enables generators to delegate to or compose with other generators.
+
+```typescript
+// Inside a custom generator
+const faker = this.getGenerator('GeneratorFaker')
+```
+
+#### `clearContext(): void`
+
+Resets the `uniqueSet` and `instanceData`. Called between independent generation runs to clear per-run state without affecting the persistent store.
+
+#### `async generate(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise<unknown>`
+
+Generates a value for the given directive. This is the primary generation method.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `instanceId` | `string` | A unique ID for this test case instance. The same instance ID should yield the same data |
+| `testcase` | `TestcaseData` | The test case data object being built. Contains data already generated by other generators |
+| `generatorDirective` | `GeneratorDirective` | The directive describing what to generate, including generator name and config |
+
+**Returns:** The generated data, or `undefined` if the generator cannot produce data yet (e.g., because it depends on data from another generator that has not run yet). The processor will retry generators that return `undefined`.
+
+#### `async createPostProcessDirectives(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise<GeneratorDirective[]>`
+
+Called after `generate()` returns successfully. Returns an array of additional directives for post-processing. Each returned directive will cause a later call to `postProcess()`.
+
+This is useful when a generator needs to perform additional work after all primary generators have completed.
+
+#### `async postProcess(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise<void>`
+
+Called for each directive returned by `createPostProcessDirectives()`, after all primary generation is complete. Post-processing can modify the `testcase` data object directly and does not return a value.
+
+---
+
+## DataGeneratorBase
+
+Base implementation of `DataGeneratorInterface`. Provides store loading/saving, instance ID management, and the uniqueness mechanism. Most custom generators should extend this class rather than implementing the interface directly.
+
+### Inherited Behavior
+
+- **Instance ID caching**: If `generate()` is called with an instance ID that has already been used, the previously generated value is returned without calling `_doGenerate()` again.
+- **Uniqueness enforcement**: When `unique` is `true`, the base class retries `_doGenerate()` up to `maxUniqueTries` times until a value is produced that is not already in `uniqueSet`.
+- **Store persistence**: `loadStore()` reads from and `saveStore()` writes to a JSON file at `${varDir}/${storeFileName}`.
+
+### Additional Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `storeName` | `string` | The base name used for the store file. Defaults to the generator name |
+| `store` | `Record<string, unknown>` | The data object that is persisted. Generators can store arbitrary data here |
+| `storeFileName` | `string` | Computed file name for the store (read-only). Derived from `storeName` |
+
+### Methods
+
+#### `_doGenerate(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise<unknown>`
+
+**Override this method in subclasses.** This is where the actual data generation logic goes. The base class `generate()` method handles instance ID caching and uniqueness; `_doGenerate()` is only called when new data is actually needed.
+
+```typescript
+import { DataGeneratorBase } from 'nanook-table'
+import type { GeneratorDirective } from 'nanook-table'
+
+class GeneratorTimestamp extends DataGeneratorBase {
+  async _doGenerate(
+    instanceId: string,
+    testcase: TestcaseData,
+    generatorDirective: GeneratorDirective
+  ): Promise<string> {
+    return new Date().toISOString()
+  }
+}
+```
+
+#### `getStoreData(): Record<string, unknown>`
+
+Returns the data as it would be written to the store. Useful for inspecting store state without saving to disk.
+
+### Creating a Custom Generator
+
+```typescript
+import {
+  DataGeneratorBase,
+  DataGeneratorRegistry,
+  LoggerMemory
+} from 'nanook-table'
+import type { GeneratorDirective, TestcaseData } from 'nanook-table'
+
+class GeneratorCounter extends DataGeneratorBase {
+  private counter = 0
+
+  async _doGenerate(
+    instanceId: string,
+    testcase: TestcaseData,
+    generatorDirective: GeneratorDirective
+  ): Promise<number> {
+    this.counter += 1
+    return this.counter
+  }
+}
+
+// Register the generator
+const logger = new LoggerMemory()
+const registry = new DataGeneratorRegistry()
+const counter = new GeneratorCounter({ logger, serviceRegistry: registry })
+registry.registerGenerator('counter', counter)
+```
+
+---
+
+## DataGeneratorRegistry
+
+A registry that stores generator instances by name. The processor uses the registry to look up generators when executing `GeneratorDirective` entries. Generators can also use it to access other generators for composition.
+
+### Methods
+
+#### `registerGenerator(name: string, generator: DataGeneratorInterface): void`
+
+Registers a generator under the given name. Also sets the `name` property on the generator instance.
+
+```typescript
+const registry = new DataGeneratorRegistry()
+const faker = new GeneratorFaker({ logger })
+registry.registerGenerator('GeneratorFaker', faker)
+```
+
+#### `getGenerator(name: string): DataGeneratorInterface`
+
+Returns the generator registered under the given name. Throws an error if no generator with that name exists.
+
+```typescript
+const faker = registry.getGenerator('GeneratorFaker')
+```
+
+#### `async loadStore(): Promise<void>`
+
+Calls `loadStore()` on every registered generator. The processor calls this once at startup.
+
+#### `async saveStore(): Promise<void>`
+
+Calls `saveStore()` on every registered generator. The processor calls this once at shutdown.
+
+---
+
+## GeneratorFaker
+
+A built-in generator that uses `@faker-js/faker` to produce data. The Faker method to call is specified in the `config` property of the `GeneratorDirective`.
+
+### Usage in Spreadsheets
+
+In the generator column of your equivalence class table, use:
+
+```
+gen:GeneratorFaker:{"method": "person.firstName"}
+gen:GeneratorFaker:{"method": "internet.email"}
+gen:GeneratorFaker:{"method": "number.int", "args": [{"min": 1, "max": 100}]}
+```
+
+### Configuration
+
+The `config` object in the directive supports:
+
+| Key | Type | Description |
+|---|---|---|
+| `method` | `string` | The Faker method path, e.g., `'person.firstName'`, `'internet.email'`, `'number.int'` |
+| `args` | `unknown[]` | Optional array of arguments passed to the Faker method |
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `logger` | `LoggerInterface` | The logger instance |
+| `unique` | `boolean` | Whether generated values must be unique. Default is `false` for GeneratorFaker |
+
+### Example
+
+```typescript
+import {
+  GeneratorFaker,
+  DataGeneratorRegistry,
+  LoggerMemory
+} from 'nanook-table'
+
+const logger = new LoggerMemory()
+const registry = new DataGeneratorRegistry()
+const faker = new GeneratorFaker({ logger, serviceRegistry: registry })
+registry.registerGenerator('GeneratorFaker', faker)
+```
+
+The `createDefaultGeneratorRegistry()` factory function in the processor module creates a registry with `GeneratorFaker` already registered.
+
+
+# File processor
+
+Source: https://nanook.xhub.io/docs/api/v3/file-processor
+
+API reference · Nanook 3.x
+
+Generated on 2026-09-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+
+- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
+- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+
+The file processor module handles loading spreadsheet files and parsing their sheets into table models. It includes the importer abstraction, individual parsers for each table type, and the specification-to-decision converter with its rule converter plugin system.
+
+```typescript
+import {
+  ImporterInterface,
+  ImporterXlsx,
+  FileProcessor,
+  ParserInterface,
+  ParserDecision,
+  ParserMatrix,
+  ParserSpecification,
+  ParserSpecificationConverter,
+  RuleConverterRegistry,
+  createDefaultConverterRegistry
+} from 'nanook-table'
+```
+
+---
+
+## ImporterInterface
+
+Abstract interface for spreadsheet readers. An importer loads a file and provides cell-level access to its content. The `FileProcessor` depends on this interface, so you can replace the XLSX importer with one for a different file format.
+
+### Methods
+
+#### `async loadFile(fileName: string): Promise<void>`
+
+Opens and loads the given file. After this call, the importer's sheet data is available for reading.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `fileName` | `string` | Path to the file to load |
+
+#### `sheetNames(): string[]`
+
+Returns an array of sheet names in the loaded file, in the original order they appear.
+
+```typescript
+const importer = new ImporterXlsx()
+await importer.loadFile('tests.xlsx')
+const sheets = importer.sheetNames()
+// ['LoginTests', 'RegistrationTests', 'PaymentMatrix']
+```
+
+#### `cellValue(sheetName: string, column: number, row: number): string | undefined`
+
+Returns the value of a single cell. Column and row indices are zero-based.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `sheetName` | `string` | The name of the sheet |
+| `column` | `number` | Column index, starting at `0` |
+| `row` | `number` | Row index, starting at `0` |
+
+Returns `undefined` if the cell is empty.
+
+#### `clear(): void`
+
+Releases the loaded file data to free memory. Call this after parsing is complete.
+
+---
+
+## ImporterXlsx
+
+XLSX implementation of `ImporterInterface`. Uses the `xlsx` library to read Excel files (.xlsx, .xls).
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `sheets` | `Map<string, unknown>` | Internal storage of loaded sheet data, keyed by sheet name |
+| `converter` | `object` | Column name/number converter (maps Excel column letters to zero-based indices) |
+
+### Example
+
+```typescript
+import { ImporterXlsx } from 'nanook-table'
+
+const importer = new ImporterXlsx()
+await importer.loadFile('resources/tests.xlsx')
+
+for (const name of importer.sheetNames()) {
+  const firstCell = importer.cellValue(name, 0, 0)
+  console.log(`Sheet "${name}" starts with: ${firstCell}`)
+}
+
+importer.clear()
+```
+
+---
+
+## FileProcessor
+
+Orchestrates the loading and parsing of spreadsheet files. It uses an importer to read cells and delegates to registered parsers based on the table type marker found in each sheet's first cell.
+
+### Constructor
+
+```typescript
+new FileProcessor({ logger }: { logger: LoggerInterface })
+```
+
+| Option | Type | Description |
+|---|---|---|
+| `logger` | `LoggerInterface` | Logger instance for diagnostic messages |
+
+The `FileProcessor` requires an importer and parsers to be registered before calling `load()`. Use `createDefaultFileProcessor()` to get a pre-configured instance with all standard parsers.
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `tables` | `TableInterface[]` | Array of parsed table models. Populated after calling `load()` |
+
+### Methods
+
+#### `async load(fileName: string): Promise<void>`
+
+Loads the given file, iterates over all sheets, and parses each one into a table model. The parser is selected based on the table type marker in cell `(0, 0)` of each sheet.
+
+After this call, the `tables` property contains all parsed table models.
+
+```typescript
+import { createDefaultFileProcessor, LoggerMemory } from 'nanook-table'
+
+const logger = new LoggerMemory()
+const fp = await createDefaultFileProcessor(logger)
+await fp.load('resources/tests.xlsx')
+
+console.log(`Loaded ${fp.tables.length} tables`)
+for (const table of fp.tables) {
+  console.log(`- ${table.name} (${table.tableType})`)
+}
+```
+
+#### `registerImporter(importer: ImporterInterface): void`
+
+Sets the importer to use for loading files.
+
+#### `registerParser(tableType: string, parser: ParserInterface): void`
+
+Registers a parser for the given table type marker. When a sheet's first cell matches the marker, this parser is used.
+
+---
+
+## ParserInterface
+
+Abstract interface for table parsers. Each concrete parser knows how to read a specific table type from raw spreadsheet cells and produce a table model.
+
+### Methods
+
+#### `parse(sheetName: string, importer: ImporterInterface): TableInterface`
+
+Parses the sheet with the given name using the provided importer and returns a table model.
+
+| Parameter | Type | Description |
+|---|---|---|
+| `sheetName` | `string` | The name of the sheet to parse |
+| `importer` | `ImporterInterface` | The importer providing cell access |
+
+**Returns:** A `TableInterface` implementation (e.g., `TableDecision`, `TableMatrix`).
+
+---
+
+## ParserDecision
+
+Parser for sheets marked with `<DECISION_TABLE>`. Reads the sheet structure -- sections, sub-sections, field definitions, and test case columns -- and produces a `TableDecision` model.
+
+### Sheet Structure
+
+A decision table sheet has the following structure:
+
+```
+Row 0:  <DECISION_TABLE>   |  tc1  |  tc2  |  tc3  | ...
+        ─────────────────────────────────────────────────
+        FieldSection: "Login Data"
+          userId            |  x    |       |  x    |
+          password          |       |  x    |  x    |
+        TagSection: "Tags"
+          smoke             |  x    |       |  x    |
+        FilterSection: "Filter"
+          myFilter          |  val  |       |  val  |
+        ExecuteSection
+        NeverExecuteSection
+        MultiplicitySection
+        SummarySection: "Summary"
+          expected result   |  err  |  err  |  ok   |
+        <END>
+```
+
+### Recognized Section Types
+
+| Section Marker | Handler | Description |
+|---|---|---|
+| `FieldSection` | `handleFieldSection` | Defines fields with sub-sections for equivalence classes |
+| `TagSection` | `handleTagSection` | Defines tags for test case filtering |
+| `FilterSection` | `handleFilterSection` | Defines filter expressions per test case |
+| `GeneratorSwitchSection` | `handleGeneratorSwitchSection` | Lists generators to disable per test case |
+| `MultiplicitySection` | `handleMultiplicitySection` | Sets how many times each test case is generated |
+| `ExecuteSection` | `handleExecuteSection` | Controls whether each test case is executed |
+| `NeverExecuteSection` | `handleNeverExecuteSection` | Marks test cases as never executed |
+| `SummarySection` | `handleSummarySection` | Free-text summary information |
+| `MultiRowSection` | `handleMultiRowSection` | Generic multi-row data section |
+
+### Methods
+
+#### `parse(sheetName: string, importer: ImporterInterface): TableDecision`
+
+Parses the decision table and returns a `TableDecision` model.
+
+---
+
+## ParserMatrix
+
+Parser for sheets marked with `<MATRIX_TABLE>`. Reads a two-dimensional matrix of test parameters and produces a `TableMatrix` model.
+
+### Sheet Structure
+
+A matrix table has row headers on the left, column headers on top, and data values at their intersections. Each non-empty intersection becomes a test case.
+
+### Methods
+
+#### `parse(sheetName: string, importer: ImporterInterface): TableMatrix`
+
+Parses the matrix table and returns a `TableMatrix` model.
+
+---
+
+## ParserSpecification
+
+Parser for sheets marked with `<SPECIFICATION_TABLE>`. Reads a high-level specification of fields, rules, and severities, and produces a `SpecificationModel`.
+
+### Sheet Structure
+
+A specification table has three sections:
+
+1. **Fields** -- listed vertically with their applicable rules marked per column
+2. **Severities** -- defines severity levels for rule violations
+3. **Rules** -- defines the available rules and their descriptions
+
+### Methods
+
+#### `parseSpecification(sheetName: string, importer: ImporterInterface): SpecificationModel`
+
+Parses the specification sheet and returns a `SpecificationModel`.
+
+---
+
+## ParserSpecificationConverter
+
+Converts a `SpecificationModel` into a `TableDecision`. This is the bridge between the high-level specification format and the concrete decision table that the processor can execute.
+
+The converter creates:
+
+- A primary data section with equivalence classes derived from the field rules
+- An execution section
+- A severity section
+- A secondary data section (if a primary key rule is present)
+- A summary section
+
+### Constructor
+
+```typescript
+new ParserSpecificationConverter(options?: {
+  logger?: LoggerInterface
+  converterRegistry?: RuleConverterRegistry
+})
+```
+
+| Option | Type | Description |
+|---|---|---|
+| `logger` | `LoggerInterface` | Logger instance |
+| `converterRegistry` | `RuleConverterRegistry` | Registry of rule converter plugins. If not provided, uses `createDefaultConverterRegistry()` |
+
+### Methods
+
+#### `convert(specification: SpecificationModel): TableDecision`
+
+Converts the specification model into a decision table.
+
+```typescript
+import {
+  ParserSpecification,
+  ParserSpecificationConverter,
+  ImporterXlsx
+} from 'nanook-table'
+
+const importer = new ImporterXlsx()
+await importer.loadFile('spec.xlsx')
+
+const parser = new ParserSpecification()
+const spec = parser.parseSpecification('MySpec', importer)
+
+const converter = new ParserSpecificationConverter()
+const decisionTable = converter.convert(spec)
+```
+
+---
+
+## RuleConverterPlugin
+
+Interface for plugins that convert specification rules into equivalence classes. Each plugin handles one type of rule.
+
+```typescript
+interface RuleConverterPlugin {
+  /** Unique name identifying this converter */
+  name: string
+
+  /** Human-readable description of what this converter does */
+  description: string
+
+  /** Convert a rule into equivalence classes */
+  convert(context: RuleConversionContext): EquivalenceClassResult
+}
+```
+
+---
+
+## RuleConversionContext
+
+Context object passed to `RuleConverterPlugin.convert()`. Contains all information needed to derive equivalence classes from a rule.
+
+```typescript
+interface RuleConversionContext {
+  /** The field definition being processed */
+  field: FieldDefinition
+
+  /** The specific rule being converted */
+  rule: RuleDefinition
+
+  /** All rules that apply to this field */
+  allFieldRules: RuleDefinition[]
+
+  /** The full specification model */
+  specification: SpecificationModel
+}
+```
+
+---
+
+## EquivalenceClassResult
+
+The return type of a rule converter plugin. Contains the valid and error equivalence classes derived from a rule.
+
+```typescript
+interface EquivalenceClassResult {
+  validClasses: EquivalenceClassEntry[]
+  errorClasses: EquivalenceClassEntry[]
+}
+```
+
+---
+
+## EquivalenceClassEntry
+
+A single equivalence class within a result.
+
+```typescript
+interface EquivalenceClassEntry {
+  /** Display name of the equivalence class */
+  name: string
+
+  /** Optional explanatory comment */
+  comment?: string
+
+  /** Optional severity level for error classes */
+  severity?: string
+}
+```
+
+---
+
+## RuleConverterRegistry
+
+Registry for rule converter plugins. Used by `ParserSpecificationConverter` to look up the appropriate converter for each rule type.
+
+### Methods
+
+#### `register(plugin: RuleConverterPlugin): void`
+
+Registers a converter plugin. The plugin's `name` property is used as the key.
+
+#### `get(name: string): RuleConverterPlugin`
+
+Returns the plugin registered under the given name. Throws an error if not found.
+
+#### `has(name: string): boolean`
+
+Returns `true` if a plugin with the given name is registered.
+
+#### `names(): string[]`
+
+Returns an array of all registered plugin names.
+
+### Custom Rule Converter Example
+
+```typescript
+import { RuleConverterRegistry } from 'nanook-table'
+import type {
+  RuleConverterPlugin,
+  RuleConversionContext,
+  EquivalenceClassResult
+} from 'nanook-table'
+
+const myPlugin: RuleConverterPlugin = {
+  name: 'maxLength',
+  description: 'Generates classes for maximum length validation',
+  convert(context: RuleConversionContext): EquivalenceClassResult {
+    return {
+      validClasses: [
+        { name: 'within limit', comment: 'Value within max length' }
+      ],
+      errorClasses: [
+        { name: 'exceeds limit', comment: 'Value exceeds max length' }
+      ]
+    }
+  }
+}
+
+const registry = new RuleConverterRegistry()
+registry.register(myPlugin)
+```
+
+---
+
+## createDefaultConverterRegistry()
+
+Factory function that creates a `RuleConverterRegistry` pre-populated with all built-in rule converter plugins.
+
+```typescript
+import { createDefaultConverterRegistry } from 'nanook-table'
+
+const registry = createDefaultConverterRegistry()
+console.log(registry.names()) // list of all built-in converter names
+```
+
+---
+
+## Parser Constants
+
+The parsers use the following constants when reading spreadsheet data:
+
+| Constant | Value | Description |
+|---|---|---|
+| `START_ROW` | `0` | Default starting row in a sheet |
+| `START_COLUMN` | `0` | Default starting column in a sheet |
+| `MAX_EMPTY_LINES` | `30` | Maximum consecutive empty lines before the parser assumes the table has ended |
+| `KEY_TABLE_END` | `'<END>'` | Marker string in a cell that explicitly marks the end of a table |
+
+
+# Logger
+
+Source: https://nanook.xhub.io/docs/api/v3/logger
+
+API reference · Nanook 3.x
+
+Generated on 2026-09-02 from [docs/api/logger.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+
+- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
+- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+
+The logger module provides a logging interface used by all Nanook components and an in-memory implementation suitable for development, testing, and production use.
+
+```typescript
+import {
+  LoggerInterface,
+  LoggerMemory,
+  getLoggerMemory
+} from 'nanook-table'
+```
+
+---
+
+## LoggerInterface
+
+Abstract base class that defines the logging contract. All Nanook components accept a `LoggerInterface` and use it for diagnostic output. You can implement this interface to integrate with any logging framework (Winston, Pino, console, etc.).
+
+### Log Levels
+
+Log levels are ordered by severity. Setting the logger to a given level means it will only output messages at that level or higher.
+
+| Level | Numeric Value | Description |
+|---|---|---|
+| `debug` | `0` | Detailed diagnostic information |
+| `info` | `1` | General informational messages |
+| `warning` | `2` | Potentially problematic situations |
+| `error` | `3` | Error conditions that allow continued operation |
+| `fatal` | `4` | Severe errors that may cause the process to abort |
+
+### Properties
+
+| Property | Type | Description |
+|---|---|---|
+| `level` | `string \| number` | The current log level. Messages below this level are suppressed. Can be set as a string (`'debug'`, `'info'`, etc.) or a number (`0`--`4`) |
+
+### Methods
+
+#### `clear(): void`
+
+Clears all stored log entries. The specific behavior depends on the implementation.
+
+#### `getLevelNumber(level: string): number`
+
+Converts a log level string to its numeric value.
+
+```typescript
+logger.getLevelNumber('warning') // 2
+logger.getLevelNumber('debug')   // 0
+```
+
+#### `getTime(): string`
+
+Returns the current time formatted for log entries. The format is implementation-specific.
+
+#### `async debug(message: string | object): Promise<void>`
+
+Logs a message at the `debug` level (numeric value `0`).
+
+```typescript
+await logger.debug('Processing table: LoginTests')
+await logger.debug({ table: 'LoginTests', testcases: 5 })
+```
+
+#### `async info(message: string | object): Promise<void>`
+
+Logs a message at the `info` level (numeric value `1`).
+
+```typescript
+await logger.info('File loaded successfully')
+```
+
+#### `async warning(message: string | object): Promise<void>`
+
+Logs a message at the `warning` level (numeric value `2`).
+
+```typescript
+await logger.warning('Sheet "OldFormat" uses deprecated section type')
+```
+
+#### `async error(message: string | object): Promise<void>`
+
+Logs a message at the `error` level (numeric value `3`).
+
+```typescript
+await logger.error('Generator "myGen" failed after 100 uniqueness retries')
+```
+
+#### `async fatal(message: string | object): Promise<void>`
+
+Logs a message at the `fatal` level (numeric value `4`).
+
+```typescript
+await logger.fatal('Cannot open file: tests.xlsx')
+```
+
+### Implementing a Custom Logger
+
+To integrate Nanook with your own logging infrastructure, extend `LoggerInterface` and override the `_writeLog` method:
+
+```typescript
+import { LoggerInterface } from 'nanook-table'
+
+class WinstonLogger extends LoggerInterface {
+  private winston: WinstonInstance
+
+  constructor(winston: WinstonInstance) {
+    super()
+    this.winston = winston
+  }
+
+  _writeLog(level: string, entry: string | object): void {
+    const message = typeof entry === 'string' ? entry : JSON.stringify(entry)
+    this.winston.log(level, message)
+  }
+
+  clear(): void {
+    // Winston does not support clearing logs
+  }
+}
+```
+
+---
+
+## LoggerMemory
+
+In-memory logger that stores all log entries in arrays, organized by level. Optionally also writes to the console. This is the default logger used in examples and tests.
+
+### Extends
+
+`LoggerInterface`
+
+### Constructor
+
+```typescript
+new LoggerMemory()
+```
+
+### Properties
+
+| Property | Type | Default | Description |
+|---|---|---|---|
+| `writeConsole` | `boolean` | `false` | When `true`, log entries are also printed to `console`. Set this to `true` during development to see output |
+| `entries` | `LogEntries` | `{ debug: [], info: [], warning: [], error: [], fatal: [] }` | All stored log entries, organized by level. Each entry contains the timestamp and message |
+
+### Methods
+
+#### `clear(): void`
+
+Empties all log entry arrays.
+
+```typescript
+const logger = new LoggerMemory()
+await logger.info('hello')
+console.log(logger.entries.info.length) // 1
+
+logger.clear()
+console.log(logger.entries.info.length) // 0
+```
+
+### Example
+
+```typescript
+import { LoggerMemory } from 'nanook-table'
+
+const logger = new LoggerMemory()
+logger.writeConsole = true
+
+await logger.info('Starting generation')
+await logger.debug('Processing sheet: LoginTests')
+await logger.warning('Empty test case column found')
+
+// Access stored entries
+for (const entry of logger.entries.warning) {
+  console.log(`Warning at ${entry.time}: ${entry.message}`)
+}
+
+// Check for errors after processing
+if (logger.entries.error.length > 0) {
+  console.log(`${logger.entries.error.length} errors occurred`)
+}
+```
+
+### Log Entry Structure
+
+Each entry in the `entries` arrays is an object with:
+
+| Field | Type | Description |
+|---|---|---|
+| `time` | `string` | Formatted timestamp of when the entry was logged |
+| `message` | `string \| object` | The logged message or data object |
+
+---
+
+## getLoggerMemory()
+
+Factory function that creates and returns a new `LoggerMemory` instance.
+
+```typescript
+import { getLoggerMemory } from 'nanook-table'
+
+const logger = getLoggerMemory()
+logger.writeConsole = true
+await logger.info('Ready')
+```
+
+This is a convenience shorthand for `new LoggerMemory()`.
+
+---
+
+## Usage Patterns
+
+### Development -- console output enabled
+
+```typescript
+const logger = new LoggerMemory()
+logger.writeConsole = true
+logger.level = 'debug'
+```
+
+### Testing -- capture and assert on log entries
+
+```typescript
+import { describe, it, expect } from 'vitest'
+import { LoggerMemory } from 'nanook-table'
+
+describe('my generator', () => {
+  it('logs a warning for empty config', async () => {
+    const logger = new LoggerMemory()
+    const gen = new MyGenerator({ logger })
+
+    await gen.generate('id1', testcase, directive)
+
+    expect(logger.entries.warning.length).toBe(1)
+    expect(logger.entries.warning[0].message).toContain('empty config')
+  })
+})
+```
+
+### Production -- suppress low-level output
+
+```typescript
+const logger = new LoggerMemory()
+logger.level = 'warning' // only warning, error, and fatal are logged
+```
+
+
+# Decision table sections
+
+Source: https://nanook.xhub.io/docs/guide/equivalence/sections
+
+## FieldSection
+
+The field section is the main section of an equivalence class table. The field section contains many field sub sections. It is a kind of parenthesis around fields and a grouping of element.
+
+## FieldSubSection
+
+This section contains all the equivalence classes for one single field.
+
+## MultiRowSections
+
+Multi row sections have multiple rows. One header row and 1..n data rows.
+
+### MultiRowSection
+
+The MultirowSections could be used for your own purpose. These sections are not directly supported by the test data generator like the field sections. But each data generator has access to the data from the multi row sections.
+
+### TagSection
+
+The tag section is used to add tags/labels to test cases. These tags could be used for filtering. If a test case uses references, all tags are collected of the chained test cases and could be filtered.
+
+### FilterSection
+
+The filter section defines filter for test cases. The filter works only in the master test case. So if you have test cases which uses references, the filter in a referenced test case is not executed.
+
+### GeneratorSwitchSection
+
+The generator switch section defines generators to be switched off. So you can switch of generators on a test case level.
+
+## Single Row Sections
+
+Single row sections are sections which have only one row.
+
+### ExecuteSection
+
+![execute section](https://nanook.xhub.io/img/model-decision/execute_section.png)
+
+The image shows the execute section. In this example the test case '2' in column 'G' is set to 'F' which is false. So this test case would not be executed.
+
+### NeverExecuteSection
+
+This section is the opposite of the ExecuteSection. If in the ExecuteSection a test case is set to a true value this test case will be generated. If it is set to a false value the test case is not created. But if this test case is referenced from an other table it is used and the data is generated. The NeverExecuteSection works the other way around. If this is set to a true value for a test case, the test case is created. But if this test case is referenced from an other test case, the referencing test case is not created.
+
+### MultiplicitySection
+
+![multiplicity section](https://nanook.xhub.io/img/model-decision/multiplicity_section.png)
+
+The image shows the multiplicity section. In this example the test case '1' in column 'f' is set to '10'. This means the data generator will create 10 of these test cases.
+
+### SummarySection
+
+![summary section](https://nanook.xhub.io/img/model-decision/summary_section.png)
+
+The summary section is not used by the generator. Is only for the user.
+
+
+# Data Generator
+
+Source: https://nanook.xhub.io/docs/modules/dataGenerator
+
+## Generator Overview
+
+The generator is responsible for generating data. The processor will call all the generators in a loop until each generator has returned a value. Should the generator directly manipulate the testcaseData object, it must nevertheless return a dummy value.
+
+### Generator Lifecycle
+
+![Generator Lifecycle](https://nanook.xhub.io/img/data-generator/lifeCycle.svg)
+
+The image shows the abstract lifecycle of a generator. When the processor starts up, it gets all the generators registered in the registry and calls the 'loadStore' function. Now, every generator is ready to be used.
+
+**Note**
+
+Although not all the generators use a store, the function is called for each generator.
+
+The processor then starts the executing the test cases. All test cases are independent from each other. The processor loops over all the test cases. Then it will call the 'generate' method for all the generators until each generator has returned a value. Some generators may need data that has been previously created by another generator. If the generator is not able to generate data by the first call, the generator must return 'undefined'. Then it will be called again.
+
+If the 'generate' method has returned data, then the 'createPostProcessTodos' method will be called. The generator now has the possibility to return an array of todos. For each returned todo, the processor will call the 'postProcess' method. The idea behind having post processing is that sometimes it is not possible to create data until all the generators have created the data. However, it's not easy for the processor to find out if all the other generators have been executed. A postProcessTodo has also an order property. All the todos of all the generators are sorted by this order number. Then all the todos are executed in this order.
+
+After the processor has finished executing all the test cases, the 'saveStore' function is called.
+
+### InstanceId
+
+The idea behind the 'instanceId' is to create an ID for each instance of generated data. So if the generator is called twice with the same instanceId it will return the same data. The instanceId is created by the processor for each test case.
+
+- Example Let's say we have a test case where the generator should create a password, but the password needs to be entered in two separete fields - 'Password' and 'Password repeat'. This is common each time a user needs to reset the password. Thus, in the equivalence class table the generator is called twice with the same instanceId. Then the generator should return the same data. This is explained in more detail the tutorial.
+
+### Post processing
+
+Although post processing is an exceptional case for a generator, it is sometimes very useful. Post processing directly operates on the 'testcaseData' object. It will not return any data.
+
+To make the processor call the 'postProcess' function, the generator must have returned one or more of these 'postProcessTodo' objects beforehand.
+
+**post process todo object.**
+
+```
+{
+  instanceIdSuffix: undefined   
+  order: 1000                   
+  config: {}                    
+  generatorName: 'MyGenerator', 
+}
+```
+
+- (optional) The instanceId suffix. if not given, the current instanceId is used
+- (optional) The order number. Default is '1000'. All the todos are executed in the order of this number. So it’s up to the author of the generator to define the right order.
+- (optional) The configuration for the function 'postProcess'.
+- (mandatory) The name of the generator to be called. So it's possible that one generator creates a postProcessTodo for another generator.
+
+### Generator Constructor
+
+| key | description |
+|---|---|
+| logger | The logger this generator should use. |
+| serviceRegistry | The service registry. Each generator is added to the Service registry and each generator has access to this registry. So one generator could call another generator. |
+| unique | {true/false} (default=true) If set to a true value, the data generator should return unique values. What unique means depends on the generator. If the generator create more than one field is up to the generator. |
+| maxUniqueTries | {number} (default=100) Defines how many attempts the generator will makedo for getting a unique value until it throws an error |
+| varDir | The directory used to store the generated data. |
+| useStore | {true/false} (default=false) Should the generator persists the data. |
+
+options when creating a generator
+
+| key | description |
+|---|---|
+| uniqueSet | A set to store the data which has to be unique |
+| instanceData | A map where all the generated data is mapped to the instanceId |
+| name | The name under which the generator is registered. Sometimes multiple instances of the same generator class may be registered under different names. |
+
+additional properties
+
+## Generator Interface
+
+- async loadStore() (Not implemented) This function should load the store of the generator.
+- async saveStore() (Not implemented) This function should save the store of the generator.
+- getGenerator(generatorName) (Implemented) Returns the generator with the given name. If the generator does not exists, it throws an exception.
+- clearContext() (Implemented) Clears the 'uniqueSet' and the 'instanceData' property.
+- async generate(instanceId, testcase, todoGenerator) (Not implemented) This is the method normally used to do all the work. Here is where the data is generated.
+- async createPostProcessTodos(instanceId, testcase, todoGenerator) (Not implemented) Only needed if the generator should do post processing. Sometimes, the generator is not supposed to create the data directly, or is supposed to do additional work later on.
+- async postProcess(instanceId, testcase, todoGenerator) (Not implemented) Executes the post process.
+
+## Generator Base
+
+The base implementation of the interface in 'DataGeneratorBase.js' adds the load and save store function. It Also handles the use of the instanceId.
+
+It adds a new function '_doGenerate()' which needs to be overwritten.
+
+
+# File Processor
+
+Source: https://nanook.xhub.io/docs/modules/fileProcessor
+
+The file processor works on the data imported by an importer to create a table model. For the file processor, it is transparent which importer was used. The importer must implement the importer interface.
+
+## ImporterInterface
+
+The importer is responsible for loading data from a spreadsheet. This interface must be implemented to use the custom importer. The Importer is used by a parser to read the files and create the table model. The importer does not care about the content of the spreadsheet - it's just an abstract spreadsheet reader.
+
+### Functions
+
+```
+/**
+ * Opens a file and loads it. This could be spreadsheet or whatever
+ * file.
+ * @param fileName {string} The file to open
+ */
+async loadFile(fileName) {}
+```
+
+```
+/**
+ * Returns all the loaded sheet names
+ * @return sheets {array} A list of sheet names
+ */
+sheetNames() {}
+```
+
+```
+/**
+ * Returns the Cell value from the sheet with the given name
+ * @param sheetName {string} The name of the sheet
+ * @param column {number} The column number start with '0'
+ * @param row {number} The row number start with '0'
+ * @return value {string} The Cell value
+ */
+cellValue(sheetName, column, row) {}
+```
+
+```
+/**
+ * Deletes all the loaded data in the importer
+ */
+clear() {}
+```
+
+## ParserInterface
+
+For each table type, a specific parser is needed. All parsers must implement this interface.
+
+### Functions
+
+```
+/**
+ * Parser the sheet with the given name
+ * @param sheetName {string} The name of the sheet
+ * @param importer {object} The importer
+ * @return tableModel {object} The created table model
+ */
+async parse(sheetName, importer) {}
+```
+
+This module provides the following parsers
+
+  - ParserDecision Parses decision tables.
+  - ParserMatrix Parses matrix tables.
+  - ParserSpecification Parses specification tables and returns decisionTable models.
+
+
+# Logger
+
+Source: https://nanook.xhub.io/docs/modules/logger
+
+This is a logging facade. It stores all the log entries in Memory. This is very useful for testing but not for production.
+
+It has the following methods:
+
+```
+// Logs debug messages
+debug(arg)
+
+// Logs info messages
+info(arg)
+
+// Logs warning messages
+warning(arg)
+
+// Logs error messages
+error(arg)
+
+// Logs fatal messages
+fatal(arg)
+```
+
+## LoggerInterface
+
+This is the interface each logger must implement to be used in xhubiotable.
+
+The following loglevels exists:
+
+**Loglevel names and their level number.**
+
+```
+{
+  debug: 0,
+  info: 1,
+  warning: 2,
+  error: 3,
+  fatal: 4,
+}
+```
+
+### Functions
+
+```
+/**
+ * Clears all the existing log entries
+ * Placeholder for the implementing loggers.
+ */
+async clear() {}
+```
+
+```
+/**
+ * Returns the logLevel as a number for a given level String.
+ * If the level string is invalid, the level number for
+ * error will be returned
+ *
+ * @param level {string} The loglevel as a string
+ *
+ * @return num {number} The loglevel as a number
+ */
+getLevelNumber(level) {}
+```
+
+```
+/**
+ * Returns the current date time as a timestamp string.
+ * This time is added to the log entry
+ * Format: 'yyyy-mm-dd hh:MM:ss'
+ *
+ * @return timeString {string} The timestamp
+ */
+getTime() {}
+```
+
+```
+/**
+ * Logs the given message.
+ * @param message {string|object} The message/entry to be logged
+ */
+async debug(message) {}
+
+async info(message) {}
+
+async warning(message) {}
+
+async error(message) {}
+
+async fatal(message) {}
+```
+
+## LoggerMemory
+
+This logger is mainly used for unit testing. It stores all the logs in an array by level type. This way, you can get the logs after the test along with proof that the right logs where generated.
+
+### Properties
+
+- writeConsole When set to true, all the logs are also written to the console
+
+### Functions
+
+All the functions from the LoggerInterface plus these functions.
+
+```
+/**
+ * Clears all the existing log entries
+ * Placeholder for the implementing loggers.
+ */
+async clear() {}
+```
+
+### Retrieve the logs
+
+To get all the logs read the property 'logger.entries'. This returns a hash where for each logLevel the logs are stored.
+
+```
+entries: {
+  debug: [],
+  info: [],
+  warning: [],
+  error: [],
+  fatal: [],
+}
+```
+
+
+# Model
+
+Source: https://nanook.xhub.io/docs/modules/model
+
+This Package is the basis for the table models and test cases
+
+## TableInterface
+
+The TableInterface describes the basic Interface for the table. This is common for all the tables, such as decision tables or the matrix tables.
+
+### Properties
+
+- tableType Returns the type of the table
+
+### Functions
+
+```
+/**
+ * Returns the testcase for the given name. If not found it will throw an exception
+ * @param testcaseName {string} The name of the testcase
+ * @return testcaseDefinition {object} returns the testcase definition object
+ */
+getTestcaseForName(testcaseName) {}
+```
+
+```
+/**
+ * This generator returns all the testcases which should be executed
+ */
+*getTestcasesForExecution() {}
+```
+
+```
+/**
+ * Parses a testcase name. If the name is a range it will return an
+ * Array of names. For example the name 'tc12-14' will be expanded to:
+ * tc12, tc13, tc14
+ * This is a helper method
+ * @param testcaseName {string} The reference test case name
+ * @return tcNames {array} An array of test case names
+ */
+processRanges(testcaseName) {}
+```
+
+## Todos
+
+Todos defines what is needed to create the test cases. Each generator cmd or each reference creates a 'todo'. There are different types of todos.
+
+## TodoStatic
+
+All the values from the generator column which are NOT a special cmd (like 'gen' for generator) are taken as static values. These data will be directly written to the result data.
+
+### Properties
+
+- value The static data
+
+## TodoMeta
+
+The meta data of a test case. This data depends on the kind of table.
+
+### Properties
+
+- fieldName The name of the field in the table.
+- tableName The table this todo comes from.
+- tableType The table type of the table this todo comes from.
+- testcaseName The name of the test case this todo comes from.
+- meta The meta data itself. Depends from which table the data comes from.
+
+## TodoGenerator
+
+Each todo is a call to the generator.
+
+### Properties
+
+- generatorName The name of the generator to call. This is the name the generator was registered in the generator registry
+- config The parameters for calling the generator.
+- tableType The table type of the table this todo comes from.
+- instanceIdSuffix A suffix for the current instanceId.
+- order The order number. Before the generator todos are executed, they are sorted by this number. This way, the user can define an execution order for the generators. The default order number is '1000'.
+
+## TodoReference
+
+For each reference, a TodoReference is created.
+
+### Properties
+
+- targetTableName The table name of the target table.
+- targetFieldName The name of the field in the target table.
+- targetTestcaseName The name of the test case in the target table.
+- instanceIdSuffix A suffix for the current instanceId.
+
+
+# Overview equivalence class table
+
+Source: https://nanook.xhub.io/docs/modules/overview
+
+Nanook is built from five modules, each documented on its own page in this section.
+
+- [Model](https://nanook.xhub.io/docs/modules/model) — the table and test case interfaces: which fields a table has, which equivalence classes, which test cases, and what a test case needs in order to be generated.
+- [File processor](https://nanook.xhub.io/docs/modules/fileProcessor) — importers read a workbook, parsers turn each sheet into a table model, keyed by the marker in the first cell.
+- [Data generator](https://nanook.xhub.io/docs/modules/dataGenerator) — the generator interface, the base class to extend, the registry from which the processor resolves generators, and the built-in Faker generator.
+- [Writer](https://nanook.xhub.io/docs/modules/writer) — receives every generated test case and writes it wherever it is needed: JSON files by default, anything else through a custom writer.
+- [Logger](https://nanook.xhub.io/docs/modules/logger) — the logging facade the other modules report through, with an in-memory implementation.
+
+These pages describe the 1.x modules; the 3.x layout is the same (model, file processor, data generator, processor with writers, logger) and is documented in the repository under [docs/api](https://github.com/xhubio/nanook-table/tree/master/docs/api).
+
+
+# Writer
+
+Source: https://nanook.xhub.io/docs/modules/writer
+
+The writer is responsible for exporting the generated data in the required format. It is best practice to create one writer for each format or type.
+
+## Constructor
+
+**constructor of a writer.**
+
+```
+constructor(opts = {}) {
+    this.logger = opts.logger || getLoggerMemory()
+}
+```
+
+The constructor will get the logger. So to write any logs you could use:
+
+```
+this.logger.info('My important info')
+```
+
+## before
+
+This method is called when the processor start working on the test cases. This is meant for set up the writer.
+
+```
+async before() {
+    console.log(`Start a new processing`)
+}
+```
+
+## after
+
+This method is called when the processor has finished all the test cases. This is meant for tear down the writer.
+
+```
+async after() {
+    console.log(`End processing`)
+}
+```
+
+## write
+
+This is the method doing the work. It will be called for each test case. It will get the test case data object which contains all the data generated for one test case.
+
+It is up to the writer to extract the needed.
+
+```
+async write(testcaseData) {
+    console.log(
+        `Write testcase '${testcaseData.name}' for table '${
+            testcaseData.tableName
+        }'`
+    )
+}
+```
+
+
+# Overview
+
+Source: https://nanook.xhub.io/docs/tutorials/overview
+
+In the first lesson this tutorial will teach you how to create an equivalence class table to define test cases. You will learn how to create such a table and what the benefits of using this method are. The creation of such a table is also called "equivalence partitioning". The pool of possible input values is divided into partitions of values that can be considered to be the same.
+
+For example, if there is a boundary that the user must be of age 18 or older, then the input values 17 and below are grouped into the same class (equivalence class).
+
+In the next lesson you will convert the equivalence class table into a data generation table. With one tool, you are be able to define the test cases and create the test data needed for each test case.
+
+At first glance it may seam a little complicated to use this method. But once you get familiar with it, it is a great way.
+
+When you define the tests with this method you also have a good documentation on which tests you perform and why. It provides the opportunity to optimise test cases, find all test cases needed and avoid duplicates.
+
+Also, you will be able to show your manager what you are doing (sometimes this is a very important factor).
+
+The example repository `tutorial-source` used by this tutorial is archived (last change November 2020) and targets Nanook 1.x. The tutorials below still explain the table concepts, which are unchanged; for 3.x code (TypeScript, ESM, Node.js 22 or newer) follow the tutorials in the repository: [docs/tutorials](https://github.com/xhubio/nanook-table/tree/master/docs/tutorials). Where this tutorial refers to files, they are relative to that archived repository.

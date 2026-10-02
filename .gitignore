@@ -7,3 +7,4 @@ tmp/
 skills-lock.json
 .hallmark/
 __pycache__/
+.idea/

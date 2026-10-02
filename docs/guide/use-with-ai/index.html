@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charSet="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Use Nanook with AI agents · Nanook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="generator" content="Docusaurus" />
+  <meta name="description"
+    content="Give Claude Code, Cursor, Codex or Copilot what it needs to write Nanook tables and test data scripts: the skill, an AGENTS.md rules block, docs as plain text." />
+  <meta name="docsearch:language" content="en" />
+  <meta property="og:title" content="Use Nanook with AI agents · Nanook" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://nanook.xhub.io/docs/guide/use-with-ai" />
+  <meta property="og:description"
+    content="Give Claude Code, Cursor, Codex or Copilot what it needs to write Nanook tables and test data scripts: the skill, an AGENTS.md rules block, docs as plain text." />
+  <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://nanook.xhub.io/docs/guide/use-with-ai" />
+  <link rel="shortcut icon" href="/img/favicon.png" />
+  <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/css/prism.css" />
+  <link rel="stylesheet" href="/css/main.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,300..400&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/css/nanook.css?v=e599824f" />
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://nanook.xhub.io/" },
+    { "@type": "ListItem", "position": 2, "name": "Documentation", "item": "https://nanook.xhub.io/docs" },
+    { "@type": "ListItem", "position": 3, "name": "Use Nanook with AI agents", "item": "https://nanook.xhub.io/docs/guide/use-with-ai" }
+  ]
+}
+</script>
+</head>
+
+<body data-theme="light">
+  <script>(function () { try { var t = localStorage.getItem('nanook-theme'); if (t === 'tactical') t = 'dark'; else if (t === 'swiss') t = 'light'; if (t === 'dark' || t === 'light') document.body.setAttribute('data-theme', t); } catch (e) { } })();</script>
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="/" class="site-logo"><img src="/img/logo.svg" alt="Nanook" /><span class="site-name">Nanook</span></a>
+      <div class="header-right">
+        <nav class="site-nav">
+          <ul>
+            <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+            <li><a href="/docs/api">API</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/articles">Articles</a></li>
+            <li><a href="/support">Support</a></li>
+          </ul>
+        </nav>
+        <a class="header-cta" href="https://cal.com/pa201608/30min" data-booking-link>Book a call</a>
+        <a class="gh-link" href="https://github.com/xhubio/nanook-table/" aria-label="nanook-table on GitHub, 19 stars">
+          <svg class="gh-mark" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path fill="currentColor" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"/></svg>
+          <span class="gh-label">GitHub</span>
+          <span class="gh-stars"><svg class="gh-star" viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 .25a.75.75 0 0 1 .673.418l1.882 3.815 4.21.612a.75.75 0 0 1 .416 1.279l-3.046 2.97.719 4.192a.751.751 0 0 1-1.088.791L8 12.347l-3.766 1.98a.75.75 0 0 1-1.088-.79l.72-4.194L.818 6.374a.75.75 0 0 1 .416-1.28l4.21-.611L7.327.668A.75.75 0 0 1 8 .25Zm0 2.445L6.615 5.5a.75.75 0 0 1-.564.41l-3.097.45 2.24 2.184a.75.75 0 0 1 .216.664l-.528 3.084 2.769-1.456a.75.75 0 0 1 .698 0l2.77 1.456-.53-3.084a.75.75 0 0 1 .216-.664l2.24-2.183-3.096-.45a.75.75 0 0 1-.564-.41L8 2.694Z"/></svg><span data-gh-stars>19</span></span>
+        </a>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+          <span class="theme-toggle-label-dark">Dark</span>
+          <span class="theme-toggle-track"><span class="theme-toggle-thumb"></span></span>
+          <span class="theme-toggle-label-light">Light</span>
+        </button>
+      </div>
+    </div>
+  </header>
+  <div class="navPusher">
+    <div class="docMainWrapper wrapper">
+      <div class="docsNavContainer" id="docsNav">
+        <nav class="toc">
+          <div class="toggleNav">
+            <section class="navWrapper wrapper">
+              <div class="navBreadcrumb wrapper">
+                <div class="navToggle" id="navToggler">
+                  <div class="hamburger-menu">
+                    <div class="line1"></div>
+                    <div class="line2"></div>
+                    <div class="line3"></div>
+                  </div>
+                </div>
+                <h2><i>›</i><span>Use Nanook with AI agents</span></h2>
+                <div class="tocToggler" id="tocToggler"><i class="icon-toc"></i></div>
+              </div>
+              <div class="navGroups">
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Quickstart<span class="arrow"><svg width="24"
+                        height="24" viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/quickstart/quickstart">The
+                        5 minute Quickstart</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/quickstart/claude-code">Quickstart with Claude Code</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Tutorials<span class="arrow"><svg width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/tutorials/overview">Overview</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/tutorials/createEquivalenceClassTable">Create
+                        an equivalence class table</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/tutorials/transform2dataGenerator">Transform
+                        into data generator</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/tutorials/createGenerator">Create data
+                        generator</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/tutorials/createWriter">Create writer</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem" href="/docs/tutorials/createFilterProcessor">Create
+                        filter processor</a></li>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Guides<span class="arrow"><svg width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem navListItemActive"><a class="navItem" href="/docs/guide/use-with-ai">Use with AI agents</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/guide/generalOverview">Nanook Table
+                        Overview</a></li>
+                    <div class="navGroup subNavGroup">
+                      <h4 class="navGroupSubcategoryTitle">Equivalence class table</h4>
+                      <ul>
+                        <li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/overview">Overview</a>
+                        </li>
+                        <li class="navListItem"><a class="navItem" href="/docs/guide/equivalence/sections">Section</a>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="navGroup subNavGroup">
+                      <h4 class="navGroupSubcategoryTitle">Matrix table</h4>
+                      <ul>
+                        <li class="navListItem"><a class="navItem" href="/docs/guide/matrix/overview">Overview</a></li>
+                      </ul>
+                    </div>
+                    <div class="navGroup subNavGroup">
+                      <h4 class="navGroupSubcategoryTitle">Generator commands</h4>
+                      <ul>
+                        <li class="navListItem"><a class="navItem" href="/docs/guide/generatrorCommand/static">Static
+                            Data</a></li>
+                        <li class="navListItem"><a class="navItem"
+                            href="/docs/guide/generatrorCommand/generator">Generator</a></li>
+                        <li class="navListItem"><a class="navItem"
+                            href="/docs/guide/generatrorCommand/reference">References</a></li>
+                      </ul>
+                    </div>
+                    <div class="navGroup subNavGroup">
+                      <h4 class="navGroupSubcategoryTitle">Advanced</h4>
+                      <ul>
+                        <li class="navListItem"><a class="navItem" href="/docs/guide/advanced/instanceIds">Instance
+                            IDs</a></li>
+                      </ul>
+                    </div>
+                  </ul>
+                </div>
+                <div class="navGroup">
+                  <h3 class="navGroupCategoryTitle collapsible">Modules<span class="arrow"><svg width="24" height="24"
+                        viewBox="0 0 24 24">
+                        <path fill="#565656" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path>
+                        <path d="M0 0h24v24H0z" fill="none"></path>
+                      </svg></span></h3>
+                  <ul class="hide">
+                    <li class="navListItem"><a class="navItem" href="/docs/modules/model">Model</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/modules/logger">Logger</a></li>
+                    <li class="navListItem"><a class="navItem" href="/docs/modules/fileProcessor">File Processor</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem" href="/docs/modules/dataGenerator">Data Generator</a>
+                    </li>
+                    <li class="navListItem"><a class="navItem" href="/docs/modules/writer">Writer</a></li>
+                  </ul>
+                </div>
+              </div>
+            </section>
+          </div>
+          <script>
+            var coll = document.getElementsByClassName('collapsible');
+            var checkActiveCategory = true;
+            for (var i = 0; i < coll.length; i++) {
+              var links = coll[i].nextElementSibling.getElementsByTagName('*');
+              if (checkActiveCategory) {
+                for (var j = 0; j < links.length; j++) {
+                  if (links[j].classList.contains('navListItemActive')) {
+                    coll[i].nextElementSibling.classList.toggle('hide');
+                    coll[i].childNodes[1].classList.toggle('rotate');
+                    checkActiveCategory = false;
+                    break;
+                  }
+                }
+              }
+
+              coll[i].addEventListener('click', function () {
+                var arrow = this.childNodes[1];
+                arrow.classList.toggle('rotate');
+                var content = this.nextElementSibling;
+                content.classList.toggle('hide');
+              });
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+              createToggler('#navToggler', '#docsNav', 'docsSliderActive');
+              createToggler('#tocToggler', 'body', 'tocActive');
+
+              var headings = document.querySelector('.toc-headings');
+              headings && headings.addEventListener('click', function (event) {
+                var el = event.target;
+                while (el !== headings) {
+                  if (el.tagName === 'A') {
+                    document.body.classList.remove('tocActive');
+                    break;
+                  } else {
+                    el = el.parentNode;
+                  }
+                }
+              }, false);
+
+              function createToggler(togglerSelector, targetSelector, className) {
+                var toggler = document.querySelector(togglerSelector);
+                var target = document.querySelector(targetSelector);
+
+                if (!toggler) {
+                  return;
+                }
+
+                toggler.onclick = function (event) {
+                  event.preventDefault();
+
+                  target.classList.toggle(className);
+                };
+              }
+            });
+          </script>
+        </nav>
+      </div>
+      <div class="container mainContainer docsContainer">
+        <div class="wrapper">
+          <div class="post">
+            <header class="postHeader">
+              <h1 id="__docusaurus" class="postHeaderTitle">Use Nanook with AI agents</h1>
+            </header>
+            <article>
+              <div><span>
+                  <p>A coding agent can draft a Nanook table and the script that turns it into test data. It does
+                    that well when it has three things: a skill that knows how a decision table is built, a few rules
+                    that keep the generation script correct, and the documentation as plain text. This page lists
+                    all three for Claude Code and for other agents. None of it replaces checking what the agent
+                    produced; the last section says how.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="claude-code"></a><a href="#claude-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1 · Claude Code: the skill</h2>
+                  <p>The skill <code>create-equivalence-class-table</code> and the slash command
+                    <code>/createEquivalenceClassTable</code> ship inside the npm package. Claude Code reads skills
+                    from your project&rsquo;s <code>.claude</code> folder, so copy them there once. In a new project, start with
+                    <code>npm init -y</code> and <code>npm pkg set type=module</code>:</p>
+                  <pre><code class="hljs">npm install @xhubio/nanook-table
+npm install -D exceljs
+mkdir -p .claude/skills .claude/commands
+cp -r node_modules/@xhubio/nanook-table/.claude/skills/create-equivalence-class-table \
+  .claude/skills/
+cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTable.md \
+  .claude/commands/
+</code></pre>
+                  <p>Then run <code>/createEquivalenceClassTable Login Form</code> in Claude Code. What that
+                    produces, how long it took and what to watch for is on
+                    <a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>, every step from a recorded
+                    run. The skill text is German; ask for English output if you want it.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="other-agents"></a><a href="#other-agents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2 · Other agents</h2>
+                  <p>The skill is a plain folder with a <code>SKILL.md</code> in the
+                    <a href="https://agentskills.io" target="_blank" rel="noreferrer noopener">Agent Skills</a> format.
+                    Agents that read that format can use the same folder; where each one looks for skills is in its
+                    own documentation. We have run the skill in Claude Code only, so treat other agents as untested.
+                    The rules block in the next section does not depend on skills and works in any agent that reads
+                    <code>AGENTS.md</code>.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="agents-md"></a><a href="#agents-md" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3 · A rules block for AGENTS.md</h2>
+                  <p><a href="https://agents.md" target="_blank" rel="noreferrer noopener"><code>AGENTS.md</code></a>
+                    is the instruction file that Codex, Cursor, GitHub Copilot and other agents read from the project
+                    root. Paste this block into it. The markers let you replace the block later without touching the
+                    rest of the file:</p>
+                  <pre><code class="hljs">&lt;!-- BEGIN:nanook-agent-rules --&gt;
+## Nanook: test cases and test data
+
+Test cases are defined in XLSX workbooks and turned into test data with
+@xhubio/nanook-table (Node.js 22 or newer, ESM).
+
+- Before writing a table or a generation script, read the docs for the
+  installed version: node_modules/@xhubio/nanook-table/docs/
+  (guide/decision-tables.md, guide/directives.md, api/processor.md).
+  Website index: https://nanook.xhub.io/llms.txt
+- Every generator a table calls (gen:&lt;instanceId&gt;:&lt;generator&gt;:&lt;parameter&gt;)
+  must be registered in the DataGeneratorRegistry. The built-in
+  GeneratorFaker takes a Faker path and no arguments; anything else
+  needs its own generator.
+- Pass the tables to TestcaseProcessor keyed by table name, not as the
+  array from FileProcessor, or every ref: fails.
+- In 3.0.1 the default writer throws in before(); use an inline
+  InterfaceWriter.
+- After generating, compare the number of test cases with the number of
+  test-case columns (plus one per extra element of a range reference).
+  Fewer means a generator failed: Nanook logs the error and goes on.
+&lt;!-- END:nanook-agent-rules --&gt;
+</code></pre>
+                  <p>Claude Code reads <code>CLAUDE.md</code>. Put the line <code>@AGENTS.md</code> into it and Claude
+                    Code imports the same rules, so both files never drift apart.</p>
+                  <p>The block points the agent to the Markdown documentation inside the package. Unlike the pages on
+                    this site, it always matches the installed version: the guide and tutorials here describe the table
+                    concepts, and the 3.x API reference is under <a href="/docs/api">API</a>.
+                    Rules two to four are mistakes that cost a run its test cases on 3.0.1; the last one is how you
+                    notice. The quickstart describes them under
+                    <a href="/docs/quickstart/claude-code#generate-the-test-data">Generate the test data</a> and
+                    <a href="/docs/quickstart/claude-code#what-can-go-wrong">What can go wrong</a>.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="docs-as-text"></a><a href="#docs-as-text" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4 · The docs as plain text</h2>
+                  <p>For a chat window, or an agent that fetches URLs:</p>
+                  <ul>
+                    <li><a href="/llms.txt"><code>/llms.txt</code></a> is the index: every docs page with one line on
+                      what it covers, in the <a href="https://llmstxt.org" target="_blank" rel="noreferrer noopener">llms.txt</a>
+                      format.</li>
+                    <li><a href="/llms-full.txt"><code>/llms-full.txt</code></a> is the whole documentation in one
+                      Markdown file, to paste or attach.</li>
+                    <li>Every quickstart, guide, tutorial and module page and the 3.x API reference has a Markdown
+                      version: add <code>.md</code> to its address, for example
+                      <a href="/docs/quickstart/quickstart.md"><code>/docs/quickstart/quickstart.md</code></a>. The
+                      <em>Copy as Markdown</em> button at the top of those pages puts it on the clipboard. The 1.x API
+                      pages have none.</li>
+                    <li>Inside a project, the package itself carries the 3.x documentation as Markdown in
+                      <code>node_modules/@xhubio/nanook-table/docs/</code>, matching the installed version.</li>
+                  </ul>
+                  <h2><a class="anchor" aria-hidden="true" id="check-the-result"></a><a href="#check-the-result" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5 · Check what the agent produced</h2>
+                  <p>An agent that writes a table and a script will report success. Two checks catch most of what
+                    goes wrong. First, open the workbook: if the skill built it, its summary row shows the coverage per sheet. Second,
+                    count: the script must report one test case per test-case column, plus one for every extra
+                    element of a range reference. Fewer means a generator failed on the way, and Nanook logs that
+                    and keeps going. The quickstart explains the count under
+                    <a href="/docs/quickstart/claude-code#generate-the-test-data">Generate the test data</a>.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="not-yet"></a><a href="#not-yet" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not yet</h2>
+                  <p>There is no Nanook MCP server and no Claude Code plugin yet. An agent with a terminal does not
+                    need either: it runs the generation script itself. When the skill ships as a plugin, section 1
+                    gets two commands instead of the copy.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="where-to-go-next"></a><a href="#where-to-go-next" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Where to go next</h2>
+                  <ul>
+                    <li><a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>: from an empty directory
+                      to generated test data, as recorded.</li>
+                    <li><a href="/blog/2026/08/22/login-example-ai-generated-table">The login example</a>: a table
+                      Claude drafted, column by column, and what it got wrong.</li>
+                    <li><a href="/docs/guide/equivalence/overview">Equivalence class tables</a>: the concepts, for
+                      when you edit what the agent drafted.</li>
+                  </ul>
+
+                </span>
+              </div>
+            </article>
+          </div>
+          <div class="docs-prevnext"><a class="docs-prev button" href="/docs/tutorials/createFilterProcessor"><span class="arrow-prev">← </span><span>Create filter processor</span></a><a class="docs-next button" href="/docs/guide/generalOverview"><span>Nanook Table Overview</span><span class="arrow-next"> →</span></a></div>
+        </div>
+      </div>
+      <nav class="onPageNav">
+        <ul class="toc-headings">
+          <li><a href="#claude-code">1 · Claude Code: the skill</a></li>
+          <li><a href="#other-agents">2 · Other agents</a></li>
+          <li><a href="#agents-md">3 · A rules block for AGENTS.md</a></li>
+          <li><a href="#docs-as-text">4 · The docs as plain text</a></li>
+          <li><a href="#check-the-result">5 · Check what the agent produced</a></li>
+          <li><a href="#not-yet">Not yet</a></li>
+          <li><a href="#where-to-go-next">Where to go next</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-mast">
+        <a class="footer-wordmark" href="/"><img src="/img/logo.svg" alt="" width="66" height="58" /><span class="site-name">Nanook</span></a>
+        <p class="footer-tagline">Open-source test data toolkit.<br />MIT licensed &middot; Node.js 22+</p>
+      </div>
+      <nav class="footer-links" aria-label="Footer">
+        <ul>
+          <li><a href="/docs/quickstart/quickstart">Docs</a></li>
+          <li><a href="/docs/api">API</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/articles">Articles</a></li>
+          <li><a href="/support">Support</a></li>
+          <li><a href="https://github.com/xhubio/nanook-table/">GitHub</a></li>
+        </ul>
+        <ul>
+          <li><a href="/about">About</a></li>
+          <li><a href="/imprint">Imprint</a></li>
+          <li><a href="/privacyPolicy">Privacy</a></li>
+          <li><button type="button" class="footer-cookies" onclick="resetCookieConsent()">Manage cookies</button></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="footer-copyright">&copy; 2018&ndash;2026 BeeBack UG (<a href="https://xhub.io">xhub.io</a>)</p>
+  </footer>
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner" style="display:none;">
+    <div class="cookie-inner">
+      <div class="cookie-main">
+        <span class="cookie-title">Cookie preferences</span>
+        <p class="cookie-text">We use cookies to analyze site usage and improve your experience. You can choose which
+          cookies to allow below. See our <a href="/privacyPolicy">Privacy Policy</a> for details.</p>
+        <div class="cookie-actions">
+          <button onclick="acceptAllCookies()" class="cookie-btn cookie-accept">Accept all</button>
+          <button onclick="savePreferences()" class="cookie-btn cookie-save">Save preferences</button>
+          <button onclick="declineAllCookies()" class="cookie-btn cookie-decline">Decline all</button>
+        </div>
+      </div>
+      <div class="cookie-categories">
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" checked disabled /><span
+                class="cookie-slider cookie-slider-locked"></span></label>
+            <div class="cookie-cat-info"><span class="cookie-cat-name">Essential</span><span
+                class="cookie-cat-badge">Always active</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td>Provider</td>
+                <td>nanook.xhub.io (First Party)</td>
+              </tr>
+              <tr>
+                <td>Cookies</td>
+                <td><code>nanook-theme</code> — Stores your theme preference (light/dark)</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td>Persistent (localStorage)</td>
+              </tr>
+              <tr>
+                <td>Purpose</td>
+                <td>Remember your display preferences across visits</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <div class="cookie-category">
+          <div class="cookie-cat-header">
+            <label class="cookie-toggle"><input type="checkbox" id="cookie-analytics" /><span
+                class="cookie-slider"></span></label>
+            <div class="cookie-cat-info"><span class="cookie-cat-name">Analytics</span></div>
+            <button class="cookie-expand" onclick="this.closest('.cookie-category').classList.toggle('open')"
+              aria-label="Toggle details">+</button>
+          </div>
+          <div class="cookie-cat-details">
+            <table class="cookie-table">
+              <tr>
+                <td>Provider</td>
+                <td>Google LLC (Google Analytics 4)</td>
+              </tr>
+              <tr>
+                <td>Cookies</td>
+                <td><code>_ga</code>, <code>_ga_PMNJR2G9ZH</code> — Distinguish unique visitors and sessions</td>
+              </tr>
+              <tr>
+                <td>Duration</td>
+                <td><code>_ga</code>: 2 years, <code>_ga_*</code>: 2 years</td>
+              </tr>
+              <tr>
+                <td>Purpose</td>
+                <td>Measure site usage, page views, and traffic sources to improve the site. IP addresses are
+                  anonymized.</td>
+              </tr>
+              <tr>
+                <td>Privacy</td>
+                <td><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google Privacy
+                    Policy</a></td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+  </script>
+  <script src="/js/theme.js?v=9609fdd7"></script>
+  <script src="/js/cookies.js"></script>
+</body>
+
+</html>

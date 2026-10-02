@@ -3543,3 +3543,29 @@ body[data-theme] .navGroupSubcategoryTitle,
 body[data-theme] .nav-date {
   font-size: var(--text-xs);
 }
+
+/* "Copy as Markdown · View as Markdown" under a docs title (js/theme.js) — one muted line, no box */
+body[data-theme] .md-actions {
+  margin: calc(-1 * var(--space-2xs)) 0 var(--space-md);
+  font-size: var(--text-sm);
+  color: var(--fg-dim);
+}
+
+body[data-theme] .md-actions button,
+body[data-theme] .md-actions a {
+  font: inherit;
+  color: var(--fg-dim);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--border-color);
+  text-underline-offset: 0.2em;
+}
+
+body[data-theme] .md-actions button:hover,
+body[data-theme] .md-actions a:hover {
+  color: var(--link-accent);
+  text-decoration-color: var(--link-underline);
+}

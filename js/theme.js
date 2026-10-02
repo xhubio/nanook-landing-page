@@ -134,3 +134,54 @@ syncThemeToggle();
     init();
   }
 })();
+
+/* Markdown for agents: "Copy as Markdown" / "View as Markdown" under the
+   title of every docs page that has a .md twin (tools/build-llms.py writes
+   them; the 1.x API pages have none). Injected so the pre-rendered pages
+   stay untouched. */
+(function () {
+  function init() {
+    var path = location.pathname.replace(/\/(index\.html)?$/, '').replace(/\.html$/, '');
+    if (path.indexOf('/docs/') !== 0) return;
+    if (path.indexOf('/docs/api/') === 0 && path.indexOf('/docs/api/v3/') !== 0) return;
+    var head = document.querySelector('.docsContainer .postHeader, article > .long-doc-head');
+    if (!head || document.querySelector('.md-actions')) return;
+    var md = path + '.md';
+
+    var bar = document.createElement('p');
+    bar.className = 'md-actions';
+
+    var copy = document.createElement('button');
+    copy.type = 'button';
+    copy.textContent = 'Copy as Markdown';
+    copy.addEventListener('click', function () {
+      fetch(md).then(function (r) {
+        if (!r.ok) throw new Error(r.status);
+        return r.text();
+      }).then(function (text) {
+        return navigator.clipboard.writeText(text);
+      }).then(function () {
+        copy.textContent = 'Copied';
+      }, function () {
+        copy.textContent = 'Copy failed: open the Markdown instead';
+      }).then(function () {
+        setTimeout(function () { copy.textContent = 'Copy as Markdown'; }, 2500);
+      });
+    });
+
+    var view = document.createElement('a');
+    view.href = md;
+    view.textContent = 'View as Markdown';
+
+    bar.appendChild(copy);
+    bar.appendChild(document.createTextNode(' · '));
+    bar.appendChild(view);
+    head.parentNode.insertBefore(bar, head.nextSibling);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

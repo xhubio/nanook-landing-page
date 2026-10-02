@@ -170,6 +170,22 @@ A machine-readable index of the docs at the site root. **If you add or move a
 docs page, update it** — it is the one file whose whole purpose is to be read by an agent,
 and it has no generator watching it.
 
+🔴 **After any change to a docs page: `python3 tools/build-llms.py`.** It writes a `.md` next
+to every docs page (served at `<page-url>.md`; not for the 1.x API) and `/llms-full.txt` in the
+order of `llms.txt`. Idempotent. The "Copy as Markdown · View as Markdown" line under each docs
+title is injected by `js/theme.js` and fetches that `.md`. This needs `.nojekyll` at the root:
+with Jekyll, `docs/x.md` would be rendered to `docs/x.html` and overwrite the real page — do
+not delete it. (Side effect: dotfiles are served too; keep `.idea/` and other local files out
+of git.)
+
+### New docs page (`tools/docs-chrome.py`)
+
+Add the page to `PAGES` in `tools/docs-chrome.py` (sidebar group, position, prev/next
+neighbours) and run it: it puts the sidebar entry into every docs page that has the docs
+sidebar, points the neighbours' Previous/Next buttons at the new page, and re-copies the twins.
+Idempotent. Create the page and its twin folder first (template: an existing docs page), then
+`docs-hub-row` in `docs/index.html`, `sitemap.xml`, `llms.txt`, `tools/build-llms.py`.
+
 ## Common pitfalls
 
 1. 🔴 **Do not put a new post straight into `blog/`.** Check `prds/` first — the post may
