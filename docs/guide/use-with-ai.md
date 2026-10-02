@@ -6,23 +6,33 @@ A coding agent can draft a Nanook table and the script that turns it into test d
 
 ## 1 · Claude Code: the skill
 
-The skill `create-equivalence-class-table` and the slash command `/createEquivalenceClassTable` ship inside the npm package. Claude Code reads skills from your project’s `.claude` folder, so copy them there once. In a new project, start with `npm init -y` and `npm pkg set type=module`:
+Since skill version 0.2.0 the skill `create-equivalence-class-table` ships as a Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code:
+
+```
+/plugin marketplace add xhubio/nanook-table
+/plugin install nanook@nanook
+```
+
+Then, in a project with Nanook and `exceljs` installed (in a new project, start with `npm init -y` and `npm pkg set type=module`):
 
 ```
 npm install @xhubio/nanook-table
 npm install -D exceljs
-mkdir -p .claude/skills .claude/commands
-cp -r node_modules/@xhubio/nanook-table/.claude/skills/create-equivalence-class-table \
-  .claude/skills/
-cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTable.md \
-  .claude/commands/
+claude
+/nanook:create-equivalence-class-table Login Form
 ```
 
-Then run `/createEquivalenceClassTable Login Form` in Claude Code. What that produces, how long it took and what to watch for is on [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code), every step from a recorded run. The skill text is German; ask for English output if you want it.
+The skill copies two scripts into your project: `check-classes.mts` recounts the coverage and reports every class without a test case of its own, `generate-fixtures.mts` runs Nanook and writes one JSON per test case. What a run produces, how long it took and what to watch for is on [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code). Without the plugin, copy the skill from the package (any version after 3.0.1): `mkdir -p .claude/skills && cp -r node_modules/@xhubio/nanook-table/skills/create-equivalence-class-table .claude/skills/`.
 
 ## 2 · Other agents
 
-The skill is a plain folder with a `SKILL.md` in the [Agent Skills](https://agentskills.io) format. Agents that read that format can use the same folder; where each one looks for skills is in its own documentation. We have run the skill in Claude Code only, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
+The skill is a plain folder with a `SKILL.md` in the [Agent Skills](https://agentskills.io) format. One command installs it for Codex, Cursor, GitHub Copilot, Gemini CLI and other agents that read that format:
+
+```
+npx skills add xhubio/nanook-table --skill create-equivalence-class-table
+```
+
+Without `--skill` the command also offers the repository’s own development skills. We have run the skill in Claude Code only and checked the install for Codex, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
 
 ## 3 · A rules block for AGENTS.md
 
@@ -72,7 +82,7 @@ An agent that writes a table and a script will report success. Two checks catch 
 
 ## Not yet
 
-There is no Nanook MCP server and no Claude Code plugin yet. An agent with a terminal does not need either: it runs the generation script itself. When the skill ships as a plugin, section 1 gets two commands instead of the copy.
+There is no Nanook MCP server yet. An agent with a terminal does not need one: it runs the generation script itself.
 
 ## Where to go next
 

@@ -259,29 +259,35 @@
                     all three for Claude Code and for other agents. None of it replaces checking what the agent
                     produced; the last section says how.</p>
                   <h2><a class="anchor" aria-hidden="true" id="claude-code"></a><a href="#claude-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1 · Claude Code: the skill</h2>
-                  <p>The skill <code>create-equivalence-class-table</code> and the slash command
-                    <code>/createEquivalenceClassTable</code> ship inside the npm package. Claude Code reads skills
-                    from your project&rsquo;s <code>.claude</code> folder, so copy them there once. In a new project, start with
-                    <code>npm init -y</code> and <code>npm pkg set type=module</code>:</p>
+                  <p>Since skill version 0.2.0 the skill <code>create-equivalence-class-table</code> ships as a
+                    Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code:</p>
+                  <pre><code class="hljs">/plugin marketplace add xhubio/nanook-table
+/plugin install nanook@nanook
+</code></pre>
+                  <p>Then, in a project with Nanook and <code>exceljs</code> installed (in a new project, start with
+                    <code>npm init -y</code> and <code>npm pkg set type=module</code>):</p>
                   <pre><code class="hljs">npm install @xhubio/nanook-table
 npm install -D exceljs
-mkdir -p .claude/skills .claude/commands
-cp -r node_modules/@xhubio/nanook-table/.claude/skills/create-equivalence-class-table \
-  .claude/skills/
-cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTable.md \
-  .claude/commands/
+claude
+/nanook:create-equivalence-class-table Login Form
 </code></pre>
-                  <p>Then run <code>/createEquivalenceClassTable Login Form</code> in Claude Code. What that
-                    produces, how long it took and what to watch for is on
-                    <a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>, every step from a recorded
-                    run. The skill text is German; ask for English output if you want it.</p>
+                  <p>The skill copies two scripts into your project: <code>check-classes.mts</code> recounts the
+                    coverage and reports every class without a test case of its own, <code>generate-fixtures.mts</code>
+                    runs Nanook and writes one JSON per test case. What a run produces, how long it took and what to
+                    watch for is on <a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>. Without the
+                    plugin, copy the skill from the package (any version after 3.0.1):
+                    <code>mkdir -p .claude/skills &amp;&amp; cp -r node_modules/@xhubio/nanook-table/skills/create-equivalence-class-table .claude/skills/</code>.</p>
                   <h2><a class="anchor" aria-hidden="true" id="other-agents"></a><a href="#other-agents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2 · Other agents</h2>
                   <p>The skill is a plain folder with a <code>SKILL.md</code> in the
                     <a href="https://agentskills.io" target="_blank" rel="noreferrer noopener">Agent Skills</a> format.
-                    Agents that read that format can use the same folder; where each one looks for skills is in its
-                    own documentation. We have run the skill in Claude Code only, so treat other agents as untested.
-                    The rules block in the next section does not depend on skills and works in any agent that reads
-                    <code>AGENTS.md</code>.</p>
+                    One command installs it for Codex, Cursor, GitHub Copilot, Gemini CLI and other agents that read
+                    that format:</p>
+                  <pre><code class="hljs">npx skills add xhubio/nanook-table --skill create-equivalence-class-table
+</code></pre>
+                  <p>Without <code>--skill</code> the command also offers the repository&rsquo;s own development
+                    skills. We have run the skill in Claude Code only and checked the install for Codex, so treat
+                    other agents as untested. The rules block in the next section does not depend on skills and works
+                    in any agent that reads <code>AGENTS.md</code>.</p>
                   <h2><a class="anchor" aria-hidden="true" id="agents-md"></a><a href="#agents-md" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3 · A rules block for AGENTS.md</h2>
                   <p><a href="https://agents.md" target="_blank" rel="noreferrer noopener"><code>AGENTS.md</code></a>
                     is the instruction file that Codex, Cursor, GitHub Copilot and other agents read from the project
@@ -343,9 +349,8 @@ Test cases are defined in XLSX workbooks and turned into test data with
                     and keeps going. The quickstart explains the count under
                     <a href="/docs/quickstart/claude-code#generate-the-test-data">Generate the test data</a>.</p>
                   <h2><a class="anchor" aria-hidden="true" id="not-yet"></a><a href="#not-yet" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not yet</h2>
-                  <p>There is no Nanook MCP server and no Claude Code plugin yet. An agent with a terminal does not
-                    need either: it runs the generation script itself. When the skill ships as a plugin, section 1
-                    gets two commands instead of the copy.</p>
+                  <p>There is no Nanook MCP server yet. An agent with a terminal does not need one: it runs the
+                    generation script itself.</p>
                   <h2><a class="anchor" aria-hidden="true" id="where-to-go-next"></a><a href="#where-to-go-next" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Where to go next</h2>
                   <ul>
                     <li><a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>: from an empty directory

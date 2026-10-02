@@ -164,7 +164,7 @@
         "name": "Can an AI assistant create the tables?",
         "acceptedAnswer": {
           "@type": "Answer",
-          "text": "Yes. Since version 2.1.0 the repository ships a Claude Code skill (create-equivalence-class-table) and a slash command (/createEquivalenceClassTable) that draft a formatted decision table for a page, form or endpoint. The blog post AI-Assisted Equivalence Class Tables with Claude Code shows a run. The skill also ships inside the npm package: copy it into your project's .claude folder and follow the Quickstart with Claude Code."
+          "text": "Yes. Since version 2.1.0 the repository ships a Claude Code skill (create-equivalence-class-table) and a slash command (/createEquivalenceClassTable) that draft a formatted decision table for a page, form or endpoint. The blog post AI-Assisted Equivalence Class Tables with Claude Code shows a run. Since skill version 0.2.0 the skill installs as a Claude Code plugin (/plugin marketplace add xhubio/nanook-table, then /plugin install nanook@nanook; invoked as /nanook:create-equivalence-class-table), and with npx skills add xhubio/nanook-table for other agents; see Use with AI agents in the docs."
         }
       },
       {
@@ -650,9 +650,9 @@ console.log(JSON.stringify(collected[0], null, 2))</code></pre>
             (<code>create-equivalence-class-table</code>) and a slash command
             (<code>/createEquivalenceClassTable</code>) that draft a formatted decision table for a page, form or
             endpoint. The blog post <a href="/blog/2026/03/29/ai-assisted-equivalence-class-tables">AI-Assisted
-              Equivalence Class Tables with Claude Code</a> shows a run. The skill also ships inside the npm package: copy
-            it into your project&rsquo;s <code>.claude</code> folder and follow the <a
-              href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>.</p>
+              Equivalence Class Tables with Claude Code</a> shows a run. Since skill version 0.2.0 the skill installs as a Claude Code plugin
+            (<code>/nanook:create-equivalence-class-table</code>), and with <code>npx skills add</code> for other agents: see <a href="/docs/guide/use-with-ai">Use with AI
+              agents</a> and the <a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>.</p>
         </details>
         <details class="faq-item">
           <summary class="faq-question">Is Nanook free to use?</summary>

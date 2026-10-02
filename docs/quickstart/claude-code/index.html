@@ -8,13 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content="Docusaurus" />
   <meta name="description"
-    content="Let Claude Code draft the Nanook decision table for a form or API, then generate the test data. The skill ships in the npm package; verified step by step." />
+    content="Install the Nanook skill as a Claude Code plugin, let Claude draft the decision table for a form or API, then generate the test data. Numbers from a recorded run." />
   <meta name="docsearch:language" content="en" />
   <meta property="og:title" content="Quickstart with Claude Code · Nanook" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://nanook.xhub.io/docs/quickstart/claude-code" />
   <meta property="og:description"
-    content="Let Claude Code draft the Nanook decision table for a form or API, then generate the test data. The skill ships in the npm package; verified step by step." />
+    content="Install the Nanook skill as a Claude Code plugin, let Claude draft the decision table for a form or API, then generate the test data. Numbers from a recorded run." />
   <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
@@ -254,9 +254,10 @@
             <article>
               <div><span>
                   <p>Claude Code drafts the decision table, Nanook generates the data. One form, one script, real test
-                    data at the end. Every step on this page was run as written on 2 September 2026 with
+                    data at the end. The table run on this page was made on 2 September 2026 with
                     <code>@xhubio/nanook-table</code> 3.0.1, skill version 0.1.0 and Claude Code 2.1.258; the numbers
-                    are from that run.</p>
+                    are from that run. The plugin install and the scripts that ship with skill 0.2.0 were checked
+                    on 2 October 2026, the plugin installed from a local copy of the repository.</p>
                   <h2><a class="anchor" aria-hidden="true" id="what-you-need"></a><a href="#what-you-need" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>What you need</h2>
                   <ul>
                     <li>Node.js 22 or newer.</li>
@@ -265,32 +266,35 @@
                     <li>A project directory. You do not need a clone of the nanook-table repository.</li>
                   </ul>
                   <h2><a class="anchor" aria-hidden="true" id="install-nanook-and-the-skill"></a><a href="#install-nanook-and-the-skill" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1 · Install Nanook and the skill</h2>
-                  <p>The skill and the slash command have shipped inside the npm package since version 2.1.0. Claude
-                    Code reads skills from your project&rsquo;s <code>.claude</code> folder (or from
-                    <code>~/.claude/skills</code> for all your projects), not from <code>node_modules</code>, so copy
-                    them over after the install:</p>
+                  <p>Since skill version 0.2.0 the skill ships as a Claude Code plugin, straight from the GitHub
+                    repository. Install it once in Claude Code, then set up the project:</p>
+                  <pre><code class="hljs">/plugin marketplace add xhubio/nanook-table
+/plugin install nanook@nanook
+</code></pre>
                   <pre><code class="hljs">npm init -y
 npm pkg set type=module
 npm install @xhubio/nanook-table
 npm install -D exceljs
-mkdir -p .claude/skills .claude/commands
-cp -r node_modules/@xhubio/nanook-table/.claude/skills/create-equivalence-class-table \
-  .claude/skills/
-cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTable.md \
-  .claude/commands/
 </code></pre>
+                  <p>Without the plugin, copy the skill from the package (any version after 3.0.1) into your project:
+                    <code>mkdir -p .claude/skills &amp;&amp; cp -r node_modules/@xhubio/nanook-table/skills/create-equivalence-class-table .claude/skills/</code>.
+                    The run behind this page used 3.0.1, where skill and command were copied from the package&rsquo;s
+                    <code>.claude</code> folder.</p>
                   <p><code>exceljs</code> is what the generated script uses to write a formatted workbook with fills and
                     formulas. It is not a dependency of Nanook itself, so install it once. Two things to know before you
-                    start: the skill text is written in German. Claude reads it either way, but in the run behind this page
-                    the table&rsquo;s comments and expected results came out German although the prompt was English;
-                    ask for English explicitly if you want it. And the skill assumes a <code>scripts/</code> and a
-                    <code>resources/</code> folder; if you want the files elsewhere, say so in the prompt.</p>
+                    start: the skill text is written in German. In the run behind this page (skill 0.1.0) the
+                    table&rsquo;s comments and expected results came out German although the prompt was English; since
+                    0.2.0 the skill is told to write in the language of your request. And the skill assumes a
+                    <code>scripts/</code> and a <code>resources/</code> folder; if you want the files elsewhere, say so
+                    in the prompt.</p>
                   <h2><a class="anchor" aria-hidden="true" id="ask-for-a-table"></a><a href="#ask-for-a-table" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2 · Ask for a table</h2>
-                  <p>Start Claude Code in the project and run the command with a name or a one-line description of what
-                    you want to test. The command is a thin wrapper around the skill, which can also be invoked directly as
-                    <code>/create-equivalence-class-table</code>; the run behind this page used the command.</p>
+                  <p>Start Claude Code in the project and run the skill with a name or a one-line description of what
+                    you want to test. Installed as a plugin it is <code>/nanook:create-equivalence-class-table</code>;
+                    copied into <code>.claude/skills</code> it is <code>/create-equivalence-class-table</code>. The run
+                    behind this page used the slash command <code>/createEquivalenceClassTable</code> of 3.0.1, a thin
+                    wrapper around the same skill.</p>
                   <pre><code class="hljs">claude
-/createEquivalenceClassTable Login Form
+/nanook:create-equivalence-class-table Login Form
 </code></pre>
                   <p>The skill then works through its steps: analyse the test object, group its fields into one or more
                     tables, define equivalence classes per field, plan one test case per invalid class plus one happy
@@ -328,8 +332,8 @@ cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTabl
                     <code>gen::text:email:250</code>, <code>gen::text:alpha:200</code>) instead of empty cells or Faker,
                     because the importer trims cells, a reference to a class without a generator never resolves, and the
                     built-in Faker generator takes no arguments. The generator is about twenty lines in the fixture
-                    script. And one thing it did not report: the comments and expected results are German, because the
-                    skill is.</p>
+                    script. And one thing it did not report: the comments and expected results are German, because skill
+                    0.1.0 was.</p>
                   <p>The more you say, the less Claude guesses. A bare &ldquo;Login Form&rdquo; got Claude&rsquo;s idea of
                     a login form, with the assumptions listed at the end of its report: 254 characters for the email,
                     128 for the password, one <code>INVALID_CREDENTIALS</code> for an unknown address and a wrong
@@ -339,11 +343,17 @@ cp node_modules/@xhubio/nanook-table/.claude/commands/createEquivalenceClassTabl
                     field, and the summary row shows the coverage. The full table from a comparable run, column by
                     column, is in <a href="/blog/2026/08/22/login-example-ai-generated-table">the login example</a>.</p>
                   <h2><a class="anchor" aria-hidden="true" id="generate-the-test-data"></a><a href="#generate-the-test-data" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3 · Generate the test data</h2>
-                  <p>Claude wrote its own generation script, and it registers whatever generators the table uses. Run
-                    that first:</p>
-                  <pre><code class="hljs">node scripts/generate-login-form-fixtures.ts
+                  <p>Since 0.2.0 the skill copies two ready-made scripts into <code>scripts/</code>:
+                    <code>check-classes.mts</code> recounts the coverage from the cells and reports every class without
+                    a test case of its own, <code>generate-fixtures.mts</code> runs Nanook with the <code>faker</code>
+                    and <code>text</code> generators and writes one JSON per test case. On this run&rsquo;s workbook,
+                    checked on 2 October 2026, they report 100&nbsp;% for both sheets and 11 fixtures:</p>
+                  <pre><code class="hljs">node scripts/check-classes.mts resources/login-form-tests.xlsx
+node scripts/generate-fixtures.mts resources/login-form-tests.xlsx
 </code></pre>
-                  <p>In the run behind this page it wrote 11 fixtures to <code>fixtures/login-form/</code>: the seven
+                  <p>In the 3.0.1 run behind this page there were no bundled scripts yet: Claude wrote its own,
+                    <code>scripts/generate-login-form-fixtures.ts</code>, and it wrote the same 11 fixtures to
+                    <code>fixtures/login-form/</code>: the seven
                     columns of <code>Login</code>, with the two range references expanded into four and two cases. Node.js
                     22.18 or newer runs <code>.ts</code> files directly; older 22.x needs
                     <code>--experimental-strip-types</code>, and <code>npx tsx</code> works everywhere.</p>
