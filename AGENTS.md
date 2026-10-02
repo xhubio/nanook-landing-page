@@ -208,6 +208,10 @@ Idempotent. Create the page and its twin folder first (template: an existing doc
    von selbst — gelegentlich und vor Releases `tools/github-stars.sh` ausführen (holt die
    Zahl per `gh api`, Fallback `curl`; schreibt sie in alle Seiten; idempotent). Bewusst
    kein Live-Abruf: der würde die IP jedes Besuchers an GitHub schicken.
+   Dasselbe gilt für die Badges unter den Hero-Buttons der Startseite (skills.sh mit
+   Installationszahl, Context7): sie liegen als SVG unter `img/badges/`, `tools/badges.sh`
+   holt sie neu (skills.sh offiziell; Context7 hat kein Badge, daher ein statisches
+   shields.io-Badge im selben Schwarz). Danach committen; kein cache-bust nötig.
 
 ## When to propose a generator instead
 
