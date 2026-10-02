@@ -4,10 +4,11 @@ Source: https://nanook.xhub.io/docs/api/v3/logger
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/logger.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/logger.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The logger module provides a logging interface used by all Nanook components and an in-memory implementation suitable for development, testing, and production use.
 
@@ -16,7 +17,7 @@ import {
   LoggerInterface,
   LoggerMemory,
   getLoggerMemory
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ---
@@ -108,7 +109,7 @@ await logger.fatal('Cannot open file: tests.xlsx')
 To integrate Nanook with your own logging infrastructure, extend `LoggerInterface` and override the `_writeLog` method:
 
 ```typescript
-import { LoggerInterface } from 'nanook-table'
+import { LoggerInterface } from '@xhubio/nanook-table'
 
 class WinstonLogger extends LoggerInterface {
   private winston: WinstonInstance
@@ -170,7 +171,7 @@ console.log(logger.entries.info.length) // 0
 ### Example
 
 ```typescript
-import { LoggerMemory } from 'nanook-table'
+import { LoggerMemory } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
@@ -206,7 +207,7 @@ Each entry in the `entries` arrays is an object with:
 Factory function that creates and returns a new `LoggerMemory` instance.
 
 ```typescript
-import { getLoggerMemory } from 'nanook-table'
+import { getLoggerMemory } from '@xhubio/nanook-table'
 
 const logger = getLoggerMemory()
 logger.writeConsole = true
@@ -231,7 +232,7 @@ logger.level = 'debug'
 
 ```typescript
 import { describe, it, expect } from 'vitest'
-import { LoggerMemory } from 'nanook-table'
+import { LoggerMemory } from '@xhubio/nanook-table'
 
 describe('my generator', () => {
   it('logs a warning for empty config', async () => {

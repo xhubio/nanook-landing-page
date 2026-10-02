@@ -1,6 +1,6 @@
 # Nanook
 
-> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.0.1 (2026-08-29).
+> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.1.3 (2026-10-02).
 
 The docs pages below (Documentation except the hub, Tutorials, and the 3.x API reference; not the 1.x API pages) are also available as Markdown: append `.md` to the URL (for example https://nanook.xhub.io/docs/quickstart/quickstart.md). The whole documentation in one file: https://nanook.xhub.io/llms-full.txt. The npm package ships the 3.x docs as Markdown in node_modules/@xhubio/nanook-table/docs/.
 
@@ -1431,10 +1431,11 @@ Source: https://nanook.xhub.io/docs/api/v3/processor
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The processor module contains the main orchestrator (`TestcaseProcessor`), the writer interface, filter implementations, and factory functions for quick setup.
 
@@ -1448,7 +1449,7 @@ import {
   createDefaultGeneratorRegistry,
   createDefaultWriter,
   createDefaultFileProcessor
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ---
@@ -1516,7 +1517,7 @@ import {
   createDefaultFileProcessor,
   createDefaultGeneratorRegistry,
   createDefaultWriter
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
@@ -1586,8 +1587,8 @@ Called once after all test cases have been processed. Use this for cleanup (clos
 ### Custom Writer Example
 
 ```typescript
-import { InterfaceWriter } from 'nanook-table'
-import type { TestcaseData } from 'nanook-table'
+import { InterfaceWriter } from '@xhubio/nanook-table'
+import type { TestcaseData } from '@xhubio/nanook-table'
 
 class ConsoleWriter extends InterfaceWriter {
   async before(): Promise<void> {
@@ -1611,7 +1612,7 @@ class ConsoleWriter extends InterfaceWriter {
 The processor accepts an array of writers. All writers receive every test case.
 
 ```typescript
-import { TestcaseProcessor } from 'nanook-table'
+import { TestcaseProcessor } from '@xhubio/nanook-table'
 
 const jsonWriter = createDefaultWriter(logger)
 const consoleWriter = [new ConsoleWriter({ logger })]
@@ -1668,7 +1669,7 @@ new SimpleArrayFilterProcessor(name: string, delimiter: string)
 ### Example
 
 ```typescript
-import { SimpleArrayFilterProcessor } from 'nanook-table'
+import { SimpleArrayFilterProcessor } from '@xhubio/nanook-table'
 
 const filter = new SimpleArrayFilterProcessor('include', ',')
 
@@ -1701,7 +1702,7 @@ new SimpleArrayIgnoreFilterProcessor(name: string, delimiter: string)
 ### Example
 
 ```typescript
-import { SimpleArrayIgnoreFilterProcessor } from 'nanook-table'
+import { SimpleArrayIgnoreFilterProcessor } from '@xhubio/nanook-table'
 
 const filter = new SimpleArrayIgnoreFilterProcessor('exclude', ',')
 
@@ -1725,7 +1726,7 @@ These convenience functions create pre-configured instances with sensible defaul
 Creates a `DataGeneratorRegistry` with `GeneratorFaker` already registered under the name `'GeneratorFaker'`.
 
 ```typescript
-import { createDefaultGeneratorRegistry } from 'nanook-table'
+import { createDefaultGeneratorRegistry } from '@xhubio/nanook-table'
 
 const registry = createDefaultGeneratorRegistry()
 // registry.getGenerator('GeneratorFaker') is available
@@ -1739,7 +1740,7 @@ registry.registerGenerator('myGenerator', new MyGenerator({ logger }))
 Creates an array containing the default JSON file writer. This writer outputs one JSON file per test case into a `tdg/` directory.
 
 ```typescript
-import { createDefaultWriter, LoggerMemory } from 'nanook-table'
+import { createDefaultWriter, LoggerMemory } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 const writers = createDefaultWriter(logger)
@@ -1755,7 +1756,7 @@ Creates a `FileProcessor` pre-configured with:
 - `ParserSpecification` for `<SPECIFICATION>` sheets (the legacy marker `<SPECIFICATION_TABLE>` is also registered so existing workbooks keep loading)
 
 ```typescript
-import { createDefaultFileProcessor, LoggerMemory } from 'nanook-table'
+import { createDefaultFileProcessor, LoggerMemory } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 const fileProcessor = await createDefaultFileProcessor(logger)
@@ -1769,10 +1770,11 @@ Source: https://nanook.xhub.io/docs/api/v3/model
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/model.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/model.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The model module defines the core interfaces and classes that represent tables, test case definitions, and directives. Every table type (decision, matrix, specification) implements these interfaces, and every processor operates on them.
 
@@ -1790,7 +1792,7 @@ import {
   FilterInterface,
   PREFIX_GENERATOR,
   PREFIX_REFERENCE
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ## TableInterface
@@ -2000,8 +2002,10 @@ Extends `DirectiveBase`. Represents a reference to data generated by another tab
 ### Spreadsheet Syntax
 
 ```
-ref:<targetTableName>:<targetFieldName>:<targetTestcaseName>(<instanceIdSuffix>)
+ref:<instanceIdSuffix>:<targetTableName>:<targetFieldName>:<targetTestcaseName>
 ```
+
+The instance ID suffix is the **second** part, not a trailing parenthesis: the implementation reads `parts[1]` for it (see `createReferenceDirective`). Full description with examples: [`docs/guide/directives.md`](https://github.com/xhubio/nanook-table/blob/master/docs/guide/directives.md).
 
 ---
 
@@ -2074,10 +2078,11 @@ Source: https://nanook.xhub.io/docs/api/v3/data-generator
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The data generator module provides the interface and base implementation for all data generators. Generators are responsible for producing test data values. The processor calls generators based on `GeneratorDirective` entries created from the spreadsheet.
 
@@ -2087,7 +2092,7 @@ import {
   DataGeneratorBase,
   DataGeneratorRegistry,
   GeneratorFaker
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ## Generator Lifecycle
@@ -2219,8 +2224,8 @@ Base implementation of `DataGeneratorInterface`. Provides store loading/saving, 
 **Override this method in subclasses.** This is where the actual data generation logic goes. The base class `generate()` method handles instance ID caching and uniqueness; `_doGenerate()` is only called when new data is actually needed.
 
 ```typescript
-import { DataGeneratorBase } from 'nanook-table'
-import type { GeneratorDirective } from 'nanook-table'
+import { DataGeneratorBase } from '@xhubio/nanook-table'
+import type { GeneratorDirective } from '@xhubio/nanook-table'
 
 class GeneratorTimestamp extends DataGeneratorBase {
   async _doGenerate(
@@ -2244,8 +2249,8 @@ import {
   DataGeneratorBase,
   DataGeneratorRegistry,
   LoggerMemory
-} from 'nanook-table'
-import type { GeneratorDirective, TestcaseData } from 'nanook-table'
+} from '@xhubio/nanook-table'
+import type { GeneratorDirective, TestcaseData } from '@xhubio/nanook-table'
 
 class GeneratorCounter extends DataGeneratorBase {
   private counter = 0
@@ -2340,7 +2345,7 @@ import {
   GeneratorFaker,
   DataGeneratorRegistry,
   LoggerMemory
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 const registry = new DataGeneratorRegistry()
@@ -2357,10 +2362,11 @@ Source: https://nanook.xhub.io/docs/api/v3/file-processor
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The file processor module handles loading spreadsheet files and parsing their sheets into table models. It includes the importer abstraction, individual parsers for each table type, and the specification-to-decision converter with its rule converter plugin system.
 
@@ -2376,7 +2382,7 @@ import {
   ParserSpecificationConverter,
   RuleConverterRegistry,
   createDefaultConverterRegistry
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ---
@@ -2438,7 +2444,7 @@ XLSX implementation of `ImporterInterface`. Uses the `xlsx` library to read Exce
 ### Example
 
 ```typescript
-import { ImporterXlsx } from 'nanook-table'
+import { ImporterXlsx } from '@xhubio/nanook-table'
 
 const importer = new ImporterXlsx()
 await importer.loadFile('resources/tests.xlsx')
@@ -2484,7 +2490,7 @@ Loads the given file, iterates over all sheets, and parses each one into a table
 After this call, the `tables` property contains all parsed table models.
 
 ```typescript
-import { createDefaultFileProcessor, LoggerMemory } from 'nanook-table'
+import { createDefaultFileProcessor, LoggerMemory } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 const fp = await createDefaultFileProcessor(logger)
@@ -2646,7 +2652,7 @@ import {
   ParserSpecification,
   ParserSpecificationConverter,
   ImporterXlsx
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const importer = new ImporterXlsx()
 await importer.loadFile('spec.xlsx')
@@ -2758,12 +2764,12 @@ Returns an array of all registered plugin names.
 ### Custom Rule Converter Example
 
 ```typescript
-import { RuleConverterRegistry } from 'nanook-table'
+import { RuleConverterRegistry } from '@xhubio/nanook-table'
 import type {
   RuleConverterPlugin,
   RuleConversionContext,
   EquivalenceClassResult
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const myPlugin: RuleConverterPlugin = {
   name: 'maxLength',
@@ -2791,7 +2797,7 @@ registry.register(myPlugin)
 Factory function that creates a `RuleConverterRegistry` pre-populated with all built-in rule converter plugins.
 
 ```typescript
-import { createDefaultConverterRegistry } from 'nanook-table'
+import { createDefaultConverterRegistry } from '@xhubio/nanook-table'
 
 const registry = createDefaultConverterRegistry()
 console.log(registry.names()) // list of all built-in converter names
@@ -2817,10 +2823,11 @@ Source: https://nanook.xhub.io/docs/api/v3/logger
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/logger.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/logger.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The logger module provides a logging interface used by all Nanook components and an in-memory implementation suitable for development, testing, and production use.
 
@@ -2829,7 +2836,7 @@ import {
   LoggerInterface,
   LoggerMemory,
   getLoggerMemory
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ---
@@ -2921,7 +2928,7 @@ await logger.fatal('Cannot open file: tests.xlsx')
 To integrate Nanook with your own logging infrastructure, extend `LoggerInterface` and override the `_writeLog` method:
 
 ```typescript
-import { LoggerInterface } from 'nanook-table'
+import { LoggerInterface } from '@xhubio/nanook-table'
 
 class WinstonLogger extends LoggerInterface {
   private winston: WinstonInstance
@@ -2983,7 +2990,7 @@ console.log(logger.entries.info.length) // 0
 ### Example
 
 ```typescript
-import { LoggerMemory } from 'nanook-table'
+import { LoggerMemory } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
@@ -3019,7 +3026,7 @@ Each entry in the `entries` arrays is an object with:
 Factory function that creates and returns a new `LoggerMemory` instance.
 
 ```typescript
-import { getLoggerMemory } from 'nanook-table'
+import { getLoggerMemory } from '@xhubio/nanook-table'
 
 const logger = getLoggerMemory()
 logger.writeConsole = true
@@ -3044,7 +3051,7 @@ logger.level = 'debug'
 
 ```typescript
 import { describe, it, expect } from 'vitest'
-import { LoggerMemory } from 'nanook-table'
+import { LoggerMemory } from '@xhubio/nanook-table'
 
 describe('my generator', () => {
   it('logs a warning for empty config', async () => {

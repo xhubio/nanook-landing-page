@@ -64,10 +64,10 @@
         <h1>Processor</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor" aria-current="page">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md">docs/api/processor.md</a> in the
-        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.0.1:</p>
-      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md">docs/api/processor.md</a> in the
+        repository (commit <code>0f6e869ea6c0</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.1.3:</p>
+      <ul class="provenance"><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code>, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from <code>fileProcessor.tables</code> after construction, and every <code>ref:</code> then fails</li><li><code>createDefaultGeneratorRegistry()</code> returns an empty registry; the processor and data generator pages say <code>GeneratorFaker</code> is already registered. Register it yourself</li><li>the writer from <code>createDefaultWriter()</code> throws <code>Method not implemented</code> in <code>before()</code>, so the processor example stops before the first table. Use your own writer</li></ul>
 <p>The processor module contains the main orchestrator
 (<code>TestcaseProcessor</code>), the writer interface, filter
 implementations, and factory functions for quick setup.</p>
@@ -80,7 +80,7 @@ implementations, and factory functions for quick setup.</p>
   createDefaultGeneratorRegistry,
   createDefaultWriter,
   createDefaultFileProcessor
-} from &#39;nanook-table&#39;</code></pre>
+} from &#39;@xhubio/nanook-table&#39;</code></pre>
 <hr />
 <h2 id="testcaseprocessor">TestcaseProcessor</h2>
 <p>The central orchestrator that ties together table models, data
@@ -177,7 +177,7 @@ all generator stores)</li>
   createDefaultFileProcessor,
   createDefaultGeneratorRegistry,
   createDefaultWriter
-} from &#39;nanook-table&#39;
+} from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
@@ -247,8 +247,8 @@ id="async-after-promisevoid"><code>async after(): Promise&lt;void&gt;</code></h4
 <p>Called once after all test cases have been processed. Use this for
 cleanup (closing files, finalizing output, writing summaries, etc.).</p>
 <h3 id="custom-writer-example">Custom Writer Example</h3>
-<pre class="typescript"><code>import { InterfaceWriter } from &#39;nanook-table&#39;
-import type { TestcaseData } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { InterfaceWriter } from &#39;@xhubio/nanook-table&#39;
+import type { TestcaseData } from &#39;@xhubio/nanook-table&#39;
 
 class ConsoleWriter extends InterfaceWriter {
   async before(): Promise&lt;void&gt; {
@@ -268,7 +268,7 @@ class ConsoleWriter extends InterfaceWriter {
 <h3 id="using-multiple-writers">Using Multiple Writers</h3>
 <p>The processor accepts an array of writers. All writers receive every
 test case.</p>
-<pre class="typescript"><code>import { TestcaseProcessor } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { TestcaseProcessor } from &#39;@xhubio/nanook-table&#39;
 
 const jsonWriter = createDefaultWriter(logger)
 const consoleWriter = [new ConsoleWriter({ logger })]
@@ -358,7 +358,7 @@ match is found, the test case is processed.</p>
 </tbody>
 </table></div>
 <h3 id="example-1">Example</h3>
-<pre class="typescript"><code>import { SimpleArrayFilterProcessor } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { SimpleArrayFilterProcessor } from &#39;@xhubio/nanook-table&#39;
 
 const filter = new SimpleArrayFilterProcessor(&#39;include&#39;, &#39;,&#39;)
 
@@ -400,7 +400,7 @@ test case's tags. If a match is found, the test case is skipped.</p>
 </tbody>
 </table></div>
 <h3 id="example-2">Example</h3>
-<pre class="typescript"><code>import { SimpleArrayIgnoreFilterProcessor } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { SimpleArrayIgnoreFilterProcessor } from &#39;@xhubio/nanook-table&#39;
 
 const filter = new SimpleArrayIgnoreFilterProcessor(&#39;exclude&#39;, &#39;,&#39;)
 
@@ -420,7 +420,7 @@ id="createdefaultgeneratorregistry">createDefaultGeneratorRegistry()</h3>
 <p>Creates a <code>DataGeneratorRegistry</code> with
 <code>GeneratorFaker</code> already registered under the name
 <code>'GeneratorFaker'</code>.</p>
-<pre class="typescript"><code>import { createDefaultGeneratorRegistry } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { createDefaultGeneratorRegistry } from &#39;@xhubio/nanook-table&#39;
 
 const registry = createDefaultGeneratorRegistry()
 // registry.getGenerator(&#39;GeneratorFaker&#39;) is available
@@ -433,7 +433,7 @@ LoggerInterface): InterfaceWriter[]</h3>
 <p>Creates an array containing the default JSON file writer. This writer
 outputs one JSON file per test case into a <code>tdg/</code>
 directory.</p>
-<pre class="typescript"><code>import { createDefaultWriter, LoggerMemory } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { createDefaultWriter, LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
 const writers = createDefaultWriter(logger)</code></pre>
@@ -452,7 +452,7 @@ sheets</li>
 <code>&lt;SPECIFICATION_TABLE&gt;</code> is also registered so existing
 workbooks keep loading)</li>
 </ul>
-<pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
 const fileProcessor = await createDefaultFileProcessor(logger)

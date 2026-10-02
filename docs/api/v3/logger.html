@@ -64,10 +64,10 @@
         <h1>Logger</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger" aria-current="page">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md">docs/api/logger.md</a> in the
-        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.0.1:</p>
-      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/logger.md">docs/api/logger.md</a> in the
+        repository (commit <code>0f6e869ea6c0</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.1.3:</p>
+      <ul class="provenance"><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code>, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from <code>fileProcessor.tables</code> after construction, and every <code>ref:</code> then fails</li><li><code>createDefaultGeneratorRegistry()</code> returns an empty registry; the processor and data generator pages say <code>GeneratorFaker</code> is already registered. Register it yourself</li><li>the writer from <code>createDefaultWriter()</code> throws <code>Method not implemented</code> in <code>before()</code>, so the processor example stops before the first table. Use your own writer</li></ul>
 <p>The logger module provides a logging interface used by all Nanook
 components and an in-memory implementation suitable for development,
 testing, and production use.</p>
@@ -75,7 +75,7 @@ testing, and production use.</p>
   LoggerInterface,
   LoggerMemory,
   getLoggerMemory
-} from &#39;nanook-table&#39;</code></pre>
+} from &#39;@xhubio/nanook-table&#39;</code></pre>
 <hr />
 <h2 id="loggerinterface">LoggerInterface</h2>
 <p>Abstract base class that defines the logging contract. All Nanook
@@ -182,7 +182,7 @@ id="async-fatalmessage-string--object-promisevoid"><code>async fatal(message: st
 <p>To integrate Nanook with your own logging infrastructure, extend
 <code>LoggerInterface</code> and override the <code>_writeLog</code>
 method:</p>
-<pre class="typescript"><code>import { LoggerInterface } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { LoggerInterface } from &#39;@xhubio/nanook-table&#39;
 
 class WinstonLogger extends LoggerInterface {
   private winston: WinstonInstance
@@ -248,7 +248,7 @@ console.log(logger.entries.info.length) // 1
 logger.clear()
 console.log(logger.entries.info.length) // 0</code></pre>
 <h3 id="example">Example</h3>
-<pre class="typescript"><code>import { LoggerMemory } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
@@ -293,7 +293,7 @@ if (logger.entries.error.length &gt; 0) {
 <h2 id="getloggermemory">getLoggerMemory()</h2>
 <p>Factory function that creates and returns a new
 <code>LoggerMemory</code> instance.</p>
-<pre class="typescript"><code>import { getLoggerMemory } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { getLoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = getLoggerMemory()
 logger.writeConsole = true
@@ -310,7 +310,7 @@ logger.level = &#39;debug&#39;</code></pre>
 <h3 id="testing----capture-and-assert-on-log-entries">Testing -- capture
 and assert on log entries</h3>
 <pre class="typescript"><code>import { describe, it, expect } from &#39;vitest&#39;
-import { LoggerMemory } from &#39;nanook-table&#39;
+import { LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 describe(&#39;my generator&#39;, () =&gt; {
   it(&#39;logs a warning for empty config&#39;, async () =&gt; {

@@ -38,14 +38,19 @@ PAGES = [
 OUT_DIR = "docs/api/v3"
 SHELL_SOURCE = "about.html"
 
-# Deviations between the upstream docs and the published 3.0.1 package that
-# were verified by hand on 2026-09-02. Keep this list in sync with reality;
-# drop entries once upstream fixes them.
+# Deviations between the upstream docs and the published package that were
+# verified by hand (2026-09-02, re-checked 2026-10-02 against 3.1.3). Keep this
+# list in sync with reality; drop entries once upstream fixes them. The import
+# path (nanook-table instead of @xhubio/nanook-table) was fixed upstream in #60.
+PACKAGE_VERSION = "3.1.3"
 DEVIATIONS = [
-    "the import path in the samples is <code>nanook-table</code>; the published package is "
-    "<code>@xhubio/nanook-table</code>",
-    "<code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since "
-    "2.1.4; the samples assign it after construction",
+    "<code>tables</code> is a required constructor option of <code>TestcaseProcessor</code>, keyed by "
+    "table name (honoured by the constructor since 2.1.4); the samples assign the array from "
+    "<code>fileProcessor.tables</code> after construction, and every <code>ref:</code> then fails",
+    "<code>createDefaultGeneratorRegistry()</code> returns an empty registry; the processor and data "
+    "generator pages say <code>GeneratorFaker</code> is already registered. Register it yourself",
+    "the writer from <code>createDefaultWriter()</code> throws <code>Method not implemented</code> in "
+    "<code>before()</code>, so the processor example stops before the first table. Use your own writer",
 ]
 
 
@@ -130,7 +135,7 @@ def page_html(head_template, prefix, suffix, slug, title, description, fragment,
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul>{nav}</ul></nav>
       <p class="provenance">Generated on {today} from <a href="{source_url}">docs/api/{slug}.md</a> in the
         repository ({commit_note}) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.0.1:</p>
+        edited here. Known deviations from the published package {PACKAGE_VERSION}:</p>
       <ul class="provenance">{deviations}</ul>
 {fragment}
     </article>

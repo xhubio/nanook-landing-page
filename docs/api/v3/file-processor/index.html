@@ -64,10 +64,10 @@
         <h1>File processor</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor" aria-current="page">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md">docs/api/file-processor.md</a> in the
-        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.0.1:</p>
-      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md">docs/api/file-processor.md</a> in the
+        repository (commit <code>0f6e869ea6c0</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.1.3:</p>
+      <ul class="provenance"><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code>, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from <code>fileProcessor.tables</code> after construction, and every <code>ref:</code> then fails</li><li><code>createDefaultGeneratorRegistry()</code> returns an empty registry; the processor and data generator pages say <code>GeneratorFaker</code> is already registered. Register it yourself</li><li>the writer from <code>createDefaultWriter()</code> throws <code>Method not implemented</code> in <code>before()</code>, so the processor example stops before the first table. Use your own writer</li></ul>
 <p>The file processor module handles loading spreadsheet files and
 parsing their sheets into table models. It includes the importer
 abstraction, individual parsers for each table type, and the
@@ -84,7 +84,7 @@ system.</p>
   ParserSpecificationConverter,
   RuleConverterRegistry,
   createDefaultConverterRegistry
-} from &#39;nanook-table&#39;</code></pre>
+} from &#39;@xhubio/nanook-table&#39;</code></pre>
 <hr />
 <h2 id="importerinterface">ImporterInterface</h2>
 <p>Abstract interface for spreadsheet readers. An importer loads a file
@@ -181,7 +181,7 @@ zero-based indices)</td>
 </tbody>
 </table></div>
 <h3 id="example">Example</h3>
-<pre class="typescript"><code>import { ImporterXlsx } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { ImporterXlsx } from &#39;@xhubio/nanook-table&#39;
 
 const importer = new ImporterXlsx()
 await importer.loadFile(&#39;resources/tests.xlsx&#39;)
@@ -245,7 +245,7 @@ into a table model. The parser is selected based on the table type
 marker in cell <code>(0, 0)</code> of each sheet.</p>
 <p>After this call, the <code>tables</code> property contains all parsed
 table models.</p>
-<pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
 const fp = await createDefaultFileProcessor(logger)
@@ -466,7 +466,7 @@ id="convertspecification-specificationmodel-tabledecision"><code>convert(specifi
   ParserSpecification,
   ParserSpecificationConverter,
   ImporterXlsx
-} from &#39;nanook-table&#39;
+} from &#39;@xhubio/nanook-table&#39;
 
 const importer = new ImporterXlsx()
 await importer.loadFile(&#39;spec.xlsx&#39;)
@@ -551,12 +551,12 @@ registered.</p>
 <p>Returns an array of all registered plugin names.</p>
 <h3 id="custom-rule-converter-example">Custom Rule Converter
 Example</h3>
-<pre class="typescript"><code>import { RuleConverterRegistry } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { RuleConverterRegistry } from &#39;@xhubio/nanook-table&#39;
 import type {
   RuleConverterPlugin,
   RuleConversionContext,
   EquivalenceClassResult
-} from &#39;nanook-table&#39;
+} from &#39;@xhubio/nanook-table&#39;
 
 const myPlugin: RuleConverterPlugin = {
   name: &#39;maxLength&#39;,
@@ -580,7 +580,7 @@ registry.register(myPlugin)</code></pre>
 id="createdefaultconverterregistry">createDefaultConverterRegistry()</h2>
 <p>Factory function that creates a <code>RuleConverterRegistry</code>
 pre-populated with all built-in rule converter plugins.</p>
-<pre class="typescript"><code>import { createDefaultConverterRegistry } from &#39;nanook-table&#39;
+<pre class="typescript"><code>import { createDefaultConverterRegistry } from &#39;@xhubio/nanook-table&#39;
 
 const registry = createDefaultConverterRegistry()
 console.log(registry.names()) // list of all built-in converter names</code></pre>

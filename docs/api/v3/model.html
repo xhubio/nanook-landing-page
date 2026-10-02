@@ -64,10 +64,10 @@
         <h1>Model</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model" aria-current="page">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-09-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md">docs/api/model.md</a> in the
-        repository (commit <code>47266695abbc</code> of 2026-08-29) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.0.1:</p>
-      <ul class="provenance"><li>the import path in the samples is <code>nanook-table</code>; the published package is <code>@xhubio/nanook-table</code></li><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code> since 2.1.4; the samples assign it after construction</li></ul>
+      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md">docs/api/model.md</a> in the
+        repository (commit <code>0f6e869ea6c0</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. Known deviations from the published package 3.1.3:</p>
+      <ul class="provenance"><li><code>tables</code> is a required constructor option of <code>TestcaseProcessor</code>, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from <code>fileProcessor.tables</code> after construction, and every <code>ref:</code> then fails</li><li><code>createDefaultGeneratorRegistry()</code> returns an empty registry; the processor and data generator pages say <code>GeneratorFaker</code> is already registered. Register it yourself</li><li>the writer from <code>createDefaultWriter()</code> throws <code>Method not implemented</code> in <code>before()</code>, so the processor example stops before the first table. Use your own writer</li></ul>
 <p>The model module defines the core interfaces and classes that
 represent tables, test case definitions, and directives. Every table
 type (decision, matrix, specification) implements these interfaces, and
@@ -85,7 +85,7 @@ every processor operates on them.</p>
   FilterInterface,
   PREFIX_GENERATOR,
   PREFIX_REFERENCE
-} from &#39;nanook-table&#39;</code></pre>
+} from &#39;@xhubio/nanook-table&#39;</code></pre>
 <h2 id="tableinterface">TableInterface</h2>
 <p>Common interface implemented by all table models
 (<code>TableDecision</code>, <code>TableMatrix</code>). The processor
@@ -430,7 +430,12 @@ starts with the <code>ref:</code> prefix.</p>
 </tbody>
 </table></div>
 <h3 id="spreadsheet-syntax-1">Spreadsheet Syntax</h3>
-<pre><code>ref:&lt;targetTableName&gt;:&lt;targetFieldName&gt;:&lt;targetTestcaseName&gt;(&lt;instanceIdSuffix&gt;)</code></pre>
+<pre><code>ref:&lt;instanceIdSuffix&gt;:&lt;targetTableName&gt;:&lt;targetFieldName&gt;:&lt;targetTestcaseName&gt;</code></pre>
+<p>The instance ID suffix is the <strong>second</strong> part, not a
+trailing parenthesis: the implementation reads <code>parts[1]</code> for
+it (see <code>createReferenceDirective</code>). Full description with
+examples: <a
+href="https://github.com/xhubio/nanook-table/blob/master/docs/guide/directives.md"><code>docs/guide/directives.md</code></a>.</p>
 <hr />
 <h2 id="fielddirective">FieldDirective</h2>
 <p>Extends <code>DirectiveBase</code>. Represents a field selection

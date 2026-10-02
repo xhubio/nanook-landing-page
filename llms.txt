@@ -1,6 +1,6 @@
 # Nanook
 
-> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.0.1 (2026-08-29).
+> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.1.3 (2026-10-02).
 
 The docs pages below (Documentation except the hub, Tutorials, and the 3.x API reference; not the 1.x API pages) are also available as Markdown: append `.md` to the URL (for example https://nanook.xhub.io/docs/quickstart/quickstart.md). The whole documentation in one file: https://nanook.xhub.io/llms-full.txt. The npm package ships the 3.x docs as Markdown in node_modules/@xhubio/nanook-table/docs/.
 
@@ -50,7 +50,7 @@ The docs pages below (Documentation except the hub, Tutorials, and the 3.x API r
 - [AI-Assisted Equivalence Class Tables with Claude Code](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables): The Claude Code skill and slash command shipped with the repository
 
 ## Key Facts
-- Open source, MIT license (GitHub: https://github.com/xhubio/nanook-table; npm: @xhubio/nanook-table, current release 3.0.1, 2026-08-29)
+- Open source, MIT license (GitHub: https://github.com/xhubio/nanook-table; npm: @xhubio/nanook-table, current release 3.1.3, 2026-10-02)
 - Written in TypeScript; one ESM package with type declarations; requires Node.js >= 22
 - Reads XLSX files (.xlsx and .xls via the built-in importer); other formats need a custom importer
 - Table types: <DECISION_TABLE> (equivalence class table), <MATRIX_TABLE>, <SPECIFICATION_TABLE> (also <SPECIFICATION>; field rules converted into a decision table)
@@ -58,7 +58,7 @@ The docs pages below (Documentation except the hub, Tutorials, and the 3.x API r
 - Built-in Faker generator (@faker-js/faker); custom generators extend DataGeneratorBase
 - Writes one JSON file per test case by default; any other format (CSV, database, API) through a custom writer
 - Tag-based filters select which test cases are processed
-- Claude Code skill create-equivalence-class-table (since 2.1.0; version 0.2.0 ships as a plugin from the GitHub repository): plugin via /plugin marketplace add xhubio/nanook-table and /plugin install nanook@nanook (invoked as /nanook:create-equivalence-class-table); for other agents npx skills add xhubio/nanook-table --skill create-equivalence-class-table; also in the npm package under skills/ (versions after 3.0.1), the slash command /createEquivalenceClassTable under .claude/commands/
+- Claude Code skill create-equivalence-class-table (since 2.1.0; version 0.3.0, in English, ships as a plugin from the GitHub repository, listed on skills.sh and Context7): plugin via /plugin marketplace add xhubio/nanook-table and /plugin install nanook@nanook (invoked as /nanook:create-equivalence-class-table); for other agents npx skills add xhubio/nanook-table --skill create-equivalence-class-table; also in the npm package under skills/ (versions after 3.0.1), the slash command /createEquivalenceClassTable under .claude/commands/
 - A rules block for a project's AGENTS.md (Codex, Cursor, Copilot; Claude Code via @AGENTS.md in CLAUDE.md) is on https://nanook.xhub.io/docs/guide/use-with-ai; there is no Nanook MCP server yet
 - Used by Deutsche Bahn and other enterprises
 - Published by BeeBack UG (haftungsbeschränkt), xhub.io

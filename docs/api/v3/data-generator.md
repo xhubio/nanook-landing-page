@@ -4,10 +4,11 @@ Source: https://nanook.xhub.io/docs/api/v3/data-generator
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The data generator module provides the interface and base implementation for all data generators. Generators are responsible for producing test data values. The processor calls generators based on `GeneratorDirective` entries created from the spreadsheet.
 
@@ -17,7 +18,7 @@ import {
   DataGeneratorBase,
   DataGeneratorRegistry,
   GeneratorFaker
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ## Generator Lifecycle
@@ -149,8 +150,8 @@ Base implementation of `DataGeneratorInterface`. Provides store loading/saving, 
 **Override this method in subclasses.** This is where the actual data generation logic goes. The base class `generate()` method handles instance ID caching and uniqueness; `_doGenerate()` is only called when new data is actually needed.
 
 ```typescript
-import { DataGeneratorBase } from 'nanook-table'
-import type { GeneratorDirective } from 'nanook-table'
+import { DataGeneratorBase } from '@xhubio/nanook-table'
+import type { GeneratorDirective } from '@xhubio/nanook-table'
 
 class GeneratorTimestamp extends DataGeneratorBase {
   async _doGenerate(
@@ -174,8 +175,8 @@ import {
   DataGeneratorBase,
   DataGeneratorRegistry,
   LoggerMemory
-} from 'nanook-table'
-import type { GeneratorDirective, TestcaseData } from 'nanook-table'
+} from '@xhubio/nanook-table'
+import type { GeneratorDirective, TestcaseData } from '@xhubio/nanook-table'
 
 class GeneratorCounter extends DataGeneratorBase {
   private counter = 0
@@ -270,7 +271,7 @@ import {
   GeneratorFaker,
   DataGeneratorRegistry,
   LoggerMemory
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 const registry = new DataGeneratorRegistry()

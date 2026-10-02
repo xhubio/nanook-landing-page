@@ -4,10 +4,11 @@ Source: https://nanook.xhub.io/docs/api/v3/file-processor
 
 API reference · Nanook 3.x
 
-Generated on 2026-09-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `47266695abbc` of 2026-08-29) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.0.1:
+Generated on 2026-10-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- the import path in the samples is `nanook-table`; the published package is `@xhubio/nanook-table`
-- `tables` is a required constructor option of `TestcaseProcessor` since 2.1.4; the samples assign it after construction
+- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
+- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
+- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
 
 The file processor module handles loading spreadsheet files and parsing their sheets into table models. It includes the importer abstraction, individual parsers for each table type, and the specification-to-decision converter with its rule converter plugin system.
 
@@ -23,7 +24,7 @@ import {
   ParserSpecificationConverter,
   RuleConverterRegistry,
   createDefaultConverterRegistry
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 ```
 
 ---
@@ -85,7 +86,7 @@ XLSX implementation of `ImporterInterface`. Uses the `xlsx` library to read Exce
 ### Example
 
 ```typescript
-import { ImporterXlsx } from 'nanook-table'
+import { ImporterXlsx } from '@xhubio/nanook-table'
 
 const importer = new ImporterXlsx()
 await importer.loadFile('resources/tests.xlsx')
@@ -131,7 +132,7 @@ Loads the given file, iterates over all sheets, and parses each one into a table
 After this call, the `tables` property contains all parsed table models.
 
 ```typescript
-import { createDefaultFileProcessor, LoggerMemory } from 'nanook-table'
+import { createDefaultFileProcessor, LoggerMemory } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 const fp = await createDefaultFileProcessor(logger)
@@ -293,7 +294,7 @@ import {
   ParserSpecification,
   ParserSpecificationConverter,
   ImporterXlsx
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const importer = new ImporterXlsx()
 await importer.loadFile('spec.xlsx')
@@ -405,12 +406,12 @@ Returns an array of all registered plugin names.
 ### Custom Rule Converter Example
 
 ```typescript
-import { RuleConverterRegistry } from 'nanook-table'
+import { RuleConverterRegistry } from '@xhubio/nanook-table'
 import type {
   RuleConverterPlugin,
   RuleConversionContext,
   EquivalenceClassResult
-} from 'nanook-table'
+} from '@xhubio/nanook-table'
 
 const myPlugin: RuleConverterPlugin = {
   name: 'maxLength',
@@ -438,7 +439,7 @@ registry.register(myPlugin)
 Factory function that creates a `RuleConverterRegistry` pre-populated with all built-in rule converter plugins.
 
 ```typescript
-import { createDefaultConverterRegistry } from 'nanook-table'
+import { createDefaultConverterRegistry } from '@xhubio/nanook-table'
 
 const registry = createDefaultConverterRegistry()
 console.log(registry.names()) // list of all built-in converter names
