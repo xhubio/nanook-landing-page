@@ -1,0 +1,87 @@
+{
+  "tableName": "Login",
+  "name": "falschesPasswort",
+  "data": {
+    "Login": {
+      "4feeb246-c719-416b-9380-643c830d85a5": {
+        "angemeldetBleiben": "false",
+        "Expected Result": [
+          {
+            "key": "INVALID_CREDENTIALS",
+            "other": "E-Mail oder Passwort ist falsch"
+          }
+        ],
+        "abweichendesPasswort": "MKdTqfn4cPVXhy7"
+      }
+    },
+    "User": {
+      "1f08a77a-425c-4b45-94d3-80dcd7de5f66": {
+        "Expected Result": [
+          {
+            "key": "valid",
+            "other": "Daten sind gültig, kein Fehler"
+          },
+          {
+            "key": "valid",
+            "other": "Daten sind gültig, kein Fehler"
+          }
+        ],
+        "email": "Jerod.Skiles63@gmail.com",
+        "password": "izYhL2fHBUN0nkb"
+      },
+      "9733a85d-3345-4802-9fd4-cd892d41e4f5": {
+        "Expected Result": [
+          {
+            "key": "valid",
+            "other": "Daten sind gültig, kein Fehler"
+          }
+        ],
+        "email": "Adolph.White56@gmail.com",
+        "password": "MKdTqfn4cPVXhy7"
+      }
+    }
+  },
+  "instanceId": "4feeb246-c719-416b-9380-643c830d85a5",
+  "callTree": {
+    "instanceId": "7539f72c-1d60-431b-b55b-30461c8479da",
+    "tableName": "Login",
+    "testcaseName": "falschesPasswort",
+    "neverExecute": false,
+    "tags": [
+      "negative"
+    ],
+    "children": [
+      {
+        "instanceId": "1f08a77a-425c-4b45-94d3-80dcd7de5f66",
+        "tableName": "User",
+        "testcaseName": "valid_1",
+        "neverExecute": false,
+        "tags": [
+          "valid"
+        ],
+        "children": []
+      },
+      {
+        "instanceId": "9733a85d-3345-4802-9fd4-cd892d41e4f5",
+        "tableName": "User",
+        "testcaseName": "valid_1",
+        "neverExecute": false,
+        "tags": [
+          "valid"
+        ],
+        "children": []
+      },
+      {
+        "instanceId": "1f08a77a-425c-4b45-94d3-80dcd7de5f66",
+        "tableName": "User",
+        "testcaseName": "valid_1",
+        "neverExecute": false,
+        "tags": [
+          "valid"
+        ],
+        "children": []
+      }
+    ]
+  },
+  "postProcessDirectives": []
+}
