@@ -284,7 +284,9 @@ claude
                     that format:</p>
                   <pre><code class="hljs">npx skills add xhubio/nanook-table --skill create-equivalence-class-table
 </code></pre>
-                  <p>Without <code>--skill</code> the command also offers the repository&rsquo;s own development
+                  <p>The skill is listed on <a href="https://skills.sh/xhubio/nanook-table" target="_blank"
+                    rel="noreferrer noopener">skills.sh</a>, the directory behind that command.
+                    Without <code>--skill</code> the command also offers the repository&rsquo;s own development
                     skills. We have run the skill in Claude Code only and checked the install for Codex, so treat
                     other agents as untested. The rules block in the next section does not depend on skills and works
                     in any agent that reads <code>AGENTS.md</code>.</p>
@@ -326,7 +328,7 @@ Test cases are defined in XLSX workbooks and turned into test data with
                     <a href="/docs/quickstart/claude-code#generate-the-test-data">Generate the test data</a> and
                     <a href="/docs/quickstart/claude-code#what-can-go-wrong">What can go wrong</a>.</p>
                   <h2><a class="anchor" aria-hidden="true" id="docs-as-text"></a><a href="#docs-as-text" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>4 · The docs as plain text</h2>
-                  <p>For a chat window, or an agent that fetches URLs:</p>
+                  <p>For a chat window, an agent that fetches URLs, or one with an MCP server for docs:</p>
                   <ul>
                     <li><a href="/llms.txt"><code>/llms.txt</code></a> is the index: every docs page with one line on
                       what it covers, in the <a href="https://llmstxt.org" target="_blank" rel="noreferrer noopener">llms.txt</a>
@@ -340,6 +342,9 @@ Test cases are defined in XLSX workbooks and turned into test data with
                       pages have none.</li>
                     <li>Inside a project, the package itself carries the 3.x documentation as Markdown in
                       <code>node_modules/@xhubio/nanook-table/docs/</code>, matching the installed version.</li>
+                    <li><a href="https://context7.com/xhubio/nanook-table" target="_blank" rel="noreferrer noopener">Context7</a>
+                      indexes the documentation in the repository; agents with the Context7 MCP server fetch it from
+                      there. Its index is refreshed from time to time and can lag behind the repository.</li>
                   </ul>
                   <h2><a class="anchor" aria-hidden="true" id="check-the-result"></a><a href="#check-the-result" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5 · Check what the agent produced</h2>
                   <p>An agent that writes a table and a script will report success. Two checks catch most of what

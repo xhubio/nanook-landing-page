@@ -4,11 +4,12 @@ Source: https://nanook.xhub.io/docs/api/v3/data-generator
 
 API reference · Nanook 3.x
 
-Generated on 2026-10-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
+Generated on 2026-10-02 from [docs/api/data-generator.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md) in the repository (commit `e17c1ea349f5` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
-- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
-- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
+- `InterfaceWriter` is an interface, not a class: implement it, do not extend or construct it; the test case type is `TestcaseDataInterface`
+- `SimpleArrayFilterProcessor` and `SimpleArrayIgnoreFilterProcessor` take an options object (`{ name, delimiter }`), not positional arguments; `createDefaultFileProcessor()` is synchronous
+- generators implement `doGenerate(request)` and are called as `generate(request)`, not with `(instanceId, testcase, directive)`
+- the generator directive is `gen:<instanceIdSuffix>:<generatorName>:<config>`, not `gen:name(suffix):config`; the faker config is a plain path, not JSON (`gen::faker:person.firstName`)
 
 The data generator module provides the interface and base implementation for all data generators. Generators are responsible for producing test data values. The processor calls generators based on `GeneratorDirective` entries created from the spreadsheet.
 
@@ -45,38 +46,43 @@ Abstract interface that all data generators must implement. Defines the contract
 ### Constructor
 
 ```typescript
-new DataGeneratorInterface(options: {
-  logger: LoggerInterface
-  serviceRegistry?: DataGeneratorRegistry
+// DataGeneratorOptions, as taken by DataGeneratorBase and GeneratorFaker
+new DataGeneratorBase(options: {
+  generatorRegistry: DataGeneratorRegistry
+  name: string
+  logger?: LoggerInterface
   unique?: boolean
   maxUniqueTries?: number
   varDir?: string
   useStore?: boolean
+  storeName?: string
 })
 ```
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `logger` | `LoggerInterface` | required | Logger instance for diagnostic output |
-| `serviceRegistry` | `DataGeneratorRegistry` | `undefined` | Registry providing access to other generators. Allows generators to compose with each other |
-| `unique` | `boolean` | `true` | When `true`, the generator should return unique values. The definition of "unique" is generator-specific |
-| `maxUniqueTries` | `number` | `100` | Maximum attempts to generate a unique value before throwing an error |
-| `varDir` | `string` | `undefined` | Directory path for reading/writing persistent store files |
+| `generatorRegistry` | `DataGeneratorRegistry` | required | The registry that holds all available generators. Allows generators to compose with each other |
+| `name` | `string` | required | The name under which this generator is registered. Pass the same name to `registerGenerator()` |
+| `logger` | `LoggerInterface` | `new LoggerMemory()` | Logger instance for diagnostic output |
+| `unique` | `boolean` | `false` | When `true`, the generator should return unique values. The definition of "unique" is generator-specific |
+| `maxUniqueTries` | `number` | `20` | Maximum attempts to generate a unique value before throwing an error |
+| `varDir` | `string` | `'var'` | Directory path for reading/writing persistent store files |
 | `useStore` | `boolean` | `false` | Whether the generator should persist data between runs |
+| `storeName` | `string` | the `name` option | The name of the data store associated with this generator |
 
 ### Properties
 
 | Property | Type | Description |
 |---|---|---|
 | `logger` | `LoggerInterface` | The logger instance |
-| `serviceRegistry` | `DataGeneratorRegistry` | The registry of all available generators |
+| `generatorRegistry` | `DataGeneratorRegistry` | The registry of all available generators |
 | `unique` | `boolean` | Whether uniqueness is enforced |
 | `maxUniqueTries` | `number` | Maximum uniqueness retry count |
 | `uniqueSet` | `Set<string>` | Stores previously generated values for uniqueness checks |
 | `instanceData` | `Map<string, unknown>` | Maps instance IDs to previously generated data. Ensures the same instance ID returns the same value |
 | `varDir` | `string` | Store directory path |
 | `useStore` | `boolean` | Whether the store is active |
-| `name` | `string` | The name under which this generator is registered. Set automatically by the registry |
+| `name` | `string` | The name under which this generator is registered. Set from the `name` option and overwritten by `registerGenerator()` |
 
 ### Methods
 
@@ -176,15 +182,13 @@ import {
   DataGeneratorRegistry,
   LoggerMemory
 } from '@xhubio/nanook-table'
-import type { GeneratorDirective, TestcaseData } from '@xhubio/nanook-table'
+import type { DataGeneratorGenerateRequest } from '@xhubio/nanook-table'
 
 class GeneratorCounter extends DataGeneratorBase {
   private counter = 0
 
-  async _doGenerate(
-    instanceId: string,
-    testcase: TestcaseData,
-    generatorDirective: GeneratorDirective
+  protected override async doGenerate(
+    request: DataGeneratorGenerateRequest
   ): Promise<number> {
     this.counter += 1
     return this.counter
@@ -194,7 +198,11 @@ class GeneratorCounter extends DataGeneratorBase {
 // Register the generator
 const logger = new LoggerMemory()
 const registry = new DataGeneratorRegistry()
-const counter = new GeneratorCounter({ logger, serviceRegistry: registry })
+const counter = new GeneratorCounter({
+  generatorRegistry: registry,
+  name: 'counter',
+  logger
+})
 registry.registerGenerator('counter', counter)
 ```
 
@@ -212,7 +220,7 @@ Registers a generator under the given name. Also sets the `name` property on the
 
 ```typescript
 const registry = new DataGeneratorRegistry()
-const faker = new GeneratorFaker({ logger })
+const faker = new GeneratorFaker({ generatorRegistry: registry, name: 'GeneratorFaker', logger })
 registry.registerGenerator('GeneratorFaker', faker)
 ```
 
@@ -275,11 +283,15 @@ import {
 
 const logger = new LoggerMemory()
 const registry = new DataGeneratorRegistry()
-const faker = new GeneratorFaker({ logger, serviceRegistry: registry })
+const faker = new GeneratorFaker({
+  generatorRegistry: registry,
+  name: 'GeneratorFaker',
+  logger
+})
 registry.registerGenerator('GeneratorFaker', faker)
 ```
 
-The `createDefaultGeneratorRegistry()` factory function in the processor module creates a registry with `GeneratorFaker` already registered.
+`GeneratorFaker` is never registered for you. The `createDefaultGeneratorRegistry()` factory function in the processor module returns an empty registry, so register `GeneratorFaker` explicitly as shown above.
 
 ---
 Index of all docs: https://nanook.xhub.io/llms.txt

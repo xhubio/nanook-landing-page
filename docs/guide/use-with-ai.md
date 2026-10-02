@@ -32,7 +32,7 @@ The skill is a plain folder with a `SKILL.md` in the [Agent Skills](https://agen
 npx skills add xhubio/nanook-table --skill create-equivalence-class-table
 ```
 
-Without `--skill` the command also offers the repository’s own development skills. We have run the skill in Claude Code only and checked the install for Codex, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
+The skill is listed on [skills.sh](https://skills.sh/xhubio/nanook-table), the directory behind that command. Without `--skill` the command also offers the repository’s own development skills. We have run the skill in Claude Code only and checked the install for Codex, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
 
 ## 3 · A rules block for AGENTS.md
 
@@ -69,12 +69,13 @@ The block points the agent to the Markdown documentation inside the package. Unl
 
 ## 4 · The docs as plain text
 
-For a chat window, or an agent that fetches URLs:
+For a chat window, an agent that fetches URLs, or one with an MCP server for docs:
 
 - [`/llms.txt`](https://nanook.xhub.io/llms.txt) is the index: every docs page with one line on what it covers, in the [llms.txt](https://llmstxt.org) format.
 - [`/llms-full.txt`](https://nanook.xhub.io/llms-full.txt) is the whole documentation in one Markdown file, to paste or attach.
 - Every quickstart, guide, tutorial and module page and the 3.x API reference has a Markdown version: add `.md` to its address, for example [`/docs/quickstart/quickstart.md`](https://nanook.xhub.io/docs/quickstart/quickstart.md). The *Copy as Markdown* button at the top of those pages puts it on the clipboard. The 1.x API pages have none.
 - Inside a project, the package itself carries the 3.x documentation as Markdown in `node_modules/@xhubio/nanook-table/docs/`, matching the installed version.
+- [Context7](https://context7.com/xhubio/nanook-table) indexes the documentation in the repository; agents with the Context7 MCP server fetch it from there. Its index is refreshed from time to time and can lag behind the repository.
 
 ## 5 · Check what the agent produced
 

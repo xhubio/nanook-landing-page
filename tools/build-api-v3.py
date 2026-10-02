@@ -38,19 +38,25 @@ PAGES = [
 OUT_DIR = "docs/api/v3"
 SHELL_SOURCE = "about.html"
 
-# Deviations between the upstream docs and the published package that were
-# verified by hand (2026-09-02, re-checked 2026-10-02 against 3.1.3). Keep this
-# list in sync with reality; drop entries once upstream fixes them. The import
-# path (nanook-table instead of @xhubio/nanook-table) was fixed upstream in #60.
+# Deviations between the upstream docs and the published package, verified by
+# hand. Keep in sync with reality; drop entries once upstream fixes them. Import
+# path fixed upstream in #60.
 PACKAGE_VERSION = "3.1.3"
+# Fixed upstream in #62 (2026-10-02): tables keyed by name, empty default
+# registry, default writer throws in before(). The entries below were found
+# with tsc and by reading the parsers against 3.1.3 on 2026-10-02 and are
+# still open upstream (#62 body).
 DEVIATIONS = [
-    "<code>tables</code> is a required constructor option of <code>TestcaseProcessor</code>, keyed by "
-    "table name (honoured by the constructor since 2.1.4); the samples assign the array from "
-    "<code>fileProcessor.tables</code> after construction, and every <code>ref:</code> then fails",
-    "<code>createDefaultGeneratorRegistry()</code> returns an empty registry; the processor and data "
-    "generator pages say <code>GeneratorFaker</code> is already registered. Register it yourself",
-    "the writer from <code>createDefaultWriter()</code> throws <code>Method not implemented</code> in "
-    "<code>before()</code>, so the processor example stops before the first table. Use your own writer",
+    "<code>InterfaceWriter</code> is an interface, not a class: implement it, do not extend or "
+    "construct it; the test case type is <code>TestcaseDataInterface</code>",
+    "<code>SimpleArrayFilterProcessor</code> and <code>SimpleArrayIgnoreFilterProcessor</code> take an "
+    "options object (<code>{ name, delimiter }</code>), not positional arguments; "
+    "<code>createDefaultFileProcessor()</code> is synchronous",
+    "generators implement <code>doGenerate(request)</code> and are called as <code>generate(request)</code>, "
+    "not with <code>(instanceId, testcase, directive)</code>",
+    "the generator directive is <code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code>, "
+    "not <code>gen:name(suffix):config</code>; the faker config is a plain path, not JSON "
+    "(<code>gen::faker:person.firstName</code>)",
 ]
 
 
@@ -125,7 +131,12 @@ def page_html(head_template, prefix, suffix, slug, title, description, fragment,
     )
     source_url = f"https://github.com/{REPO}/blob/{BRANCH}/docs/api/{slug}.md"
     commit_note = f"commit <code>{sha}</code>" + (f" of {sha_date}" if sha_date else "")
-    deviations = "".join(f"<li>{d}</li>" for d in DEVIATIONS)
+    if DEVIATIONS:
+        deviation_note = (f"Known deviations from the published package {PACKAGE_VERSION}:</p>\n"
+                          f'      <ul class="provenance">' + "".join(f"<li>{d}</li>" for d in DEVIATIONS) + "</ul>")
+    else:
+        deviation_note = (f"The samples were checked against the published package {PACKAGE_VERSION}; "
+                          "no known deviations.</p>")
     main = f"""<main class="long-doc api-v3" id="main-content">
     <article>
       <header class="long-doc-head">
@@ -135,8 +146,7 @@ def page_html(head_template, prefix, suffix, slug, title, description, fragment,
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul>{nav}</ul></nav>
       <p class="provenance">Generated on {today} from <a href="{source_url}">docs/api/{slug}.md</a> in the
         repository ({commit_note}) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package {PACKAGE_VERSION}:</p>
-      <ul class="provenance">{deviations}</ul>
+        edited here. {deviation_note}
 {fragment}
     </article>
   </main>"""

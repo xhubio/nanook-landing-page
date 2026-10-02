@@ -4,11 +4,12 @@ Source: https://nanook.xhub.io/docs/api/v3/processor
 
 API reference · Nanook 3.x
 
-Generated on 2026-10-02 from [docs/api/processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
+Generated on 2026-10-02 from [docs/api/processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md) in the repository (commit `e17c1ea349f5` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
-- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
-- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
+- `InterfaceWriter` is an interface, not a class: implement it, do not extend or construct it; the test case type is `TestcaseDataInterface`
+- `SimpleArrayFilterProcessor` and `SimpleArrayIgnoreFilterProcessor` take an options object (`{ name, delimiter }`), not positional arguments; `createDefaultFileProcessor()` is synchronous
+- generators implement `doGenerate(request)` and are called as `generate(request)`, not with `(instanceId, testcase, directive)`
+- the generator directive is `gen:<instanceIdSuffix>:<generatorName>:<config>`, not `gen:name(suffix):config`; the faker config is a plain path, not JSON (`gen::faker:person.firstName`)
 
 The processor module contains the main orchestrator (`TestcaseProcessor`), the writer interface, filter implementations, and factory functions for quick setup.
 
@@ -35,23 +36,25 @@ The central orchestrator that ties together table models, data generators, and w
 
 ```typescript
 new TestcaseProcessor(options: {
-  logger: LoggerInterface
+  logger?: LoggerInterface
   generatorRegistry: DataGeneratorRegistry
-  writer: InterfaceWriter | InterfaceWriter[]
+  writer: InterfaceWriter[]
+  tables: Record<string, TableInterface>
 })
 ```
 
 | Option | Type | Description |
 |---|---|---|
-| `logger` | `LoggerInterface` | Logger instance for diagnostic output |
+| `logger` | `LoggerInterface` | Optional. Logger instance for diagnostic output. Defaults to a `LoggerMemory` |
 | `generatorRegistry` | `DataGeneratorRegistry` | Registry containing all available data generators |
-| `writer` | `InterfaceWriter \| InterfaceWriter[]` | One or more writers that receive generated test case data |
+| `writer` | `InterfaceWriter[]` | The writers that receive generated test case data |
+| `tables` | `Record<string, TableInterface>` | Required. The table models to process, keyed by table name. `FileProcessor.tables` is an array, so convert it: `Object.fromEntries(fileProcessor.tables.map((t) => [t.tableName, t]))` |
 
 ### Properties
 
 | Property | Type | Description |
 |---|---|---|
-| `tables` | `TableInterface[]` | The table models to process. Set this after creating the processor, typically from `FileProcessor.tables` |
+| `tables` | `Record<string, TableInterface>` | The table models to process, keyed by table name. Filled from the `tables` constructor option; `addTables(tables)` adds further tables. Do not assign the `FileProcessor.tables` array to it: every `ref:` would then fail with "The targetTable 'X' does not exists" |
 
 ### Methods
 
@@ -88,27 +91,42 @@ import {
   LoggerMemory,
   TestcaseProcessor,
   createDefaultFileProcessor,
-  createDefaultGeneratorRegistry,
-  createDefaultWriter
+  DataGeneratorRegistry,
+  GeneratorFaker,
+  type InterfaceWriter
 } from '@xhubio/nanook-table'
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
 
 // Set up components
-const fileProcessor = await createDefaultFileProcessor(logger)
-const registry = createDefaultGeneratorRegistry()
-const writer = createDefaultWriter(logger)
+const fileProcessor = createDefaultFileProcessor(logger)
+const registry = new DataGeneratorRegistry()
+registry.registerGenerator(
+  'faker',
+  new GeneratorFaker({ generatorRegistry: registry, name: 'faker', logger })
+)
+const writer: InterfaceWriter = {
+  logger,
+  async before() {},
+  async write(tc) {
+    console.log(tc.tableName, tc.name)
+  },
+  async after() {}
+}
 
 // Load and process
 await fileProcessor.load('resources/tests.xlsx')
+const tables = Object.fromEntries(
+  fileProcessor.tables.map((t) => [t.tableName, t])
+)
 
 const processor = new TestcaseProcessor({
   logger,
   generatorRegistry: registry,
-  writer
+  writer: [writer],
+  tables
 })
-processor.tables = fileProcessor.tables
 
 await processor.process()
 ```
@@ -118,13 +136,13 @@ await processor.process()
 Filters can be registered on the processor to include or exclude test cases based on their tags.
 
 ```typescript
-const processor = new TestcaseProcessor({ logger, generatorRegistry, writer })
+const processor = new TestcaseProcessor({ logger, generatorRegistry, writer: [writer], tables })
 
 // Only process test cases tagged with 'smoke'
-processor.registerFilter(new SimpleArrayFilterProcessor('include', ','))
+processor.addFilterProcessor(new SimpleArrayFilterProcessor({ name: 'include', delimiter: ',' }))
 
 // Skip test cases tagged with 'slow'
-processor.registerFilter(new SimpleArrayIgnoreFilterProcessor('exclude', ','))
+processor.addFilterProcessor(new SimpleArrayIgnoreFilterProcessor({ name: 'exclude', delimiter: ',' }))
 ```
 
 ---
@@ -185,15 +203,27 @@ class ConsoleWriter extends InterfaceWriter {
 The processor accepts an array of writers. All writers receive every test case.
 
 ```typescript
-import { TestcaseProcessor } from '@xhubio/nanook-table'
+import fs from 'node:fs/promises'
+import path from 'node:path'
+import { TestcaseProcessor, type InterfaceWriter } from '@xhubio/nanook-table'
 
-const jsonWriter = createDefaultWriter(logger)
-const consoleWriter = [new ConsoleWriter({ logger })]
+const jsonWriter: InterfaceWriter = {
+  logger,
+  async before() {},
+  async write(tc) {
+    const dir = path.join('tdg', tc.name)
+    await fs.mkdir(dir, { recursive: true })
+    await fs.writeFile(path.join(dir, 'testcaseData.json'), JSON.stringify(tc, null, 2))
+  },
+  async after() {}
+}
+const consoleWriter = new ConsoleWriter({ logger })
 
 const processor = new TestcaseProcessor({
   logger,
   generatorRegistry: registry,
-  writer: [...jsonWriter, ...consoleWriter]
+  writer: [jsonWriter, consoleWriter],
+  tables
 })
 ```
 
@@ -296,21 +326,32 @@ These convenience functions create pre-configured instances with sensible defaul
 
 ### createDefaultGeneratorRegistry()
 
-Creates a `DataGeneratorRegistry` with `GeneratorFaker` already registered under the name `'GeneratorFaker'`.
+Creates an empty `DataGeneratorRegistry`. No generator is registered, not even `GeneratorFaker`: register every generator your tables call yourself.
 
 ```typescript
-import { createDefaultGeneratorRegistry } from '@xhubio/nanook-table'
+import {
+  createDefaultGeneratorRegistry,
+  GeneratorFaker
+} from '@xhubio/nanook-table'
 
 const registry = createDefaultGeneratorRegistry()
-// registry.getGenerator('GeneratorFaker') is available
 
-// Add your own generators
-registry.registerGenerator('myGenerator', new MyGenerator({ logger }))
+// The registry is empty; register what your tables use
+registry.registerGenerator(
+  'faker',
+  new GeneratorFaker({ generatorRegistry: registry, name: 'faker', logger })
+)
+registry.registerGenerator(
+  'myGenerator',
+  new MyGenerator({ generatorRegistry: registry, name: 'myGenerator', logger })
+)
 ```
 
 ### createDefaultWriter(logger: LoggerInterface): InterfaceWriter[]
 
 Creates an array containing the default JSON file writer. This writer outputs one JSON file per test case into a `tdg/` directory.
+
+**Note (3.x):** the default writer's `before()` and `after()` throw `Method not implemented`, and `TestcaseProcessor.process()` calls `before()` on every writer. A processor using `createDefaultWriter()` therefore fails before the first test case. Use your own writer instead; see [Create a Custom Writer](https://github.com/xhubio/nanook-table/blob/master/docs/tutorials/create-writer.md) or the inline writer in the example above.
 
 ```typescript
 import { createDefaultWriter, LoggerMemory } from '@xhubio/nanook-table'

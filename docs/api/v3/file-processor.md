@@ -4,11 +4,12 @@ Source: https://nanook.xhub.io/docs/api/v3/file-processor
 
 API reference · Nanook 3.x
 
-Generated on 2026-10-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `0f6e869ea6c0` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
+Generated on 2026-10-02 from [docs/api/file-processor.md](https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md) in the repository (commit `e17c1ea349f5` of 2026-10-02) by `tools/build-api-v3.py`. The text is the repository's, not edited here. Known deviations from the published package 3.1.3:
 
-- `tables` is a required constructor option of `TestcaseProcessor`, keyed by table name (honoured by the constructor since 2.1.4); the samples assign the array from `fileProcessor.tables` after construction, and every `ref:` then fails
-- `createDefaultGeneratorRegistry()` returns an empty registry; the processor and data generator pages say `GeneratorFaker` is already registered. Register it yourself
-- the writer from `createDefaultWriter()` throws `Method not implemented` in `before()`, so the processor example stops before the first table. Use your own writer
+- `InterfaceWriter` is an interface, not a class: implement it, do not extend or construct it; the test case type is `TestcaseDataInterface`
+- `SimpleArrayFilterProcessor` and `SimpleArrayIgnoreFilterProcessor` take an options object (`{ name, delimiter }`), not positional arguments; `createDefaultFileProcessor()` is synchronous
+- generators implement `doGenerate(request)` and are called as `generate(request)`, not with `(instanceId, testcase, directive)`
+- the generator directive is `gen:<instanceIdSuffix>:<generatorName>:<config>`, not `gen:name(suffix):config`; the faker config is a plain path, not JSON (`gen::faker:person.firstName`)
 
 The file processor module handles loading spreadsheet files and parsing their sheets into table models. It includes the importer abstraction, individual parsers for each table type, and the specification-to-decision converter with its rule converter plugin system.
 
