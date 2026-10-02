@@ -1,22 +1,28 @@
 User-agent: *
 Allow: /
 Disallow: /en/
+Disallow: /prds/
 
 # AI Search Crawlers — explicitly allowed
 User-agent: GPTBot
 Allow: /
+Disallow: /prds/
 
 User-agent: OAI-SearchBot
 Allow: /
+Disallow: /prds/
 
 User-agent: ChatGPT-User
 Allow: /
+Disallow: /prds/
 
 User-agent: ClaudeBot
 Allow: /
+Disallow: /prds/
 
 User-agent: PerplexityBot
 Allow: /
+Disallow: /prds/
 
 # Block AI training crawlers (not search)
 User-agent: CCBot
