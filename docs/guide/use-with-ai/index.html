@@ -8,13 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="generator" content="Docusaurus" />
   <meta name="description"
-    content="Give Claude Code, Cursor, Codex or Copilot what it needs to write Nanook tables and test data scripts: the skill, an AGENTS.md rules block, docs as plain text." />
+    content="Give Claude Code, Cursor, Codex or Copilot what it needs to write Nanook tables and test data scripts: the skills, an AGENTS.md rules block, docs as plain text." />
   <meta name="docsearch:language" content="en" />
   <meta property="og:title" content="Use Nanook with AI agents · Nanook" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://nanook.xhub.io/docs/guide/use-with-ai" />
   <meta property="og:description"
-    content="Give Claude Code, Cursor, Codex or Copilot what it needs to write Nanook tables and test data scripts: the skill, an AGENTS.md rules block, docs as plain text." />
+    content="Give Claude Code, Cursor, Codex or Copilot what it needs to write Nanook tables and test data scripts: the skills, an AGENTS.md rules block, docs as plain text." />
   <meta property="og:image" content="https://nanook.xhub.io/img/logo.svg" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:image" content="https://nanook.xhub.io/img/logo.svg" />
@@ -254,13 +254,16 @@
             <article>
               <div><span>
                   <p>A coding agent can draft a Nanook table and the script that turns it into test data. It does
-                    that well when it has three things: a skill that knows how a decision table is built, a few rules
-                    that keep the generation script correct, and the documentation as plain text. This page lists
+                    that well when it has three things: skills that know how a decision table is built and how test data
+                    comes out of it, a few rules that keep the generation script correct, and the documentation as
+                    plain text. This page lists
                     all three for Claude Code and for other agents. None of it replaces checking what the agent
                     produced; the last section says how.</p>
-                  <h2><a class="anchor" aria-hidden="true" id="claude-code"></a><a href="#claude-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1 · Claude Code: the skill</h2>
+                  <h2><a class="anchor" aria-hidden="true" id="claude-code"></a><a href="#claude-code" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>1 · Claude Code: the skills</h2>
                   <p>Since skill version 0.2.0 the skill <code>create-equivalence-class-table</code> ships as a
-                    Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code:</p>
+                    Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code (already
+                    installed? <code>/plugin marketplace update nanook</code> and <code>/plugin update nanook@nanook</code>
+                    bring the second skill below):</p>
                   <pre><code class="hljs">/plugin marketplace add xhubio/nanook-table
 /plugin install nanook@nanook
 </code></pre>
@@ -277,18 +280,32 @@ claude
                     watch for is on <a href="/docs/quickstart/claude-code">Quickstart with Claude Code</a>. Without the
                     plugin, copy the skill from the package (any version after 3.0.1):
                     <code>mkdir -p .claude/skills &amp;&amp; cp -r node_modules/@xhubio/nanook-table/skills/create-equivalence-class-table .claude/skills/</code>.</p>
-                  <h2><a class="anchor" aria-hidden="true" id="other-agents"></a><a href="#other-agents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2 · Other agents</h2>
-                  <p>The skill is a plain folder with a <code>SKILL.md</code> in the
-                    <a href="https://agentskills.io" target="_blank" rel="noreferrer noopener">Agent Skills</a> format.
-                    One command installs it for Codex, Cursor, GitHub Copilot, Gemini CLI and other agents that read
-                    that format:</p>
-                  <pre><code class="hljs">npx skills add xhubio/nanook-table --skill create-equivalence-class-table
+                  <p>The second skill, <code>generate-test-data</code> (in the plugin since skill version 0.4.0,
+                    in the npm package since Nanook 3.2.0; use 3.2.1 or later), starts from a table that already
+                    exists: drafted by the first skill, built by hand or taken over from an older project. It needs no
+                    <code>exceljs</code>:</p>
+                  <pre><code class="hljs">/nanook:generate-test-data resources/login-tests.xlsx
 </code></pre>
-                  <p>The skill is listed on <a href="https://skills.sh/xhubio/nanook-table" target="_blank"
+                  <p>It first runs <code>inspect-workbook.mts</code>, which reads the workbook with Nanook&rsquo;s own
+                    parser and reports the minimum number of test cases, every generator the table calls but nobody
+                    registers, broken references and filters. Then it resolves the missing generators with you (fix the
+                    cell, reuse one from the project, or write one), generates one
+                    JSON per test case with <code>generate-fixtures.mts</code>, compares the count with that minimum
+                    and reads the fixtures into Vitest or Playwright tests. Without the plugin:
+                    <code>cp -r node_modules/@xhubio/nanook-table/skills/generate-test-data .claude/skills/</code>.</p>
+                  <h2><a class="anchor" aria-hidden="true" id="other-agents"></a><a href="#other-agents" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>2 · Other agents</h2>
+                  <p>Each skill is a plain folder with a <code>SKILL.md</code> in the
+                    <a href="https://agentskills.io" target="_blank" rel="noreferrer noopener">Agent Skills</a> format.
+                    One command per skill installs it for Codex, Cursor, GitHub Copilot, Gemini CLI and other agents
+                    that read that format:</p>
+                  <pre><code class="hljs">npx skills add xhubio/nanook-table --skill create-equivalence-class-table
+npx skills add xhubio/nanook-table --skill generate-test-data
+</code></pre>
+                  <p>The skills are listed on <a href="https://skills.sh/xhubio/nanook-table" target="_blank"
                     rel="noreferrer noopener">skills.sh</a>, the directory behind that command.
-                    Without <code>--skill</code> the command also offers the repository&rsquo;s own development
-                    skills. We have run the skill in Claude Code only and checked the install for Codex, so treat
-                    other agents as untested. The rules block in the next section does not depend on skills and works
+                    We have run them in Claude Code only (the second one step by step in a test project, not yet in
+                    a full agent run) and checked the install of the first one for Codex, so treat other agents as
+                    untested. The rules block in the next section does not depend on skills and works
                     in any agent that reads <code>AGENTS.md</code>.</p>
                   <h2><a class="anchor" aria-hidden="true" id="agents-md"></a><a href="#agents-md" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>3 · A rules block for AGENTS.md</h2>
                   <p><a href="https://agents.md" target="_blank" rel="noreferrer noopener"><code>AGENTS.md</code></a>
@@ -348,11 +365,14 @@ Test cases are defined in XLSX workbooks and turned into test data with
                   </ul>
                   <h2><a class="anchor" aria-hidden="true" id="check-the-result"></a><a href="#check-the-result" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>5 · Check what the agent produced</h2>
                   <p>An agent that writes a table and a script will report success. Two checks catch most of what
-                    goes wrong. First, open the workbook: if the skill built it, its summary row shows the coverage per sheet. Second,
+                    goes wrong. First, open the workbook: if <code>create-equivalence-class-table</code> built it, its summary row shows the coverage per sheet. Second,
                     count: the script must report one test case per test-case column, plus one for every extra
                     element of a range reference. Fewer means a generator failed on the way, and Nanook logs that
                     and keeps going. The quickstart explains the count under
-                    <a href="/docs/quickstart/claude-code#generate-the-test-data">Generate the test data</a>.</p>
+                    <a href="/docs/quickstart/claude-code#generate-the-test-data">Generate the test data</a>. For a
+                    table you already have, <code>inspect-workbook.mts</code> from the second skill prints the minimum
+                    per table before anything is generated (executed columns times Multiplicity) and marks the columns
+                    a range reference adds to.</p>
                   <h2><a class="anchor" aria-hidden="true" id="not-yet"></a><a href="#not-yet" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Not yet</h2>
                   <p>There is no Nanook MCP server yet. An agent with a terminal does not need one: it runs the
                     generation script itself.</p>
@@ -375,7 +395,7 @@ Test cases are defined in XLSX workbooks and turned into test data with
       </div>
       <nav class="onPageNav">
         <ul class="toc-headings">
-          <li><a href="#claude-code">1 · Claude Code: the skill</a></li>
+          <li><a href="#claude-code">1 · Claude Code: the skills</a></li>
           <li><a href="#other-agents">2 · Other agents</a></li>
           <li><a href="#agents-md">3 · A rules block for AGENTS.md</a></li>
           <li><a href="#docs-as-text">4 · The docs as plain text</a></li>

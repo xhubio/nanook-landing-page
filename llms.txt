@@ -8,7 +8,7 @@ The docs pages below (Documentation except the hub, Tutorials, and the 3.x API r
 - [Documentation Hub](https://nanook.xhub.io/docs): Entry page linking quickstart, guide, tutorials, modules, and API reference
 - [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): Introduction to creating an equivalence class table and generating test data from it
 - [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code): Install the skill as a Claude Code plugin, let Claude Code draft the decision table, generate the data with Nanook
-- [Use with AI agents](https://nanook.xhub.io/docs/guide/use-with-ai): The skill, a rules block for AGENTS.md, and the docs as plain text for Claude Code, Cursor, Codex, Copilot and other agents
+- [Use with AI agents](https://nanook.xhub.io/docs/guide/use-with-ai): The skills, a rules block for AGENTS.md, and the docs as plain text for Claude Code, Cursor, Codex, Copilot and other agents
 - [General Overview](https://nanook.xhub.io/docs/guide/generalOverview): Architecture and concepts of Nanook Table
 - [Equivalence Class Tables](https://nanook.xhub.io/docs/guide/equivalence/overview): How to define test cases using equivalence classes
 - [Matrix Tables](https://nanook.xhub.io/docs/guide/matrix/overview): Pairwise or combinatorial relationships between two dimensions of test parameters
@@ -58,7 +58,8 @@ The docs pages below (Documentation except the hub, Tutorials, and the 3.x API r
 - Built-in Faker generator (@faker-js/faker); custom generators extend DataGeneratorBase
 - Writes one JSON file per test case by default; any other format (CSV, database, API) through a custom writer
 - Tag-based filters select which test cases are processed
-- Claude Code skill create-equivalence-class-table (since 2.1.0; version 0.3.0, in English, ships as a plugin from the GitHub repository, listed on skills.sh and Context7): plugin via /plugin marketplace add xhubio/nanook-table and /plugin install nanook@nanook (invoked as /nanook:create-equivalence-class-table); for other agents npx skills add xhubio/nanook-table --skill create-equivalence-class-table; also in the npm package under skills/ (versions after 3.0.1), the slash command /createEquivalenceClassTable under .claude/commands/
+- Claude Code skill create-equivalence-class-table (since 2.1.0; in English, ships as a plugin from the GitHub repository, listed on skills.sh and Context7): plugin via /plugin marketplace add xhubio/nanook-table and /plugin install nanook@nanook (invoked as /nanook:create-equivalence-class-table); for other agents npx skills add xhubio/nanook-table --skill create-equivalence-class-table; also in the npm package under skills/ (versions after 3.0.1), the slash command /createEquivalenceClassTable under .claude/commands/
+- Claude Code skill generate-test-data (since 3.2.0, same plugin): starts from an existing workbook, checks it with inspect-workbook.mts (minimum test case count, unregistered generators, broken references), writes missing generators, generates one JSON per test case and wires the fixtures into Vitest or Playwright tests; invoked as /nanook:generate-test-data, for other agents npx skills add xhubio/nanook-table --skill generate-test-data
 - A rules block for a project's AGENTS.md (Codex, Cursor, Copilot; Claude Code via @AGENTS.md in CLAUDE.md) is on https://nanook.xhub.io/docs/guide/use-with-ai; there is no Nanook MCP server yet
 - Used by Deutsche Bahn and other enterprises
 - Published by BeeBack UG (haftungsbeschränkt), xhub.io

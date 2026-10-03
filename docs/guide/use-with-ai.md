@@ -2,11 +2,11 @@
 
 Source: https://nanook.xhub.io/docs/guide/use-with-ai
 
-A coding agent can draft a Nanook table and the script that turns it into test data. It does that well when it has three things: a skill that knows how a decision table is built, a few rules that keep the generation script correct, and the documentation as plain text. This page lists all three for Claude Code and for other agents. None of it replaces checking what the agent produced; the last section says how.
+A coding agent can draft a Nanook table and the script that turns it into test data. It does that well when it has three things: skills that know how a decision table is built and how test data comes out of it, a few rules that keep the generation script correct, and the documentation as plain text. This page lists all three for Claude Code and for other agents. None of it replaces checking what the agent produced; the last section says how.
 
-## 1 · Claude Code: the skill
+## 1 · Claude Code: the skills
 
-Since skill version 0.2.0 the skill `create-equivalence-class-table` ships as a Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code:
+Since skill version 0.2.0 the skill `create-equivalence-class-table` ships as a Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code (already installed? `/plugin marketplace update nanook` and `/plugin update nanook@nanook` bring the second skill below):
 
 ```
 /plugin marketplace add xhubio/nanook-table
@@ -24,15 +24,24 @@ claude
 
 The skill copies two scripts into your project: `check-classes.mts` recounts the coverage and reports every class without a test case of its own, `generate-fixtures.mts` runs Nanook and writes one JSON per test case. What a run produces, how long it took and what to watch for is on [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code). Without the plugin, copy the skill from the package (any version after 3.0.1): `mkdir -p .claude/skills && cp -r node_modules/@xhubio/nanook-table/skills/create-equivalence-class-table .claude/skills/`.
 
+The second skill, `generate-test-data` (in the plugin since skill version 0.4.0, in the npm package since Nanook 3.2.0; use 3.2.1 or later), starts from a table that already exists: drafted by the first skill, built by hand or taken over from an older project. It needs no `exceljs`:
+
+```
+/nanook:generate-test-data resources/login-tests.xlsx
+```
+
+It first runs `inspect-workbook.mts`, which reads the workbook with Nanook’s own parser and reports the minimum number of test cases, every generator the table calls but nobody registers, broken references and filters. Then it resolves the missing generators with you (fix the cell, reuse one from the project, or write one), generates one JSON per test case with `generate-fixtures.mts`, compares the count with that minimum and reads the fixtures into Vitest or Playwright tests. Without the plugin: `cp -r node_modules/@xhubio/nanook-table/skills/generate-test-data .claude/skills/`.
+
 ## 2 · Other agents
 
-The skill is a plain folder with a `SKILL.md` in the [Agent Skills](https://agentskills.io) format. One command installs it for Codex, Cursor, GitHub Copilot, Gemini CLI and other agents that read that format:
+Each skill is a plain folder with a `SKILL.md` in the [Agent Skills](https://agentskills.io) format. One command per skill installs it for Codex, Cursor, GitHub Copilot, Gemini CLI and other agents that read that format:
 
 ```
 npx skills add xhubio/nanook-table --skill create-equivalence-class-table
+npx skills add xhubio/nanook-table --skill generate-test-data
 ```
 
-The skill is listed on [skills.sh](https://skills.sh/xhubio/nanook-table), the directory behind that command. Without `--skill` the command also offers the repository’s own development skills. We have run the skill in Claude Code only and checked the install for Codex, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
+The skills are listed on [skills.sh](https://skills.sh/xhubio/nanook-table), the directory behind that command. We have run them in Claude Code only (the second one step by step in a test project, not yet in a full agent run) and checked the install of the first one for Codex, so treat other agents as untested. The rules block in the next section does not depend on skills and works in any agent that reads `AGENTS.md`.
 
 ## 3 · A rules block for AGENTS.md
 
@@ -79,7 +88,7 @@ For a chat window, an agent that fetches URLs, or one with an MCP server for doc
 
 ## 5 · Check what the agent produced
 
-An agent that writes a table and a script will report success. Two checks catch most of what goes wrong. First, open the workbook: if the skill built it, its summary row shows the coverage per sheet. Second, count: the script must report one test case per test-case column, plus one for every extra element of a range reference. Fewer means a generator failed on the way, and Nanook logs that and keeps going. The quickstart explains the count under [Generate the test data](https://nanook.xhub.io/docs/quickstart/claude-code#generate-the-test-data).
+An agent that writes a table and a script will report success. Two checks catch most of what goes wrong. First, open the workbook: if `create-equivalence-class-table` built it, its summary row shows the coverage per sheet. Second, count: the script must report one test case per test-case column, plus one for every extra element of a range reference. Fewer means a generator failed on the way, and Nanook logs that and keeps going. The quickstart explains the count under [Generate the test data](https://nanook.xhub.io/docs/quickstart/claude-code#generate-the-test-data). For a table you already have, `inspect-workbook.mts` from the second skill prints the minimum per table before anything is generated (executed columns times Multiplicity) and marks the columns a range reference adds to.
 
 ## Not yet
 
