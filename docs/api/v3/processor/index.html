@@ -64,22 +64,24 @@
         <h1>Processor</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor" aria-current="page">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md">docs/api/processor.md</a> in the
-        repository (commit <code>e17c1ea349f5</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.1.3:</p>
-      <ul class="provenance"><li><code>InterfaceWriter</code> is an interface, not a class: implement it, do not extend or construct it; the test case type is <code>TestcaseDataInterface</code></li><li><code>SimpleArrayFilterProcessor</code> and <code>SimpleArrayIgnoreFilterProcessor</code> take an options object (<code>{ name, delimiter }</code>), not positional arguments; <code>createDefaultFileProcessor()</code> is synchronous</li><li>generators implement <code>doGenerate(request)</code> and are called as <code>generate(request)</code>, not with <code>(instanceId, testcase, directive)</code></li><li>the generator directive is <code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code>, not <code>gen:name(suffix):config</code>; the faker config is a plain path, not JSON (<code>gen::faker:person.firstName</code>)</li></ul>
+      <p class="provenance">Generated on 2026-10-03 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/processor.md">docs/api/processor.md</a> in the
+        repository (commit <code>f26b8022e0f8</code> of 2026-10-03) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. The samples with imports type-check against the published package 3.3.1; no known deviations.</p>
 <p>The processor module contains the main orchestrator
 (<code>TestcaseProcessor</code>), the writer interface, filter
 implementations, and factory functions for quick setup.</p>
 <pre class="typescript"><code>import {
   TestcaseProcessor,
-  InterfaceWriter,
-  FilterProcessorInterface,
   SimpleArrayFilterProcessor,
   SimpleArrayIgnoreFilterProcessor,
   createDefaultGeneratorRegistry,
   createDefaultWriter,
   createDefaultFileProcessor
+} from &#39;@xhubio/nanook-table&#39;
+import type {
+  InterfaceWriter,
+  FilterProcessorInterface,
+  TestcaseDataInterface
 } from &#39;@xhubio/nanook-table&#39;</code></pre>
 <hr />
 <h2 id="testcaseprocessor">TestcaseProcessor</h2>
@@ -126,6 +128,18 @@ results to writers.</p>
 <code>FileProcessor.tables</code> is an array, so convert it:
 <code>Object.fromEntries(fileProcessor.tables.map((t) =&gt; [t.tableName, t]))</code></td>
 </tr>
+<tr>
+<td><code>writeStaticData</code></td>
+<td><code>(testcaseData, directives) =&gt; void</code></td>
+<td>Optional. Writes the static cell values into the test case data.
+Replace it only to change how static values are stored</td>
+</tr>
+<tr>
+<td><code>writeMetaData</code></td>
+<td><code>(testcaseData, directives) =&gt; void</code></td>
+<td>Optional. Writes the MultiRowSection rows
+(<code>{ key, comment, other }</code>) into the test case data</td>
+</tr>
 </tbody>
 </table></div>
 <h3 id="properties">Properties</h3>
@@ -159,22 +173,26 @@ point that runs the full generation pipeline.</p>
 <li>Call <code>loadStore()</code> on the generator registry (loads all
 generator stores)</li>
 <li>Call <code>before()</code> on each writer</li>
-<li>For each table in <code>tables</code>: a. For each executable test
-case in the table:
+<li>For each table in <code>tables</code>: a. For each test case column
+with a true Execute value (once per Multiplicity):
 <ul>
-<li>Create directives from the test case definition</li>
+<li>Build the node tree from the references; a range reference gives one
+test case per element</li>
+<li>Skip the test case if a referenced test case has NeverExecute, or if
+the filters of the column reject the tags of its call tree (see
+<code>addFilterProcessor()</code>)</li>
 <li>Execute static directives (write literal values)</li>
-<li>Execute reference directives (resolve cross-table references)</li>
-<li>Execute generator directives in order:
+<li>Execute reference and generator directives, retrying the ones that
+cannot be resolved yet:
 <ul>
-<li>Call <code>generate()</code> on the appropriate generator</li>
+<li>Call <code>generate()</code> on the appropriate generator, unless
+the column's GeneratorSwitchSection switches that generator off</li>
 <li>Retry generators that return <code>undefined</code> (dependency not
 yet available)</li>
 <li>Call <code>createPostProcessDirectives()</code> after each generator
-succeeds</li>
+returned a value</li>
 </ul></li>
 <li>Execute all post-process directives (sorted by order)</li>
-<li>Apply filters</li>
 <li>Call <code>write()</code> on each writer with the completed test
 case data</li>
 </ul></li>
@@ -182,26 +200,26 @@ case data</li>
 <li>Call <code>saveStore()</code> on the generator registry (persists
 all generator stores)</li>
 </ol>
+<p>Nanook does not throw for a failed generator or an unresolved
+reference: it logs the error and goes on. Check
+<code>logger.entries.error</code> after <code>process()</code>, and
+compare the number of written test cases with the number of executed
+columns.</p>
 <h3 id="example">Example</h3>
 <pre class="typescript"><code>import {
   LoggerMemory,
   TestcaseProcessor,
   createDefaultFileProcessor,
-  DataGeneratorRegistry,
-  GeneratorFaker,
+  createDefaultGeneratorRegistry,
   type InterfaceWriter
 } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
 logger.writeConsole = true
 
-// Set up components
+// Set up components; the default registry already holds &#39;faker&#39;
 const fileProcessor = createDefaultFileProcessor(logger)
-const registry = new DataGeneratorRegistry()
-registry.registerGenerator(
-  &#39;faker&#39;,
-  new GeneratorFaker({ generatorRegistry: registry, name: &#39;faker&#39;, logger })
-)
+const registry = createDefaultGeneratorRegistry(logger)
 const writer: InterfaceWriter = {
   logger,
   async before() {},
@@ -227,21 +245,30 @@ const processor = new TestcaseProcessor({
 await processor.process()</code></pre>
 <h3 id="registering-filters">Registering Filters</h3>
 <p>Filters can be registered on the processor to include or exclude test
-cases based on their tags.</p>
+cases based on their tags. A row of the FilterSection names a filter
+processor; the processor must be registered under that name, or the
+filter is ignored and an error is logged. Only the filters of the
+executed column count, not those of referenced test cases; several
+filters must all pass, and a test case without tags passes.</p>
 <pre class="typescript"><code>const processor = new TestcaseProcessor({ logger, generatorRegistry, writer: [writer], tables })
 
-// Only process test cases tagged with &#39;smoke&#39;
+// FilterSection rows named &#39;include&#39;: keep a test case if one of its tags is in the expression
 processor.addFilterProcessor(new SimpleArrayFilterProcessor({ name: &#39;include&#39;, delimiter: &#39;,&#39; }))
 
-// Skip test cases tagged with &#39;slow&#39;
+// FilterSection rows named &#39;exclude&#39;: drop a test case if one of its tags is in the expression
 processor.addFilterProcessor(new SimpleArrayIgnoreFilterProcessor({ name: &#39;exclude&#39;, delimiter: &#39;,&#39; }))</code></pre>
 <hr />
 <h2 id="interfacewriter">InterfaceWriter</h2>
-<p>Abstract base class for writers. A writer receives fully generated
+<p>The interface every writer implements (a type, not a class: implement
+it, do not extend or construct it). A writer receives fully generated
 test case data and writes it to some output destination (files,
 database, console, etc.).</p>
-<h3 id="constructor-1">Constructor</h3>
-<pre class="typescript"><code>new InterfaceWriter({ logger }: { logger: LoggerInterface })</code></pre>
+<pre class="typescript"><code>interface InterfaceWriter {
+  logger: LoggerInterface
+  before(): Promise&lt;void&gt;
+  write(testcaseData: TestcaseDataInterface): Promise&lt;void&gt;
+  after(): Promise&lt;void&gt;
+}</code></pre>
 <h3 id="methods-1">Methods</h3>
 <h4
 id="async-before-promisevoid"><code>async before(): Promise&lt;void&gt;</code></h4>
@@ -249,23 +276,54 @@ id="async-before-promisevoid"><code>async before(): Promise&lt;void&gt;</code></
 this for initialization (creating output directories, opening database
 connections, writing file headers, etc.).</p>
 <h4
-id="async-writetestcasedata-testcasedata-promisevoid"><code>async write(testcaseData: TestcaseData): Promise&lt;void&gt;</code></h4>
-<p>Called once for each generated test case. The
-<code>testcaseData</code> object contains all generated field values,
-metadata, tags, and filter results.</p>
+id="async-writetestcasedata-testcasedatainterface-promisevoid"><code>async write(testcaseData: TestcaseDataInterface): Promise&lt;void&gt;</code></h4>
+<p>Called once for each generated test case, with a copy of the test
+case data:</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>Field</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><code>testcaseData</code></td>
-<td><code>TestcaseData</code></td>
-<td>The fully populated test case data object</td>
+<td><code>tableName</code></td>
+<td><code>string</code></td>
+<td>The table of the executed column</td>
+</tr>
+<tr>
+<td><code>name</code></td>
+<td><code>string</code></td>
+<td>The test case name; <code>-1</code>, <code>-2</code>, … for the
+elements of a range reference, <code>.1</code>, <code>.2</code>, … with
+Multiplicity</td>
+</tr>
+<tr>
+<td><code>instanceId</code></td>
+<td><code>string</code></td>
+<td>The instance of the test case; its own record is
+<code>data[tableName][instanceId]</code></td>
+</tr>
+<tr>
+<td><code>data</code></td>
+<td><code>Record&lt;string, Record&lt;string, Record&lt;string, any&gt;&gt;&gt;</code></td>
+<td>The records, keyed by table name and instance ID; referenced records
+are under their own table</td>
+</tr>
+<tr>
+<td><code>callTree</code></td>
+<td><code>CallTreeInterface</code></td>
+<td>The tree of referenced test cases, with <code>instanceId</code>,
+<code>tableName</code>, <code>testcaseName</code>,
+<code>neverExecute</code>, <code>tags</code> and
+<code>children</code></td>
+</tr>
+<tr>
+<td><code>postProcessDirectives</code></td>
+<td><code>GeneratorDirectiveInterface[]</code></td>
+<td>Empty by the time the writer gets the data</td>
 </tr>
 </tbody>
 </table></div>
@@ -274,15 +332,24 @@ id="async-after-promisevoid"><code>async after(): Promise&lt;void&gt;</code></h4
 <p>Called once after all test cases have been processed. Use this for
 cleanup (closing files, finalizing output, writing summaries, etc.).</p>
 <h3 id="custom-writer-example">Custom Writer Example</h3>
-<pre class="typescript"><code>import { InterfaceWriter } from &#39;@xhubio/nanook-table&#39;
-import type { TestcaseData } from &#39;@xhubio/nanook-table&#39;
+<pre class="typescript"><code>import type {
+  InterfaceWriter,
+  LoggerInterface,
+  TestcaseDataInterface
+} from &#39;@xhubio/nanook-table&#39;
 
-class ConsoleWriter extends InterfaceWriter {
+class ConsoleWriter implements InterfaceWriter {
+  logger: LoggerInterface
+
+  constructor(opts: { logger: LoggerInterface }) {
+    this.logger = opts.logger
+  }
+
   async before(): Promise&lt;void&gt; {
     console.log(&#39;--- Start of test data ---&#39;)
   }
 
-  async write(testcaseData: TestcaseData): Promise&lt;void&gt; {
+  async write(testcaseData: TestcaseDataInterface): Promise&lt;void&gt; {
     const name = testcaseData.name
     console.log(`Test case: ${name}`)
     console.log(JSON.stringify(testcaseData.data, null, 2))
@@ -295,7 +362,8 @@ class ConsoleWriter extends InterfaceWriter {
 <h3 id="using-multiple-writers">Using Multiple Writers</h3>
 <p>The processor accepts an array of writers. All writers receive every
 test case.</p>
-<pre class="typescript"><code>import fs from &#39;node:fs/promises&#39;
+<pre class="typescript"><code>// continues the examples above: logger, registry, tables and ConsoleWriter
+import fs from &#39;node:fs/promises&#39;
 import path from &#39;node:path&#39;
 import { TestcaseProcessor, type InterfaceWriter } from &#39;@xhubio/nanook-table&#39;
 
@@ -319,9 +387,9 @@ const processor = new TestcaseProcessor({
 })</code></pre>
 <hr />
 <h2 id="filterprocessorinterface">FilterProcessorInterface</h2>
-<p>Abstract interface for filter processors. Filters are used to include
-or exclude test cases from processing based on their tags and a filter
-expression.</p>
+<p>The interface for filter processors (a type). Filters are used to
+include or exclude test cases from processing based on their tags and a
+filter expression.</p>
 <h3 id="properties-1">Properties</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -335,8 +403,8 @@ expression.</p>
 <tr>
 <td><code>name</code></td>
 <td><code>string</code></td>
-<td>The name of this filter processor. Matches the filter name used in
-the spreadsheet's FilterSection</td>
+<td>The name of this filter processor. Matches the processor name in a
+row of the spreadsheet's FilterSection</td>
 </tr>
 </tbody>
 </table></div>
@@ -356,7 +424,8 @@ id="filtertags-string-expression-string-boolean"><code>filter(tags: string[], ex
 <tr>
 <td><code>tags</code></td>
 <td><code>string[]</code></td>
-<td>All tags defined on the test case</td>
+<td>All tags of the test case's call tree: its own and those of every
+referenced test case</td>
 </tr>
 <tr>
 <td><code>expression</code></td>
@@ -373,13 +442,14 @@ skipped.</p>
 <p>An include filter. Splits the expression by a delimiter and checks
 whether any of the resulting values exist in the test case's tags. If a
 match is found, the test case is processed.</p>
-<h3 id="constructor-2">Constructor</h3>
-<pre class="typescript"><code>new SimpleArrayFilterProcessor(name: string, delimiter: string)</code></pre>
+<h3 id="constructor-1">Constructor</h3>
+<pre class="typescript"><code>new SimpleArrayFilterProcessor(options?: { name?: string; delimiter?: string })</code></pre>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>Option</th>
 <th>Type</th>
+<th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -387,11 +457,13 @@ match is found, the test case is processed.</p>
 <tr>
 <td><code>name</code></td>
 <td><code>string</code></td>
+<td><code>'SimpleArrayFilter'</code></td>
 <td>The filter name, referenced in the spreadsheet</td>
 </tr>
 <tr>
 <td><code>delimiter</code></td>
 <td><code>string</code></td>
+<td><code>';'</code></td>
 <td>Character used to split the expression into individual values</td>
 </tr>
 </tbody>
@@ -399,7 +471,7 @@ match is found, the test case is processed.</p>
 <h3 id="example-1">Example</h3>
 <pre class="typescript"><code>import { SimpleArrayFilterProcessor } from &#39;@xhubio/nanook-table&#39;
 
-const filter = new SimpleArrayFilterProcessor(&#39;include&#39;, &#39;,&#39;)
+const filter = new SimpleArrayFilterProcessor({ name: &#39;include&#39;, delimiter: &#39;,&#39; })
 
 // Expression &quot;smoke,regression&quot; matches test case with tag &quot;smoke&quot;
 filter.filter([&#39;smoke&#39;, &#39;login&#39;], &#39;smoke,regression&#39;)
@@ -415,13 +487,14 @@ id="simplearrayignorefilterprocessor">SimpleArrayIgnoreFilterProcessor</h2>
 <code>SimpleArrayFilterProcessor</code>. Splits the expression by a
 delimiter and checks whether any of the resulting values exist in the
 test case's tags. If a match is found, the test case is skipped.</p>
-<h3 id="constructor-3">Constructor</h3>
-<pre class="typescript"><code>new SimpleArrayIgnoreFilterProcessor(name: string, delimiter: string)</code></pre>
+<h3 id="constructor-2">Constructor</h3>
+<pre class="typescript"><code>new SimpleArrayIgnoreFilterProcessor(options?: { name?: string; delimiter?: string })</code></pre>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>Option</th>
 <th>Type</th>
+<th>Default</th>
 <th>Description</th>
 </tr>
 </thead>
@@ -429,11 +502,13 @@ test case's tags. If a match is found, the test case is skipped.</p>
 <tr>
 <td><code>name</code></td>
 <td><code>string</code></td>
+<td><code>'SimpleArrayIgnoreFilter'</code></td>
 <td>The filter name, referenced in the spreadsheet</td>
 </tr>
 <tr>
 <td><code>delimiter</code></td>
 <td><code>string</code></td>
+<td><code>';'</code></td>
 <td>Character used to split the expression into individual values</td>
 </tr>
 </tbody>
@@ -441,7 +516,7 @@ test case's tags. If a match is found, the test case is skipped.</p>
 <h3 id="example-2">Example</h3>
 <pre class="typescript"><code>import { SimpleArrayIgnoreFilterProcessor } from &#39;@xhubio/nanook-table&#39;
 
-const filter = new SimpleArrayIgnoreFilterProcessor(&#39;exclude&#39;, &#39;,&#39;)
+const filter = new SimpleArrayIgnoreFilterProcessor({ name: &#39;exclude&#39;, delimiter: &#39;,&#39; })
 
 // Expression &quot;slow,flaky&quot; matches test case with tag &quot;slow&quot; -&gt; excluded
 filter.filter([&#39;slow&#39;, &#39;login&#39;], &#39;slow,flaky&#39;)
@@ -455,49 +530,56 @@ filter.filter([&#39;smoke&#39;, &#39;login&#39;], &#39;slow,flaky&#39;)
 <p>These convenience functions create pre-configured instances with
 sensible defaults. Use them for quick setup.</p>
 <h3
-id="createdefaultgeneratorregistry">createDefaultGeneratorRegistry()</h3>
-<p>Creates an empty <code>DataGeneratorRegistry</code>. No generator is
-registered, not even <code>GeneratorFaker</code>: register every
-generator your tables call yourself.</p>
+id="createdefaultgeneratorregistrylogger-loggerinterface-datageneratorregistry">createDefaultGeneratorRegistry(logger?:
+LoggerInterface): DataGeneratorRegistry</h3>
+<p>Creates a <code>DataGeneratorRegistry</code> with
+<code>GeneratorFaker</code> registered as <code>faker</code>, so cells
+like <code>gen::faker:person.firstName</code> work. Register every other
+generator your tables call. Without <code>logger</code>, the faker
+generator logs to the shared <code>getLoggerMemory()</code>
+instance.</p>
 <pre class="typescript"><code>import {
   createDefaultGeneratorRegistry,
-  GeneratorFaker
+  LoggerMemory
 } from &#39;@xhubio/nanook-table&#39;
 
-const registry = createDefaultGeneratorRegistry()
+const logger = new LoggerMemory()
+const registry = createDefaultGeneratorRegistry(logger)
 
-// The registry is empty; register what your tables use
-registry.registerGenerator(
-  &#39;faker&#39;,
-  new GeneratorFaker({ generatorRegistry: registry, name: &#39;faker&#39;, logger })
-)
+// &#39;faker&#39; is there; register what else your tables use
 registry.registerGenerator(
   &#39;myGenerator&#39;,
   new MyGenerator({ generatorRegistry: registry, name: &#39;myGenerator&#39;, logger })
 )</code></pre>
+<p>Up to 3.2.x the registry was empty and
+<code>registerGenerator()</code> threw for a name already taken. Since
+3.3.0 a registration under a taken name replaces the earlier generator,
+so scripts that register their own <code>faker</code> keep working.</p>
 <h3
-id="createdefaultwriterlogger-loggerinterface-interfacewriter">createDefaultWriter(logger:
-LoggerInterface): InterfaceWriter[]</h3>
-<p>Creates an array containing the default JSON file writer. This writer
-outputs one JSON file per test case into a <code>tdg/</code>
-directory.</p>
-<blockquote>
-<p><strong>Note (3.x):</strong> the default writer's
-<code>before()</code> and <code>after()</code> throw
-<code>Method not implemented</code>, and
-<code>TestcaseProcessor.process()</code> calls <code>before()</code> on
-every writer. A processor using <code>createDefaultWriter()</code>
-therefore fails before the first test case. Use your own writer instead;
-see <a href="https://github.com/xhubio/nanook-table/blob/master/docs/tutorials/create-writer.md">Create a Custom Writer</a>
-or the inline writer in the example above.</p>
-</blockquote>
+id="createdefaultwriterlogger-loggerinterface-dir-string-interfacewriter">createDefaultWriter(logger:
+LoggerInterface, dir?: string): InterfaceWriter[]</h3>
+<p>Creates an array containing the default JSON file writer. It writes
+one file per test case,
+<code>&lt;dir&gt;/&lt;test case name&gt;/testcaseData.json</code>;
+<code>dir</code> defaults to <code>tdg</code>. <code>before()</code>
+creates the directory, <code>write()</code> the folder per test case. It
+does not delete earlier output. The folder is named after the test case
+only: when two tables have a column of the same name (<code>1</code>,
+<code>valid</code>), the second overwrites the first. For more than one
+table, use a writer of your own that puts the table name into the
+path.</p>
 <pre class="typescript"><code>import { createDefaultWriter, LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
-const writers = createDefaultWriter(logger)</code></pre>
+const writers = createDefaultWriter(logger)            // tdg/&lt;test case&gt;/testcaseData.json
+const intoFixtures = createDefaultWriter(logger, &#39;fixtures/login&#39;)</code></pre>
+<p>Up to 3.2.x <code>before()</code> and <code>after()</code> of this
+writer threw <code>Method not implemented</code>, so a processor using
+it failed before the first test case; use your own writer there (see <a
+href="https://github.com/xhubio/nanook-table/blob/master/docs/tutorials/create-writer.md">Create a Custom Writer</a>).</p>
 <h3
-id="createdefaultfileprocessorlogger-loggerinterface-promisefileprocessor">createDefaultFileProcessor(logger:
-LoggerInterface): Promise&lt;FileProcessor&gt;</h3>
+id="createdefaultfileprocessorlogger-loggerinterface-fileprocessor">createDefaultFileProcessor(logger:
+LoggerInterface): FileProcessor</h3>
 <p>Creates a <code>FileProcessor</code> pre-configured with:</p>
 <ul>
 <li><code>ImporterXlsx</code> as the importer</li>
@@ -513,7 +595,7 @@ workbooks keep loading)</li>
 <pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
-const fileProcessor = await createDefaultFileProcessor(logger)
+const fileProcessor = createDefaultFileProcessor(logger)
 await fileProcessor.load(&#39;resources/tests.xlsx&#39;)</code></pre>
 
     </article>

@@ -64,20 +64,22 @@
         <h1>Data generator</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator" aria-current="page">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md">docs/api/data-generator.md</a> in the
-        repository (commit <code>e17c1ea349f5</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.1.3:</p>
-      <ul class="provenance"><li><code>InterfaceWriter</code> is an interface, not a class: implement it, do not extend or construct it; the test case type is <code>TestcaseDataInterface</code></li><li><code>SimpleArrayFilterProcessor</code> and <code>SimpleArrayIgnoreFilterProcessor</code> take an options object (<code>{ name, delimiter }</code>), not positional arguments; <code>createDefaultFileProcessor()</code> is synchronous</li><li>generators implement <code>doGenerate(request)</code> and are called as <code>generate(request)</code>, not with <code>(instanceId, testcase, directive)</code></li><li>the generator directive is <code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code>, not <code>gen:name(suffix):config</code>; the faker config is a plain path, not JSON (<code>gen::faker:person.firstName</code>)</li></ul>
+      <p class="provenance">Generated on 2026-10-03 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/data-generator.md">docs/api/data-generator.md</a> in the
+        repository (commit <code>f26b8022e0f8</code> of 2026-10-03) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. The samples with imports type-check against the published package 3.3.1; no known deviations.</p>
 <p>The data generator module provides the interface and base
 implementation for all data generators. Generators are responsible for
 producing test data values. The processor calls generators based on
 <code>GeneratorDirective</code> entries created from the
 spreadsheet.</p>
 <pre class="typescript"><code>import {
-  DataGeneratorInterface,
   DataGeneratorBase,
   DataGeneratorRegistry,
   GeneratorFaker
+} from &#39;@xhubio/nanook-table&#39;
+import type {
+  DataGeneratorInterface,
+  DataGeneratorGenerateRequest
 } from &#39;@xhubio/nanook-table&#39;</code></pre>
 <h2 id="generator-lifecycle">Generator Lifecycle</h2>
 <p>The processor manages generators through a well-defined
@@ -88,14 +90,25 @@ lifecycle:</p>
    b. createPostProcessDirectives()  -- optionally return additional directives
    c. postProcess()               -- called for each post-process directive
 3. saveStore()                    -- called once at shutdown for each registered generator</code></pre>
-<p>Between test cases, <code>clearContext()</code> may be called to
-reset per-run state while preserving the store.</p>
+<p>Every method that takes data gets one request object,
+<code>DataGeneratorGenerateRequest</code>:</p>
+<pre class="typescript"><code>interface DataGeneratorGenerateRequest {
+  instanceId: string                              // the instance the value belongs to
+  testcaseData?: any                              // the test case being built (TestcaseDataInterface)
+  generatorDirective?: GeneratorDirectiveInterface // the cell: fieldName, config, instanceIdSuffix, ...
+}</code></pre>
+<p><code>generatorDirective.config</code> is everything after the third
+colon of the cell: <code>person.firstName</code> in
+<code>gen::faker:person.firstName</code>.</p>
 <hr />
 <h2 id="datageneratorinterface">DataGeneratorInterface</h2>
-<p>Abstract interface that all data generators must implement. Defines
-the contract between the processor and any generator.</p>
-<h3 id="constructor">Constructor</h3>
-<pre class="typescript"><code>// DataGeneratorOptions, as taken by DataGeneratorBase and GeneratorFaker
+<p>The interface all data generators implement (a type, not a class).
+Defines the contract between the processor and any generator.
+<code>DataGeneratorBase</code> implements it; extend that instead of
+implementing the interface yourself.</p>
+<h3 id="options-datageneratoroptions">Options
+(<code>DataGeneratorOptions</code>)</h3>
+<pre class="typescript"><code>// as taken by the constructors of DataGeneratorBase and GeneratorFaker
 new DataGeneratorBase(options: {
   generatorRegistry: DataGeneratorRegistry
   name: string
@@ -140,15 +153,16 @@ name to <code>registerGenerator()</code></td>
 <td><code>unique</code></td>
 <td><code>boolean</code></td>
 <td><code>false</code></td>
-<td>When <code>true</code>, the generator should return unique values.
-The definition of "unique" is generator-specific</td>
+<td>Stored for the generator's own use. <code>DataGeneratorBase</code>
+does not read it: a generator that must return unique values checks
+<code>uniqueSet</code> itself</td>
 </tr>
 <tr>
 <td><code>maxUniqueTries</code></td>
 <td><code>number</code></td>
 <td><code>20</code></td>
-<td>Maximum attempts to generate a unique value before throwing an
-error</td>
+<td>Stored for the generator's own use; <code>DataGeneratorBase</code>
+does not read it</td>
 </tr>
 <tr>
 <td><code>varDir</code></td>
@@ -193,23 +207,26 @@ error</td>
 <tr>
 <td><code>unique</code></td>
 <td><code>boolean</code></td>
-<td>Whether uniqueness is enforced</td>
+<td>The <code>unique</code> option, for the generator's own use</td>
 </tr>
 <tr>
 <td><code>maxUniqueTries</code></td>
 <td><code>number</code></td>
-<td>Maximum uniqueness retry count</td>
+<td>The <code>maxUniqueTries</code> option, for the generator's own
+use</td>
 </tr>
 <tr>
 <td><code>uniqueSet</code></td>
-<td><code>Set&lt;string&gt;</code></td>
-<td>Stores previously generated values for uniqueness checks</td>
+<td><code>Set&lt;any&gt;</code></td>
+<td>Values a generator has handed out, for its own uniqueness checks.
+Persisted with the store</td>
 </tr>
 <tr>
 <td><code>instanceData</code></td>
 <td><code>Map&lt;string, unknown&gt;</code></td>
-<td>Maps instance IDs to previously generated data. Ensures the same
-instance ID returns the same value</td>
+<td>Maps the cache key (instance ID and parameter, see
+<code>createCacheKey()</code>) to previously generated data. Ensures the
+same instance ID and parameter return the same value</td>
 </tr>
 <tr>
 <td><code>varDir</code></td>
@@ -234,31 +251,39 @@ instance ID returns the same value</td>
 <h4
 id="async-loadstore-promisevoid"><code>async loadStore(): Promise&lt;void&gt;</code></h4>
 <p>Loads previously persisted data from the store file. Called once by
-the processor before any generation begins. Implementations that do not
-use a store can leave this as a no-op.</p>
+the processor before any generation begins. In
+<code>DataGeneratorBase</code> it does nothing unless
+<code>useStore</code> is <code>true</code>.</p>
 <h4
 id="async-savestore-promisevoid"><code>async saveStore(): Promise&lt;void&gt;</code></h4>
 <p>Persists the current store data to a file. Called once by the
-processor after all generation is complete.</p>
+processor after all generation is complete. In
+<code>DataGeneratorBase</code> it does nothing unless
+<code>useStore</code> is <code>true</code>.</p>
 <h4
 id="getgeneratorgeneratorname-string-datageneratorinterface"><code>getGenerator(generatorName: string): DataGeneratorInterface</code></h4>
 <p>Retrieves another generator from the service registry by name. Throws
 an error if the generator is not found. This enables generators to
 delegate to or compose with other generators.</p>
 <pre class="typescript"><code>// Inside a custom generator
-const faker = this.getGenerator(&#39;GeneratorFaker&#39;)</code></pre>
+const faker = this.getGenerator(&#39;faker&#39;)</code></pre>
 <h4 id="clearcontext-void"><code>clearContext(): void</code></h4>
-<p>Resets the <code>uniqueSet</code> and <code>instanceData</code>.
-Called between independent generation runs to clear per-run state
-without affecting the persistent store.</p>
+<p>Resets <code>uniqueSet</code> and <code>instanceData</code>.
+<code>DataGeneratorBase.loadStore()</code> calls it before it fills both
+from the store; the processor does not call it between test cases.</p>
 <h4
-id="async-generateinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promiseunknown"><code>async generate(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;unknown&gt;</code></h4>
+id="getstoredata--uniqueset-any-instancedata-any-"><code>getStoreData(): { uniqueSet: any[]; instanceData: any[] }</code></h4>
+<p>Returns <code>uniqueSet</code> and <code>instanceData</code> as
+arrays, the shape <code>saveStore()</code> writes. Useful for inspecting
+the state without saving to disk.</p>
+<h4
+id="async-generaterequest-datageneratorgeneraterequest-promiseany"><code>async generate(request: DataGeneratorGenerateRequest): Promise&lt;any&gt;</code></h4>
 <p>Generates a value for the given directive. This is the primary
 generation method.</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>Field of <code>request</code></th>
 <th>Type</th>
 <th>Description</th>
 </tr>
@@ -267,20 +292,21 @@ generation method.</p>
 <tr>
 <td><code>instanceId</code></td>
 <td><code>string</code></td>
-<td>A unique ID for this test case instance. The same instance ID should
-yield the same data</td>
+<td>The instance the value belongs to. The same instance ID and
+parameter yield the same data</td>
 </tr>
 <tr>
-<td><code>testcase</code></td>
-<td><code>TestcaseData</code></td>
+<td><code>testcaseData</code></td>
+<td><code>any</code> (a <code>TestcaseDataInterface</code>)</td>
 <td>The test case data object being built. Contains data already
 generated by other generators</td>
 </tr>
 <tr>
 <td><code>generatorDirective</code></td>
-<td><code>GeneratorDirective</code></td>
-<td>The directive describing what to generate, including generator name
-and config</td>
+<td><code>GeneratorDirectiveInterface</code></td>
+<td>The directive describing what to generate: <code>fieldName</code>,
+<code>config</code>, <code>instanceIdSuffix</code>,
+<code>generatorName</code></td>
 </tr>
 </tbody>
 </table></div>
@@ -290,37 +316,54 @@ because it depends on data from another generator that has not run yet).
 The processor will retry generators that return
 <code>undefined</code>.</p>
 <h4
-id="async-createpostprocessdirectivesinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promisegeneratordirective"><code>async createPostProcessDirectives(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;GeneratorDirective[]&gt;</code></h4>
-<p>Called after <code>generate()</code> returns successfully. Returns an
-array of additional directives for post-processing. Each returned
-directive will cause a later call to <code>postProcess()</code>.</p>
+id="createcachekeyrequest-datageneratorgeneraterequest-string--undefined-protected"><code>createCacheKey(request: DataGeneratorGenerateRequest): string | undefined</code>
+(protected)</h4>
+<p>Returns the key under which <code>DataGeneratorBase.generate()</code>
+caches a value: the instance ID together with
+<code>generatorDirective.config</code>, or the instance ID alone when
+the request has no parameter. Override it to share one cached value
+across parameters. <code>doGenerate()</code> still gets the original
+<code>request.instanceId</code>.</p>
+<h4
+id="async-createpostprocessdirectivesrequest-datageneratorgeneraterequest-promisegeneratordirectiveinterface--undefined"><code>async createPostProcessDirectives(request: DataGeneratorGenerateRequest): Promise&lt;GeneratorDirectiveInterface[] | undefined&gt;</code></h4>
+<p>Called after <code>generate()</code> returned a value. Returns
+additional directives for post-processing, or <code>undefined</code> for
+none (the default in <code>DataGeneratorBase</code>). Each returned
+directive causes a later call to <code>postProcess()</code>.</p>
 <p>This is useful when a generator needs to perform additional work
 after all primary generators have completed.</p>
 <h4
-id="async-postprocessinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promisevoid"><code>async postProcess(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;void&gt;</code></h4>
+id="async-postprocessrequest-datageneratorgeneraterequest-promisegeneratordirectiveinterface--undefined"><code>async postProcess(request: DataGeneratorGenerateRequest): Promise&lt;GeneratorDirectiveInterface[] | undefined&gt;</code></h4>
 <p>Called for each directive returned by
 <code>createPostProcessDirectives()</code>, after all primary generation
-is complete. Post-processing can modify the <code>testcase</code> data
-object directly and does not return a value.</p>
+of the test case is complete, in the order of the directives'
+<code>order</code> (default 1000). <code>request.instanceId</code> is
+the same ID <code>generate()</code> got for that directive.
+Post-processing can modify <code>request.testcaseData</code> directly;
+the return value is not used by the processor.</p>
 <hr />
 <h2 id="datageneratorbase">DataGeneratorBase</h2>
 <p>Base implementation of <code>DataGeneratorInterface</code>. Provides
-store loading/saving, instance ID management, and the uniqueness
-mechanism. Most custom generators should extend this class rather than
-implementing the interface directly.</p>
+store loading/saving and caching per instance. Most custom generators
+should extend this class rather than implementing the interface
+directly.</p>
 <h3 id="inherited-behavior">Inherited Behavior</h3>
 <ul>
-<li><strong>Instance ID caching</strong>: If <code>generate()</code> is
-called with an instance ID that has already been used, the previously
-generated value is returned without calling <code>_doGenerate()</code>
-again.</li>
-<li><strong>Uniqueness enforcement</strong>: When <code>unique</code> is
-<code>true</code>, the base class retries <code>_doGenerate()</code> up
-to <code>maxUniqueTries</code> times until a value is produced that is
-not already in <code>uniqueSet</code>.</li>
-<li><strong>Store persistence</strong>: <code>loadStore()</code> reads
-from and <code>saveStore()</code> writes to a JSON file at
-<code>${varDir}/${storeFileName}</code>.</li>
+<li><strong>Caching</strong>: If <code>generate()</code> is called again
+with the same instance ID and parameter, the cached value is returned
+without calling <code>doGenerate()</code> again (see
+<code>createCacheKey()</code>).</li>
+<li><strong>Errors</strong>: If <code>doGenerate()</code> throws or
+rejects, <code>generate()</code> logs the error and returns
+<code>undefined</code>; the field stays empty.</li>
+<li><strong>No uniqueness logic</strong>: <code>unique</code> and
+<code>maxUniqueTries</code> are only stored. A generator that must not
+repeat values checks and fills <code>uniqueSet</code> in
+<code>doGenerate()</code>.</li>
+<li><strong>Store persistence</strong>: with
+<code>useStore: true</code>, <code>loadStore()</code> reads and
+<code>saveStore()</code> writes the JSON file <code>storeFileName</code>
+(<code>&lt;varDir&gt;/&lt;storeName&gt;.json</code>).</li>
 </ul>
 <h3 id="additional-properties">Additional Properties</h3>
 <div class="table-scroll"><table>
@@ -340,42 +383,37 @@ name</td>
 </tr>
 <tr>
 <td><code>store</code></td>
-<td><code>Record&lt;string, unknown&gt;</code></td>
-<td>The data object that is persisted. Generators can store arbitrary
-data here</td>
+<td><code>DataGeneratorStore</code>
+(<code>{ uniqueSet: any[]; instanceData: any[] }</code>)</td>
+<td>The data object that is persisted</td>
 </tr>
 <tr>
 <td><code>storeFileName</code></td>
 <td><code>string</code></td>
-<td>Computed file name for the store (read-only). Derived from
-<code>storeName</code></td>
+<td>The store file, <code>&lt;varDir&gt;/&lt;storeName&gt;.json</code>
+(read-only)</td>
 </tr>
 </tbody>
 </table></div>
 <h3 id="methods-1">Methods</h3>
 <h4
-id="_dogenerateinstanceid-string-testcase-testcasedata-generatordirective-generatordirective-promiseunknown"><code>_doGenerate(instanceId: string, testcase: TestcaseData, generatorDirective: GeneratorDirective): Promise&lt;unknown&gt;</code></h4>
+id="protected-async-dogeneraterequest-datageneratorgeneraterequest-promiseany"><code>protected async doGenerate(request: DataGeneratorGenerateRequest): Promise&lt;any&gt;</code></h4>
 <p><strong>Override this method in subclasses.</strong> This is where
 the actual data generation logic goes. The base class
-<code>generate()</code> method handles instance ID caching and
-uniqueness; <code>_doGenerate()</code> is only called when new data is
-actually needed.</p>
+<code>generate()</code> handles the caching; <code>doGenerate()</code>
+is only called when new data is needed. Return <code>undefined</code>
+while data the generator depends on is not there yet: the processor
+calls it again later.</p>
 <pre class="typescript"><code>import { DataGeneratorBase } from &#39;@xhubio/nanook-table&#39;
-import type { GeneratorDirective } from &#39;@xhubio/nanook-table&#39;
+import type { DataGeneratorGenerateRequest } from &#39;@xhubio/nanook-table&#39;
 
 class GeneratorTimestamp extends DataGeneratorBase {
-  async _doGenerate(
-    instanceId: string,
-    testcase: TestcaseData,
-    generatorDirective: GeneratorDirective
+  protected override async doGenerate(
+    request: DataGeneratorGenerateRequest
   ): Promise&lt;string&gt; {
     return new Date().toISOString()
   }
 }</code></pre>
-<h4
-id="getstoredata-recordstring-unknown"><code>getStoreData(): Record&lt;string, unknown&gt;</code></h4>
-<p>Returns the data as it would be written to the store. Useful for
-inspecting store state without saving to disk.</p>
 <h3 id="creating-a-custom-generator">Creating a Custom Generator</h3>
 <pre class="typescript"><code>import {
   DataGeneratorBase,
@@ -395,7 +433,7 @@ class GeneratorCounter extends DataGeneratorBase {
   }
 }
 
-// Register the generator
+// Register the generator; tables call it as gen::counter:
 const logger = new LoggerMemory()
 const registry = new DataGeneratorRegistry()
 const counter = new GeneratorCounter({
@@ -413,16 +451,19 @@ access other generators for composition.</p>
 <h3 id="methods-2">Methods</h3>
 <h4
 id="registergeneratorname-string-generator-datageneratorinterface-void"><code>registerGenerator(name: string, generator: DataGeneratorInterface): void</code></h4>
-<p>Registers a generator under the given name. Also sets the
-<code>name</code> property on the generator instance.</p>
+<p>Registers a generator under the given name, the name the tables use
+(<code>gen::&lt;name&gt;:...</code>). Also sets the <code>name</code>
+property on the generator instance. A generator registered under a name
+that is already taken replaces the earlier one (since 3.3.0; before,
+<code>registerGenerator()</code> threw).</p>
 <pre class="typescript"><code>const registry = new DataGeneratorRegistry()
-const faker = new GeneratorFaker({ generatorRegistry: registry, name: &#39;GeneratorFaker&#39;, logger })
-registry.registerGenerator(&#39;GeneratorFaker&#39;, faker)</code></pre>
+const faker = new GeneratorFaker({ generatorRegistry: registry, name: &#39;faker&#39;, logger })
+registry.registerGenerator(&#39;faker&#39;, faker)</code></pre>
 <h4
 id="getgeneratorname-string-datageneratorinterface"><code>getGenerator(name: string): DataGeneratorInterface</code></h4>
 <p>Returns the generator registered under the given name. Throws an
 error if no generator with that name exists.</p>
-<pre class="typescript"><code>const faker = registry.getGenerator(&#39;GeneratorFaker&#39;)</code></pre>
+<pre class="typescript"><code>const faker = registry.getGenerator(&#39;faker&#39;)</code></pre>
 <h4
 id="async-loadstore-promisevoid-1"><code>async loadStore(): Promise&lt;void&gt;</code></h4>
 <p>Calls <code>loadStore()</code> on every registered generator. The
@@ -434,60 +475,27 @@ processor calls this once at shutdown.</p>
 <hr />
 <h2 id="generatorfaker">GeneratorFaker</h2>
 <p>A built-in generator that uses <code>@faker-js/faker</code> to
-produce data. The Faker method to call is specified in the
-<code>config</code> property of the <code>GeneratorDirective</code>.</p>
+produce data. The Faker function to call is the <code>config</code> of
+the directive: a dot path, called without arguments.</p>
 <h3 id="usage-in-spreadsheets">Usage in Spreadsheets</h3>
-<p>In the generator column of your equivalence class table, use:</p>
-<pre><code>gen:GeneratorFaker:{&quot;method&quot;: &quot;person.firstName&quot;}
-gen:GeneratorFaker:{&quot;method&quot;: &quot;internet.email&quot;}
-gen:GeneratorFaker:{&quot;method&quot;: &quot;number.int&quot;, &quot;args&quot;: [{&quot;min&quot;: 1, &quot;max&quot;: 100}]}</code></pre>
+<p>In the generator column of your equivalence class table, use
+(assuming the generator is registered as <code>faker</code>):</p>
+<pre><code>gen::faker:person.firstName
+gen::faker:internet.email
+gen:1:faker:person.lastName</code></pre>
 <h3 id="configuration">Configuration</h3>
-<p>The <code>config</code> object in the directive supports:</p>
-<div class="table-scroll"><table>
-<thead>
-<tr>
-<th>Key</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>method</code></td>
-<td><code>string</code></td>
-<td>The Faker method path, e.g., <code>'person.firstName'</code>,
-<code>'internet.email'</code>, <code>'number.int'</code></td>
-</tr>
-<tr>
-<td><code>args</code></td>
-<td><code>unknown[]</code></td>
-<td>Optional array of arguments passed to the Faker method</td>
-</tr>
-</tbody>
-</table></div>
-<h3 id="properties-1">Properties</h3>
-<div class="table-scroll"><table>
-<thead>
-<tr>
-<th>Property</th>
-<th>Type</th>
-<th>Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>logger</code></td>
-<td><code>LoggerInterface</code></td>
-<td>The logger instance</td>
-</tr>
-<tr>
-<td><code>unique</code></td>
-<td><code>boolean</code></td>
-<td>Whether generated values must be unique. Default is
-<code>false</code> for GeneratorFaker</td>
-</tr>
-</tbody>
-</table></div>
+<p>The config is the path of a Faker function, e.g.
+<code>person.firstName</code>, <code>internet.email</code>,
+<code>location.city</code>. Nanook splits it on <code>.</code> and calls
+the function <strong>without arguments</strong>: <code>number.int</code>
+works, <code>number.int({ max: 100 })</code> cannot be written. For
+values that need arguments (a length, a range), write a small generator
+of your own. An empty config or a path Faker does not have throws, and
+the test case is dropped.</p>
+<p><code>GeneratorFaker</code> caches per instance ID and config:
+<code>gen::faker:person.firstName</code> in two fields of one test case
+gives the same name; a different instance ID (<code>gen:1:…</code>,
+<code>gen:2:…</code>) gives a different one.</p>
 <h3 id="example">Example</h3>
 <pre class="typescript"><code>import {
   GeneratorFaker,
@@ -499,14 +507,16 @@ const logger = new LoggerMemory()
 const registry = new DataGeneratorRegistry()
 const faker = new GeneratorFaker({
   generatorRegistry: registry,
-  name: &#39;GeneratorFaker&#39;,
+  name: &#39;faker&#39;,
   logger
 })
-registry.registerGenerator(&#39;GeneratorFaker&#39;, faker)</code></pre>
-<p><code>GeneratorFaker</code> is never registered for you. The
-<code>createDefaultGeneratorRegistry()</code> factory function in the
-processor module returns an empty registry, so register
-<code>GeneratorFaker</code> explicitly as shown above.</p>
+registry.registerGenerator(&#39;faker&#39;, faker)</code></pre>
+<p><code>createDefaultGeneratorRegistry(logger)</code> in the processor
+module returns a registry with <code>GeneratorFaker</code> already
+registered as <code>faker</code> (since 3.3.0; up to 3.2.x it was
+empty). A registry you create with
+<code>new DataGeneratorRegistry()</code> starts empty; register
+<code>GeneratorFaker</code> as shown above.</p>
 
     </article>
   </main>

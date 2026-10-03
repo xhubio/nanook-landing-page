@@ -41,23 +41,14 @@ SHELL_SOURCE = "about.html"
 # Deviations between the upstream docs and the published package, verified by
 # hand. Keep in sync with reality; drop entries once upstream fixes them. Import
 # path fixed upstream in #60.
-PACKAGE_VERSION = "3.1.3"
+PACKAGE_VERSION = "3.3.1"
 # Fixed upstream in #62 (2026-10-02): tables keyed by name, empty default
-# registry, default writer throws in before(). The entries below were found
-# with tsc and by reading the parsers against 3.1.3 on 2026-10-02 and are
-# still open upstream (#62 body).
-DEVIATIONS = [
-    "<code>InterfaceWriter</code> is an interface, not a class: implement it, do not extend or "
-    "construct it; the test case type is <code>TestcaseDataInterface</code>",
-    "<code>SimpleArrayFilterProcessor</code> and <code>SimpleArrayIgnoreFilterProcessor</code> take an "
-    "options object (<code>{ name, delimiter }</code>), not positional arguments; "
-    "<code>createDefaultFileProcessor()</code> is synchronous",
-    "generators implement <code>doGenerate(request)</code> and are called as <code>generate(request)</code>, "
-    "not with <code>(instanceId, testcase, directive)</code>",
-    "the generator directive is <code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code>, "
-    "not <code>gen:name(suffix):config</code>; the faker config is a plain path, not JSON "
-    "(<code>gen::faker:person.firstName</code>)",
-]
+# registry, default writer throws in before(). Fixed in #66 (3.3.0,
+# 2026-10-03): InterfaceWriter as interface, filter options object,
+# generate(request), directive syntax and faker config, plus about 40 further
+# mismatches; every sample with imports type-checks against the source.
+# 3.3.1 (#67): the logger testing sample runs (generate() without testcaseMeta).
+DEVIATIONS = []
 
 
 def fetch(url, binary=False):
@@ -135,7 +126,7 @@ def page_html(head_template, prefix, suffix, slug, title, description, fragment,
         deviation_note = (f"Known deviations from the published package {PACKAGE_VERSION}:</p>\n"
                           f'      <ul class="provenance">' + "".join(f"<li>{d}</li>" for d in DEVIATIONS) + "</ul>")
     else:
-        deviation_note = (f"The samples were checked against the published package {PACKAGE_VERSION}; "
+        deviation_note = (f"The samples with imports type-check against the published package {PACKAGE_VERSION}; "
                           "no known deviations.</p>")
     main = f"""<main class="long-doc api-v3" id="main-content">
     <article>

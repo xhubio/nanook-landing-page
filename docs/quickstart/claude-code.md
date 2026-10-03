@@ -130,7 +130,7 @@ With the Faker generator alone, this script reported 5 test cases on the run’s
 - **Fewer cases than columns.** A Faker directive with an argument, such as `gen:1:faker:string.alpha:255`, fails because the built-in generator takes a Faker path and nothing else. Write a small generator that extends `DataGeneratorBase` and register it under its own name; see [Create data generator](https://nanook.xhub.io/docs/tutorials/createGenerator).
 - **`Cannot find module 'exceljs'`.** The generated script needs it in your project: `npm install -D exceljs`.
 - **Files land in `scripts/` and `resources/`.** That is the skill’s default. Name the folders you want in the prompt, or move the files and change the path in `generate.mts`.
-- **`Method not implemented` from the default writer.** In 3.0.1 the writer returned by `createDefaultWriter` throws in `before()`. Use an inline writer as above, or your own class.
+- **`Method not implemented` from the default writer.** Up to 3.2.x the writer returned by `createDefaultWriter` throws in `before()`. Use an inline writer as above, or your own class; from 3.3.0 the default writer works.
 - **`The targetTable 'User' does not exists`.** You handed `fileProcessor.tables`, an array in 3.0.1, to `TestcaseProcessor`. Every `ref:` then fails with this message and fewer cases come out, 7 instead of 11 in the run. Pass the tables keyed by name, as the script above does.
 
 ## No terminal?

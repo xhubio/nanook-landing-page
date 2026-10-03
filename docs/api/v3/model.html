@@ -64,27 +64,29 @@
         <h1>Model</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model" aria-current="page">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md">docs/api/model.md</a> in the
-        repository (commit <code>e17c1ea349f5</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.1.3:</p>
-      <ul class="provenance"><li><code>InterfaceWriter</code> is an interface, not a class: implement it, do not extend or construct it; the test case type is <code>TestcaseDataInterface</code></li><li><code>SimpleArrayFilterProcessor</code> and <code>SimpleArrayIgnoreFilterProcessor</code> take an options object (<code>{ name, delimiter }</code>), not positional arguments; <code>createDefaultFileProcessor()</code> is synchronous</li><li>generators implement <code>doGenerate(request)</code> and are called as <code>generate(request)</code>, not with <code>(instanceId, testcase, directive)</code></li><li>the generator directive is <code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code>, not <code>gen:name(suffix):config</code>; the faker config is a plain path, not JSON (<code>gen::faker:person.firstName</code>)</li></ul>
+      <p class="provenance">Generated on 2026-10-03 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/model.md">docs/api/model.md</a> in the
+        repository (commit <code>f26b8022e0f8</code> of 2026-10-03) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. The samples with imports type-check against the published package 3.3.1; no known deviations.</p>
 <p>The model module defines the core interfaces and classes that
 represent tables, test case definitions, and directives. Every table
 type (decision, matrix, specification) implements these interfaces, and
 every processor operates on them.</p>
 <pre class="typescript"><code>import {
-  TableInterface,
-  TestcaseDefinitionInterface,
   DirectiveBase,
   StaticDirective,
   GeneratorDirective,
   ReferenceDirective,
   FieldDirective,
-  MetaTable,
-  MetaTestcase,
-  FilterInterface,
   PREFIX_GENERATOR,
   PREFIX_REFERENCE
+} from &#39;@xhubio/nanook-table&#39;
+import type {
+  TableInterface,
+  TestcaseDefinitionInterface,
+  TestcaseDirectivesInterface,
+  MetaTable,
+  MetaTestcase,
+  FilterInterface
 } from &#39;@xhubio/nanook-table&#39;</code></pre>
 <h2 id="tableinterface">TableInterface</h2>
 <p>Common interface implemented by all table models
@@ -101,20 +103,34 @@ operates on this interface without knowing the concrete table type.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>name</code></td>
+<td><code>tableName</code></td>
 <td><code>string</code></td>
-<td>The name of this table, typically derived from the sheet name</td>
+<td>The name of this table: the sheet name. References and
+<code>TestcaseProcessor.tables</code> use it</td>
+</tr>
+<tr>
+<td><code>fileName</code></td>
+<td><code>string</code></td>
+<td>The workbook the table was read from</td>
 </tr>
 <tr>
 <td><code>tableType</code></td>
-<td><code>string</code></td>
-<td>The type identifier for this table (e.g., <code>'decision'</code>,
-<code>'matrix'</code>)</td>
+<td><code>string</code> (read-only)</td>
+<td><code>'decision-table'</code>
+(<code>TABLE_TYPE_DECISION_TABLE</code>) or <code>'matrix-table'</code>
+(<code>TABLE_TYPE_MATRIX_TABLE</code>); specification sheets become
+decision tables</td>
 </tr>
 <tr>
-<td><code>meta</code></td>
-<td><code>MetaTable</code></td>
-<td>Metadata about the table, including the source file name</td>
+<td><code>tableMeta</code></td>
+<td><code>MetaTable</code> (read-only)</td>
+<td><code>fileName</code>, <code>tableName</code> and
+<code>tableType</code> in one object</td>
+</tr>
+<tr>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>The logger of the table</td>
 </tr>
 </tbody>
 </table></div>
@@ -125,22 +141,27 @@ id="gettestcasefornametestcasename-string-testcasedefinitioninterface"><code>get
 if no test case with that name exists in the table.</p>
 <pre class="typescript"><code>const table: TableInterface = // ... loaded table
 const tc = table.getTestcaseForName(&#39;tc1&#39;)
-console.log(tc.testcaseName, tc.execute)</code></pre>
+console.log(tc.testcaseMeta.testcaseName, tc.execute)</code></pre>
 <h4
 id="gettestcasesforexecution-generatortestcasedefinitioninterface"><code>getTestcasesForExecution(): Generator&lt;TestcaseDefinitionInterface&gt;</code></h4>
 <p>A generator function that yields all test case definitions that
-should be executed. Test cases marked with <code>execute = false</code>
-or <code>neverExecute = true</code> are excluded.</p>
+should be executed. In a decision table these are the columns with a
+true Execute value, each once per Multiplicity (named
+<code>&lt;column&gt;.1</code>, <code>&lt;column&gt;.2</code>, …);
+NeverExecute only takes effect when another test case references the
+column.</p>
 <pre class="typescript"><code>for (const tc of table.getTestcasesForExecution()) {
-  console.log(tc.testcaseName)
+  console.log(tc.testcaseMeta.testcaseName)
 }</code></pre>
 <h4
 id="processrangestestcasename-string-string"><code>processRanges(testcaseName: string): string[]</code></h4>
 <p>Parses a test case name that may contain a range expression and
-returns an array of individual test case names. For example,
-<code>'tc12-14'</code> expands to <code>['tc12', 'tc13', 'tc14']</code>.
-If the name is not a range, returns a single-element array.</p>
-<pre class="typescript"><code>const names = table.processRanges(&#39;tc3-5&#39;)
+returns an array of individual test case names. A range is written in
+square brackets, with comma-separated elements: <code>'[tc12-14]'</code>
+expands to <code>['tc12', 'tc13', 'tc14']</code>, <code>'[1,5]'</code>
+to <code>['1', '5']</code>. A name without brackets returns a
+single-element array.</p>
+<pre class="typescript"><code>const names = table.processRanges(&#39;[tc3-5]&#39;)
 // [&#39;tc3&#39;, &#39;tc4&#39;, &#39;tc5&#39;]</code></pre>
 <hr />
 <h2 id="testcasedefinitioninterface">TestcaseDefinitionInterface</h2>
@@ -163,15 +184,16 @@ produces one test case definition.</p>
 <td>Unique identifier (UUID) for this test case</td>
 </tr>
 <tr>
-<td><code>testcaseName</code></td>
-<td><code>string</code></td>
-<td>The name of this test case (e.g., <code>'tc1'</code>). Used to look
-up the test case in the table</td>
+<td><code>testcaseMeta</code></td>
+<td><code>MetaTestcase</code> (read-only)</td>
+<td><code>fileName</code>, <code>tableName</code>,
+<code>tableType</code> and <code>testcaseName</code> (e.g.
+<code>'tc1'</code>)</td>
 </tr>
 <tr>
 <td><code>data</code></td>
-<td><code>Record&lt;string, Record&lt;string, string&gt;&gt;</code></td>
-<td>The cell data for this test case, organized by section and row</td>
+<td><code>any</code> (optional)</td>
+<td>The cell data for this test case, keyed by row ID</td>
 </tr>
 <tr>
 <td><code>execute</code></td>
@@ -182,8 +204,8 @@ it exists only as a reference target</td>
 <tr>
 <td><code>neverExecute</code></td>
 <td><code>boolean</code></td>
-<td>If <code>true</code>, this test case is never executed, even when
-referenced from another test case</td>
+<td>If <code>true</code>, a test case that references this one is
+dropped</td>
 </tr>
 <tr>
 <td><code>multiplicity</code></td>
@@ -197,19 +219,9 @@ referenced from another test case</td>
 <td>Reference back to the table this test case belongs to</td>
 </tr>
 <tr>
-<td><code>tableType</code></td>
-<td><code>string</code></td>
-<td>The table type of the parent table</td>
-</tr>
-<tr>
-<td><code>tableName</code></td>
-<td><code>string</code></td>
-<td>The name of the parent table</td>
-</tr>
-<tr>
-<td><code>tableMeta</code></td>
-<td><code>MetaTable</code></td>
-<td>The metadata of the parent table</td>
+<td><code>logger</code></td>
+<td><code>LoggerInterface</code></td>
+<td>The logger</td>
 </tr>
 </tbody>
 </table></div>
@@ -240,11 +252,11 @@ filtering.</p>
 // [&#39;smoke&#39;, &#39;regression&#39;, &#39;login&#39;]</code></pre>
 <h4
 id="createfilter-filterinterface"><code>createFilter(): FilterInterface[]</code></h4>
-<p>Returns all filter definitions for this test case. Each filter has a
-name and a value expression.</p>
+<p>Returns all filter definitions for this test case. Each filter names
+a filter processor and an expression.</p>
 <pre class="typescript"><code>const filters = testcase.createFilter()
 for (const f of filters) {
-  console.log(`Filter: ${f.filterName} = ${f.filterValue}`)
+  console.log(`Filter: ${f.filterProcessorName} = ${f.expression}`)
 }</code></pre>
 <h4
 id="creategeneratorswitches-string"><code>createGeneratorSwitches(): string[]</code></h4>
@@ -257,10 +269,10 @@ executed) for this test case.</p>
 <p>The return type of <code>createDirectives()</code>. Groups all
 directives by type.</p>
 <pre class="typescript"><code>interface TestcaseDirectivesInterface {
-  generator: GeneratorDirective[]
-  static: StaticDirective[]
-  reference: ReferenceDirective[]
-  field: FieldDirective[]
+  generator: GeneratorDirectiveInterface[]
+  static: StaticDirectiveInterface[]
+  reference: ReferenceDirectiveInterface[]
+  field: FieldDirectiveInterface[]
 }</code></pre>
 <hr />
 <h2 id="directivebase">DirectiveBase</h2>
@@ -356,14 +368,16 @@ prefix.</p>
 </tr>
 <tr>
 <td><code>config</code></td>
-<td><code>Record&lt;string, unknown&gt;</code></td>
-<td>Configuration parameters passed to the generator</td>
+<td><code>string</code></td>
+<td>Everything after the third colon of the cell, passed to the
+generator (<code>person.firstName</code>)</td>
 </tr>
 <tr>
 <td><code>instanceIdSuffix</code></td>
-<td><code>string | undefined</code></td>
-<td>Optional suffix appended to the instance ID. When two directives
-share the same suffix, the generator returns the same data</td>
+<td><code>string</code></td>
+<td>The second part of the cell; empty for <code>gen::</code>.
+Directives with the same suffix in one test case share an instance
+ID</td>
 </tr>
 <tr>
 <td><code>order</code></td>
@@ -374,14 +388,18 @@ execution. Default is <code>1000</code></td>
 </tbody>
 </table></div>
 <h3 id="spreadsheet-syntax">Spreadsheet Syntax</h3>
-<pre><code>gen:&lt;generatorName&gt;(&lt;instanceIdSuffix&gt;):&lt;config&gt;</code></pre>
+<pre><code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code></pre>
 <p>Examples:</p>
 <ul>
-<li><code>gen:faker:{"method": "person.firstName"}</code> -- call
-GeneratorFaker with the given config</li>
-<li><code>gen:password(pwd):{"minLength": 8}</code> -- call the password
-generator; uses instance ID suffix <code>pwd</code></li>
+<li><code>gen::faker:person.firstName</code> -- call the generator
+registered as <code>faker</code> with the config
+<code>person.firstName</code></li>
+<li><code>gen:pwd:password:8</code> -- call the generator registered as
+<code>password</code> with the config <code>8</code>; instance ID suffix
+<code>pwd</code></li>
 </ul>
+<p>Full description: <a
+href="https://github.com/xhubio/nanook-table/blob/master/docs/guide/directives.md"><code>docs/guide/directives.md</code></a>.</p>
 <hr />
 <h2 id="referencedirective">ReferenceDirective</h2>
 <p>Extends <code>DirectiveBase</code>. Represents a reference to data
@@ -424,8 +442,8 @@ starts with the <code>ref:</code> prefix.</p>
 </tr>
 <tr>
 <td><code>instanceIdSuffix</code></td>
-<td><code>string | undefined</code></td>
-<td>Optional suffix for the instance ID</td>
+<td><code>string</code></td>
+<td>The second part of the cell; may be empty</td>
 </tr>
 </tbody>
 </table></div>
@@ -438,9 +456,10 @@ examples: <a
 href="https://github.com/xhubio/nanook-table/blob/master/docs/guide/directives.md"><code>docs/guide/directives.md</code></a>.</p>
 <hr />
 <h2 id="fielddirective">FieldDirective</h2>
-<p>Extends <code>DirectiveBase</code>. Represents a field selection
-marker. Used internally to track which fields are active in a test
-case.</p>
+<p>Extends <code>DirectiveBase</code>. Represents a marked row of a
+MultiRowSection (for example an Expected Result row). Each one becomes
+an entry <code>{ key, comment, other }</code> in the array the field
+holds in the test case data.</p>
 <h3 id="properties-6">Properties</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -454,12 +473,28 @@ case.</p>
 <tr>
 <td><code>fieldName</code></td>
 <td><code>string</code></td>
-<td>Inherited from <code>DirectiveBase</code></td>
+<td>Inherited from <code>DirectiveBase</code>: the name of the
+section</td>
 </tr>
 <tr>
 <td><code>testcaseMeta</code></td>
 <td><code>MetaTestcase</code></td>
 <td>Inherited from <code>DirectiveBase</code></td>
+</tr>
+<tr>
+<td><code>key</code></td>
+<td><code>string</code></td>
+<td>Column C of the row</td>
+</tr>
+<tr>
+<td><code>other</code></td>
+<td><code>string</code></td>
+<td>Column D of the row</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td><code>string</code></td>
+<td>Column E of the row</td>
 </tr>
 </tbody>
 </table></div>
@@ -478,14 +513,19 @@ processing.</p>
 </thead>
 <tbody>
 <tr>
-<td><code>filterName</code></td>
+<td><code>filterProcessorName</code></td>
 <td><code>string</code></td>
 <td>The name of the filter processor to use</td>
 </tr>
 <tr>
-<td><code>filterValue</code></td>
+<td><code>expression</code></td>
 <td><code>string</code></td>
 <td>The filter expression passed to the filter processor</td>
+</tr>
+<tr>
+<td><code>comment</code></td>
+<td><code>string</code> (optional)</td>
+<td>The comment of the FilterSection row</td>
 </tr>
 </tbody>
 </table></div>
@@ -568,13 +608,15 @@ test case identification.</p>
 <tbody>
 <tr>
 <td><code>PREFIX_GENERATOR</code></td>
-<td><code>'gen'</code></td>
-<td>The prefix that identifies generator commands in cell values</td>
+<td><code>'gen:'</code></td>
+<td>The prefix that identifies generator commands in cell values
+(compared case-insensitively)</td>
 </tr>
 <tr>
 <td><code>PREFIX_REFERENCE</code></td>
-<td><code>'ref'</code></td>
-<td>The prefix that identifies reference commands in cell values</td>
+<td><code>'ref:'</code></td>
+<td>The prefix that identifies reference commands in cell values
+(compared case-insensitively)</td>
 </tr>
 </tbody>
 </table></div>

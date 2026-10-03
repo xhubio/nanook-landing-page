@@ -1,6 +1,6 @@
 # Nanook
 
-> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.1.3 (2026-10-02).
+> Nanook is an open-source toolkit for defining test cases in XLSX spreadsheets (equivalence class, matrix and specification tables) and generating test data through pluggable generators and writers. Written in TypeScript, shipped as one ESM package with type declarations, requires Node.js >= 22. Current release: @xhubio/nanook-table 3.3.1 (2026-10-03).
 
 The docs pages below (Documentation except the hub, Tutorials, and the 3.x API reference; not the 1.x API pages) are also available as Markdown: append `.md` to the URL (for example https://nanook.xhub.io/docs/quickstart/quickstart.md). The whole documentation in one file: https://nanook.xhub.io/llms-full.txt. The npm package ships the 3.x docs as Markdown in node_modules/@xhubio/nanook-table/docs/.
 
@@ -50,7 +50,7 @@ The docs pages below (Documentation except the hub, Tutorials, and the 3.x API r
 - [AI-Assisted Equivalence Class Tables with Claude Code](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables): The Claude Code skill and slash command shipped with the repository
 
 ## Key Facts
-- Open source, MIT license (GitHub: https://github.com/xhubio/nanook-table; npm: @xhubio/nanook-table, current release 3.1.3, 2026-10-02)
+- Open source, MIT license (GitHub: https://github.com/xhubio/nanook-table; npm: @xhubio/nanook-table, current release 3.3.1, 2026-10-03)
 - Written in TypeScript; one ESM package with type declarations; requires Node.js >= 22
 - Reads XLSX files (.xlsx and .xls via the built-in importer); other formats need a custom importer
 - Table types: <DECISION_TABLE> (equivalence class table), <MATRIX_TABLE>, <SPECIFICATION_TABLE> (also <SPECIFICATION>; field rules converted into a decision table)

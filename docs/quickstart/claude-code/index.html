@@ -435,9 +435,9 @@ console.log(JSON.stringify(collected[0], null, 2))
                     <li><strong>Files land in <code>scripts/</code> and <code>resources/</code>.</strong> That is the
                       skill&rsquo;s default. Name the folders you want in the prompt, or move the files and change the
                       path in <code>generate.mts</code>.</li>
-                    <li><strong><code>Method not implemented</code> from the default writer.</strong> In 3.0.1 the
+                    <li><strong><code>Method not implemented</code> from the default writer.</strong> Up to 3.2.x the
                       writer returned by <code>createDefaultWriter</code> throws in <code>before()</code>. Use an
-                      inline writer as above, or your own class.</li>
+                      inline writer as above, or your own class; from 3.3.0 the default writer works.</li>
                     <li><strong><code>The targetTable 'User' does not exists</code>.</strong> You handed
                       <code>fileProcessor.tables</code>, an array in 3.0.1, to <code>TestcaseProcessor</code>. Every
                       <code>ref:</code> then fails with this message and fewer cases come out, 7 instead of 11 in the

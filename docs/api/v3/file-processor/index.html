@@ -64,31 +64,33 @@
         <h1>File processor</h1>
       </header>
       <nav class="api-nav" aria-label="Modules of the 3.x API reference"><ul><li><a href="/docs/api/v3/model">Model</a></li><li><a href="/docs/api/v3/data-generator">Data generator</a></li><li><a href="/docs/api/v3/file-processor" aria-current="page">File processor</a></li><li><a href="/docs/api/v3/processor">Processor</a></li><li><a href="/docs/api/v3/logger">Logger</a></li></ul></nav>
-      <p class="provenance">Generated on 2026-10-02 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md">docs/api/file-processor.md</a> in the
-        repository (commit <code>e17c1ea349f5</code> of 2026-10-02) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
-        edited here. Known deviations from the published package 3.1.3:</p>
-      <ul class="provenance"><li><code>InterfaceWriter</code> is an interface, not a class: implement it, do not extend or construct it; the test case type is <code>TestcaseDataInterface</code></li><li><code>SimpleArrayFilterProcessor</code> and <code>SimpleArrayIgnoreFilterProcessor</code> take an options object (<code>{ name, delimiter }</code>), not positional arguments; <code>createDefaultFileProcessor()</code> is synchronous</li><li>generators implement <code>doGenerate(request)</code> and are called as <code>generate(request)</code>, not with <code>(instanceId, testcase, directive)</code></li><li>the generator directive is <code>gen:&lt;instanceIdSuffix&gt;:&lt;generatorName&gt;:&lt;config&gt;</code>, not <code>gen:name(suffix):config</code>; the faker config is a plain path, not JSON (<code>gen::faker:person.firstName</code>)</li></ul>
+      <p class="provenance">Generated on 2026-10-03 from <a href="https://github.com/xhubio/nanook-table/blob/master/docs/api/file-processor.md">docs/api/file-processor.md</a> in the
+        repository (commit <code>f26b8022e0f8</code> of 2026-10-03) by <code>tools/build-api-v3.py</code>. The text is the repository's, not
+        edited here. The samples with imports type-check against the published package 3.3.1; no known deviations.</p>
 <p>The file processor module handles loading spreadsheet files and
 parsing their sheets into table models. It includes the importer
 abstraction, individual parsers for each table type, and the
 specification-to-decision converter with its rule converter plugin
 system.</p>
 <pre class="typescript"><code>import {
-  ImporterInterface,
   ImporterXlsx,
   FileProcessor,
-  ParserInterface,
   ParserDecision,
   ParserMatrix,
   ParserSpecification,
   ParserSpecificationConverter,
   RuleConverterRegistry,
   createDefaultConverterRegistry
+} from &#39;@xhubio/nanook-table&#39;
+import type {
+  ImporterInterface,
+  ParserInterface,
+  ParserParseRequest
 } from &#39;@xhubio/nanook-table&#39;</code></pre>
 <hr />
 <h2 id="importerinterface">ImporterInterface</h2>
-<p>Abstract interface for spreadsheet readers. An importer loads a file
-and provides cell-level access to its content. The
+<p>The interface for spreadsheet readers (a type). An importer loads a
+file and provides cell-level access to its content. The
 <code>FileProcessor</code> depends on this interface, so you can replace
 the XLSX importer with one for a different file format.</p>
 <h3 id="methods">Methods</h3>
@@ -112,15 +114,16 @@ data is available for reading.</p>
 </tr>
 </tbody>
 </table></div>
-<h4 id="sheetnames-string"><code>sheetNames(): string[]</code></h4>
-<p>Returns an array of sheet names in the loaded file, in the original
-order they appear.</p>
+<h4 id="sheetnames-string-property"><code>sheetNames: string[]</code>
+(property)</h4>
+<p>The sheet names of the loaded file, in the order they appear. In
+<code>ImporterXlsx</code> it is a getter: read it, do not call it.</p>
 <pre class="typescript"><code>const importer = new ImporterXlsx()
 await importer.loadFile(&#39;tests.xlsx&#39;)
-const sheets = importer.sheetNames()
+const sheets = importer.sheetNames
 // [&#39;LoginTests&#39;, &#39;RegistrationTests&#39;, &#39;PaymentMatrix&#39;]</code></pre>
 <h4
-id="cellvaluesheetname-string-column-number-row-number-string--undefined"><code>cellValue(sheetName: string, column: number, row: number): string | undefined</code></h4>
+id="cellvaluesheetname-string-columnnumber-number-rownumber-number-number--string--undefined"><code>cellValue(sheetName: string, columnNumber: number, rowNumber: number): number | string | undefined</code></h4>
 <p>Returns the value of a single cell. Column and row indices are
 zero-based.</p>
 <div class="table-scroll"><table>
@@ -138,25 +141,34 @@ zero-based.</p>
 <td>The name of the sheet</td>
 </tr>
 <tr>
-<td><code>column</code></td>
+<td><code>columnNumber</code></td>
 <td><code>number</code></td>
 <td>Column index, starting at <code>0</code></td>
 </tr>
 <tr>
-<td><code>row</code></td>
+<td><code>rowNumber</code></td>
 <td><code>number</code></td>
 <td>Row index, starting at <code>0</code></td>
 </tr>
 </tbody>
 </table></div>
 <p>Returns <code>undefined</code> if the cell is empty.</p>
+<h4
+id="cellvaluestringsheetname-string-columnnumber-number-rownumber-number-string--undefined"><code>cellValueString(sheetName: string, columnNumber: number, rowNumber: number): string | undefined</code></h4>
+<p>Like <code>cellValue()</code>, but returns the value as a string. The
+parsers use this one.</p>
+<h4
+id="logger-loggerinterface-property"><code>logger: LoggerInterface</code>
+(property)</h4>
+<p>The logger of the importer.</p>
 <h4 id="clear-void"><code>clear(): void</code></h4>
 <p>Releases the loaded file data to free memory. Call this after parsing
 is complete.</p>
 <hr />
 <h2 id="importerxlsx">ImporterXlsx</h2>
 <p>XLSX implementation of <code>ImporterInterface</code>. Uses the
-<code>xlsx</code> library to read Excel files (.xlsx, .xls).</p>
+<code>xlsx</code> library to read Excel files (.xlsx, .xls). The
+constructor takes <code>{ logger? }</code>.</p>
 <h3 id="properties">Properties</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -186,7 +198,7 @@ zero-based indices)</td>
 const importer = new ImporterXlsx()
 await importer.loadFile(&#39;resources/tests.xlsx&#39;)
 
-for (const name of importer.sheetNames()) {
+for (const name of importer.sheetNames) {
   const firstCell = importer.cellValue(name, 0, 0)
   console.log(`Sheet &quot;${name}&quot; starts with: ${firstCell}`)
 }
@@ -198,7 +210,7 @@ importer.clear()</code></pre>
 importer to read cells and delegates to registered parsers based on the
 table type marker found in each sheet's first cell.</p>
 <h3 id="constructor">Constructor</h3>
-<pre class="typescript"><code>new FileProcessor({ logger }: { logger: LoggerInterface })</code></pre>
+<pre class="typescript"><code>new FileProcessor(options?: { logger?: LoggerInterface; tableTypeKeys?: string[] })</code></pre>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -211,7 +223,16 @@ table type marker found in each sheet's first cell.</p>
 <tr>
 <td><code>logger</code></td>
 <td><code>LoggerInterface</code></td>
-<td>Logger instance for diagnostic messages</td>
+<td>Logger instance for diagnostic messages. Default: the shared
+<code>getLoggerMemory()</code> instance</td>
+</tr>
+<tr>
+<td><code>tableTypeKeys</code></td>
+<td><code>string[]</code></td>
+<td>Stored, but not evaluated: which sheets are loaded depends only on
+the parsers registered with <code>registerParser()</code>. A sheet whose
+first cell names no registered parser is skipped with an info
+message</td>
 </tr>
 </tbody>
 </table></div>
@@ -233,49 +254,60 @@ instance with all standard parsers.</p>
 <td><code>tables</code></td>
 <td><code>TableInterface[]</code></td>
 <td>Array of parsed table models. Populated after calling
-<code>load()</code></td>
+<code>load()</code>. A second sheet with the same name replaces the
+first (a warning is logged). <code>TestcaseProcessor</code> wants them
+keyed by <code>tableName</code>; convert the array</td>
 </tr>
 </tbody>
 </table></div>
 <h3 id="methods-1">Methods</h3>
 <h4
-id="async-loadfilename-string-promisevoid"><code>async load(fileName: string): Promise&lt;void&gt;</code></h4>
-<p>Loads the given file, iterates over all sheets, and parses each one
-into a table model. The parser is selected based on the table type
-marker in cell <code>(0, 0)</code> of each sheet.</p>
+id="async-loadfilenames-string--string-promisevoid"><code>async load(fileNames: string | string[]): Promise&lt;void&gt;</code></h4>
+<p>Loads the given file or files, iterates over all sheets, and parses
+each one into a table model. The importer is selected by the file
+extension, the parser by the table type marker in cell
+<code>(0, 0)</code> of each sheet.</p>
 <p>After this call, the <code>tables</code> property contains all parsed
-table models.</p>
+table models. <code>load()</code> does not throw: a file it cannot read
+or a sheet it cannot parse is logged as an error, so check
+<code>logger.entries.error</code>.</p>
 <pre class="typescript"><code>import { createDefaultFileProcessor, LoggerMemory } from &#39;@xhubio/nanook-table&#39;
 
 const logger = new LoggerMemory()
-const fp = await createDefaultFileProcessor(logger)
+const fp = createDefaultFileProcessor(logger)
 await fp.load(&#39;resources/tests.xlsx&#39;)
 
 console.log(`Loaded ${fp.tables.length} tables`)
 for (const table of fp.tables) {
-  console.log(`- ${table.name} (${table.tableType})`)
+  console.log(`- ${table.tableName} (${table.tableType})`)
 }</code></pre>
 <h4
-id="registerimporterimporter-importerinterface-void"><code>registerImporter(importer: ImporterInterface): void</code></h4>
-<p>Sets the importer to use for loading files.</p>
+id="registerimporterextension-string-importer-importerinterface-void"><code>registerImporter(extension: string, importer: ImporterInterface): void</code></h4>
+<p>Registers the importer for files with the given extension, without
+the dot (<code>'xlsx'</code>, <code>'xls'</code>).</p>
 <h4
 id="registerparsertabletype-string-parser-parserinterface-void"><code>registerParser(tableType: string, parser: ParserInterface): void</code></h4>
 <p>Registers a parser for the given table type marker. When a sheet's
 first cell matches the marker, this parser is used.</p>
 <hr />
 <h2 id="parserinterface">ParserInterface</h2>
-<p>Abstract interface for table parsers. Each concrete parser knows how
-to read a specific table type from raw spreadsheet cells and produce a
-table model.</p>
+<p>The interface for table parsers (a type). Each concrete parser knows
+how to read a specific table type from raw spreadsheet cells and produce
+a table model. Besides <code>parse()</code> it has the properties
+<code>startRow</code>, <code>startColumn</code>, <code>endKey</code> and
+<code>logger</code>. The built-in parsers extend
+<code>ParserBase</code>, whose constructor requires
+<code>{ logger }</code>:
+<code>new ParserDecision({ logger })</code>.</p>
 <h3 id="methods-2">Methods</h3>
 <h4
-id="parsesheetname-string-importer-importerinterface-tableinterface"><code>parse(sheetName: string, importer: ImporterInterface): TableInterface</code></h4>
-<p>Parses the sheet with the given name using the provided importer and
-returns a table model.</p>
+id="parserequest-parserparserequest-tableinterface--undefined"><code>parse(request: ParserParseRequest): TableInterface | undefined</code></h4>
+<p>Parses one sheet and returns a table model, or <code>undefined</code>
+if the sheet could not be parsed (the errors are logged).</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
-<th>Parameter</th>
+<th>Field of <code>request</code></th>
 <th>Type</th>
 <th>Description</th>
 </tr>
@@ -291,11 +323,16 @@ returns a table model.</p>
 <td><code>ImporterInterface</code></td>
 <td>The importer providing cell access</td>
 </tr>
+<tr>
+<td><code>fileName</code></td>
+<td><code>string</code></td>
+<td>The file the sheet comes from</td>
+</tr>
 </tbody>
 </table></div>
 <p><strong>Returns:</strong> A <code>TableInterface</code>
 implementation (e.g., <code>TableDecision</code>,
-<code>TableMatrix</code>).</p>
+<code>TableMatrix</code>), or <code>undefined</code>.</p>
 <hr />
 <h2 id="parserdecision">ParserDecision</h2>
 <p>Parser for sheets marked with <code>&lt;DECISION_TABLE&gt;</code>.
@@ -378,7 +415,7 @@ model.</p>
 </table></div>
 <h3 id="methods-3">Methods</h3>
 <h4
-id="parsesheetname-string-importer-importerinterface-tabledecision"><code>parse(sheetName: string, importer: ImporterInterface): TableDecision</code></h4>
+id="parserequest-parserparserequest-tableinterface--undefined-1"><code>parse(request: ParserParseRequest): TableInterface | undefined</code></h4>
 <p>Parses the decision table and returns a <code>TableDecision</code>
 model.</p>
 <hr />
@@ -392,15 +429,17 @@ and data values at their intersections. Each non-empty intersection
 becomes a test case.</p>
 <h3 id="methods-4">Methods</h3>
 <h4
-id="parsesheetname-string-importer-importerinterface-tablematrix"><code>parse(sheetName: string, importer: ImporterInterface): TableMatrix</code></h4>
+id="parserequest-parserparserequest-tableinterface--undefined-2"><code>parse(request: ParserParseRequest): TableInterface | undefined</code></h4>
 <p>Parses the matrix table and returns a <code>TableMatrix</code>
 model.</p>
 <hr />
 <h2 id="parserspecification">ParserSpecification</h2>
-<p>Parser for sheets marked with
-<code>&lt;SPECIFICATION_TABLE&gt;</code>. Reads a high-level
-specification of fields, rules, and severities, and produces a
-<code>SpecificationModel</code>.</p>
+<p>Parser for sheets marked with <code>&lt;SPECIFICATION&gt;</code> (the
+legacy marker <code>&lt;SPECIFICATION_TABLE&gt;</code> works too). Reads
+a high-level specification of fields, rules, and severities into a
+<code>SpecificationModel</code>; <code>parse()</code> converts that into
+a <code>TableDecision</code> right away, so a specification sheet
+arrives in <code>FileProcessor.tables</code> as a decision table.</p>
 <h3 id="sheet-structure-2">Sheet Structure</h3>
 <p>A specification table has three sections:</p>
 <ol type="1">
@@ -413,9 +452,13 @@ descriptions</li>
 </ol>
 <h3 id="methods-5">Methods</h3>
 <h4
-id="parsespecificationsheetname-string-importer-importerinterface-specificationmodel"><code>parseSpecification(sheetName: string, importer: ImporterInterface): SpecificationModel</code></h4>
-<p>Parses the specification sheet and returns a
-<code>SpecificationModel</code>.</p>
+id="parserequest-parserparserequest-tableinterface--undefined-3"><code>parse(request: ParserParseRequest): TableInterface | undefined</code></h4>
+<p>Parses the specification sheet and returns the converted
+<code>TableDecision</code>.</p>
+<h4
+id="parsespecificationsheetname-string-importer-importerinterface-specificationmodel--undefined"><code>parseSpecification(sheetName: string, importer: ImporterInterface): SpecificationModel | undefined</code></h4>
+<p>Parses the specification sheet and returns the
+<code>SpecificationModel</code>, without converting it.</p>
 <hr />
 <h2 id="parserspecificationconverter">ParserSpecificationConverter</h2>
 <p>Converts a <code>SpecificationModel</code> into a
@@ -432,10 +475,7 @@ field rules</li>
 <li>A summary section</li>
 </ul>
 <h3 id="constructor-1">Constructor</h3>
-<pre class="typescript"><code>new ParserSpecificationConverter(options?: {
-  logger?: LoggerInterface
-  converterRegistry?: RuleConverterRegistry
-})</code></pre>
+<pre class="typescript"><code>new ParserSpecificationConverter(options?: { registry?: RuleConverterRegistry })</code></pre>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -446,12 +486,7 @@ field rules</li>
 </thead>
 <tbody>
 <tr>
-<td><code>logger</code></td>
-<td><code>LoggerInterface</code></td>
-<td>Logger instance</td>
-</tr>
-<tr>
-<td><code>converterRegistry</code></td>
+<td><code>registry</code></td>
 <td><code>RuleConverterRegistry</code></td>
 <td>Registry of rule converter plugins. If not provided, uses
 <code>createDefaultConverterRegistry()</code></td>
@@ -460,22 +495,26 @@ field rules</li>
 </table></div>
 <h3 id="methods-6">Methods</h3>
 <h4
-id="convertspecification-specificationmodel-tabledecision"><code>convert(specification: SpecificationModel): TableDecision</code></h4>
+id="convertrequest--specification-specificationinterface-logger-loggerinterface-filename-string--tabledecision"><code>convert(request: { specification: SpecificationInterface; logger: LoggerInterface; fileName: string }): TableDecision</code></h4>
 <p>Converts the specification model into a decision table.</p>
 <pre class="typescript"><code>import {
+  LoggerMemory,
   ParserSpecification,
   ParserSpecificationConverter,
   ImporterXlsx
 } from &#39;@xhubio/nanook-table&#39;
 
-const importer = new ImporterXlsx()
+const logger = new LoggerMemory()
+const importer = new ImporterXlsx({ logger })
 await importer.loadFile(&#39;spec.xlsx&#39;)
 
-const parser = new ParserSpecification()
+const parser = new ParserSpecification({ logger })
 const spec = parser.parseSpecification(&#39;MySpec&#39;, importer)
 
-const converter = new ParserSpecificationConverter()
-const decisionTable = converter.convert(spec)</code></pre>
+if (spec !== undefined) {
+  const converter = new ParserSpecificationConverter()
+  const decisionTable = converter.convert({ specification: spec, logger, fileName: &#39;spec.xlsx&#39; })
+}</code></pre>
 <hr />
 <h2 id="ruleconverterplugin">RuleConverterPlugin</h2>
 <p>Interface for plugins that convert specification rules into
@@ -497,16 +536,16 @@ Contains all information needed to derive equivalence classes from a
 rule.</p>
 <pre class="typescript"><code>interface RuleConversionContext {
   /** The field definition being processed */
-  field: FieldDefinition
+  field: SpecificationFieldInterface
 
   /** The specific rule being converted */
-  rule: RuleDefinition
+  rule: SpecificationFieldRuleInterface
 
   /** All rules that apply to this field */
-  allFieldRules: RuleDefinition[]
+  allFieldRules: SpecificationFieldRuleInterface[]
 
   /** The full specification model */
-  specification: SpecificationModel
+  specification: SpecificationInterface
 }</code></pre>
 <hr />
 <h2 id="equivalenceclassresult">EquivalenceClassResult</h2>
@@ -523,8 +562,8 @@ error equivalence classes derived from a rule.</p>
   /** Display name of the equivalence class */
   name: string
 
-  /** Optional explanatory comment */
-  comment?: string
+  /** Explanatory comment (required; may be an empty string) */
+  comment: string
 
   /** Optional severity level for error classes */
   severity?: string
@@ -538,11 +577,12 @@ converter for each rule type.</p>
 <h4
 id="registerplugin-ruleconverterplugin-void"><code>register(plugin: RuleConverterPlugin): void</code></h4>
 <p>Registers a converter plugin. The plugin's <code>name</code> property
-is used as the key.</p>
+is used as the key. Throws if a plugin with that name is already
+registered.</p>
 <h4
-id="getname-string-ruleconverterplugin"><code>get(name: string): RuleConverterPlugin</code></h4>
-<p>Returns the plugin registered under the given name. Throws an error
-if not found.</p>
+id="getname-string-ruleconverterplugin--undefined"><code>get(name: string): RuleConverterPlugin | undefined</code></h4>
+<p>Returns the plugin registered under the given name, or
+<code>undefined</code>.</p>
 <h4
 id="hasname-string-boolean"><code>has(name: string): boolean</code></h4>
 <p>Returns <code>true</code> if a plugin with the given name is
@@ -586,8 +626,9 @@ const registry = createDefaultConverterRegistry()
 console.log(registry.names()) // list of all built-in converter names</code></pre>
 <hr />
 <h2 id="parser-constants">Parser Constants</h2>
-<p>The parsers use the following constants when reading spreadsheet
-data:</p>
+<p>The parsers use the following internal constants when reading
+spreadsheet data. They are not exported; they are listed so you know how
+a sheet is read:</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
@@ -609,7 +650,7 @@ data:</p>
 </tr>
 <tr>
 <td><code>MAX_EMPTY_LINES</code></td>
-<td><code>30</code></td>
+<td><code>100</code></td>
 <td>Maximum consecutive empty lines before the parser assumes the table
 has ended</td>
 </tr>
