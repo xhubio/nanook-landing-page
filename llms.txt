@@ -5,6 +5,7 @@
 The docs pages below (Documentation except the hub, Tutorials, and the 3.x API reference; not the 1.x API pages) are also available as Markdown: append `.md` to the URL (for example https://nanook.xhub.io/docs/quickstart/quickstart.md). The whole documentation in one file: https://nanook.xhub.io/llms-full.txt. The npm package ships the 3.x docs as Markdown in node_modules/@xhubio/nanook-table/docs/.
 
 ## Documentation
+- [agents.md](https://nanook.xhub.io/agents.md): One guide a coding agent follows end to end to add Nanook test cases and test data to a project: install, which skill to read, what goes in a cell, how to check the count
 - [Documentation Hub](https://nanook.xhub.io/docs): Entry page linking quickstart, guide, tutorials, modules, and API reference
 - [Quickstart Guide](https://nanook.xhub.io/docs/quickstart/quickstart): Introduction to creating an equivalence class table and generating test data from it
 - [Quickstart with Claude Code](https://nanook.xhub.io/docs/quickstart/claude-code): Install the skill as a Claude Code plugin, let Claude Code draft the decision table, generate the data with Nanook

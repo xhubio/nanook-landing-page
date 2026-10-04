@@ -3596,7 +3596,7 @@ body[data-theme="swiss"] .notfound-links a {
    "dark"  = light fill authored for the dark theme (DB, BitDiver);
    "light" = colour mark authored for white paper (Weltportfolio).
    CSS derives the other theme — the same dark-first rule as the blog
-   diagrams (AGENTS.md § Theme). invert() after brightness(0) yields a
+   diagrams (CONTRIBUTING.md § Theme). invert() after brightness(0) yields a
    flat grey, so both kinds land on one ink per theme. */
 body[data-theme="tactical"] .row-logo img[data-ink="light"] {
   filter: grayscale(1) brightness(0) invert(0.81);

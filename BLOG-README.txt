@@ -8,9 +8,9 @@ Werkzeug für den Erscheinungstag
 - blog/new/series-state.json hält je Teil den Status.
 - python3 tools/publish-part.py <slug> registriert einen Teil an allen Stellen, setzt Twin und index, follow, verlinkt die Zeile in Teil 1, ergänzt „Next“ im Vorgänger, setzt bei 5b den Rückverweis in Teil 5, baut die Artikel neu und aktualisiert den Serienplan. Idempotent, erzwingt die Reihenfolge, meldet unbekannte Slugs. Danach Commit und Push.
 - Im Probelauf in einer Repo-Kopie: Teil 2 zweimal (zweiter Lauf ohne Änderung), 5b vor 5 abgelehnt, dann 3, 4, 5, 5b in Folge; alle Reihenfolgen, Feeds, Sitemap, Artikel-Links und Twins stimmten.
-- tools/unpublish-parts.py ist die Umkehrung; tools/series_lib.py der gemeinsame Code. AGENTS.md und der Serienplan (Statuszeilen, Übersichtstabelle, offener Punkt 7, Checkliste) beschreiben den Ablauf.
+- tools/unpublish-parts.py ist die Umkehrung; tools/series_lib.py der gemeinsame Code. CONTRIBUTING.md und der Serienplan (Statuszeilen, Übersichtstabelle, offener Punkt 7, Checkliste) beschreiben den Ablauf.
 
-Lektor: keine Blocker; die fünf Warnungen (ein Satzfragment in Teil 1, doppeltes „on the blog“ im Leitfaden, der verlinkte Teil 5 im Kopf von 5b, ein Widerspruch im Serienplan, die Sidebar-Zahl in AGENTS.md) und die Hinweise (Tempus im letzten Teil, Skript-Kommentar, unbekannter Slug, __pycache__ in .gitignore) sind eingearbeitet und nachgeprüft.
+Lektor: keine Blocker; die fünf Warnungen (ein Satzfragment in Teil 1, doppeltes „on the blog“ im Leitfaden, der verlinkte Teil 5 im Kopf von 5b, ein Widerspruch im Serienplan, die Sidebar-Zahl in CONTRIBUTING.md) und die Hinweise (Tempus im letzten Teil, Skript-Kommentar, unbekannter Slug, __pycache__ in .gitignore) sind eingearbeitet und nachgeprüft.
 
 Für morgen: LinkedIn zu Teil 1 kann raus, Teil 1 ist live. Am 29.09. dann:
 

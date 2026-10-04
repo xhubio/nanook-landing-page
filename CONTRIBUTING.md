@@ -1,4 +1,4 @@
-# AGENTS.md — AI Assistant Instructions for nanook-landing-page
+# CONTRIBUTING.md — AI Assistant Instructions for nanook-landing-page
 
 > Companion to `CLAUDE.md`. That file describes **what the site is**; this one describes
 > **how to work on it** — the steps, the traps, and the things that are measurably not
@@ -177,6 +177,12 @@ title is injected by `js/theme.js` and fetches that `.md`. This needs `.nojekyll
 with Jekyll, `docs/x.md` would be rendered to `docs/x.html` and overwrite the real page — do
 not delete it. (Side effect: dotfiles are served too; keep `.idea/` and other local files out
 of git.)
+
+🔴 **`/agents.md` is a copy, not a page.** The source is `docs/agents.md` in nanook-table; edit
+it there and run `sh tools/sync-agents-md.sh`. The "agents.md" button in the bar (injected by
+`js/theme.js`, styled in `css/nanook.css`) copies a prompt that points an agent at it. This
+file was called `AGENTS.md` until 2026-10-04; it had to move because `agents.md` and
+`AGENTS.md` cannot share the root on a case-insensitive file system.
 
 ### New docs page (`tools/docs-chrome.py`)
 

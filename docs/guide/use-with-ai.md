@@ -4,6 +4,12 @@ Source: https://nanook.xhub.io/docs/guide/use-with-ai
 
 A coding agent can draft a Nanook table and the script that turns it into test data. It does that well when it has three things: skills that know how a decision table is built and how test data comes out of it, a few rules that keep the generation script correct, and the documentation as plain text. This page lists all three for Claude Code and for other agents. None of it replaces checking what the agent produced; the last section says how.
 
+**The short way, for any agent:** paste this prompt into it (the `agents.md` button in the bar copies it). [/agents.md](https://nanook.xhub.io/agents.md) is one guide the agent follows end to end: install, which skill to read, what goes in a cell, how to check the count. The sections below are the same pieces one by one.
+
+```
+Read https://nanook.xhub.io/agents.md and follow it to add Nanook test cases and test data for <the form or API to test> to this project.
+```
+
 ## 1 · Claude Code: the skills
 
 Since skill version 0.2.0 the skill `create-equivalence-class-table` ships as a Claude Code plugin, straight from the GitHub repository. Install it once in Claude Code (already installed? `/plugin marketplace update nanook` and `/plugin update nanook@nanook` bring the second skill below):
@@ -64,8 +70,11 @@ Test cases are defined in XLSX workbooks and turned into test data with
   needs its own generator.
 - Pass the tables to TestcaseProcessor keyed by table name, not as the
   array from FileProcessor, or every ref: fails.
-- In 3.0.1 the default writer throws in before(); use an inline
-  InterfaceWriter.
+- Up to 3.2.x the default writer throws in before() and the default
+  registry is empty; use an inline InterfaceWriter and register faker
+  yourself. From 3.3.0 both work.
+- LoggerMemory keeps only errors by default; set logger.level =
+  'warning' to see warnings as well.
 - After generating, compare the number of test cases with the number of
   test-case columns (plus one per extra element of a range reference).
   Fewer means a generator failed: Nanook logs the error and goes on.
@@ -74,7 +83,7 @@ Test cases are defined in XLSX workbooks and turned into test data with
 
 Claude Code reads `CLAUDE.md`. Put the line `@AGENTS.md` into it and Claude Code imports the same rules, so both files never drift apart.
 
-The block points the agent to the Markdown documentation inside the package. Unlike the pages on this site, it always matches the installed version: the guide and tutorials here describe the table concepts, and the 3.x API reference is under [API](https://nanook.xhub.io/docs/api). Rules two to four are mistakes that cost a run its test cases on 3.0.1; the last one is how you notice. The quickstart describes them under [Generate the test data](https://nanook.xhub.io/docs/quickstart/claude-code#generate-the-test-data) and [What can go wrong](https://nanook.xhub.io/docs/quickstart/claude-code#what-can-go-wrong).
+The block points the agent to the Markdown documentation inside the package. Unlike the pages on this site, it always matches the installed version: the guide and tutorials here describe the table concepts, and the 3.x API reference is under [API](https://nanook.xhub.io/docs/api). Rules two to four are mistakes that cost a run its test cases (the fourth only up to 3.2.x), the fifth keeps warnings from getting lost, the last one is how you notice. The quickstart describes them under [Generate the test data](https://nanook.xhub.io/docs/quickstart/claude-code#generate-the-test-data) and [What can go wrong](https://nanook.xhub.io/docs/quickstart/claude-code#what-can-go-wrong).
 
 ## 4 · The docs as plain text
 
