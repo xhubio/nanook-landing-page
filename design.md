@@ -156,8 +156,8 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
   front of the GitHub link — hairline `--border-bright`, ink text, 32px like
   the pill, never filled. Visible **only from 1200px**: below that the bar is
   full and the docs pages stay quiet; the "Support" link carries the way.
-  Between 641px and 960px the GitHub label and the toggle labels drop and the
-  links sit closer, so the bar fits.
+  Between 641px and 960px the GitHub label drops and the links sit closer, so
+  the bar fits.
 - **Footer: Ft1 mast-headed** (2026-10-01, replaces the Ft3 index columns).
   Left: wordmark (logo + "Nanook" + brand square, same treatment as the bar)
   and one factual line — "Open-source test data toolkit. / MIT licensed ·
@@ -169,7 +169,10 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
   page). Below 640px: one column, links left-aligned at 44px touch height,
   separators replaced by space (a wrapped middot would start a line). A
   closing band, not a sitemap — the bar carries the sections.
-- Theme toggle labels read **Light / Dark**; cookie banner sentence case;
+- **Theme toggle** (2026-10-04): one icon, no text — a moon in the light theme,
+  a sun in the dark one (the icon names where a click goes); 36px square, `--fg-dim`,
+  paper-2 on hover, 44px below 640px. Drawn by CSS (`::before` mask) over the baked
+  markup; `aria-pressed` + title set by `js/theme.js`; cookie banner sentence case;
   skip link (injected) is an ink block; `aria-current="page"` on the active
   nav link (ink + blue underline).
 - **404** (`/404.html`): status line, display figure in brand red, three

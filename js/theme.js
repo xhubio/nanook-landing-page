@@ -21,14 +21,17 @@ function toggleTheme() {
 }
 
 /* The baked button says "Toggle theme" and nothing about its state; a
-   pressed state named "Dark theme" tells a screen reader both. Set here so
-   the pre-rendered pages stay untouched. */
+   pressed state named "Dark theme" tells a screen reader both, and the
+   title tells the mouse where a click goes. Set here so the pre-rendered
+   pages stay untouched. */
 function syncThemeToggle() {
   var btn = document.querySelector('.theme-toggle');
   if (!btn) return;
+  var dark = document.body.getAttribute('data-theme') === 'dark';
   btn.setAttribute('aria-label', 'Dark theme');
-  btn.setAttribute('aria-pressed',
-    document.body.getAttribute('data-theme') === 'dark' ? 'true' : 'false');
+  btn.setAttribute('aria-pressed', dark ? 'true' : 'false');
+  /* the icon names the target (moon in light, sun in dark); the title says it */
+  btn.title = dark ? 'Switch to light theme' : 'Switch to dark theme';
 }
 syncThemeToggle();
 
