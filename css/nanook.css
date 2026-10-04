@@ -630,6 +630,70 @@ body[data-theme] .header-cta:hover {
 }
 
 /* ============================================================
+   AGENTS.MD — a pill that copies a prompt pointing a coding agent at
+   /agents.md (js/theme.js injects it in front of the call / GitHub link).
+   Mono label, same height as its neighbours; "copied" for 1.6s after a
+   click. From 768px: below ~740px the bar overflows with it, and a
+   phone has no agent to paste into.
+   ============================================================ */
+body[data-theme] .agents-btn {
+  display: none;
+  justify-self: end;
+  align-items: center;
+  gap: var(--space-2xs);
+  min-height: 32px;
+  padding: 0 var(--space-xs);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+  color: var(--fg-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--dur-short) var(--ease-out),
+    border-color var(--dur-short) var(--ease-out),
+    color var(--dur-short) var(--ease-out);
+}
+
+body[data-theme] .agents-btn:hover {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-bright);
+  color: var(--fg-primary);
+}
+
+body[data-theme] .agents-btn.copied {
+  border-color: var(--link-accent);
+  color: var(--link-accent);
+}
+
+body[data-theme] .agents-btn:focus-visible {
+  outline-offset: 3px;
+}
+
+body[data-theme] .agents-btn:active {
+  transform: translateY(1px);
+}
+
+.agents-btn-label {
+  /* "agents.md" and "copied" take the same room: nothing shifts */
+  min-width: 9ch;
+  text-align: center;
+}
+
+.agents-btn-icon {
+  flex: none;
+}
+
+@media (min-width: 48rem) {
+  body[data-theme] .agents-btn {
+    display: inline-flex;
+  }
+}
+
+/* ============================================================
    THEME TOGGLE — Light / Dark, a quiet control
    ============================================================ */
 .theme-toggle {

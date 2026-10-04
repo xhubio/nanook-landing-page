@@ -185,3 +185,57 @@ syncThemeToggle();
     init();
   }
 })();
+
+/* agents.md: a button in the bar that copies a prompt pointing a coding
+   agent at /agents.md (the guide comes from nanook-table/docs/agents.md).
+   Injected so the pre-rendered pages stay untouched. Without a clipboard
+   the button opens the guide instead. */
+(function () {
+  var PROMPT = 'Read https://nanook.xhub.io/agents.md and follow it to add Nanook test cases ' +
+    'and test data for <the form or API to test> to this project.';
+
+  function init() {
+    var header = document.querySelector('.site-header');
+    if (!header || header.querySelector('.agents-btn')) return;
+    var anchor = header.querySelector('.header-cta') || header.querySelector('.gh-link');
+    if (!anchor) return;
+
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'agents-btn';
+    btn.title = 'Copy a prompt that points your AI agent at /agents.md';
+    btn.innerHTML = '<span class="agents-btn-label" aria-live="polite">agents.md</span>' +
+      '<svg class="agents-btn-icon" viewBox="0 0 24 24" width="12" height="12" fill="none" ' +
+      'stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" ' +
+      'aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/>' +
+      '<path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    var label = btn.querySelector('.agents-btn-label');
+    var timer;
+
+    btn.addEventListener('click', function () {
+      if (!navigator.clipboard) {
+        location.href = '/agents.md';
+        return;
+      }
+      navigator.clipboard.writeText(PROMPT).then(function () {
+        btn.classList.add('copied');
+        label.textContent = 'copied';
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          btn.classList.remove('copied');
+          label.textContent = 'agents.md';
+        }, 1600);
+      }, function () {
+        location.href = '/agents.md';
+      });
+    });
+
+    anchor.parentNode.insertBefore(btn, anchor);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();

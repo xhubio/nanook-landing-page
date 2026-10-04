@@ -16,9 +16,9 @@ This is a **pre-built Docusaurus v1 site** — there is no build step, package.j
 
 Pushing to `main` deploys automatically via GitHub Pages. There are no CI pipelines, build commands, or test suites.
 
-> 🔵 **Arbeitsanweisungen stehen in `AGENTS.md`** — die sechs Stellen, an denen ein Beitrag
+> 🔵 **Arbeitsanweisungen stehen in `CONTRIBUTING.md`** — die sechs Stellen, an denen ein Beitrag
 > registriert werden muss, die Theme-Regeln fuer Diagramme und die Fallen. Diese Datei hier
-> beschreibt, WAS die Seite ist; AGENTS.md, WIE man daran arbeitet.
+> beschreibt, WAS die Seite ist; CONTRIBUTING.md, WIE man daran arbeitet.
 
 ## Key Notes
 

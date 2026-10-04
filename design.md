@@ -7,7 +7,7 @@ system needs to grow. (Hallmark multi-page contract: on this project,
 inverted.)
 
 Working rules for the repo itself (registration points, twins, deployment traps)
-live in `AGENTS.md`. This file covers the visual system only.
+live in `CONTRIBUTING.md`. This file covers the visual system only.
 
 > **2026-09-02 — system replaced.** The Industrial Brutalist system (dark
 > telemetry default, Inter 900 display, JetBrains Mono body, red accent, CRT
@@ -183,7 +183,7 @@ muted 5.8 / 5.8, link 7.8 / 8.4, ring 4.3 / 8.4).
 - Content pages (blog, docs, hubs, root pages): **typography only** — no
   enrichment, no reveals.
 - Diagrams are authored for the dark theme and CSS-inverted for light
-  (see AGENTS.md § Theme).
+  (see CONTRIBUTING.md § Theme).
 
 ## CTA voice
 
