@@ -47,6 +47,7 @@ The docs pages below (Documentation except the hub, Tutorials, and the 3.x API r
 ## Blog
 - [The Agent Writes the Code. Everything Around It Decides Whether You Can Trust It.](https://nanook.xhub.io/blog/2026/09/22/agentic-development-overview): Part 1 of a nine-part series on agentic software development, with the measured numbers of two settings
 - [Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions](https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file): Part 2 of the series on agentic software development (2026-09-29)
+- [One Root, Many Repositories: A Directory Layout and a Requirements Lifecycle for Agent Work](https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle): Part 3 of the series on agentic software development (2026-10-06)
 - [How We Test a SaaS Application with Nanook](https://nanook.xhub.io/blog/2026/08/21/testing-a-saas-with-nanook): Field report — decision tables as the single source of a Playwright suite
 - [AI-Assisted Equivalence Class Tables with Claude Code](https://nanook.xhub.io/blog/2026/03/29/ai-assisted-equivalence-class-tables): The Claude Code skill and slash command shipped with the repository
 

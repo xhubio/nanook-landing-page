@@ -4,7 +4,7 @@
         <title>Nanook Blog</title>
         <link>https://nanook.xhub.io/blog</link>
         <description>The best place to stay up-to-date with the latest Nanook news and events.</description>
-        <lastBuildDate>Tue, 29 Sep 2026 06:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 06 Oct 2026 06:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
         <image>
@@ -13,6 +13,13 @@
             <link>https://nanook.xhub.io/blog</link>
         </image>
         <copyright>Copyright  2022 nanook.xhub.io</copyright>
+        <item>
+            <title><![CDATA[One Root, Many Repositories: A Directory Layout and a Requirements Lifecycle for Agent Work]]></title>
+            <link>https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle</link>
+            <guid>https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle</guid>
+            <pubDate>Tue, 06 Oct 2026 06:00:00 GMT</pubDate>
+            <description><![CDATA[<p>A directory layout for agent work, for a multi-product SaaS and for microservices, and the lifecycle a requirement passes through from analysis to done.</p> ]]></description>
+        </item>
         <item>
             <title><![CDATA[Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions]]></title>
             <link>https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file</link>

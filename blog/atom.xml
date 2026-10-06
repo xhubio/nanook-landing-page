@@ -2,12 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://nanook.xhub.io/blog</id>
     <title>Nanook Blog</title>
-    <updated>2026-09-29T06:00:00.000Z</updated>
+    <updated>2026-10-06T06:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://nanook.xhub.io/blog"/>
     <subtitle>The best place to stay up-to-date with the latest Nanook news and events.</subtitle>
     <logo>https://nanook.xhub.io/img/logo.svg</logo>
     <rights>Copyright  2022 nanook.xhub.io</rights>
+    <entry>
+        <title type="html"><![CDATA[One Root, Many Repositories: A Directory Layout and a Requirements Lifecycle for Agent Work]]></title>
+        <id>https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle</id>
+        <link href="https://nanook.xhub.io/blog/2026/10/06/directory-layout-requirements-lifecycle"/>
+        <updated>2026-10-06T06:00:00.000Z</updated>
+        <summary type="html"><![CDATA[<p>A directory layout for agent work, for a multi-product SaaS and for microservices, and the lifecycle a requirement passes through from analysis to done.</p> ]]></summary>
+        <author>
+            <name>Torsten Link</name>
+        </author>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Fewer Skills, Shorter Rules: Setting Up a Coding Agent That Does Not Drown in Its Own Instructions]]></title>
         <id>https://nanook.xhub.io/blog/2026/09/29/agent-toolbox-and-instruction-file</id>

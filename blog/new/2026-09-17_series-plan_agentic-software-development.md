@@ -126,7 +126,7 @@ Cost: weekly limit after three days, orchestrator at 30 %, model assignment, max
 
 ## Part 3 — One root, many repositories
 
-**Status:** scheduled 2026-10-06 as `/blog/2026/10/06/directory-layout-requirements-lifecycle`, unpublished draft; publish with `tools/publish-part.py directory-layout-requirements-lifecycle` (PRD `prds/2026-10-06_blog-directory-layout-requirements-lifecycle.md`).
+**Status:** published 2026-10-06 as `/blog/2026/10/06/directory-layout-requirements-lifecycle` (PRD `prds/2026-10-06_blog-directory-layout-requirements-lifecycle.md`).
 
 **Content:** The root directory is a repository (4,284 commits of plans, rules and decisions). Layout for a
 multi-product SaaS with shared modules versus an event-driven microservice landscape (requirements per
