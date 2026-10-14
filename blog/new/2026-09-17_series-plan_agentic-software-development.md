@@ -170,7 +170,7 @@ blockers leave the plan.
 
 ## Part 4 — What the next session knows
 
-**Status:** scheduled 2026-10-13 as `/blog/2026/10/13/knowledge-base-and-lesson-memory`, unpublished draft; publish with `tools/publish-part.py knowledge-base-and-lesson-memory` (PRD `prds/2026-10-13_blog-knowledge-base-and-lesson-memory.md`).
+**Status:** published 2026-10-13 as `/blog/2026/10/13/knowledge-base-and-lesson-memory` (PRD `prds/2026-10-13_blog-knowledge-base-and-lesson-memory.md`).
 
 **Content:** Two stores for two questions. The knowledge base (own repository, raw → compiled wiki, one
 concept per file, dated, lint; topics development, test, deployment, production; target environment;

@@ -6,7 +6,7 @@ Wir führen zwei Speicher, weil sie zwei verschiedene Fragen beantworten:
 
 📚 EINE WISSENSBASIS — Wie funktioniert unser System? Ein eigenes Repository. Ich füttere Rohmaterial hinein, das Modell kompiliert es zu kurzen, datierten Artikeln: Entwicklung, Test, Deployment, Produktion. Jeder abgeschlossene Plan trägt bei.
 
-🧠 EIN GEDÄCHTNIS FÜR LEKTIONEN — Was ist schiefgegangen, und wie vermeiden wir es? Inzwischen 327 Einträge, eine Lektion pro Datei, jede mit „was passiert ist“, „warum“ und „wie anzuwenden“.
+🧠 EIN GEDÄCHTNIS FÜR LEKTIONEN — Was ist schiefgegangen, und wie vermeiden wir es? 327 Einträge (Stand 17. September 2026), eine Lektion pro Datei, jede mit „was passiert ist“, „warum“ und „wie anzuwenden“.
 
 Die nützlichste Entdeckung: Nach ein paar hundert Lektionen bündeln sich die Vorfälle in etwa zwanzig Fehlerklassen. „Das Messinstrument lügt.“ „Stiller Datenverlust.“ „Gebaut, aber nicht erreichbar.“
 

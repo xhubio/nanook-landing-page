@@ -6,7 +6,7 @@ We keep two stores, because they answer two different questions:
 
 📚 A KNOWLEDGE BASE — how does our system work? Its own repository. I feed raw material in, the model compiles it into short, dated articles: development, test, deployment, production. Every completed plan contributes.
 
-🧠 A LESSON MEMORY — what went wrong, and how do we avoid it? 327 entries now, one lesson per file, each with what happened, why, and how to apply.
+🧠 A LESSON MEMORY — what went wrong, and how do we avoid it? 327 entries on 17 September 2026, one lesson per file, each with what happened, why, and how to apply.
 
 The most useful discovery: after a few hundred lessons, incidents cluster into about twenty failure classes. "The measuring instrument lies." "Silent data loss." "Built but not reachable."
 
